@@ -28,6 +28,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdio.h>
 
 /* USER CODE END Includes */
 
@@ -102,6 +103,13 @@ int main(void)
   MX_SPI1_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
+  setvbuf(stdout, NULL, _IONBF, 0);
+  printf("\r\n[boot] project start\r\n");
+  printf("[boot] SYSCLK=%lu Hz HCLK=%lu Hz PCLK1=%lu Hz PCLK2=%lu Hz\r\n",
+         (unsigned long)HAL_RCC_GetSysClockFreq(),
+         (unsigned long)HAL_RCC_GetHCLKFreq(),
+         (unsigned long)HAL_RCC_GetPCLK1Freq(),
+         (unsigned long)HAL_RCC_GetPCLK2Freq());
 
   /* USER CODE END 2 */
 
@@ -184,6 +192,12 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+int __io_putchar(int ch)
+{
+  uint8_t data = (uint8_t)ch;
+  HAL_UART_Transmit(&huart1, &data, 1, HAL_MAX_DELAY);
+  return ch;
+}
 
 /* USER CODE END 4 */
 
@@ -214,6 +228,28 @@ void MPU_Config(void)
   /* Enables the MPU */
   HAL_MPU_Enable(MPU_PRIVILEGED_DEFAULT);
 
+}
+
+/**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM1 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  /* USER CODE BEGIN Callback 0 */
+
+  /* USER CODE END Callback 0 */
+  if (htim->Instance == TIM1)
+  {
+    HAL_IncTick();
+  }
+  /* USER CODE BEGIN Callback 1 */
+
+  /* USER CODE END Callback 1 */
 }
 
 /**

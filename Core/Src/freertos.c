@@ -26,6 +26,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdio.h>
 
 /* USER CODE END Includes */
 
@@ -115,10 +116,19 @@ void MX_FREERTOS_Init(void) {
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
+  uint32_t heartbeat = 0;
+
+  printf("[rtos] defaultTask started\r\n");
+
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    HAL_GPIO_TogglePin(LED_YL_GPIO_Port, LED_YL_Pin);
+    HAL_GPIO_TogglePin(LED_RY_GPIO_Port, LED_RY_Pin);
+    printf("[rtos] heartbeat=%lu tick=%lu\r\n",
+           (unsigned long)heartbeat++,
+           (unsigned long)HAL_GetTick());
+    osDelay(1000);
   }
   /* USER CODE END StartDefaultTask */
 }
