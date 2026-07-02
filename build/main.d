@@ -43,7 +43,8 @@ build/main.o: Core/Src/main.c Core/Inc/main.h \
  Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h \
  Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h \
  Drivers/CMSIS/RTOS2/Include/cmsis_os2.h Core/Inc/eth.h Core/Inc/main.h \
- Core/Inc/spi.h Core/Inc/usart.h Core/Inc/gpio.h Core/Inc/fmc.h
+ Core/Inc/spi.h Core/Inc/usart.h Core/Inc/gpio.h Core/Inc/fmc.h \
+ Drivers/DAC81416/Inc/dac81416.h BSP/Inc/bsp_dac81416.h
 Core/Inc/main.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h:
 Core/Inc/stm32h7xx_hal_conf.h:
@@ -98,3 +99,5 @@ Core/Inc/spi.h:
 Core/Inc/usart.h:
 Core/Inc/gpio.h:
 Core/Inc/fmc.h:
+Drivers/DAC81416/Inc/dac81416.h:
+BSP/Inc/bsp_dac81416.h:

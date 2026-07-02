@@ -69,8 +69,8 @@ void Error_Handler(void);
 #define temp4b_GPIO_Port GPIOC
 #define temp4a_Pin GPIO_PIN_8
 #define temp4a_GPIO_Port GPIOA
-#define DAC_nCLR_Pin GPIO_PIN_2
-#define DAC_nCLR_GPIO_Port GPIOD
+#define DAC_ALMOUT_Pin GPIO_PIN_2
+#define DAC_ALMOUT_GPIO_Port GPIOD
 #define DAC_RESET_Pin GPIO_PIN_3
 #define DAC_RESET_GPIO_Port GPIOD
 #define DAC_nLDAC_Pin GPIO_PIN_6
@@ -91,6 +91,8 @@ void Error_Handler(void);
 #define temp1a_GPIO_Port GPIOB
 #define temp1b_Pin GPIO_PIN_4
 #define temp1b_GPIO_Port GPIOB
+#define DAC_CS_Pin GPIO_PIN_4
+#define DAC_CS_GPIO_Port GPIOA
 #define TOGGLE2_Pin GPIO_PIN_5
 #define TOGGLE2_GPIO_Port GPIOB
 #define TOGGLE1_Pin GPIO_PIN_6

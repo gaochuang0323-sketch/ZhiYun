@@ -30,6 +30,8 @@
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 
+#include "dac81416.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -110,6 +112,12 @@ int main(void)
          (unsigned long)HAL_RCC_GetHCLKFreq(),
          (unsigned long)HAL_RCC_GetPCLK1Freq(),
          (unsigned long)HAL_RCC_GetPCLK2Freq());
+  if (DAC81416_Init() != HAL_OK)
+  {
+    printf("[boot] DAC81416 init failed\r\n");
+    Error_Handler();
+  }
+  printf("[boot] DAC81416 SPI/GPIO ready\r\n");
 
   /* USER CODE END 2 */
 
