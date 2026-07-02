@@ -4,6 +4,32 @@
 
 static HAL_StatusTypeDef dacLastStatus = HAL_OK;
 
+static uint8_t DAC81416_IsValidRange(uint8_t range)
+{
+  switch (range)
+  {
+    case DAC81416_RANGE_0V_TO_5V:
+    case DAC81416_RANGE_0V_TO_10V:
+    case DAC81416_RANGE_0V_TO_20V:
+    case DAC81416_RANGE_0V_TO_40V:
+    case DAC81416_RANGE_NEG_5V_TO_5V:
+    case DAC81416_RANGE_NEG_10V_TO_10V:
+    case DAC81416_RANGE_NEG_20V_TO_20V:
+    case DAC81416_RANGE_NEG_2V5_TO_2V5:
+      return 1U;
+
+    default:
+      return 0U;
+  }
+}
+
+static uint16_t DAC81416_BuildRangeRegister(uint8_t range)
+{
+  uint16_t value = (uint16_t)(range & 0x0FU);
+
+  return (uint16_t)(value | (value << 4) | (value << 8) | (value << 12));
+}
+
 static void DAC81416_BuildFrame(uint8_t rw, uint8_t addr, uint16_t data, uint8_t frame[3])
 {
   frame[0] = (uint8_t)((rw & DAC81416_CMD_READ) | (addr & 0x3FU));
@@ -19,6 +45,20 @@ HAL_StatusTypeDef DAC81416_Init(void)
   dacLastStatus = DAC_WriteRegister(DAC81416_CMD_WRITE,
                                     DAC81416_REG_SPICONFIG,
                                     DAC81416_SPICONFIG_ACTIVE_VALUE);
+  if (dacLastStatus != HAL_OK)
+  {
+    return dacLastStatus;
+  }
+
+  dacLastStatus = DAC_EnableInternalRef(1U);
+  if (dacLastStatus != HAL_OK)
+  {
+    return dacLastStatus;
+  }
+
+  HAL_Delay(1U);
+
+  dacLastStatus = DAC_ConfigAllChannels0To5V();
   if (dacLastStatus != HAL_OK)
   {
     return dacLastStatus;
@@ -129,6 +169,37 @@ HAL_StatusTypeDef DAC_EnableInternalRef(uint8_t enable)
 
   dacLastStatus = DAC_WriteRegister(DAC81416_CMD_WRITE, DAC81416_REG_GENCONFIG, reg);
   return dacLastStatus;
+}
+
+HAL_StatusTypeDef DAC_SetAllChannelsRange(uint8_t range)
+{
+  uint16_t rangeValue;
+
+  if (DAC81416_IsValidRange(range) == 0U)
+  {
+    dacLastStatus = HAL_ERROR;
+    return dacLastStatus;
+  }
+
+  rangeValue = DAC81416_BuildRangeRegister(range);
+
+  for (uint8_t index = 0U; index < 4U; index++)
+  {
+    dacLastStatus = DAC_WriteRegister(DAC81416_CMD_WRITE,
+                                      (uint8_t)(DAC81416_REG_DACRANGE0 + index),
+                                      rangeValue);
+    if (dacLastStatus != HAL_OK)
+    {
+      return dacLastStatus;
+    }
+  }
+
+  return dacLastStatus;
+}
+
+HAL_StatusTypeDef DAC_ConfigAllChannels0To5V(void)
+{
+  return DAC_SetAllChannelsRange(DAC81416_RANGE_0V_TO_5V);
 }
 
 HAL_StatusTypeDef DAC_PowerDownChannels(uint16_t powerDownMask)

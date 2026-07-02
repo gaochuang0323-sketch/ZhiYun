@@ -20,6 +20,10 @@ extern "C" {
 #define DAC81416_REG_BRDCONFIG   0x05U
 #define DAC81416_REG_SYNCCONFIG  0x06U
 #define DAC81416_REG_DACPWDWN    0x09U
+#define DAC81416_REG_DACRANGE0   0x0AU
+#define DAC81416_REG_DACRANGE1   0x0BU
+#define DAC81416_REG_DACRANGE2   0x0CU
+#define DAC81416_REG_DACRANGE3   0x0DU
 #define DAC81416_REG_TRIGGER     0x0EU
 #define DAC81416_REG_BRDCAST     0x0FU
 #define DAC81416_REG_DAC0        0x10U
@@ -34,6 +38,15 @@ extern "C" {
 #define DAC81416_TRIGGER_LDAC          (1U << 4)
 #define DAC81416_TRIGGER_SOFT_RESET    0x1010U
 
+#define DAC81416_RANGE_0V_TO_5V        0x0U
+#define DAC81416_RANGE_0V_TO_10V       0x1U
+#define DAC81416_RANGE_0V_TO_20V       0x2U
+#define DAC81416_RANGE_0V_TO_40V       0x4U
+#define DAC81416_RANGE_NEG_5V_TO_5V    0x9U
+#define DAC81416_RANGE_NEG_10V_TO_10V  0xAU
+#define DAC81416_RANGE_NEG_20V_TO_20V  0xCU
+#define DAC81416_RANGE_NEG_2V5_TO_2V5  0xEU
+
 HAL_StatusTypeDef DAC81416_Init(void);
 HAL_StatusTypeDef DAC_WriteRegister(uint8_t cmd, uint8_t addr, uint16_t data);
 uint16_t DAC_ReadRegister(uint8_t cmd, uint8_t addr);
@@ -41,6 +54,8 @@ HAL_StatusTypeDef DAC_SoftwareReset(void);
 HAL_StatusTypeDef DAC_WriteChannel(uint8_t channel, uint16_t value);
 HAL_StatusTypeDef DAC_WriteAllChannels(uint16_t *values);
 HAL_StatusTypeDef DAC_EnableInternalRef(uint8_t enable);
+HAL_StatusTypeDef DAC_SetAllChannelsRange(uint8_t range);
+HAL_StatusTypeDef DAC_ConfigAllChannels0To5V(void);
 HAL_StatusTypeDef DAC_PowerDownChannels(uint16_t powerDownMask);
 HAL_StatusTypeDef DAC_TriggerLDAC(void);
 HAL_StatusTypeDef DAC_GetLastStatus(void);

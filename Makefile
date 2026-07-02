@@ -49,6 +49,9 @@ Core/Src/spi.c \
 Core/Src/usart.c \
 Core/Src/stm32h7xx_it.c \
 Core/Src/stm32h7xx_hal_msp.c \
+App/Src/fault_command.c \
+App/Src/fault_console.c \
+App/Src/voltage_sim.c \
 BSP/Src/bsp_dac81416.c \
 Drivers/DAC81416/Src/dac81416.c \
 Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.c \
@@ -166,6 +169,7 @@ AS_INCLUDES =  \
 # C includes
 C_INCLUDES =  \
 -ICore/Inc \
+-IApp/Inc \
 -IBSP/Inc \
 -IDrivers/DAC81416/Inc \
 -IDrivers/STM32H7xx_HAL_Driver/Inc \

@@ -1,0 +1,3539 @@
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"fault_command.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "App/Src/fault_command.c"
+  19              		.section	.text.FaultCommand_Write,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	FaultCommand_Write:
+  26              	.LVL0:
+  27              	.LFB149:
+   1:App/Src/fault_command.c **** #include "fault_command.h"
+   2:App/Src/fault_command.c **** 
+   3:App/Src/fault_command.c **** #include <stdarg.h>
+   4:App/Src/fault_command.c **** #include <stdio.h>
+   5:App/Src/fault_command.c **** #include <stdlib.h>
+   6:App/Src/fault_command.c **** #include <string.h>
+   7:App/Src/fault_command.c **** 
+   8:App/Src/fault_command.c **** #include "voltage_sim.h"
+   9:App/Src/fault_command.c **** 
+  10:App/Src/fault_command.c **** #define FAULT_COMMAND_DEFAULT_DURATION_MS 100U
+  11:App/Src/fault_command.c **** #define FAULT_COMMAND_DEFAULT_SLEW_MV_PER_MS 3000U
+  12:App/Src/fault_command.c **** 
+  13:App/Src/fault_command.c **** static void FaultCommand_Write(FaultCommand_WriteFn write, void *context, const char *text)
+  14:App/Src/fault_command.c **** {
+  28              		.loc 1 14 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  15:App/Src/fault_command.c ****   if ((write != NULL) && (text != NULL))
+  32              		.loc 1 15 3 view .LVU1
+  33              		.loc 1 15 6 is_stmt 0 view .LVU2
+  34 0000 0028     		cmp	r0, #0
+  35 0002 18BF     		it	ne
+  36 0004 002A     		cmpne	r2, #0
+  37 0006 04D0     		beq	.L4
+  14:App/Src/fault_command.c ****   if ((write != NULL) && (text != NULL))
+  38              		.loc 1 14 1 view .LVU3
+  39 0008 08B5     		push	{r3, lr}
+  40              	.LCFI0:
+  41              		.cfi_def_cfa_offset 8
+  42              		.cfi_offset 3, -8
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 2
+
+
+  43              		.cfi_offset 14, -4
+  44 000a 0346     		mov	r3, r0
+  16:App/Src/fault_command.c ****   {
+  17:App/Src/fault_command.c ****     write(text, context);
+  45              		.loc 1 17 5 is_stmt 1 view .LVU4
+  46 000c 1046     		mov	r0, r2
+  47              	.LVL1:
+  48              		.loc 1 17 5 is_stmt 0 view .LVU5
+  49 000e 9847     		blx	r3
+  50              	.LVL2:
+  18:App/Src/fault_command.c ****   }
+  19:App/Src/fault_command.c **** }
+  51              		.loc 1 19 1 view .LVU6
+  52 0010 08BD     		pop	{r3, pc}
+  53              	.LVL3:
+  54              	.L4:
+  55              	.LCFI1:
+  56              		.cfi_def_cfa_offset 0
+  57              		.cfi_restore 3
+  58              		.cfi_restore 14
+  59              		.loc 1 19 1 view .LVU7
+  60 0012 7047     		bx	lr
+  61              		.cfi_endproc
+  62              	.LFE149:
+  64              		.section	.text.FaultCommand_SkipSpaces,"ax",%progbits
+  65              		.align	1
+  66              		.syntax unified
+  67              		.thumb
+  68              		.thumb_func
+  70              	FaultCommand_SkipSpaces:
+  71              	.LVL4:
+  72              	.LFB151:
+  20:App/Src/fault_command.c **** 
+  21:App/Src/fault_command.c **** static void FaultCommand_WriteFormat(FaultCommand_WriteFn write,
+  22:App/Src/fault_command.c ****                                      void *context,
+  23:App/Src/fault_command.c ****                                      const char *format,
+  24:App/Src/fault_command.c ****                                      ...)
+  25:App/Src/fault_command.c **** {
+  26:App/Src/fault_command.c ****   char buffer[192];
+  27:App/Src/fault_command.c ****   va_list args;
+  28:App/Src/fault_command.c **** 
+  29:App/Src/fault_command.c ****   va_start(args, format);
+  30:App/Src/fault_command.c ****   (void)vsnprintf(buffer, sizeof(buffer), format, args);
+  31:App/Src/fault_command.c ****   va_end(args);
+  32:App/Src/fault_command.c **** 
+  33:App/Src/fault_command.c ****   FaultCommand_Write(write, context, buffer);
+  34:App/Src/fault_command.c **** }
+  35:App/Src/fault_command.c **** 
+  36:App/Src/fault_command.c **** static const char *FaultCommand_SkipSpaces(const char *text)
+  37:App/Src/fault_command.c **** {
+  73              		.loc 1 37 1 is_stmt 1 view -0
+  74              		.cfi_startproc
+  75              		@ args = 0, pretend = 0, frame = 0
+  76              		@ frame_needed = 0, uses_anonymous_args = 0
+  77              		@ link register save eliminated.
+  38:App/Src/fault_command.c ****   while ((text != NULL) && (*text == ' '))
+  78              		.loc 1 38 3 view .LVU9
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 3
+
+
+  79              		.loc 1 38 9 is_stmt 0 view .LVU10
+  80 0000 00E0     		b	.L8
+  81              	.L10:
+  39:App/Src/fault_command.c ****   {
+  40:App/Src/fault_command.c ****     text++;
+  82              		.loc 1 40 5 is_stmt 1 view .LVU11
+  83              		.loc 1 40 9 is_stmt 0 view .LVU12
+  84 0002 0130     		adds	r0, r0, #1
+  85              	.LVL5:
+  86              	.L8:
+  38:App/Src/fault_command.c ****   while ((text != NULL) && (*text == ' '))
+  87              		.loc 1 38 25 is_stmt 1 view .LVU13
+  88 0004 10B1     		cbz	r0, .L9
+  38:App/Src/fault_command.c ****   while ((text != NULL) && (*text == ' '))
+  89              		.loc 1 38 29 is_stmt 0 discriminator 1 view .LVU14
+  90 0006 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+  38:App/Src/fault_command.c ****   while ((text != NULL) && (*text == ' '))
+  91              		.loc 1 38 25 discriminator 1 view .LVU15
+  92 0008 202B     		cmp	r3, #32
+  93 000a FAD0     		beq	.L10
+  94              	.L9:
+  41:App/Src/fault_command.c ****   }
+  42:App/Src/fault_command.c **** 
+  43:App/Src/fault_command.c ****   return text;
+  95              		.loc 1 43 3 is_stmt 1 view .LVU16
+  44:App/Src/fault_command.c **** }
+  96              		.loc 1 44 1 is_stmt 0 view .LVU17
+  97 000c 7047     		bx	lr
+  98              		.cfi_endproc
+  99              	.LFE151:
+ 101              		.section	.rodata.FaultCommand_WriteTextHelp.str1.4,"aMS",%progbits,1
+ 102              		.align	2
+ 103              	.LC0:
+ 104 0000 0D0A5B63 		.ascii	"\015\012[cmd] help\015\012\000"
+ 104      6D645D20 
+ 104      68656C70 
+ 104      0D0A00
+ 105 000f 00       		.align	2
+ 106              	.LC1:
+ 107 0010 20206865 		.ascii	"  help\015\012\000"
+ 107      6C700D0A 
+ 107      00
+ 108 0019 000000   		.align	2
+ 109              	.LC2:
+ 110 001c 20207374 		.ascii	"  status\015\012\000"
+ 110      61747573 
+ 110      0D0A00
+ 111 0027 00       		.align	2
+ 112              	.LC3:
+ 113 0028 20206E6F 		.ascii	"  normal [mv]\015\012\000"
+ 113      726D616C 
+ 113      205B6D76 
+ 113      5D0D0A00 
+ 114              		.align	2
+ 115              	.LC4:
+ 116 0038 20207365 		.ascii	"  set <cell> <mv>\015\012\000"
+ 116      74203C63 
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 4
+
+
+ 116      656C6C3E 
+ 116      203C6D76 
+ 116      3E0D0A00 
+ 117              		.align	2
+ 118              	.LC5:
+ 119 004c 20206F76 		.ascii	"  ov <cell> [mv] [duration_ms] [slew_mv_per_ms]\015"
+ 119      203C6365 
+ 119      6C6C3E20 
+ 119      5B6D765D 
+ 119      205B6475 
+ 120 007c 0A00     		.ascii	"\012\000"
+ 121 007e 0000     		.align	2
+ 122              	.LC6:
+ 123 0080 20207576 		.ascii	"  uv <cell> [mv] [duration_ms] [slew_mv_per_ms]\015"
+ 123      203C6365 
+ 123      6C6C3E20 
+ 123      5B6D765D 
+ 123      205B6475 
+ 124 00b0 0A00     		.ascii	"\012\000"
+ 125 00b2 0000     		.align	2
+ 126              	.LC7:
+ 127 00b4 20206469 		.ascii	"  diff <high_cell> <high_mv> <low_cell> <low_mv> [d"
+ 127      6666203C 
+ 127      68696768 
+ 127      5F63656C 
+ 127      6C3E203C 
+ 128 00e7 75726174 		.ascii	"uration_ms] [slew_mv_per_ms]\015\012\000"
+ 128      696F6E5F 
+ 128      6D735D20 
+ 128      5B736C65 
+ 128      775F6D76 
+ 129 0106 0000     		.align	2
+ 130              	.LC8:
+ 131 0108 2020636C 		.ascii	"  clear [cell]\015\012\000"
+ 131      65617220 
+ 131      5B63656C 
+ 131      6C5D0D0A 
+ 131      00
+ 132 0119 000000   		.align	2
+ 133              	.LC9:
+ 134 011c 20204A53 		.ascii	"  JSON examples: {\"cmd\":\"status\"}, {\"cmd\":\"o"
+ 134      4F4E2065 
+ 134      78616D70 
+ 134      6C65733A 
+ 134      207B2263 
+ 135 0148 76222C22 		.ascii	"v\",\"cell\":7}\015\012\000"
+ 135      63656C6C 
+ 135      223A377D 
+ 135      0D0A00
+ 136              		.section	.text.FaultCommand_WriteTextHelp,"ax",%progbits
+ 137              		.align	1
+ 138              		.syntax unified
+ 139              		.thumb
+ 140              		.thumb_func
+ 142              	FaultCommand_WriteTextHelp:
+ 143              	.LVL6:
+ 144              	.LFB152:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 5
+
+
+  45:App/Src/fault_command.c **** 
+  46:App/Src/fault_command.c **** static void FaultCommand_WriteTextHelp(FaultCommand_WriteFn write, void *context)
+  47:App/Src/fault_command.c **** {
+ 145              		.loc 1 47 1 is_stmt 1 view -0
+ 146              		.cfi_startproc
+ 147              		@ args = 0, pretend = 0, frame = 0
+ 148              		@ frame_needed = 0, uses_anonymous_args = 0
+ 149              		.loc 1 47 1 is_stmt 0 view .LVU19
+ 150 0000 38B5     		push	{r3, r4, r5, lr}
+ 151              	.LCFI2:
+ 152              		.cfi_def_cfa_offset 16
+ 153              		.cfi_offset 3, -16
+ 154              		.cfi_offset 4, -12
+ 155              		.cfi_offset 5, -8
+ 156              		.cfi_offset 14, -4
+ 157 0002 0446     		mov	r4, r0
+ 158 0004 0D46     		mov	r5, r1
+  48:App/Src/fault_command.c ****   FaultCommand_Write(write, context, "\r\n[cmd] help\r\n");
+ 159              		.loc 1 48 3 is_stmt 1 view .LVU20
+ 160 0006 184A     		ldr	r2, .L13
+ 161 0008 FFF7FEFF 		bl	FaultCommand_Write
+ 162              	.LVL7:
+  49:App/Src/fault_command.c ****   FaultCommand_Write(write, context, "  help\r\n");
+ 163              		.loc 1 49 3 view .LVU21
+ 164 000c 174A     		ldr	r2, .L13+4
+ 165 000e 2946     		mov	r1, r5
+ 166 0010 2046     		mov	r0, r4
+ 167 0012 FFF7FEFF 		bl	FaultCommand_Write
+ 168              	.LVL8:
+  50:App/Src/fault_command.c ****   FaultCommand_Write(write, context, "  status\r\n");
+ 169              		.loc 1 50 3 view .LVU22
+ 170 0016 164A     		ldr	r2, .L13+8
+ 171 0018 2946     		mov	r1, r5
+ 172 001a 2046     		mov	r0, r4
+ 173 001c FFF7FEFF 		bl	FaultCommand_Write
+ 174              	.LVL9:
+  51:App/Src/fault_command.c ****   FaultCommand_Write(write, context, "  normal [mv]\r\n");
+ 175              		.loc 1 51 3 view .LVU23
+ 176 0020 144A     		ldr	r2, .L13+12
+ 177 0022 2946     		mov	r1, r5
+ 178 0024 2046     		mov	r0, r4
+ 179 0026 FFF7FEFF 		bl	FaultCommand_Write
+ 180              	.LVL10:
+  52:App/Src/fault_command.c ****   FaultCommand_Write(write, context, "  set <cell> <mv>\r\n");
+ 181              		.loc 1 52 3 view .LVU24
+ 182 002a 134A     		ldr	r2, .L13+16
+ 183 002c 2946     		mov	r1, r5
+ 184 002e 2046     		mov	r0, r4
+ 185 0030 FFF7FEFF 		bl	FaultCommand_Write
+ 186              	.LVL11:
+  53:App/Src/fault_command.c ****   FaultCommand_Write(write, context, "  ov <cell> [mv] [duration_ms] [slew_mv_per_ms]\r\n");
+ 187              		.loc 1 53 3 view .LVU25
+ 188 0034 114A     		ldr	r2, .L13+20
+ 189 0036 2946     		mov	r1, r5
+ 190 0038 2046     		mov	r0, r4
+ 191 003a FFF7FEFF 		bl	FaultCommand_Write
+ 192              	.LVL12:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 6
+
+
+  54:App/Src/fault_command.c ****   FaultCommand_Write(write, context, "  uv <cell> [mv] [duration_ms] [slew_mv_per_ms]\r\n");
+ 193              		.loc 1 54 3 view .LVU26
+ 194 003e 104A     		ldr	r2, .L13+24
+ 195 0040 2946     		mov	r1, r5
+ 196 0042 2046     		mov	r0, r4
+ 197 0044 FFF7FEFF 		bl	FaultCommand_Write
+ 198              	.LVL13:
+  55:App/Src/fault_command.c ****   FaultCommand_Write(write, context, "  diff <high_cell> <high_mv> <low_cell> <low_mv> [duration_ms
+ 199              		.loc 1 55 3 view .LVU27
+ 200 0048 0E4A     		ldr	r2, .L13+28
+ 201 004a 2946     		mov	r1, r5
+ 202 004c 2046     		mov	r0, r4
+ 203 004e FFF7FEFF 		bl	FaultCommand_Write
+ 204              	.LVL14:
+  56:App/Src/fault_command.c ****   FaultCommand_Write(write, context, "  clear [cell]\r\n");
+ 205              		.loc 1 56 3 view .LVU28
+ 206 0052 0D4A     		ldr	r2, .L13+32
+ 207 0054 2946     		mov	r1, r5
+ 208 0056 2046     		mov	r0, r4
+ 209 0058 FFF7FEFF 		bl	FaultCommand_Write
+ 210              	.LVL15:
+  57:App/Src/fault_command.c ****   FaultCommand_Write(write, context, "  JSON examples: {\"cmd\":\"status\"}, {\"cmd\":\"ov\",\"cell
+ 211              		.loc 1 57 3 view .LVU29
+ 212 005c 0B4A     		ldr	r2, .L13+36
+ 213 005e 2946     		mov	r1, r5
+ 214 0060 2046     		mov	r0, r4
+ 215 0062 FFF7FEFF 		bl	FaultCommand_Write
+ 216              	.LVL16:
+  58:App/Src/fault_command.c **** }
+ 217              		.loc 1 58 1 is_stmt 0 view .LVU30
+ 218 0066 38BD     		pop	{r3, r4, r5, pc}
+ 219              	.LVL17:
+ 220              	.L14:
+ 221              		.loc 1 58 1 view .LVU31
+ 222              		.align	2
+ 223              	.L13:
+ 224 0068 00000000 		.word	.LC0
+ 225 006c 10000000 		.word	.LC1
+ 226 0070 1C000000 		.word	.LC2
+ 227 0074 28000000 		.word	.LC3
+ 228 0078 38000000 		.word	.LC4
+ 229 007c 4C000000 		.word	.LC5
+ 230 0080 80000000 		.word	.LC6
+ 231 0084 B4000000 		.word	.LC7
+ 232 0088 08010000 		.word	.LC8
+ 233 008c 1C010000 		.word	.LC9
+ 234              		.cfi_endproc
+ 235              	.LFE152:
+ 237              		.section	.rodata.FaultCommand_FindJsonKey.str1.4,"aMS",%progbits,1
+ 238              		.align	2
+ 239              	.LC10:
+ 240 0000 22257322 		.ascii	"\"%s\"\000"
+ 240      00
+ 241              		.section	.text.FaultCommand_FindJsonKey,"ax",%progbits
+ 242              		.align	1
+ 243              		.syntax unified
+ 244              		.thumb
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 7
+
+
+ 245              		.thumb_func
+ 247              	FaultCommand_FindJsonKey:
+ 248              	.LVL18:
+ 249              	.LFB163:
+  59:App/Src/fault_command.c **** 
+  60:App/Src/fault_command.c **** static void FaultCommand_WriteTextStatus(FaultCommand_WriteFn write, void *context)
+  61:App/Src/fault_command.c **** {
+  62:App/Src/fault_command.c ****   FaultCommand_WriteFormat(write, context, "\r\n[status] active_faults=%u\r\n",
+  63:App/Src/fault_command.c ****                            VoltageSim_GetActiveFaultCount());
+  64:App/Src/fault_command.c **** 
+  65:App/Src/fault_command.c ****   for (uint8_t cell = 1U; cell <= VOLTAGE_SIM_CELL_COUNT; cell++)
+  66:App/Src/fault_command.c ****   {
+  67:App/Src/fault_command.c ****     VoltageSim_CellFaultInfo info = VoltageSim_GetCellFaultInfo(cell);
+  68:App/Src/fault_command.c **** 
+  69:App/Src/fault_command.c ****     FaultCommand_WriteFormat(write, context, "  C%02u=%umV",
+  70:App/Src/fault_command.c ****                              cell,
+  71:App/Src/fault_command.c ****                              VoltageSim_GetLastCellVoltageMv(cell));
+  72:App/Src/fault_command.c ****     if (info.type != VOLTAGE_SIM_FAULT_NONE)
+  73:App/Src/fault_command.c ****     {
+  74:App/Src/fault_command.c ****       FaultCommand_WriteFormat(write,
+  75:App/Src/fault_command.c ****                                context,
+  76:App/Src/fault_command.c ****                                " fault=%s target=%umV restore=%umV duration=%lums slew=%umV/ms",
+  77:App/Src/fault_command.c ****                                VoltageSim_GetFaultTypeName(info.type),
+  78:App/Src/fault_command.c ****                                info.targetMillivolts,
+  79:App/Src/fault_command.c ****                                info.restoreMillivolts,
+  80:App/Src/fault_command.c ****                                (unsigned long)info.durationMs,
+  81:App/Src/fault_command.c ****                                info.slewRateMvPerMs);
+  82:App/Src/fault_command.c ****     }
+  83:App/Src/fault_command.c ****     FaultCommand_Write(write, context, "\r\n");
+  84:App/Src/fault_command.c ****   }
+  85:App/Src/fault_command.c **** }
+  86:App/Src/fault_command.c **** 
+  87:App/Src/fault_command.c **** static void FaultCommand_WriteTextResult(FaultCommand_WriteFn write,
+  88:App/Src/fault_command.c ****                                          void *context,
+  89:App/Src/fault_command.c ****                                          const char *name,
+  90:App/Src/fault_command.c ****                                          HAL_StatusTypeDef status)
+  91:App/Src/fault_command.c **** {
+  92:App/Src/fault_command.c ****   FaultCommand_WriteFormat(write, context, "[cmd] %s %s\r\n",
+  93:App/Src/fault_command.c ****                            name,
+  94:App/Src/fault_command.c ****                            (status == HAL_OK) ? "OK" : "ERR");
+  95:App/Src/fault_command.c **** }
+  96:App/Src/fault_command.c **** 
+  97:App/Src/fault_command.c **** static void FaultCommand_WriteJsonResult(FaultCommand_WriteFn write,
+  98:App/Src/fault_command.c ****                                          void *context,
+  99:App/Src/fault_command.c ****                                          const char *cmd,
+ 100:App/Src/fault_command.c ****                                          HAL_StatusTypeDef status)
+ 101:App/Src/fault_command.c **** {
+ 102:App/Src/fault_command.c ****   FaultCommand_WriteFormat(write, context, "{\"ok\":%s,\"cmd\":\"%s\"}\r\n",
+ 103:App/Src/fault_command.c ****                            (status == HAL_OK) ? "true" : "false",
+ 104:App/Src/fault_command.c ****                            cmd);
+ 105:App/Src/fault_command.c **** }
+ 106:App/Src/fault_command.c **** 
+ 107:App/Src/fault_command.c **** static void FaultCommand_WriteJsonStatus(FaultCommand_WriteFn write, void *context)
+ 108:App/Src/fault_command.c **** {
+ 109:App/Src/fault_command.c ****   FaultCommand_WriteFormat(write,
+ 110:App/Src/fault_command.c ****                            context,
+ 111:App/Src/fault_command.c ****                            "{\"ok\":true,\"active_faults\":%u,\"cells\":[",
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 8
+
+
+ 112:App/Src/fault_command.c ****                            VoltageSim_GetActiveFaultCount());
+ 113:App/Src/fault_command.c **** 
+ 114:App/Src/fault_command.c ****   for (uint8_t cell = 1U; cell <= VOLTAGE_SIM_CELL_COUNT; cell++)
+ 115:App/Src/fault_command.c ****   {
+ 116:App/Src/fault_command.c ****     VoltageSim_CellFaultInfo info = VoltageSim_GetCellFaultInfo(cell);
+ 117:App/Src/fault_command.c **** 
+ 118:App/Src/fault_command.c ****     FaultCommand_WriteFormat(write,
+ 119:App/Src/fault_command.c ****                              context,
+ 120:App/Src/fault_command.c ****                              "%s{\"cell\":%u,\"mv\":%u,\"fault\":\"%s\",\"target_mv\":%u,\"restore_
+ 121:App/Src/fault_command.c ****                              (cell == 1U) ? "" : ",",
+ 122:App/Src/fault_command.c ****                              cell,
+ 123:App/Src/fault_command.c ****                              VoltageSim_GetLastCellVoltageMv(cell),
+ 124:App/Src/fault_command.c ****                              VoltageSim_GetFaultTypeName(info.type),
+ 125:App/Src/fault_command.c ****                              info.targetMillivolts,
+ 126:App/Src/fault_command.c ****                              info.restoreMillivolts,
+ 127:App/Src/fault_command.c ****                              (unsigned long)info.durationMs,
+ 128:App/Src/fault_command.c ****                              info.slewRateMvPerMs);
+ 129:App/Src/fault_command.c ****   }
+ 130:App/Src/fault_command.c **** 
+ 131:App/Src/fault_command.c ****   FaultCommand_Write(write, context, "]}\r\n");
+ 132:App/Src/fault_command.c **** }
+ 133:App/Src/fault_command.c **** 
+ 134:App/Src/fault_command.c **** static HAL_StatusTypeDef FaultCommand_RunNormal(uint16_t millivolts)
+ 135:App/Src/fault_command.c **** {
+ 136:App/Src/fault_command.c ****   return VoltageSim_SetAllCellsVoltageMv(millivolts);
+ 137:App/Src/fault_command.c **** }
+ 138:App/Src/fault_command.c **** 
+ 139:App/Src/fault_command.c **** static HAL_StatusTypeDef FaultCommand_RunSet(uint8_t cell, uint16_t millivolts)
+ 140:App/Src/fault_command.c **** {
+ 141:App/Src/fault_command.c ****   return VoltageSim_SetCellVoltageMv(cell, millivolts);
+ 142:App/Src/fault_command.c **** }
+ 143:App/Src/fault_command.c **** 
+ 144:App/Src/fault_command.c **** static HAL_StatusTypeDef FaultCommand_RunOverVoltage(uint8_t cell,
+ 145:App/Src/fault_command.c ****                                                      uint16_t target,
+ 146:App/Src/fault_command.c ****                                                      uint32_t duration,
+ 147:App/Src/fault_command.c ****                                                      uint16_t slew)
+ 148:App/Src/fault_command.c **** {
+ 149:App/Src/fault_command.c ****   return VoltageSim_InjectCellOverVoltageRamp(cell, target, duration, slew);
+ 150:App/Src/fault_command.c **** }
+ 151:App/Src/fault_command.c **** 
+ 152:App/Src/fault_command.c **** static HAL_StatusTypeDef FaultCommand_RunUnderVoltage(uint8_t cell,
+ 153:App/Src/fault_command.c ****                                                       uint16_t target,
+ 154:App/Src/fault_command.c ****                                                       uint32_t duration,
+ 155:App/Src/fault_command.c ****                                                       uint16_t slew)
+ 156:App/Src/fault_command.c **** {
+ 157:App/Src/fault_command.c ****   return VoltageSim_InjectCellUnderVoltageRamp(cell, target, duration, slew);
+ 158:App/Src/fault_command.c **** }
+ 159:App/Src/fault_command.c **** 
+ 160:App/Src/fault_command.c **** static HAL_StatusTypeDef FaultCommand_RunDiff(uint8_t highCell,
+ 161:App/Src/fault_command.c ****                                               uint16_t highMv,
+ 162:App/Src/fault_command.c ****                                               uint8_t lowCell,
+ 163:App/Src/fault_command.c ****                                               uint16_t lowMv,
+ 164:App/Src/fault_command.c ****                                               uint32_t duration,
+ 165:App/Src/fault_command.c ****                                               uint16_t slew)
+ 166:App/Src/fault_command.c **** {
+ 167:App/Src/fault_command.c ****   return VoltageSim_InjectVoltageDifference(highCell, highMv, lowCell, lowMv, duration, slew);
+ 168:App/Src/fault_command.c **** }
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 9
+
+
+ 169:App/Src/fault_command.c **** 
+ 170:App/Src/fault_command.c **** static void FaultCommand_ExecuteText(const char *line, FaultCommand_WriteFn write, void *context)
+ 171:App/Src/fault_command.c **** {
+ 172:App/Src/fault_command.c ****   unsigned int cell;
+ 173:App/Src/fault_command.c ****   unsigned int millivolts;
+ 174:App/Src/fault_command.c ****   unsigned int target;
+ 175:App/Src/fault_command.c ****   unsigned long duration;
+ 176:App/Src/fault_command.c ****   unsigned int slew;
+ 177:App/Src/fault_command.c **** 
+ 178:App/Src/fault_command.c ****   if ((strcmp(line, "help") == 0) || (strcmp(line, "?") == 0))
+ 179:App/Src/fault_command.c ****   {
+ 180:App/Src/fault_command.c ****     FaultCommand_WriteTextHelp(write, context);
+ 181:App/Src/fault_command.c ****   }
+ 182:App/Src/fault_command.c ****   else if (strcmp(line, "status") == 0)
+ 183:App/Src/fault_command.c ****   {
+ 184:App/Src/fault_command.c ****     FaultCommand_WriteTextStatus(write, context);
+ 185:App/Src/fault_command.c ****   }
+ 186:App/Src/fault_command.c ****   else if (strncmp(line, "normal", 6U) == 0)
+ 187:App/Src/fault_command.c ****   {
+ 188:App/Src/fault_command.c ****     millivolts = VOLTAGE_SIM_DEFAULT_NORMAL_MV;
+ 189:App/Src/fault_command.c ****     (void)sscanf(line, "normal %u", &millivolts);
+ 190:App/Src/fault_command.c ****     FaultCommand_WriteTextResult(write,
+ 191:App/Src/fault_command.c ****                                  context,
+ 192:App/Src/fault_command.c ****                                  "normal",
+ 193:App/Src/fault_command.c ****                                  FaultCommand_RunNormal((uint16_t)millivolts));
+ 194:App/Src/fault_command.c ****   }
+ 195:App/Src/fault_command.c ****   else if (sscanf(line, "set %u %u", &cell, &millivolts) == 2)
+ 196:App/Src/fault_command.c ****   {
+ 197:App/Src/fault_command.c ****     FaultCommand_WriteTextResult(write,
+ 198:App/Src/fault_command.c ****                                  context,
+ 199:App/Src/fault_command.c ****                                  "set",
+ 200:App/Src/fault_command.c ****                                  FaultCommand_RunSet((uint8_t)cell, (uint16_t)millivolts));
+ 201:App/Src/fault_command.c ****   }
+ 202:App/Src/fault_command.c ****   else if (strncmp(line, "ov ", 3U) == 0)
+ 203:App/Src/fault_command.c ****   {
+ 204:App/Src/fault_command.c ****     cell = 0U;
+ 205:App/Src/fault_command.c ****     target = VOLTAGE_SIM_DEFAULT_OV_MV;
+ 206:App/Src/fault_command.c ****     duration = FAULT_COMMAND_DEFAULT_DURATION_MS;
+ 207:App/Src/fault_command.c ****     slew = FAULT_COMMAND_DEFAULT_SLEW_MV_PER_MS;
+ 208:App/Src/fault_command.c ****     if (sscanf(line, "ov %u %u %lu %u", &cell, &target, &duration, &slew) < 1)
+ 209:App/Src/fault_command.c ****     {
+ 210:App/Src/fault_command.c ****       FaultCommand_WriteTextResult(write, context, "ov", HAL_ERROR);
+ 211:App/Src/fault_command.c ****       return;
+ 212:App/Src/fault_command.c ****     }
+ 213:App/Src/fault_command.c **** 
+ 214:App/Src/fault_command.c ****     FaultCommand_WriteTextResult(write,
+ 215:App/Src/fault_command.c ****                                  context,
+ 216:App/Src/fault_command.c ****                                  "ov",
+ 217:App/Src/fault_command.c ****                                  FaultCommand_RunOverVoltage((uint8_t)cell,
+ 218:App/Src/fault_command.c ****                                                              (uint16_t)target,
+ 219:App/Src/fault_command.c ****                                                              (uint32_t)duration,
+ 220:App/Src/fault_command.c ****                                                              (uint16_t)slew));
+ 221:App/Src/fault_command.c ****   }
+ 222:App/Src/fault_command.c ****   else if (strncmp(line, "uv ", 3U) == 0)
+ 223:App/Src/fault_command.c ****   {
+ 224:App/Src/fault_command.c ****     cell = 0U;
+ 225:App/Src/fault_command.c ****     target = VOLTAGE_SIM_DEFAULT_UV_MV;
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 10
+
+
+ 226:App/Src/fault_command.c ****     duration = FAULT_COMMAND_DEFAULT_DURATION_MS;
+ 227:App/Src/fault_command.c ****     slew = FAULT_COMMAND_DEFAULT_SLEW_MV_PER_MS;
+ 228:App/Src/fault_command.c ****     if (sscanf(line, "uv %u %u %lu %u", &cell, &target, &duration, &slew) < 1)
+ 229:App/Src/fault_command.c ****     {
+ 230:App/Src/fault_command.c ****       FaultCommand_WriteTextResult(write, context, "uv", HAL_ERROR);
+ 231:App/Src/fault_command.c ****       return;
+ 232:App/Src/fault_command.c ****     }
+ 233:App/Src/fault_command.c **** 
+ 234:App/Src/fault_command.c ****     FaultCommand_WriteTextResult(write,
+ 235:App/Src/fault_command.c ****                                  context,
+ 236:App/Src/fault_command.c ****                                  "uv",
+ 237:App/Src/fault_command.c ****                                  FaultCommand_RunUnderVoltage((uint8_t)cell,
+ 238:App/Src/fault_command.c ****                                                               (uint16_t)target,
+ 239:App/Src/fault_command.c ****                                                               (uint32_t)duration,
+ 240:App/Src/fault_command.c ****                                                               (uint16_t)slew));
+ 241:App/Src/fault_command.c ****   }
+ 242:App/Src/fault_command.c ****   else if (strncmp(line, "diff ", 5U) == 0)
+ 243:App/Src/fault_command.c ****   {
+ 244:App/Src/fault_command.c ****     unsigned int highCell;
+ 245:App/Src/fault_command.c ****     unsigned int highMv;
+ 246:App/Src/fault_command.c ****     unsigned int lowCell;
+ 247:App/Src/fault_command.c ****     unsigned int lowMv;
+ 248:App/Src/fault_command.c **** 
+ 249:App/Src/fault_command.c ****     duration = FAULT_COMMAND_DEFAULT_DURATION_MS;
+ 250:App/Src/fault_command.c ****     slew = FAULT_COMMAND_DEFAULT_SLEW_MV_PER_MS;
+ 251:App/Src/fault_command.c ****     if (sscanf(line,
+ 252:App/Src/fault_command.c ****                "diff %u %u %u %u %lu %u",
+ 253:App/Src/fault_command.c ****                &highCell,
+ 254:App/Src/fault_command.c ****                &highMv,
+ 255:App/Src/fault_command.c ****                &lowCell,
+ 256:App/Src/fault_command.c ****                &lowMv,
+ 257:App/Src/fault_command.c ****                &duration,
+ 258:App/Src/fault_command.c ****                &slew) < 4)
+ 259:App/Src/fault_command.c ****     {
+ 260:App/Src/fault_command.c ****       FaultCommand_WriteTextResult(write, context, "diff", HAL_ERROR);
+ 261:App/Src/fault_command.c ****       return;
+ 262:App/Src/fault_command.c ****     }
+ 263:App/Src/fault_command.c **** 
+ 264:App/Src/fault_command.c ****     FaultCommand_WriteTextResult(write,
+ 265:App/Src/fault_command.c ****                                  context,
+ 266:App/Src/fault_command.c ****                                  "diff",
+ 267:App/Src/fault_command.c ****                                  FaultCommand_RunDiff((uint8_t)highCell,
+ 268:App/Src/fault_command.c ****                                                       (uint16_t)highMv,
+ 269:App/Src/fault_command.c ****                                                       (uint8_t)lowCell,
+ 270:App/Src/fault_command.c ****                                                       (uint16_t)lowMv,
+ 271:App/Src/fault_command.c ****                                                       (uint32_t)duration,
+ 272:App/Src/fault_command.c ****                                                       (uint16_t)slew));
+ 273:App/Src/fault_command.c ****   }
+ 274:App/Src/fault_command.c ****   else if (strncmp(line, "clear", 5U) == 0)
+ 275:App/Src/fault_command.c ****   {
+ 276:App/Src/fault_command.c ****     if (sscanf(line, "clear %u", &cell) == 1)
+ 277:App/Src/fault_command.c ****     {
+ 278:App/Src/fault_command.c ****       FaultCommand_WriteTextResult(write, context, "clear", VoltageSim_ClearCellFault((uint8_t)cell
+ 279:App/Src/fault_command.c ****     }
+ 280:App/Src/fault_command.c ****     else
+ 281:App/Src/fault_command.c ****     {
+ 282:App/Src/fault_command.c ****       FaultCommand_WriteTextResult(write, context, "clear", VoltageSim_ClearAllFaults());
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 11
+
+
+ 283:App/Src/fault_command.c ****     }
+ 284:App/Src/fault_command.c ****   }
+ 285:App/Src/fault_command.c ****   else if (*line != '\0')
+ 286:App/Src/fault_command.c ****   {
+ 287:App/Src/fault_command.c ****     FaultCommand_WriteFormat(write, context, "[cmd] unknown: %s\r\n", line);
+ 288:App/Src/fault_command.c ****   }
+ 289:App/Src/fault_command.c **** }
+ 290:App/Src/fault_command.c **** 
+ 291:App/Src/fault_command.c **** static const char *FaultCommand_FindJsonKey(const char *json, const char *key)
+ 292:App/Src/fault_command.c **** {
+ 250              		.loc 1 292 1 is_stmt 1 view -0
+ 251              		.cfi_startproc
+ 252              		@ args = 0, pretend = 0, frame = 32
+ 253              		@ frame_needed = 0, uses_anonymous_args = 0
+ 254              		.loc 1 292 1 is_stmt 0 view .LVU33
+ 255 0000 30B5     		push	{r4, r5, lr}
+ 256              	.LCFI3:
+ 257              		.cfi_def_cfa_offset 12
+ 258              		.cfi_offset 4, -12
+ 259              		.cfi_offset 5, -8
+ 260              		.cfi_offset 14, -4
+ 261 0002 89B0     		sub	sp, sp, #36
+ 262              	.LCFI4:
+ 263              		.cfi_def_cfa_offset 48
+ 264 0004 0546     		mov	r5, r0
+ 265 0006 0B46     		mov	r3, r1
+ 293:App/Src/fault_command.c ****   char pattern[32];
+ 266              		.loc 1 293 3 is_stmt 1 view .LVU34
+ 294:App/Src/fault_command.c **** 
+ 295:App/Src/fault_command.c ****   (void)snprintf(pattern, sizeof(pattern), "\"%s\"", key);
+ 267              		.loc 1 295 3 view .LVU35
+ 268              		.loc 1 295 9 is_stmt 0 view .LVU36
+ 269 0008 054A     		ldr	r2, .L17
+ 270 000a 2021     		movs	r1, #32
+ 271              	.LVL19:
+ 272              		.loc 1 295 9 view .LVU37
+ 273 000c 6846     		mov	r0, sp
+ 274              	.LVL20:
+ 275              		.loc 1 295 9 view .LVU38
+ 276 000e FFF7FEFF 		bl	snprintf
+ 277              	.LVL21:
+ 296:App/Src/fault_command.c ****   return strstr(json, pattern);
+ 278              		.loc 1 296 3 is_stmt 1 view .LVU39
+ 279              		.loc 1 296 10 is_stmt 0 view .LVU40
+ 280 0012 6946     		mov	r1, sp
+ 281 0014 2846     		mov	r0, r5
+ 282 0016 FFF7FEFF 		bl	strstr
+ 283              	.LVL22:
+ 297:App/Src/fault_command.c **** }
+ 284              		.loc 1 297 1 view .LVU41
+ 285 001a 09B0     		add	sp, sp, #36
+ 286              	.LCFI5:
+ 287              		.cfi_def_cfa_offset 12
+ 288              		@ sp needed
+ 289 001c 30BD     		pop	{r4, r5, pc}
+ 290              	.LVL23:
+ 291              	.L18:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 12
+
+
+ 292              		.loc 1 297 1 view .LVU42
+ 293 001e 00BF     		.align	2
+ 294              	.L17:
+ 295 0020 00000000 		.word	.LC10
+ 296              		.cfi_endproc
+ 297              	.LFE163:
+ 299              		.section	.text.FaultCommand_JsonGetString,"ax",%progbits
+ 300              		.align	1
+ 301              		.syntax unified
+ 302              		.thumb
+ 303              		.thumb_func
+ 305              	FaultCommand_JsonGetString:
+ 306              	.LVL24:
+ 307              	.LFB164:
+ 298:App/Src/fault_command.c **** 
+ 299:App/Src/fault_command.c **** static uint8_t FaultCommand_JsonGetString(const char *json,
+ 300:App/Src/fault_command.c ****                                           const char *key,
+ 301:App/Src/fault_command.c ****                                           char *value,
+ 302:App/Src/fault_command.c ****                                           uint32_t valueSize)
+ 303:App/Src/fault_command.c **** {
+ 308              		.loc 1 303 1 is_stmt 1 view -0
+ 309              		.cfi_startproc
+ 310              		@ args = 0, pretend = 0, frame = 0
+ 311              		@ frame_needed = 0, uses_anonymous_args = 0
+ 312              		.loc 1 303 1 is_stmt 0 view .LVU44
+ 313 0000 38B5     		push	{r3, r4, r5, lr}
+ 314              	.LCFI6:
+ 315              		.cfi_def_cfa_offset 16
+ 316              		.cfi_offset 3, -16
+ 317              		.cfi_offset 4, -12
+ 318              		.cfi_offset 5, -8
+ 319              		.cfi_offset 14, -4
+ 320 0002 1446     		mov	r4, r2
+ 321 0004 1D46     		mov	r5, r3
+ 304:App/Src/fault_command.c ****   const char *cursor = FaultCommand_FindJsonKey(json, key);
+ 322              		.loc 1 304 3 is_stmt 1 view .LVU45
+ 323              		.loc 1 304 24 is_stmt 0 view .LVU46
+ 324 0006 FFF7FEFF 		bl	FaultCommand_FindJsonKey
+ 325              	.LVL25:
+ 305:App/Src/fault_command.c ****   uint32_t index = 0U;
+ 326              		.loc 1 305 3 is_stmt 1 view .LVU47
+ 306:App/Src/fault_command.c **** 
+ 307:App/Src/fault_command.c ****   if ((cursor == NULL) || (value == NULL) || (valueSize == 0U))
+ 327              		.loc 1 307 3 view .LVU48
+ 328              		.loc 1 307 6 is_stmt 0 view .LVU49
+ 329 000a 002C     		cmp	r4, #0
+ 330 000c 18BF     		it	ne
+ 331 000e 0028     		cmpne	r0, #0
+ 332 0010 28D0     		beq	.L26
+ 333              		.loc 1 307 43 discriminator 1 view .LVU50
+ 334 0012 4DB3     		cbz	r5, .L27
+ 308:App/Src/fault_command.c ****   {
+ 309:App/Src/fault_command.c ****     return 0U;
+ 310:App/Src/fault_command.c ****   }
+ 311:App/Src/fault_command.c **** 
+ 312:App/Src/fault_command.c ****   cursor = strchr(cursor, ':');
+ 335              		.loc 1 312 3 is_stmt 1 view .LVU51
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 13
+
+
+ 336              		.loc 1 312 12 is_stmt 0 view .LVU52
+ 337 0014 3A21     		movs	r1, #58
+ 338 0016 FFF7FEFF 		bl	strchr
+ 339              	.LVL26:
+ 313:App/Src/fault_command.c ****   if (cursor == NULL)
+ 340              		.loc 1 313 3 is_stmt 1 view .LVU53
+ 341              		.loc 1 313 6 is_stmt 0 view .LVU54
+ 342 001a 0146     		mov	r1, r0
+ 343 001c 18B3     		cbz	r0, .L20
+ 314:App/Src/fault_command.c ****   {
+ 315:App/Src/fault_command.c ****     return 0U;
+ 316:App/Src/fault_command.c ****   }
+ 317:App/Src/fault_command.c **** 
+ 318:App/Src/fault_command.c ****   cursor++;
+ 344              		.loc 1 318 3 is_stmt 1 view .LVU55
+ 345              		.loc 1 318 9 is_stmt 0 view .LVU56
+ 346 001e 0131     		adds	r1, r1, #1
+ 347              	.LVL27:
+ 319:App/Src/fault_command.c ****   while (*cursor == ' ')
+ 348              		.loc 1 319 3 is_stmt 1 view .LVU57
+ 349              		.loc 1 319 9 is_stmt 0 view .LVU58
+ 350 0020 00E0     		b	.L21
+ 351              	.L22:
+ 320:App/Src/fault_command.c ****   {
+ 321:App/Src/fault_command.c ****     cursor++;
+ 352              		.loc 1 321 5 is_stmt 1 view .LVU59
+ 353              		.loc 1 321 11 is_stmt 0 view .LVU60
+ 354 0022 0131     		adds	r1, r1, #1
+ 355              	.LVL28:
+ 356              	.L21:
+ 319:App/Src/fault_command.c ****   while (*cursor == ' ')
+ 357              		.loc 1 319 18 is_stmt 1 view .LVU61
+ 319:App/Src/fault_command.c ****   while (*cursor == ' ')
+ 358              		.loc 1 319 10 is_stmt 0 view .LVU62
+ 359 0024 0878     		ldrb	r0, [r1]	@ zero_extendqisi2
+ 319:App/Src/fault_command.c ****   while (*cursor == ' ')
+ 360              		.loc 1 319 18 view .LVU63
+ 361 0026 2028     		cmp	r0, #32
+ 362 0028 FBD0     		beq	.L22
+ 322:App/Src/fault_command.c ****   }
+ 323:App/Src/fault_command.c **** 
+ 324:App/Src/fault_command.c ****   if (*cursor != '"')
+ 363              		.loc 1 324 3 is_stmt 1 view .LVU64
+ 364              		.loc 1 324 6 is_stmt 0 view .LVU65
+ 365 002a 2228     		cmp	r0, #34
+ 366 002c 1ED1     		bne	.L29
+ 325:App/Src/fault_command.c ****   {
+ 326:App/Src/fault_command.c ****     return 0U;
+ 327:App/Src/fault_command.c ****   }
+ 328:App/Src/fault_command.c **** 
+ 329:App/Src/fault_command.c ****   cursor++;
+ 367              		.loc 1 329 3 is_stmt 1 view .LVU66
+ 368              		.loc 1 329 9 is_stmt 0 view .LVU67
+ 369 002e 0131     		adds	r1, r1, #1
+ 370              	.LVL29:
+ 330:App/Src/fault_command.c ****   while ((*cursor != '\0') && (*cursor != '"') && (index < (valueSize - 1U)))
+ 371              		.loc 1 330 3 is_stmt 1 view .LVU68
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 14
+
+
+ 305:App/Src/fault_command.c **** 
+ 372              		.loc 1 305 12 is_stmt 0 view .LVU69
+ 373 0030 4FF0000C 		mov	ip, #0
+ 374              		.loc 1 330 9 view .LVU70
+ 375 0034 04E0     		b	.L23
+ 376              	.LVL30:
+ 377              	.L25:
+ 331:App/Src/fault_command.c ****   {
+ 332:App/Src/fault_command.c ****     value[index++] = *cursor++;
+ 378              		.loc 1 332 5 is_stmt 1 view .LVU71
+ 379              		.loc 1 332 29 is_stmt 0 view .LVU72
+ 380 0036 0131     		adds	r1, r1, #1
+ 381              	.LVL31:
+ 382              		.loc 1 332 20 view .LVU73
+ 383 0038 04F80C00 		strb	r0, [r4, ip]
+ 384              		.loc 1 332 16 view .LVU74
+ 385 003c 0CF1010C 		add	ip, ip, #1
+ 386              	.LVL32:
+ 387              	.L23:
+ 330:App/Src/fault_command.c ****   {
+ 388              		.loc 1 330 48 is_stmt 1 view .LVU75
+ 330:App/Src/fault_command.c ****   {
+ 389              		.loc 1 330 11 is_stmt 0 view .LVU76
+ 390 0040 0878     		ldrb	r0, [r1]	@ zero_extendqisi2
+ 330:App/Src/fault_command.c ****   {
+ 391              		.loc 1 330 48 view .LVU77
+ 392 0042 0028     		cmp	r0, #0
+ 393 0044 18BF     		it	ne
+ 394 0046 2228     		cmpne	r0, #34
+ 395 0048 02D0     		beq	.L24
+ 330:App/Src/fault_command.c ****   {
+ 396              		.loc 1 330 71 discriminator 1 view .LVU78
+ 397 004a 6B1E     		subs	r3, r5, #1
+ 330:App/Src/fault_command.c ****   {
+ 398              		.loc 1 330 48 discriminator 1 view .LVU79
+ 399 004c 6345     		cmp	r3, ip
+ 400 004e F2D8     		bhi	.L25
+ 401              	.L24:
+ 333:App/Src/fault_command.c ****   }
+ 334:App/Src/fault_command.c ****   value[index] = '\0';
+ 402              		.loc 1 334 3 is_stmt 1 view .LVU80
+ 403              		.loc 1 334 16 is_stmt 0 view .LVU81
+ 404 0050 0023     		movs	r3, #0
+ 405 0052 04F80C30 		strb	r3, [r4, ip]
+ 335:App/Src/fault_command.c **** 
+ 336:App/Src/fault_command.c ****   return (*cursor == '"') ? 1U : 0U;
+ 406              		.loc 1 336 3 is_stmt 1 view .LVU82
+ 407              		.loc 1 336 11 is_stmt 0 view .LVU83
+ 408 0056 0B78     		ldrb	r3, [r1]	@ zero_extendqisi2
+ 409              		.loc 1 336 32 view .LVU84
+ 410 0058 222B     		cmp	r3, #34
+ 411 005a 01D0     		beq	.L32
+ 412              		.loc 1 336 32 discriminator 2 view .LVU85
+ 413 005c 0020     		movs	r0, #0
+ 414 005e 02E0     		b	.L20
+ 415              	.L32:
+ 416              		.loc 1 336 32 discriminator 1 view .LVU86
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 15
+
+
+ 417 0060 0120     		movs	r0, #1
+ 418 0062 00E0     		b	.L20
+ 419              	.LVL33:
+ 420              	.L26:
+ 309:App/Src/fault_command.c ****   }
+ 421              		.loc 1 309 12 view .LVU87
+ 422 0064 0020     		movs	r0, #0
+ 423              	.LVL34:
+ 424              	.L20:
+ 337:App/Src/fault_command.c **** }
+ 425              		.loc 1 337 1 view .LVU88
+ 426 0066 38BD     		pop	{r3, r4, r5, pc}
+ 427              	.LVL35:
+ 428              	.L27:
+ 309:App/Src/fault_command.c ****   }
+ 429              		.loc 1 309 12 view .LVU89
+ 430 0068 2846     		mov	r0, r5
+ 431              	.LVL36:
+ 309:App/Src/fault_command.c ****   }
+ 432              		.loc 1 309 12 view .LVU90
+ 433 006a FCE7     		b	.L20
+ 434              	.LVL37:
+ 435              	.L29:
+ 326:App/Src/fault_command.c ****   }
+ 436              		.loc 1 326 12 view .LVU91
+ 437 006c 0020     		movs	r0, #0
+ 438 006e FAE7     		b	.L20
+ 439              		.cfi_endproc
+ 440              	.LFE164:
+ 442              		.section	.text.FaultCommand_WriteFormat,"ax",%progbits
+ 443              		.align	1
+ 444              		.syntax unified
+ 445              		.thumb
+ 446              		.thumb_func
+ 448              	FaultCommand_WriteFormat:
+ 449              	.LVL38:
+ 450              	.LFB150:
+  25:App/Src/fault_command.c ****   char buffer[192];
+ 451              		.loc 1 25 1 is_stmt 1 view -0
+ 452              		.cfi_startproc
+ 453              		@ args = 4, pretend = 8, frame = 200
+ 454              		@ frame_needed = 0, uses_anonymous_args = 1
+  25:App/Src/fault_command.c ****   char buffer[192];
+ 455              		.loc 1 25 1 is_stmt 0 view .LVU93
+ 456 0000 0CB4     		push	{r2, r3}
+ 457              	.LCFI7:
+ 458              		.cfi_def_cfa_offset 8
+ 459              		.cfi_offset 2, -8
+ 460              		.cfi_offset 3, -4
+ 461 0002 70B5     		push	{r4, r5, r6, lr}
+ 462              	.LCFI8:
+ 463              		.cfi_def_cfa_offset 24
+ 464              		.cfi_offset 4, -24
+ 465              		.cfi_offset 5, -20
+ 466              		.cfi_offset 6, -16
+ 467              		.cfi_offset 14, -12
+ 468 0004 B2B0     		sub	sp, sp, #200
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 16
+
+
+ 469              	.LCFI9:
+ 470              		.cfi_def_cfa_offset 224
+ 471 0006 0646     		mov	r6, r0
+ 472 0008 0D46     		mov	r5, r1
+ 473 000a 36AB     		add	r3, sp, #216
+ 474 000c 53F8042B 		ldr	r2, [r3], #4
+  26:App/Src/fault_command.c ****   va_list args;
+ 475              		.loc 1 26 3 is_stmt 1 view .LVU94
+  27:App/Src/fault_command.c **** 
+ 476              		.loc 1 27 3 view .LVU95
+  29:App/Src/fault_command.c ****   (void)vsnprintf(buffer, sizeof(buffer), format, args);
+ 477              		.loc 1 29 3 view .LVU96
+ 478 0010 0193     		str	r3, [sp, #4]
+  30:App/Src/fault_command.c ****   va_end(args);
+ 479              		.loc 1 30 3 view .LVU97
+  30:App/Src/fault_command.c ****   va_end(args);
+ 480              		.loc 1 30 9 is_stmt 0 view .LVU98
+ 481 0012 02AC     		add	r4, sp, #8
+ 482 0014 C021     		movs	r1, #192
+ 483              	.LVL39:
+  30:App/Src/fault_command.c ****   va_end(args);
+ 484              		.loc 1 30 9 view .LVU99
+ 485 0016 2046     		mov	r0, r4
+ 486              	.LVL40:
+  30:App/Src/fault_command.c ****   va_end(args);
+ 487              		.loc 1 30 9 view .LVU100
+ 488 0018 FFF7FEFF 		bl	vsnprintf
+ 489              	.LVL41:
+  31:App/Src/fault_command.c **** 
+ 490              		.loc 1 31 3 is_stmt 1 view .LVU101
+  33:App/Src/fault_command.c **** }
+ 491              		.loc 1 33 3 view .LVU102
+ 492 001c 2246     		mov	r2, r4
+ 493 001e 2946     		mov	r1, r5
+ 494 0020 3046     		mov	r0, r6
+ 495 0022 FFF7FEFF 		bl	FaultCommand_Write
+ 496              	.LVL42:
+  34:App/Src/fault_command.c **** 
+ 497              		.loc 1 34 1 is_stmt 0 view .LVU103
+ 498 0026 32B0     		add	sp, sp, #200
+ 499              	.LCFI10:
+ 500              		.cfi_def_cfa_offset 24
+ 501              		@ sp needed
+ 502 0028 BDE87040 		pop	{r4, r5, r6, lr}
+ 503              	.LCFI11:
+ 504              		.cfi_restore 14
+ 505              		.cfi_restore 6
+ 506              		.cfi_restore 5
+ 507              		.cfi_restore 4
+ 508              		.cfi_def_cfa_offset 8
+ 509              	.LVL43:
+  34:App/Src/fault_command.c **** 
+ 510              		.loc 1 34 1 view .LVU104
+ 511 002c 02B0     		add	sp, sp, #8
+ 512              	.LCFI12:
+ 513              		.cfi_restore 3
+ 514              		.cfi_restore 2
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 17
+
+
+ 515              		.cfi_def_cfa_offset 0
+ 516 002e 7047     		bx	lr
+ 517              		.cfi_endproc
+ 518              	.LFE150:
+ 520              		.section	.rodata.FaultCommand_WriteJsonStatus.str1.4,"aMS",%progbits,1
+ 521              		.align	2
+ 522              	.LC11:
+ 523 0000 00       		.ascii	"\000"
+ 524 0001 000000   		.align	2
+ 525              	.LC12:
+ 526 0004 2C00     		.ascii	",\000"
+ 527 0006 0000     		.align	2
+ 528              	.LC13:
+ 529 0008 7B226F6B 		.ascii	"{\"ok\":true,\"active_faults\":%u,\"cells\":[\000"
+ 529      223A7472 
+ 529      75652C22 
+ 529      61637469 
+ 529      76655F66 
+ 530              		.align	2
+ 531              	.LC14:
+ 532 0030 25737B22 		.ascii	"%s{\"cell\":%u,\"mv\":%u,\"fault\":\"%s\",\"target_"
+ 532      63656C6C 
+ 532      223A2575 
+ 532      2C226D76 
+ 532      223A2575 
+ 533 005a 6D76223A 		.ascii	"mv\":%u,\"restore_mv\":%u,\"duration_ms\":%lu,\"sle"
+ 533      25752C22 
+ 533      72657374 
+ 533      6F72655F 
+ 533      6D76223A 
+ 534 0087 775F6D76 		.ascii	"w_mv_per_ms\":%u}\000"
+ 534      5F706572 
+ 534      5F6D7322 
+ 534      3A25757D 
+ 534      00
+ 535              		.align	2
+ 536              	.LC15:
+ 537 0098 5D7D0D0A 		.ascii	"]}\015\012\000"
+ 537      00
+ 538              		.section	.text.FaultCommand_WriteJsonStatus,"ax",%progbits
+ 539              		.align	1
+ 540              		.syntax unified
+ 541              		.thumb
+ 542              		.thumb_func
+ 544              	FaultCommand_WriteJsonStatus:
+ 545              	.LVL44:
+ 546              	.LFB156:
+ 108:App/Src/fault_command.c ****   FaultCommand_WriteFormat(write,
+ 547              		.loc 1 108 1 is_stmt 1 view -0
+ 548              		.cfi_startproc
+ 549              		@ args = 0, pretend = 0, frame = 16
+ 550              		@ frame_needed = 0, uses_anonymous_args = 0
+ 108:App/Src/fault_command.c ****   FaultCommand_WriteFormat(write,
+ 551              		.loc 1 108 1 is_stmt 0 view .LVU106
+ 552 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 553              	.LCFI13:
+ 554              		.cfi_def_cfa_offset 24
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 18
+
+
+ 555              		.cfi_offset 4, -24
+ 556              		.cfi_offset 5, -20
+ 557              		.cfi_offset 6, -16
+ 558              		.cfi_offset 7, -12
+ 559              		.cfi_offset 8, -8
+ 560              		.cfi_offset 14, -4
+ 561 0004 8CB0     		sub	sp, sp, #48
+ 562              	.LCFI14:
+ 563              		.cfi_def_cfa_offset 72
+ 564 0006 0646     		mov	r6, r0
+ 565 0008 0F46     		mov	r7, r1
+ 109:App/Src/fault_command.c ****                            context,
+ 566              		.loc 1 109 3 is_stmt 1 view .LVU107
+ 112:App/Src/fault_command.c **** 
+ 567              		.loc 1 112 28 is_stmt 0 view .LVU108
+ 568 000a FFF7FEFF 		bl	VoltageSim_GetActiveFaultCount
+ 569              	.LVL45:
+ 112:App/Src/fault_command.c **** 
+ 570              		.loc 1 112 28 view .LVU109
+ 571 000e 0346     		mov	r3, r0
+ 109:App/Src/fault_command.c ****                            context,
+ 572              		.loc 1 109 3 view .LVU110
+ 573 0010 1C4A     		ldr	r2, .L43
+ 574 0012 3946     		mov	r1, r7
+ 575 0014 3046     		mov	r0, r6
+ 576 0016 FFF7FEFF 		bl	FaultCommand_WriteFormat
+ 577              	.LVL46:
+ 114:App/Src/fault_command.c ****   {
+ 578              		.loc 1 114 3 is_stmt 1 view .LVU111
+ 579              	.LBB2:
+ 114:App/Src/fault_command.c ****   {
+ 580              		.loc 1 114 8 view .LVU112
+ 114:App/Src/fault_command.c ****   {
+ 581              		.loc 1 114 16 is_stmt 0 view .LVU113
+ 582 001a 0124     		movs	r4, #1
+ 114:App/Src/fault_command.c ****   {
+ 583              		.loc 1 114 3 view .LVU114
+ 584 001c 1FE0     		b	.L36
+ 585              	.LVL47:
+ 586              	.L42:
+ 587              	.LBB3:
+ 118:App/Src/fault_command.c ****                              context,
+ 588              		.loc 1 118 5 discriminator 1 view .LVU115
+ 589 001e DFF87080 		ldr	r8, .L43+12
+ 590              	.L37:
+ 123:App/Src/fault_command.c ****                              VoltageSim_GetFaultTypeName(info.type),
+ 591              		.loc 1 123 30 view .LVU116
+ 592 0022 2046     		mov	r0, r4
+ 593 0024 FFF7FEFF 		bl	VoltageSim_GetLastCellVoltageMv
+ 594              	.LVL48:
+ 595 0028 0546     		mov	r5, r0
+ 118:App/Src/fault_command.c ****                              context,
+ 596              		.loc 1 118 5 discriminator 4 view .LVU117
+ 597 002a 9DF82000 		ldrb	r0, [sp, #32]	@ zero_extendqisi2
+ 598 002e FFF7FEFF 		bl	VoltageSim_GetFaultTypeName
+ 599              	.LVL49:
+ 125:App/Src/fault_command.c ****                              info.restoreMillivolts,
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 19
+
+
+ 600              		.loc 1 125 34 view .LVU118
+ 601 0032 BDF82230 		ldrh	r3, [sp, #34]
+ 126:App/Src/fault_command.c ****                              (unsigned long)info.durationMs,
+ 602              		.loc 1 126 34 view .LVU119
+ 603 0036 BDF82420 		ldrh	r2, [sp, #36]
+ 128:App/Src/fault_command.c ****   }
+ 604              		.loc 1 128 34 view .LVU120
+ 605 003a BDF82C10 		ldrh	r1, [sp, #44]
+ 118:App/Src/fault_command.c ****                              context,
+ 606              		.loc 1 118 5 discriminator 4 view .LVU121
+ 607 003e 0691     		str	r1, [sp, #24]
+ 608 0040 0A99     		ldr	r1, [sp, #40]
+ 609 0042 0591     		str	r1, [sp, #20]
+ 610 0044 0492     		str	r2, [sp, #16]
+ 611 0046 0393     		str	r3, [sp, #12]
+ 612 0048 0290     		str	r0, [sp, #8]
+ 613 004a 0195     		str	r5, [sp, #4]
+ 614 004c 0094     		str	r4, [sp]
+ 615 004e 4346     		mov	r3, r8
+ 616 0050 0D4A     		ldr	r2, .L43+4
+ 617 0052 3946     		mov	r1, r7
+ 618 0054 3046     		mov	r0, r6
+ 619 0056 FFF7FEFF 		bl	FaultCommand_WriteFormat
+ 620              	.LVL50:
+ 621              	.LBE3:
+ 114:App/Src/fault_command.c ****   {
+ 622              		.loc 1 114 63 is_stmt 1 discriminator 2 view .LVU122
+ 623 005a 0134     		adds	r4, r4, #1
+ 624              	.LVL51:
+ 114:App/Src/fault_command.c ****   {
+ 625              		.loc 1 114 63 is_stmt 0 discriminator 2 view .LVU123
+ 626 005c E4B2     		uxtb	r4, r4
+ 627              	.LVL52:
+ 628              	.L36:
+ 114:App/Src/fault_command.c ****   {
+ 629              		.loc 1 114 32 is_stmt 1 discriminator 1 view .LVU124
+ 630 005e 0D2C     		cmp	r4, #13
+ 631 0060 08D8     		bhi	.L41
+ 632              	.LBB4:
+ 116:App/Src/fault_command.c **** 
+ 633              		.loc 1 116 5 view .LVU125
+ 116:App/Src/fault_command.c **** 
+ 634              		.loc 1 116 37 is_stmt 0 view .LVU126
+ 635 0062 2146     		mov	r1, r4
+ 636 0064 08A8     		add	r0, sp, #32
+ 637 0066 FFF7FEFF 		bl	VoltageSim_GetCellFaultInfo
+ 638              	.LVL53:
+ 118:App/Src/fault_command.c ****                              context,
+ 639              		.loc 1 118 5 is_stmt 1 view .LVU127
+ 640 006a 012C     		cmp	r4, #1
+ 641 006c D7D0     		beq	.L42
+ 118:App/Src/fault_command.c ****                              context,
+ 642              		.loc 1 118 5 is_stmt 0 discriminator 2 view .LVU128
+ 643 006e DFF82480 		ldr	r8, .L43+16
+ 644 0072 D6E7     		b	.L37
+ 645              	.L41:
+ 646              	.LBE4:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 20
+
+
+ 647              	.LBE2:
+ 131:App/Src/fault_command.c **** }
+ 648              		.loc 1 131 3 is_stmt 1 view .LVU129
+ 649 0074 054A     		ldr	r2, .L43+8
+ 650 0076 3946     		mov	r1, r7
+ 651 0078 3046     		mov	r0, r6
+ 652 007a FFF7FEFF 		bl	FaultCommand_Write
+ 653              	.LVL54:
+ 132:App/Src/fault_command.c **** 
+ 654              		.loc 1 132 1 is_stmt 0 view .LVU130
+ 655 007e 0CB0     		add	sp, sp, #48
+ 656              	.LCFI15:
+ 657              		.cfi_def_cfa_offset 24
+ 658              		@ sp needed
+ 659 0080 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 660              	.LVL55:
+ 661              	.L44:
+ 132:App/Src/fault_command.c **** 
+ 662              		.loc 1 132 1 view .LVU131
+ 663              		.align	2
+ 664              	.L43:
+ 665 0084 08000000 		.word	.LC13
+ 666 0088 30000000 		.word	.LC14
+ 667 008c 98000000 		.word	.LC15
+ 668 0090 00000000 		.word	.LC11
+ 669 0094 04000000 		.word	.LC12
+ 670              		.cfi_endproc
+ 671              	.LFE156:
+ 673              		.section	.rodata.FaultCommand_WriteJsonResult.str1.4,"aMS",%progbits,1
+ 674              		.align	2
+ 675              	.LC16:
+ 676 0000 74727565 		.ascii	"true\000"
+ 676      00
+ 677 0005 000000   		.align	2
+ 678              	.LC17:
+ 679 0008 66616C73 		.ascii	"false\000"
+ 679      6500
+ 680 000e 0000     		.align	2
+ 681              	.LC18:
+ 682 0010 7B226F6B 		.ascii	"{\"ok\":%s,\"cmd\":\"%s\"}\015\012\000"
+ 682      223A2573 
+ 682      2C22636D 
+ 682      64223A22 
+ 682      2573227D 
+ 683              		.section	.text.FaultCommand_WriteJsonResult,"ax",%progbits
+ 684              		.align	1
+ 685              		.syntax unified
+ 686              		.thumb
+ 687              		.thumb_func
+ 689              	FaultCommand_WriteJsonResult:
+ 690              	.LVL56:
+ 691              	.LFB155:
+ 101:App/Src/fault_command.c ****   FaultCommand_WriteFormat(write, context, "{\"ok\":%s,\"cmd\":\"%s\"}\r\n",
+ 692              		.loc 1 101 1 is_stmt 1 view -0
+ 693              		.cfi_startproc
+ 694              		@ args = 0, pretend = 0, frame = 0
+ 695              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 21
+
+
+ 101:App/Src/fault_command.c ****   FaultCommand_WriteFormat(write, context, "{\"ok\":%s,\"cmd\":\"%s\"}\r\n",
+ 696              		.loc 1 101 1 is_stmt 0 view .LVU133
+ 697 0000 00B5     		push	{lr}
+ 698              	.LCFI16:
+ 699              		.cfi_def_cfa_offset 4
+ 700              		.cfi_offset 14, -4
+ 701 0002 83B0     		sub	sp, sp, #12
+ 702              	.LCFI17:
+ 703              		.cfi_def_cfa_offset 16
+ 102:App/Src/fault_command.c ****                            (status == HAL_OK) ? "true" : "false",
+ 704              		.loc 1 102 3 is_stmt 1 view .LVU134
+ 705 0004 33B9     		cbnz	r3, .L47
+ 102:App/Src/fault_command.c ****                            (status == HAL_OK) ? "true" : "false",
+ 706              		.loc 1 102 3 is_stmt 0 discriminator 1 view .LVU135
+ 707 0006 044B     		ldr	r3, .L49
+ 708              	.LVL57:
+ 709              	.L46:
+ 102:App/Src/fault_command.c ****                            (status == HAL_OK) ? "true" : "false",
+ 710              		.loc 1 102 3 discriminator 4 view .LVU136
+ 711 0008 0092     		str	r2, [sp]
+ 712 000a 044A     		ldr	r2, .L49+4
+ 713              	.LVL58:
+ 102:App/Src/fault_command.c ****                            (status == HAL_OK) ? "true" : "false",
+ 714              		.loc 1 102 3 discriminator 4 view .LVU137
+ 715 000c FFF7FEFF 		bl	FaultCommand_WriteFormat
+ 716              	.LVL59:
+ 105:App/Src/fault_command.c **** 
+ 717              		.loc 1 105 1 view .LVU138
+ 718 0010 03B0     		add	sp, sp, #12
+ 719              	.LCFI18:
+ 720              		.cfi_remember_state
+ 721              		.cfi_def_cfa_offset 4
+ 722              		@ sp needed
+ 723 0012 00BD     		pop	{pc}
+ 724              	.LVL60:
+ 725              	.L47:
+ 726              	.LCFI19:
+ 727              		.cfi_restore_state
+ 102:App/Src/fault_command.c ****                            (status == HAL_OK) ? "true" : "false",
+ 728              		.loc 1 102 3 discriminator 2 view .LVU139
+ 729 0014 024B     		ldr	r3, .L49+8
+ 730              	.LVL61:
+ 102:App/Src/fault_command.c ****                            (status == HAL_OK) ? "true" : "false",
+ 731              		.loc 1 102 3 discriminator 2 view .LVU140
+ 732 0016 F7E7     		b	.L46
+ 733              	.L50:
+ 734              		.align	2
+ 735              	.L49:
+ 736 0018 00000000 		.word	.LC16
+ 737 001c 10000000 		.word	.LC18
+ 738 0020 08000000 		.word	.LC17
+ 739              		.cfi_endproc
+ 740              	.LFE155:
+ 742              		.section	.rodata.FaultCommand_WriteTextStatus.str1.4,"aMS",%progbits,1
+ 743              		.align	2
+ 744              	.LC19:
+ 745 0000 0D0A5B73 		.ascii	"\015\012[status] active_faults=%u\015\012\000"
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 22
+
+
+ 745      74617475 
+ 745      735D2061 
+ 745      63746976 
+ 745      655F6661 
+ 746 001e 0000     		.align	2
+ 747              	.LC20:
+ 748 0020 20204325 		.ascii	"  C%02u=%umV\000"
+ 748      3032753D 
+ 748      25756D56 
+ 748      00
+ 749 002d 000000   		.align	2
+ 750              	.LC21:
+ 751 0030 20666175 		.ascii	" fault=%s target=%umV restore=%umV duration=%lums s"
+ 751      6C743D25 
+ 751      73207461 
+ 751      72676574 
+ 751      3D25756D 
+ 752 0063 6C65773D 		.ascii	"lew=%umV/ms\000"
+ 752      25756D56 
+ 752      2F6D7300 
+ 753 006f 00       		.align	2
+ 754              	.LC22:
+ 755 0070 0D0A00   		.ascii	"\015\012\000"
+ 756              		.section	.text.FaultCommand_WriteTextStatus,"ax",%progbits
+ 757              		.align	1
+ 758              		.syntax unified
+ 759              		.thumb
+ 760              		.thumb_func
+ 762              	FaultCommand_WriteTextStatus:
+ 763              	.LVL62:
+ 764              	.LFB153:
+  61:App/Src/fault_command.c ****   FaultCommand_WriteFormat(write, context, "\r\n[status] active_faults=%u\r\n",
+ 765              		.loc 1 61 1 is_stmt 1 view -0
+ 766              		.cfi_startproc
+ 767              		@ args = 0, pretend = 0, frame = 16
+ 768              		@ frame_needed = 0, uses_anonymous_args = 0
+  61:App/Src/fault_command.c ****   FaultCommand_WriteFormat(write, context, "\r\n[status] active_faults=%u\r\n",
+ 769              		.loc 1 61 1 is_stmt 0 view .LVU142
+ 770 0000 70B5     		push	{r4, r5, r6, lr}
+ 771              	.LCFI20:
+ 772              		.cfi_def_cfa_offset 16
+ 773              		.cfi_offset 4, -16
+ 774              		.cfi_offset 5, -12
+ 775              		.cfi_offset 6, -8
+ 776              		.cfi_offset 14, -4
+ 777 0002 88B0     		sub	sp, sp, #32
+ 778              	.LCFI21:
+ 779              		.cfi_def_cfa_offset 48
+ 780 0004 0546     		mov	r5, r0
+ 781 0006 0E46     		mov	r6, r1
+  62:App/Src/fault_command.c ****                            VoltageSim_GetActiveFaultCount());
+ 782              		.loc 1 62 3 is_stmt 1 view .LVU143
+  63:App/Src/fault_command.c **** 
+ 783              		.loc 1 63 28 is_stmt 0 view .LVU144
+ 784 0008 FFF7FEFF 		bl	VoltageSim_GetActiveFaultCount
+ 785              	.LVL63:
+  63:App/Src/fault_command.c **** 
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 23
+
+
+ 786              		.loc 1 63 28 view .LVU145
+ 787 000c 0346     		mov	r3, r0
+  62:App/Src/fault_command.c ****                            VoltageSim_GetActiveFaultCount());
+ 788              		.loc 1 62 3 view .LVU146
+ 789 000e 1C4A     		ldr	r2, .L57
+ 790 0010 3146     		mov	r1, r6
+ 791 0012 2846     		mov	r0, r5
+ 792 0014 FFF7FEFF 		bl	FaultCommand_WriteFormat
+ 793              	.LVL64:
+  65:App/Src/fault_command.c ****   {
+ 794              		.loc 1 65 3 is_stmt 1 view .LVU147
+ 795              	.LBB5:
+  65:App/Src/fault_command.c ****   {
+ 796              		.loc 1 65 8 view .LVU148
+  65:App/Src/fault_command.c ****   {
+ 797              		.loc 1 65 16 is_stmt 0 view .LVU149
+ 798 0018 0124     		movs	r4, #1
+  65:App/Src/fault_command.c ****   {
+ 799              		.loc 1 65 3 view .LVU150
+ 800 001a 06E0     		b	.L52
+ 801              	.LVL65:
+ 802              	.L53:
+ 803              	.LBB6:
+  83:App/Src/fault_command.c ****   }
+ 804              		.loc 1 83 5 is_stmt 1 view .LVU151
+ 805 001c 194A     		ldr	r2, .L57+4
+ 806 001e 3146     		mov	r1, r6
+ 807 0020 2846     		mov	r0, r5
+ 808 0022 FFF7FEFF 		bl	FaultCommand_Write
+ 809              	.LVL66:
+ 810              	.LBE6:
+  65:App/Src/fault_command.c ****   {
+ 811              		.loc 1 65 63 discriminator 2 view .LVU152
+ 812 0026 0134     		adds	r4, r4, #1
+ 813              	.LVL67:
+  65:App/Src/fault_command.c ****   {
+ 814              		.loc 1 65 63 is_stmt 0 discriminator 2 view .LVU153
+ 815 0028 E4B2     		uxtb	r4, r4
+ 816              	.LVL68:
+ 817              	.L52:
+  65:App/Src/fault_command.c ****   {
+ 818              		.loc 1 65 32 is_stmt 1 discriminator 1 view .LVU154
+ 819 002a 0D2C     		cmp	r4, #13
+ 820 002c 25D8     		bhi	.L56
+ 821              	.LBB7:
+  67:App/Src/fault_command.c **** 
+ 822              		.loc 1 67 5 view .LVU155
+  67:App/Src/fault_command.c **** 
+ 823              		.loc 1 67 37 is_stmt 0 view .LVU156
+ 824 002e 2146     		mov	r1, r4
+ 825 0030 04A8     		add	r0, sp, #16
+ 826 0032 FFF7FEFF 		bl	VoltageSim_GetCellFaultInfo
+ 827              	.LVL69:
+  69:App/Src/fault_command.c ****                              cell,
+ 828              		.loc 1 69 5 is_stmt 1 view .LVU157
+  71:App/Src/fault_command.c ****     if (info.type != VOLTAGE_SIM_FAULT_NONE)
+ 829              		.loc 1 71 30 is_stmt 0 view .LVU158
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 24
+
+
+ 830 0036 2046     		mov	r0, r4
+ 831 0038 FFF7FEFF 		bl	VoltageSim_GetLastCellVoltageMv
+ 832              	.LVL70:
+  69:App/Src/fault_command.c ****                              cell,
+ 833              		.loc 1 69 5 view .LVU159
+ 834 003c 0090     		str	r0, [sp]
+ 835 003e 2346     		mov	r3, r4
+ 836 0040 114A     		ldr	r2, .L57+8
+ 837 0042 3146     		mov	r1, r6
+ 838 0044 2846     		mov	r0, r5
+ 839 0046 FFF7FEFF 		bl	FaultCommand_WriteFormat
+ 840              	.LVL71:
+  72:App/Src/fault_command.c ****     {
+ 841              		.loc 1 72 5 is_stmt 1 view .LVU160
+  72:App/Src/fault_command.c ****     {
+ 842              		.loc 1 72 13 is_stmt 0 view .LVU161
+ 843 004a 9DF81000 		ldrb	r0, [sp, #16]	@ zero_extendqisi2
+  72:App/Src/fault_command.c ****     {
+ 844              		.loc 1 72 8 view .LVU162
+ 845 004e 0028     		cmp	r0, #0
+ 846 0050 E4D0     		beq	.L53
+  74:App/Src/fault_command.c ****                                context,
+ 847              		.loc 1 74 7 is_stmt 1 view .LVU163
+ 848 0052 FFF7FEFF 		bl	VoltageSim_GetFaultTypeName
+ 849              	.LVL72:
+ 850 0056 0346     		mov	r3, r0
+  78:App/Src/fault_command.c ****                                info.restoreMillivolts,
+ 851              		.loc 1 78 36 is_stmt 0 view .LVU164
+ 852 0058 BDF81220 		ldrh	r2, [sp, #18]
+  79:App/Src/fault_command.c ****                                (unsigned long)info.durationMs,
+ 853              		.loc 1 79 36 view .LVU165
+ 854 005c BDF81410 		ldrh	r1, [sp, #20]
+  81:App/Src/fault_command.c ****     }
+ 855              		.loc 1 81 36 view .LVU166
+ 856 0060 BDF81C00 		ldrh	r0, [sp, #28]
+  74:App/Src/fault_command.c ****                                context,
+ 857              		.loc 1 74 7 view .LVU167
+ 858 0064 0390     		str	r0, [sp, #12]
+ 859 0066 0698     		ldr	r0, [sp, #24]
+ 860 0068 0290     		str	r0, [sp, #8]
+ 861 006a 0191     		str	r1, [sp, #4]
+ 862 006c 0092     		str	r2, [sp]
+ 863 006e 074A     		ldr	r2, .L57+12
+ 864 0070 3146     		mov	r1, r6
+ 865 0072 2846     		mov	r0, r5
+ 866 0074 FFF7FEFF 		bl	FaultCommand_WriteFormat
+ 867              	.LVL73:
+ 868 0078 D0E7     		b	.L53
+ 869              	.L56:
+  74:App/Src/fault_command.c ****                                context,
+ 870              		.loc 1 74 7 view .LVU168
+ 871              	.LBE7:
+ 872              	.LBE5:
+  85:App/Src/fault_command.c **** 
+ 873              		.loc 1 85 1 view .LVU169
+ 874 007a 08B0     		add	sp, sp, #32
+ 875              	.LCFI22:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 25
+
+
+ 876              		.cfi_def_cfa_offset 16
+ 877              		@ sp needed
+ 878 007c 70BD     		pop	{r4, r5, r6, pc}
+ 879              	.LVL74:
+ 880              	.L58:
+  85:App/Src/fault_command.c **** 
+ 881              		.loc 1 85 1 view .LVU170
+ 882 007e 00BF     		.align	2
+ 883              	.L57:
+ 884 0080 00000000 		.word	.LC19
+ 885 0084 70000000 		.word	.LC22
+ 886 0088 20000000 		.word	.LC20
+ 887 008c 30000000 		.word	.LC21
+ 888              		.cfi_endproc
+ 889              	.LFE153:
+ 891              		.section	.rodata.FaultCommand_WriteTextResult.str1.4,"aMS",%progbits,1
+ 892              		.align	2
+ 893              	.LC23:
+ 894 0000 4F4B00   		.ascii	"OK\000"
+ 895 0003 00       		.align	2
+ 896              	.LC24:
+ 897 0004 45525200 		.ascii	"ERR\000"
+ 898              		.align	2
+ 899              	.LC25:
+ 900 0008 5B636D64 		.ascii	"[cmd] %s %s\015\012\000"
+ 900      5D202573 
+ 900      2025730D 
+ 900      0A00
+ 901              		.section	.text.FaultCommand_WriteTextResult,"ax",%progbits
+ 902              		.align	1
+ 903              		.syntax unified
+ 904              		.thumb
+ 905              		.thumb_func
+ 907              	FaultCommand_WriteTextResult:
+ 908              	.LVL75:
+ 909              	.LFB154:
+  91:App/Src/fault_command.c ****   FaultCommand_WriteFormat(write, context, "[cmd] %s %s\r\n",
+ 910              		.loc 1 91 1 is_stmt 1 view -0
+ 911              		.cfi_startproc
+ 912              		@ args = 0, pretend = 0, frame = 0
+ 913              		@ frame_needed = 0, uses_anonymous_args = 0
+  91:App/Src/fault_command.c ****   FaultCommand_WriteFormat(write, context, "[cmd] %s %s\r\n",
+ 914              		.loc 1 91 1 is_stmt 0 view .LVU172
+ 915 0000 00B5     		push	{lr}
+ 916              	.LCFI23:
+ 917              		.cfi_def_cfa_offset 4
+ 918              		.cfi_offset 14, -4
+ 919 0002 83B0     		sub	sp, sp, #12
+ 920              	.LCFI24:
+ 921              		.cfi_def_cfa_offset 16
+  92:App/Src/fault_command.c ****                            name,
+ 922              		.loc 1 92 3 is_stmt 1 view .LVU173
+ 923 0004 3BB9     		cbnz	r3, .L61
+  92:App/Src/fault_command.c ****                            name,
+ 924              		.loc 1 92 3 is_stmt 0 discriminator 1 view .LVU174
+ 925 0006 054B     		ldr	r3, .L63
+ 926              	.LVL76:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 26
+
+
+ 927              	.L60:
+  92:App/Src/fault_command.c ****                            name,
+ 928              		.loc 1 92 3 discriminator 4 view .LVU175
+ 929 0008 0093     		str	r3, [sp]
+ 930 000a 1346     		mov	r3, r2
+ 931 000c 044A     		ldr	r2, .L63+4
+ 932              	.LVL77:
+  92:App/Src/fault_command.c ****                            name,
+ 933              		.loc 1 92 3 discriminator 4 view .LVU176
+ 934 000e FFF7FEFF 		bl	FaultCommand_WriteFormat
+ 935              	.LVL78:
+  95:App/Src/fault_command.c **** 
+ 936              		.loc 1 95 1 view .LVU177
+ 937 0012 03B0     		add	sp, sp, #12
+ 938              	.LCFI25:
+ 939              		.cfi_remember_state
+ 940              		.cfi_def_cfa_offset 4
+ 941              		@ sp needed
+ 942 0014 00BD     		pop	{pc}
+ 943              	.LVL79:
+ 944              	.L61:
+ 945              	.LCFI26:
+ 946              		.cfi_restore_state
+  92:App/Src/fault_command.c ****                            name,
+ 947              		.loc 1 92 3 discriminator 2 view .LVU178
+ 948 0016 034B     		ldr	r3, .L63+8
+ 949              	.LVL80:
+  92:App/Src/fault_command.c ****                            name,
+ 950              		.loc 1 92 3 discriminator 2 view .LVU179
+ 951 0018 F6E7     		b	.L60
+ 952              	.L64:
+ 953 001a 00BF     		.align	2
+ 954              	.L63:
+ 955 001c 00000000 		.word	.LC23
+ 956 0020 08000000 		.word	.LC25
+ 957 0024 04000000 		.word	.LC24
+ 958              		.cfi_endproc
+ 959              	.LFE154:
+ 961              		.section	.text.FaultCommand_RunNormal,"ax",%progbits
+ 962              		.align	1
+ 963              		.syntax unified
+ 964              		.thumb
+ 965              		.thumb_func
+ 967              	FaultCommand_RunNormal:
+ 968              	.LVL81:
+ 969              	.LFB157:
+ 135:App/Src/fault_command.c ****   return VoltageSim_SetAllCellsVoltageMv(millivolts);
+ 970              		.loc 1 135 1 is_stmt 1 view -0
+ 971              		.cfi_startproc
+ 972              		@ args = 0, pretend = 0, frame = 0
+ 973              		@ frame_needed = 0, uses_anonymous_args = 0
+ 135:App/Src/fault_command.c ****   return VoltageSim_SetAllCellsVoltageMv(millivolts);
+ 974              		.loc 1 135 1 is_stmt 0 view .LVU181
+ 975 0000 08B5     		push	{r3, lr}
+ 976              	.LCFI27:
+ 977              		.cfi_def_cfa_offset 8
+ 978              		.cfi_offset 3, -8
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 27
+
+
+ 979              		.cfi_offset 14, -4
+ 136:App/Src/fault_command.c **** }
+ 980              		.loc 1 136 3 is_stmt 1 view .LVU182
+ 136:App/Src/fault_command.c **** }
+ 981              		.loc 1 136 10 is_stmt 0 view .LVU183
+ 982 0002 FFF7FEFF 		bl	VoltageSim_SetAllCellsVoltageMv
+ 983              	.LVL82:
+ 137:App/Src/fault_command.c **** 
+ 984              		.loc 1 137 1 view .LVU184
+ 985 0006 08BD     		pop	{r3, pc}
+ 986              		.cfi_endproc
+ 987              	.LFE157:
+ 989              		.section	.text.FaultCommand_RunSet,"ax",%progbits
+ 990              		.align	1
+ 991              		.syntax unified
+ 992              		.thumb
+ 993              		.thumb_func
+ 995              	FaultCommand_RunSet:
+ 996              	.LVL83:
+ 997              	.LFB158:
+ 140:App/Src/fault_command.c ****   return VoltageSim_SetCellVoltageMv(cell, millivolts);
+ 998              		.loc 1 140 1 is_stmt 1 view -0
+ 999              		.cfi_startproc
+ 1000              		@ args = 0, pretend = 0, frame = 0
+ 1001              		@ frame_needed = 0, uses_anonymous_args = 0
+ 140:App/Src/fault_command.c ****   return VoltageSim_SetCellVoltageMv(cell, millivolts);
+ 1002              		.loc 1 140 1 is_stmt 0 view .LVU186
+ 1003 0000 08B5     		push	{r3, lr}
+ 1004              	.LCFI28:
+ 1005              		.cfi_def_cfa_offset 8
+ 1006              		.cfi_offset 3, -8
+ 1007              		.cfi_offset 14, -4
+ 141:App/Src/fault_command.c **** }
+ 1008              		.loc 1 141 3 is_stmt 1 view .LVU187
+ 141:App/Src/fault_command.c **** }
+ 1009              		.loc 1 141 10 is_stmt 0 view .LVU188
+ 1010 0002 FFF7FEFF 		bl	VoltageSim_SetCellVoltageMv
+ 1011              	.LVL84:
+ 142:App/Src/fault_command.c **** 
+ 1012              		.loc 1 142 1 view .LVU189
+ 1013 0006 08BD     		pop	{r3, pc}
+ 1014              		.cfi_endproc
+ 1015              	.LFE158:
+ 1017              		.section	.text.FaultCommand_RunOverVoltage,"ax",%progbits
+ 1018              		.align	1
+ 1019              		.syntax unified
+ 1020              		.thumb
+ 1021              		.thumb_func
+ 1023              	FaultCommand_RunOverVoltage:
+ 1024              	.LVL85:
+ 1025              	.LFB159:
+ 148:App/Src/fault_command.c ****   return VoltageSim_InjectCellOverVoltageRamp(cell, target, duration, slew);
+ 1026              		.loc 1 148 1 is_stmt 1 view -0
+ 1027              		.cfi_startproc
+ 1028              		@ args = 0, pretend = 0, frame = 0
+ 1029              		@ frame_needed = 0, uses_anonymous_args = 0
+ 148:App/Src/fault_command.c ****   return VoltageSim_InjectCellOverVoltageRamp(cell, target, duration, slew);
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 28
+
+
+ 1030              		.loc 1 148 1 is_stmt 0 view .LVU191
+ 1031 0000 08B5     		push	{r3, lr}
+ 1032              	.LCFI29:
+ 1033              		.cfi_def_cfa_offset 8
+ 1034              		.cfi_offset 3, -8
+ 1035              		.cfi_offset 14, -4
+ 149:App/Src/fault_command.c **** }
+ 1036              		.loc 1 149 3 is_stmt 1 view .LVU192
+ 149:App/Src/fault_command.c **** }
+ 1037              		.loc 1 149 10 is_stmt 0 view .LVU193
+ 1038 0002 FFF7FEFF 		bl	VoltageSim_InjectCellOverVoltageRamp
+ 1039              	.LVL86:
+ 150:App/Src/fault_command.c **** 
+ 1040              		.loc 1 150 1 view .LVU194
+ 1041 0006 08BD     		pop	{r3, pc}
+ 1042              		.cfi_endproc
+ 1043              	.LFE159:
+ 1045              		.section	.text.FaultCommand_RunUnderVoltage,"ax",%progbits
+ 1046              		.align	1
+ 1047              		.syntax unified
+ 1048              		.thumb
+ 1049              		.thumb_func
+ 1051              	FaultCommand_RunUnderVoltage:
+ 1052              	.LVL87:
+ 1053              	.LFB160:
+ 156:App/Src/fault_command.c ****   return VoltageSim_InjectCellUnderVoltageRamp(cell, target, duration, slew);
+ 1054              		.loc 1 156 1 is_stmt 1 view -0
+ 1055              		.cfi_startproc
+ 1056              		@ args = 0, pretend = 0, frame = 0
+ 1057              		@ frame_needed = 0, uses_anonymous_args = 0
+ 156:App/Src/fault_command.c ****   return VoltageSim_InjectCellUnderVoltageRamp(cell, target, duration, slew);
+ 1058              		.loc 1 156 1 is_stmt 0 view .LVU196
+ 1059 0000 08B5     		push	{r3, lr}
+ 1060              	.LCFI30:
+ 1061              		.cfi_def_cfa_offset 8
+ 1062              		.cfi_offset 3, -8
+ 1063              		.cfi_offset 14, -4
+ 157:App/Src/fault_command.c **** }
+ 1064              		.loc 1 157 3 is_stmt 1 view .LVU197
+ 157:App/Src/fault_command.c **** }
+ 1065              		.loc 1 157 10 is_stmt 0 view .LVU198
+ 1066 0002 FFF7FEFF 		bl	VoltageSim_InjectCellUnderVoltageRamp
+ 1067              	.LVL88:
+ 158:App/Src/fault_command.c **** 
+ 1068              		.loc 1 158 1 view .LVU199
+ 1069 0006 08BD     		pop	{r3, pc}
+ 1070              		.cfi_endproc
+ 1071              	.LFE160:
+ 1073              		.section	.text.FaultCommand_RunDiff,"ax",%progbits
+ 1074              		.align	1
+ 1075              		.syntax unified
+ 1076              		.thumb
+ 1077              		.thumb_func
+ 1079              	FaultCommand_RunDiff:
+ 1080              	.LVL89:
+ 1081              	.LFB161:
+ 166:App/Src/fault_command.c ****   return VoltageSim_InjectVoltageDifference(highCell, highMv, lowCell, lowMv, duration, slew);
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 29
+
+
+ 1082              		.loc 1 166 1 is_stmt 1 view -0
+ 1083              		.cfi_startproc
+ 1084              		@ args = 8, pretend = 0, frame = 0
+ 1085              		@ frame_needed = 0, uses_anonymous_args = 0
+ 166:App/Src/fault_command.c ****   return VoltageSim_InjectVoltageDifference(highCell, highMv, lowCell, lowMv, duration, slew);
+ 1086              		.loc 1 166 1 is_stmt 0 view .LVU201
+ 1087 0000 10B5     		push	{r4, lr}
+ 1088              	.LCFI31:
+ 1089              		.cfi_def_cfa_offset 8
+ 1090              		.cfi_offset 4, -8
+ 1091              		.cfi_offset 14, -4
+ 1092 0002 82B0     		sub	sp, sp, #8
+ 1093              	.LCFI32:
+ 1094              		.cfi_def_cfa_offset 16
+ 167:App/Src/fault_command.c **** }
+ 1095              		.loc 1 167 3 is_stmt 1 view .LVU202
+ 167:App/Src/fault_command.c **** }
+ 1096              		.loc 1 167 10 is_stmt 0 view .LVU203
+ 1097 0004 BDF814C0 		ldrh	ip, [sp, #20]
+ 1098 0008 CDF804C0 		str	ip, [sp, #4]
+ 1099 000c 049C     		ldr	r4, [sp, #16]
+ 1100 000e 0094     		str	r4, [sp]
+ 1101 0010 FFF7FEFF 		bl	VoltageSim_InjectVoltageDifference
+ 1102              	.LVL90:
+ 168:App/Src/fault_command.c **** 
+ 1103              		.loc 1 168 1 view .LVU204
+ 1104 0014 02B0     		add	sp, sp, #8
+ 1105              	.LCFI33:
+ 1106              		.cfi_def_cfa_offset 8
+ 1107              		@ sp needed
+ 1108 0016 10BD     		pop	{r4, pc}
+ 168:App/Src/fault_command.c **** 
+ 1109              		.loc 1 168 1 view .LVU205
+ 1110              		.cfi_endproc
+ 1111              	.LFE161:
+ 1113              		.section	.text.FaultCommand_JsonGetUint,"ax",%progbits
+ 1114              		.align	1
+ 1115              		.syntax unified
+ 1116              		.thumb
+ 1117              		.thumb_func
+ 1119              	FaultCommand_JsonGetUint:
+ 1120              	.LVL91:
+ 1121              	.LFB165:
+ 338:App/Src/fault_command.c **** 
+ 339:App/Src/fault_command.c **** static uint8_t FaultCommand_JsonGetUint(const char *json, const char *key, uint32_t *value)
+ 340:App/Src/fault_command.c **** {
+ 1122              		.loc 1 340 1 is_stmt 1 view -0
+ 1123              		.cfi_startproc
+ 1124              		@ args = 0, pretend = 0, frame = 0
+ 1125              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1126              		.loc 1 340 1 is_stmt 0 view .LVU207
+ 1127 0000 10B5     		push	{r4, lr}
+ 1128              	.LCFI34:
+ 1129              		.cfi_def_cfa_offset 8
+ 1130              		.cfi_offset 4, -8
+ 1131              		.cfi_offset 14, -4
+ 1132 0002 1446     		mov	r4, r2
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 30
+
+
+ 341:App/Src/fault_command.c ****   const char *cursor = FaultCommand_FindJsonKey(json, key);
+ 1133              		.loc 1 341 3 is_stmt 1 view .LVU208
+ 1134              		.loc 1 341 24 is_stmt 0 view .LVU209
+ 1135 0004 FFF7FEFF 		bl	FaultCommand_FindJsonKey
+ 1136              	.LVL92:
+ 342:App/Src/fault_command.c **** 
+ 343:App/Src/fault_command.c ****   if ((cursor == NULL) || (value == NULL))
+ 1137              		.loc 1 343 3 is_stmt 1 view .LVU210
+ 1138              		.loc 1 343 6 is_stmt 0 view .LVU211
+ 1139 0008 002C     		cmp	r4, #0
+ 1140 000a 18BF     		it	ne
+ 1141 000c 0028     		cmpne	r0, #0
+ 1142 000e 10D0     		beq	.L79
+ 344:App/Src/fault_command.c ****   {
+ 345:App/Src/fault_command.c ****     return 0U;
+ 346:App/Src/fault_command.c ****   }
+ 347:App/Src/fault_command.c **** 
+ 348:App/Src/fault_command.c ****   cursor = strchr(cursor, ':');
+ 1143              		.loc 1 348 3 is_stmt 1 view .LVU212
+ 1144              		.loc 1 348 12 is_stmt 0 view .LVU213
+ 1145 0010 3A21     		movs	r1, #58
+ 1146 0012 FFF7FEFF 		bl	strchr
+ 1147              	.LVL93:
+ 349:App/Src/fault_command.c ****   if (cursor == NULL)
+ 1148              		.loc 1 349 3 is_stmt 1 view .LVU214
+ 1149              		.loc 1 349 6 is_stmt 0 view .LVU215
+ 1150 0016 58B1     		cbz	r0, .L76
+ 350:App/Src/fault_command.c ****   {
+ 351:App/Src/fault_command.c ****     return 0U;
+ 352:App/Src/fault_command.c ****   }
+ 353:App/Src/fault_command.c **** 
+ 354:App/Src/fault_command.c ****   cursor++;
+ 1151              		.loc 1 354 3 is_stmt 1 view .LVU216
+ 1152              		.loc 1 354 9 is_stmt 0 view .LVU217
+ 1153 0018 0130     		adds	r0, r0, #1
+ 1154              	.LVL94:
+ 355:App/Src/fault_command.c ****   while (*cursor == ' ')
+ 1155              		.loc 1 355 3 is_stmt 1 view .LVU218
+ 1156              	.L77:
+ 1157              		.loc 1 355 18 view .LVU219
+ 1158              		.loc 1 355 10 is_stmt 0 view .LVU220
+ 1159 001a 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 1160              		.loc 1 355 18 view .LVU221
+ 1161 001c 202B     		cmp	r3, #32
+ 1162 001e 01D1     		bne	.L82
+ 356:App/Src/fault_command.c ****   {
+ 357:App/Src/fault_command.c ****     cursor++;
+ 1163              		.loc 1 357 5 is_stmt 1 view .LVU222
+ 1164              		.loc 1 357 11 is_stmt 0 view .LVU223
+ 1165 0020 0130     		adds	r0, r0, #1
+ 1166              	.LVL95:
+ 1167              		.loc 1 357 11 view .LVU224
+ 1168 0022 FAE7     		b	.L77
+ 1169              	.LVL96:
+ 1170              	.L82:
+ 358:App/Src/fault_command.c ****   }
+ 359:App/Src/fault_command.c **** 
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 31
+
+
+ 360:App/Src/fault_command.c ****   *value = (uint32_t)strtoul(cursor, NULL, 10);
+ 1171              		.loc 1 360 3 is_stmt 1 view .LVU225
+ 1172              		.loc 1 360 12 is_stmt 0 view .LVU226
+ 1173 0024 0A22     		movs	r2, #10
+ 1174 0026 0021     		movs	r1, #0
+ 1175 0028 FFF7FEFF 		bl	strtoul
+ 1176              	.LVL97:
+ 1177              		.loc 1 360 10 discriminator 1 view .LVU227
+ 1178 002c 2060     		str	r0, [r4]
+ 361:App/Src/fault_command.c ****   return 1U;
+ 1179              		.loc 1 361 3 is_stmt 1 view .LVU228
+ 1180              		.loc 1 361 10 is_stmt 0 view .LVU229
+ 1181 002e 0120     		movs	r0, #1
+ 1182              	.LVL98:
+ 1183              	.L76:
+ 362:App/Src/fault_command.c **** }
+ 1184              		.loc 1 362 1 view .LVU230
+ 1185 0030 10BD     		pop	{r4, pc}
+ 1186              	.LVL99:
+ 1187              	.L79:
+ 345:App/Src/fault_command.c ****   }
+ 1188              		.loc 1 345 12 view .LVU231
+ 1189 0032 0020     		movs	r0, #0
+ 1190              	.LVL100:
+ 345:App/Src/fault_command.c ****   }
+ 1191              		.loc 1 345 12 view .LVU232
+ 1192 0034 FCE7     		b	.L76
+ 1193              		.cfi_endproc
+ 1194              	.LFE165:
+ 1196              		.section	.text.FaultCommand_JsonGetUintDefault,"ax",%progbits
+ 1197              		.align	1
+ 1198              		.syntax unified
+ 1199              		.thumb
+ 1200              		.thumb_func
+ 1202              	FaultCommand_JsonGetUintDefault:
+ 1203              	.LVL101:
+ 1204              	.LFB166:
+ 363:App/Src/fault_command.c **** 
+ 364:App/Src/fault_command.c **** static uint32_t FaultCommand_JsonGetUintDefault(const char *json, const char *key, uint32_t default
+ 365:App/Src/fault_command.c **** {
+ 1205              		.loc 1 365 1 is_stmt 1 view -0
+ 1206              		.cfi_startproc
+ 1207              		@ args = 0, pretend = 0, frame = 8
+ 1208              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1209              		.loc 1 365 1 is_stmt 0 view .LVU234
+ 1210 0000 00B5     		push	{lr}
+ 1211              	.LCFI35:
+ 1212              		.cfi_def_cfa_offset 4
+ 1213              		.cfi_offset 14, -4
+ 1214 0002 83B0     		sub	sp, sp, #12
+ 1215              	.LCFI36:
+ 1216              		.cfi_def_cfa_offset 16
+ 366:App/Src/fault_command.c ****   uint32_t value = defaultValue;
+ 1217              		.loc 1 366 3 is_stmt 1 view .LVU235
+ 1218              		.loc 1 366 12 is_stmt 0 view .LVU236
+ 1219 0004 0192     		str	r2, [sp, #4]
+ 367:App/Src/fault_command.c **** 
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 32
+
+
+ 368:App/Src/fault_command.c ****   (void)FaultCommand_JsonGetUint(json, key, &value);
+ 1220              		.loc 1 368 3 is_stmt 1 view .LVU237
+ 1221              		.loc 1 368 9 is_stmt 0 view .LVU238
+ 1222 0006 01AA     		add	r2, sp, #4
+ 1223              	.LVL102:
+ 1224              		.loc 1 368 9 view .LVU239
+ 1225 0008 FFF7FEFF 		bl	FaultCommand_JsonGetUint
+ 1226              	.LVL103:
+ 369:App/Src/fault_command.c ****   return value;
+ 1227              		.loc 1 369 3 is_stmt 1 view .LVU240
+ 370:App/Src/fault_command.c **** }
+ 1228              		.loc 1 370 1 is_stmt 0 view .LVU241
+ 1229 000c 0198     		ldr	r0, [sp, #4]
+ 1230 000e 03B0     		add	sp, sp, #12
+ 1231              	.LCFI37:
+ 1232              		.cfi_def_cfa_offset 4
+ 1233              		@ sp needed
+ 1234 0010 00BD     		pop	{pc}
+ 1235              		.cfi_endproc
+ 1236              	.LFE166:
+ 1238              		.section	.rodata.FaultCommand_ExecuteJson.str1.4,"aMS",%progbits,1
+ 1239              		.align	2
+ 1240              	.LC26:
+ 1241 0000 636D6400 		.ascii	"cmd\000"
+ 1242              		.align	2
+ 1243              	.LC27:
+ 1244 0004 7B226F6B 		.ascii	"{\"ok\":false,\"error\":\"missing_cmd\"}\015\012\000"
+ 1244      223A6661 
+ 1244      6C73652C 
+ 1244      22657272 
+ 1244      6F72223A 
+ 1245 0029 000000   		.align	2
+ 1246              	.LC28:
+ 1247 002c 73746174 		.ascii	"status\000"
+ 1247      757300
+ 1248 0033 00       		.align	2
+ 1249              	.LC29:
+ 1250 0034 68656C70 		.ascii	"help\000"
+ 1250      00
+ 1251 0039 000000   		.align	2
+ 1252              	.LC30:
+ 1253 003c 7B226F6B 		.ascii	"{\"ok\":true,\"commands\":[\"status\",\"normal\",\""
+ 1253      223A7472 
+ 1253      75652C22 
+ 1253      636F6D6D 
+ 1253      616E6473 
+ 1254 0066 73657422 		.ascii	"set\",\"ov\",\"uv\",\"diff\",\"clear\"]}\015\012\000"
+ 1254      2C226F76 
+ 1254      222C2275 
+ 1254      76222C22 
+ 1254      64696666 
+ 1255              		.align	2
+ 1256              	.LC31:
+ 1257 0088 6E6F726D 		.ascii	"normal\000"
+ 1257      616C00
+ 1258 008f 00       		.align	2
+ 1259              	.LC32:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 33
+
+
+ 1260 0090 6D7600   		.ascii	"mv\000"
+ 1261 0093 00       		.align	2
+ 1262              	.LC33:
+ 1263 0094 73657400 		.ascii	"set\000"
+ 1264              		.align	2
+ 1265              	.LC34:
+ 1266 0098 63656C6C 		.ascii	"cell\000"
+ 1266      00
+ 1267 009d 000000   		.align	2
+ 1268              	.LC35:
+ 1269 00a0 6F7600   		.ascii	"ov\000"
+ 1270 00a3 00       		.align	2
+ 1271              	.LC36:
+ 1272 00a4 6F766572 		.ascii	"over_voltage\000"
+ 1272      5F766F6C 
+ 1272      74616765 
+ 1272      00
+ 1273 00b1 000000   		.align	2
+ 1274              	.LC37:
+ 1275 00b4 64757261 		.ascii	"duration_ms\000"
+ 1275      74696F6E 
+ 1275      5F6D7300 
+ 1276              		.align	2
+ 1277              	.LC38:
+ 1278 00c0 736C6577 		.ascii	"slew_mv_per_ms\000"
+ 1278      5F6D765F 
+ 1278      7065725F 
+ 1278      6D7300
+ 1279 00cf 00       		.align	2
+ 1280              	.LC39:
+ 1281 00d0 757600   		.ascii	"uv\000"
+ 1282 00d3 00       		.align	2
+ 1283              	.LC40:
+ 1284 00d4 756E6465 		.ascii	"under_voltage\000"
+ 1284      725F766F 
+ 1284      6C746167 
+ 1284      6500
+ 1285 00e2 0000     		.align	2
+ 1286              	.LC41:
+ 1287 00e4 64696666 		.ascii	"diff\000"
+ 1287      00
+ 1288 00e9 000000   		.align	2
+ 1289              	.LC42:
+ 1290 00ec 68696768 		.ascii	"high_cell\000"
+ 1290      5F63656C 
+ 1290      6C00
+ 1291 00f6 0000     		.align	2
+ 1292              	.LC43:
+ 1293 00f8 68696768 		.ascii	"high_mv\000"
+ 1293      5F6D7600 
+ 1294              		.align	2
+ 1295              	.LC44:
+ 1296 0100 6C6F775F 		.ascii	"low_cell\000"
+ 1296      63656C6C 
+ 1296      00
+ 1297 0109 000000   		.align	2
+ 1298              	.LC45:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 34
+
+
+ 1299 010c 6C6F775F 		.ascii	"low_mv\000"
+ 1299      6D7600
+ 1300 0113 00       		.align	2
+ 1301              	.LC46:
+ 1302 0114 636C6561 		.ascii	"clear\000"
+ 1302      7200
+ 1303 011a 0000     		.align	2
+ 1304              	.LC47:
+ 1305 011c 7B226F6B 		.ascii	"{\"ok\":false,\"error\":\"unknown_cmd\"}\015\012\000"
+ 1305      223A6661 
+ 1305      6C73652C 
+ 1305      22657272 
+ 1305      6F72223A 
+ 1306              		.section	.text.FaultCommand_ExecuteJson,"ax",%progbits
+ 1307              		.align	1
+ 1308              		.syntax unified
+ 1309              		.thumb
+ 1310              		.thumb_func
+ 1312              	FaultCommand_ExecuteJson:
+ 1313              	.LVL104:
+ 1314              	.LFB167:
+ 371:App/Src/fault_command.c **** 
+ 372:App/Src/fault_command.c **** static void FaultCommand_ExecuteJson(const char *json, FaultCommand_WriteFn write, void *context)
+ 373:App/Src/fault_command.c **** {
+ 1315              		.loc 1 373 1 is_stmt 1 view -0
+ 1316              		.cfi_startproc
+ 1317              		@ args = 0, pretend = 0, frame = 40
+ 1318              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1319              		.loc 1 373 1 is_stmt 0 view .LVU243
+ 1320 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 1321              	.LCFI38:
+ 1322              		.cfi_def_cfa_offset 20
+ 1323              		.cfi_offset 4, -20
+ 1324              		.cfi_offset 5, -16
+ 1325              		.cfi_offset 6, -12
+ 1326              		.cfi_offset 7, -8
+ 1327              		.cfi_offset 14, -4
+ 1328 0002 8DB0     		sub	sp, sp, #52
+ 1329              	.LCFI39:
+ 1330              		.cfi_def_cfa_offset 72
+ 1331 0004 0446     		mov	r4, r0
+ 1332 0006 0E46     		mov	r6, r1
+ 1333 0008 1746     		mov	r7, r2
+ 374:App/Src/fault_command.c ****   char cmd[16];
+ 1334              		.loc 1 374 3 is_stmt 1 view .LVU244
+ 375:App/Src/fault_command.c ****   uint32_t cell;
+ 1335              		.loc 1 375 3 view .LVU245
+ 376:App/Src/fault_command.c ****   uint32_t mv;
+ 1336              		.loc 1 376 3 view .LVU246
+ 377:App/Src/fault_command.c ****   uint32_t duration;
+ 1337              		.loc 1 377 3 view .LVU247
+ 378:App/Src/fault_command.c ****   uint32_t slew;
+ 1338              		.loc 1 378 3 view .LVU248
+ 379:App/Src/fault_command.c ****   HAL_StatusTypeDef status = HAL_ERROR;
+ 1339              		.loc 1 379 3 view .LVU249
+ 1340              	.LVL105:
+ 380:App/Src/fault_command.c **** 
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 35
+
+
+ 381:App/Src/fault_command.c ****   if (FaultCommand_JsonGetString(json, "cmd", cmd, sizeof(cmd)) == 0U)
+ 1341              		.loc 1 381 3 view .LVU250
+ 1342              		.loc 1 381 7 is_stmt 0 view .LVU251
+ 1343 000a 1023     		movs	r3, #16
+ 1344 000c 08AA     		add	r2, sp, #32
+ 1345              	.LVL106:
+ 1346              		.loc 1 381 7 view .LVU252
+ 1347 000e 8849     		ldr	r1, .L125
+ 1348              	.LVL107:
+ 1349              		.loc 1 381 7 view .LVU253
+ 1350 0010 FFF7FEFF 		bl	FaultCommand_JsonGetString
+ 1351              	.LVL108:
+ 1352              		.loc 1 381 6 discriminator 1 view .LVU254
+ 1353 0014 40B3     		cbz	r0, .L111
+ 382:App/Src/fault_command.c ****   {
+ 383:App/Src/fault_command.c ****     FaultCommand_Write(write, context, "{\"ok\":false,\"error\":\"missing_cmd\"}\r\n");
+ 384:App/Src/fault_command.c ****     return;
+ 385:App/Src/fault_command.c ****   }
+ 386:App/Src/fault_command.c **** 
+ 387:App/Src/fault_command.c ****   if (strcmp(cmd, "status") == 0)
+ 1354              		.loc 1 387 3 is_stmt 1 view .LVU255
+ 1355              		.loc 1 387 7 is_stmt 0 view .LVU256
+ 1356 0016 8749     		ldr	r1, .L125+4
+ 1357 0018 08A8     		add	r0, sp, #32
+ 1358 001a FFF7FEFF 		bl	strcmp
+ 1359              	.LVL109:
+ 1360              		.loc 1 387 6 discriminator 1 view .LVU257
+ 1361 001e 48B3     		cbz	r0, .L112
+ 388:App/Src/fault_command.c ****   {
+ 389:App/Src/fault_command.c ****     FaultCommand_WriteJsonStatus(write, context);
+ 390:App/Src/fault_command.c ****     return;
+ 391:App/Src/fault_command.c ****   }
+ 392:App/Src/fault_command.c **** 
+ 393:App/Src/fault_command.c ****   if (strcmp(cmd, "help") == 0)
+ 1362              		.loc 1 393 3 is_stmt 1 view .LVU258
+ 1363              		.loc 1 393 7 is_stmt 0 view .LVU259
+ 1364 0020 8549     		ldr	r1, .L125+8
+ 1365 0022 08A8     		add	r0, sp, #32
+ 1366 0024 FFF7FEFF 		bl	strcmp
+ 1367              	.LVL110:
+ 1368              		.loc 1 393 6 discriminator 1 view .LVU260
+ 1369 0028 48B3     		cbz	r0, .L113
+ 394:App/Src/fault_command.c ****   {
+ 395:App/Src/fault_command.c ****     FaultCommand_Write(write,
+ 396:App/Src/fault_command.c ****                        context,
+ 397:App/Src/fault_command.c ****                        "{\"ok\":true,\"commands\":[\"status\",\"normal\",\"set\",\"ov\",\"uv\",\"di
+ 398:App/Src/fault_command.c ****     return;
+ 399:App/Src/fault_command.c ****   }
+ 400:App/Src/fault_command.c **** 
+ 401:App/Src/fault_command.c ****   if (strcmp(cmd, "normal") == 0)
+ 1370              		.loc 1 401 3 is_stmt 1 view .LVU261
+ 1371              		.loc 1 401 7 is_stmt 0 view .LVU262
+ 1372 002a 8449     		ldr	r1, .L125+12
+ 1373 002c 08A8     		add	r0, sp, #32
+ 1374 002e FFF7FEFF 		bl	strcmp
+ 1375              	.LVL111:
+ 1376              		.loc 1 401 6 discriminator 1 view .LVU263
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 36
+
+
+ 1377 0032 50B3     		cbz	r0, .L114
+ 402:App/Src/fault_command.c ****   {
+ 403:App/Src/fault_command.c ****     mv = FaultCommand_JsonGetUintDefault(json, "mv", VOLTAGE_SIM_DEFAULT_NORMAL_MV);
+ 404:App/Src/fault_command.c ****     status = FaultCommand_RunNormal((uint16_t)mv);
+ 405:App/Src/fault_command.c ****   }
+ 406:App/Src/fault_command.c ****   else if (strcmp(cmd, "set") == 0)
+ 1378              		.loc 1 406 8 is_stmt 1 view .LVU264
+ 1379              		.loc 1 406 12 is_stmt 0 view .LVU265
+ 1380 0034 8249     		ldr	r1, .L125+16
+ 1381 0036 08A8     		add	r0, sp, #32
+ 1382 0038 FFF7FEFF 		bl	strcmp
+ 1383              	.LVL112:
+ 1384              		.loc 1 406 11 discriminator 1 view .LVU266
+ 1385 003c 0028     		cmp	r0, #0
+ 1386 003e 36D0     		beq	.L115
+ 407:App/Src/fault_command.c ****   {
+ 408:App/Src/fault_command.c ****     if ((FaultCommand_JsonGetUint(json, "cell", &cell) != 0U) &&
+ 409:App/Src/fault_command.c ****         (FaultCommand_JsonGetUint(json, "mv", &mv) != 0U))
+ 410:App/Src/fault_command.c ****     {
+ 411:App/Src/fault_command.c ****       status = FaultCommand_RunSet((uint8_t)cell, (uint16_t)mv);
+ 412:App/Src/fault_command.c ****     }
+ 413:App/Src/fault_command.c ****   }
+ 414:App/Src/fault_command.c ****   else if ((strcmp(cmd, "ov") == 0) || (strcmp(cmd, "over_voltage") == 0))
+ 1387              		.loc 1 414 8 is_stmt 1 view .LVU267
+ 1388              		.loc 1 414 13 is_stmt 0 view .LVU268
+ 1389 0040 8049     		ldr	r1, .L125+20
+ 1390 0042 08A8     		add	r0, sp, #32
+ 1391 0044 FFF7FEFF 		bl	strcmp
+ 1392              	.LVL113:
+ 1393              		.loc 1 414 11 discriminator 1 view .LVU269
+ 1394 0048 28B1     		cbz	r0, .L93
+ 1395              		.loc 1 414 41 discriminator 2 view .LVU270
+ 1396 004a 7F49     		ldr	r1, .L125+24
+ 1397 004c 08A8     		add	r0, sp, #32
+ 1398 004e FFF7FEFF 		bl	strcmp
+ 1399              	.LVL114:
+ 1400              		.loc 1 414 37 discriminator 3 view .LVU271
+ 1401 0052 0028     		cmp	r0, #0
+ 1402 0054 60D1     		bne	.L94
+ 1403              	.L93:
+ 415:App/Src/fault_command.c ****   {
+ 416:App/Src/fault_command.c ****     if (FaultCommand_JsonGetUint(json, "cell", &cell) != 0U)
+ 1404              		.loc 1 416 5 is_stmt 1 view .LVU272
+ 1405              		.loc 1 416 9 is_stmt 0 view .LVU273
+ 1406 0056 07AA     		add	r2, sp, #28
+ 1407 0058 7C49     		ldr	r1, .L125+28
+ 1408 005a 2046     		mov	r0, r4
+ 1409 005c FFF7FEFF 		bl	FaultCommand_JsonGetUint
+ 1410              	.LVL115:
+ 1411              		.loc 1 416 8 discriminator 1 view .LVU274
+ 1412 0060 0028     		cmp	r0, #0
+ 1413 0062 3CD1     		bne	.L116
+ 379:App/Src/fault_command.c **** 
+ 1414              		.loc 1 379 21 view .LVU275
+ 1415 0064 0123     		movs	r3, #1
+ 1416 0066 1BE0     		b	.L91
+ 1417              	.L111:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 37
+
+
+ 383:App/Src/fault_command.c ****     return;
+ 1418              		.loc 1 383 5 is_stmt 1 view .LVU276
+ 1419 0068 794A     		ldr	r2, .L125+32
+ 1420 006a 3946     		mov	r1, r7
+ 1421 006c 3046     		mov	r0, r6
+ 1422 006e FFF7FEFF 		bl	FaultCommand_Write
+ 1423              	.LVL116:
+ 384:App/Src/fault_command.c ****   }
+ 1424              		.loc 1 384 5 view .LVU277
+ 1425 0072 1AE0     		b	.L85
+ 1426              	.L112:
+ 389:App/Src/fault_command.c ****     return;
+ 1427              		.loc 1 389 5 view .LVU278
+ 1428 0074 3946     		mov	r1, r7
+ 1429 0076 3046     		mov	r0, r6
+ 1430 0078 FFF7FEFF 		bl	FaultCommand_WriteJsonStatus
+ 1431              	.LVL117:
+ 390:App/Src/fault_command.c ****   }
+ 1432              		.loc 1 390 5 view .LVU279
+ 1433 007c 15E0     		b	.L85
+ 1434              	.L113:
+ 395:App/Src/fault_command.c ****                        context,
+ 1435              		.loc 1 395 5 view .LVU280
+ 1436 007e 754A     		ldr	r2, .L125+36
+ 1437 0080 3946     		mov	r1, r7
+ 1438 0082 3046     		mov	r0, r6
+ 1439 0084 FFF7FEFF 		bl	FaultCommand_Write
+ 1440              	.LVL118:
+ 398:App/Src/fault_command.c ****   }
+ 1441              		.loc 1 398 5 view .LVU281
+ 1442 0088 0FE0     		b	.L85
+ 1443              	.L114:
+ 403:App/Src/fault_command.c ****     status = FaultCommand_RunNormal((uint16_t)mv);
+ 1444              		.loc 1 403 5 view .LVU282
+ 403:App/Src/fault_command.c ****     status = FaultCommand_RunNormal((uint16_t)mv);
+ 1445              		.loc 1 403 10 is_stmt 0 view .LVU283
+ 1446 008a 4FF44862 		mov	r2, #3200
+ 1447 008e 7249     		ldr	r1, .L125+40
+ 1448 0090 2046     		mov	r0, r4
+ 1449 0092 FFF7FEFF 		bl	FaultCommand_JsonGetUintDefault
+ 1450              	.LVL119:
+ 403:App/Src/fault_command.c ****     status = FaultCommand_RunNormal((uint16_t)mv);
+ 1451              		.loc 1 403 8 discriminator 1 view .LVU284
+ 1452 0096 0690     		str	r0, [sp, #24]
+ 404:App/Src/fault_command.c ****   }
+ 1453              		.loc 1 404 5 is_stmt 1 view .LVU285
+ 404:App/Src/fault_command.c ****   }
+ 1454              		.loc 1 404 14 is_stmt 0 view .LVU286
+ 1455 0098 80B2     		uxth	r0, r0
+ 1456 009a FFF7FEFF 		bl	FaultCommand_RunNormal
+ 1457              	.LVL120:
+ 1458 009e 0346     		mov	r3, r0
+ 1459              	.LVL121:
+ 1460              	.L91:
+ 417:App/Src/fault_command.c ****     {
+ 418:App/Src/fault_command.c ****       mv = FaultCommand_JsonGetUintDefault(json, "mv", VOLTAGE_SIM_DEFAULT_OV_MV);
+ 419:App/Src/fault_command.c ****       duration = FaultCommand_JsonGetUintDefault(json, "duration_ms", FAULT_COMMAND_DEFAULT_DURATIO
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 38
+
+
+ 420:App/Src/fault_command.c ****       slew = FaultCommand_JsonGetUintDefault(json, "slew_mv_per_ms", FAULT_COMMAND_DEFAULT_SLEW_MV_
+ 421:App/Src/fault_command.c ****       status = FaultCommand_RunOverVoltage((uint8_t)cell, (uint16_t)mv, duration, (uint16_t)slew);
+ 422:App/Src/fault_command.c ****     }
+ 423:App/Src/fault_command.c ****   }
+ 424:App/Src/fault_command.c ****   else if ((strcmp(cmd, "uv") == 0) || (strcmp(cmd, "under_voltage") == 0))
+ 425:App/Src/fault_command.c ****   {
+ 426:App/Src/fault_command.c ****     if (FaultCommand_JsonGetUint(json, "cell", &cell) != 0U)
+ 427:App/Src/fault_command.c ****     {
+ 428:App/Src/fault_command.c ****       mv = FaultCommand_JsonGetUintDefault(json, "mv", VOLTAGE_SIM_DEFAULT_UV_MV);
+ 429:App/Src/fault_command.c ****       duration = FaultCommand_JsonGetUintDefault(json, "duration_ms", FAULT_COMMAND_DEFAULT_DURATIO
+ 430:App/Src/fault_command.c ****       slew = FaultCommand_JsonGetUintDefault(json, "slew_mv_per_ms", FAULT_COMMAND_DEFAULT_SLEW_MV_
+ 431:App/Src/fault_command.c ****       status = FaultCommand_RunUnderVoltage((uint8_t)cell, (uint16_t)mv, duration, (uint16_t)slew);
+ 432:App/Src/fault_command.c ****     }
+ 433:App/Src/fault_command.c ****   }
+ 434:App/Src/fault_command.c ****   else if (strcmp(cmd, "diff") == 0)
+ 435:App/Src/fault_command.c ****   {
+ 436:App/Src/fault_command.c ****     uint32_t highCell;
+ 437:App/Src/fault_command.c ****     uint32_t highMv;
+ 438:App/Src/fault_command.c ****     uint32_t lowCell;
+ 439:App/Src/fault_command.c ****     uint32_t lowMv;
+ 440:App/Src/fault_command.c **** 
+ 441:App/Src/fault_command.c ****     if ((FaultCommand_JsonGetUint(json, "high_cell", &highCell) != 0U) &&
+ 442:App/Src/fault_command.c ****         (FaultCommand_JsonGetUint(json, "high_mv", &highMv) != 0U) &&
+ 443:App/Src/fault_command.c ****         (FaultCommand_JsonGetUint(json, "low_cell", &lowCell) != 0U) &&
+ 444:App/Src/fault_command.c ****         (FaultCommand_JsonGetUint(json, "low_mv", &lowMv) != 0U))
+ 445:App/Src/fault_command.c ****     {
+ 446:App/Src/fault_command.c ****       duration = FaultCommand_JsonGetUintDefault(json, "duration_ms", FAULT_COMMAND_DEFAULT_DURATIO
+ 447:App/Src/fault_command.c ****       slew = FaultCommand_JsonGetUintDefault(json, "slew_mv_per_ms", FAULT_COMMAND_DEFAULT_SLEW_MV_
+ 448:App/Src/fault_command.c ****       status = FaultCommand_RunDiff((uint8_t)highCell,
+ 449:App/Src/fault_command.c ****                                     (uint16_t)highMv,
+ 450:App/Src/fault_command.c ****                                     (uint8_t)lowCell,
+ 451:App/Src/fault_command.c ****                                     (uint16_t)lowMv,
+ 452:App/Src/fault_command.c ****                                     duration,
+ 453:App/Src/fault_command.c ****                                     (uint16_t)slew);
+ 454:App/Src/fault_command.c ****     }
+ 455:App/Src/fault_command.c ****   }
+ 456:App/Src/fault_command.c ****   else if (strcmp(cmd, "clear") == 0)
+ 457:App/Src/fault_command.c ****   {
+ 458:App/Src/fault_command.c ****     if (FaultCommand_JsonGetUint(json, "cell", &cell) != 0U)
+ 459:App/Src/fault_command.c ****     {
+ 460:App/Src/fault_command.c ****       status = VoltageSim_ClearCellFault((uint8_t)cell);
+ 461:App/Src/fault_command.c ****     }
+ 462:App/Src/fault_command.c ****     else
+ 463:App/Src/fault_command.c ****     {
+ 464:App/Src/fault_command.c ****       status = VoltageSim_ClearAllFaults();
+ 465:App/Src/fault_command.c ****     }
+ 466:App/Src/fault_command.c ****   }
+ 467:App/Src/fault_command.c ****   else
+ 468:App/Src/fault_command.c ****   {
+ 469:App/Src/fault_command.c ****     FaultCommand_Write(write, context, "{\"ok\":false,\"error\":\"unknown_cmd\"}\r\n");
+ 470:App/Src/fault_command.c ****     return;
+ 471:App/Src/fault_command.c ****   }
+ 472:App/Src/fault_command.c **** 
+ 473:App/Src/fault_command.c ****   FaultCommand_WriteJsonResult(write, context, cmd, status);
+ 1461              		.loc 1 473 3 is_stmt 1 view .LVU287
+ 1462 00a0 08AA     		add	r2, sp, #32
+ 1463 00a2 3946     		mov	r1, r7
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 39
+
+
+ 1464 00a4 3046     		mov	r0, r6
+ 1465 00a6 FFF7FEFF 		bl	FaultCommand_WriteJsonResult
+ 1466              	.LVL122:
+ 1467              	.L85:
+ 474:App/Src/fault_command.c **** }
+ 1468              		.loc 1 474 1 is_stmt 0 view .LVU288
+ 1469 00aa 0DB0     		add	sp, sp, #52
+ 1470              	.LCFI40:
+ 1471              		.cfi_remember_state
+ 1472              		.cfi_def_cfa_offset 20
+ 1473              		@ sp needed
+ 1474 00ac F0BD     		pop	{r4, r5, r6, r7, pc}
+ 1475              	.LVL123:
+ 1476              	.L115:
+ 1477              	.LCFI41:
+ 1478              		.cfi_restore_state
+ 408:App/Src/fault_command.c ****         (FaultCommand_JsonGetUint(json, "mv", &mv) != 0U))
+ 1479              		.loc 1 408 5 is_stmt 1 view .LVU289
+ 408:App/Src/fault_command.c ****         (FaultCommand_JsonGetUint(json, "mv", &mv) != 0U))
+ 1480              		.loc 1 408 10 is_stmt 0 view .LVU290
+ 1481 00ae 07AA     		add	r2, sp, #28
+ 1482 00b0 6649     		ldr	r1, .L125+28
+ 1483 00b2 2046     		mov	r0, r4
+ 1484 00b4 FFF7FEFF 		bl	FaultCommand_JsonGetUint
+ 1485              	.LVL124:
+ 408:App/Src/fault_command.c ****         (FaultCommand_JsonGetUint(json, "mv", &mv) != 0U))
+ 1486              		.loc 1 408 8 discriminator 1 view .LVU291
+ 1487 00b8 08B9     		cbnz	r0, .L117
+ 379:App/Src/fault_command.c **** 
+ 1488              		.loc 1 379 21 view .LVU292
+ 1489 00ba 0123     		movs	r3, #1
+ 1490 00bc F0E7     		b	.L91
+ 1491              	.L117:
+ 409:App/Src/fault_command.c ****     {
+ 1492              		.loc 1 409 10 view .LVU293
+ 1493 00be 06AA     		add	r2, sp, #24
+ 1494 00c0 6549     		ldr	r1, .L125+40
+ 1495 00c2 2046     		mov	r0, r4
+ 1496 00c4 FFF7FEFF 		bl	FaultCommand_JsonGetUint
+ 1497              	.LVL125:
+ 408:App/Src/fault_command.c ****         (FaultCommand_JsonGetUint(json, "mv", &mv) != 0U))
+ 1498              		.loc 1 408 63 discriminator 2 view .LVU294
+ 1499 00c8 08B9     		cbnz	r0, .L118
+ 379:App/Src/fault_command.c **** 
+ 1500              		.loc 1 379 21 view .LVU295
+ 1501 00ca 0123     		movs	r3, #1
+ 1502 00cc E8E7     		b	.L91
+ 1503              	.L118:
+ 411:App/Src/fault_command.c ****     }
+ 1504              		.loc 1 411 7 is_stmt 1 view .LVU296
+ 411:App/Src/fault_command.c ****     }
+ 1505              		.loc 1 411 16 is_stmt 0 view .LVU297
+ 1506 00ce BDF81810 		ldrh	r1, [sp, #24]
+ 1507 00d2 9DF81C00 		ldrb	r0, [sp, #28]	@ zero_extendqisi2
+ 1508 00d6 FFF7FEFF 		bl	FaultCommand_RunSet
+ 1509              	.LVL126:
+ 1510 00da 0346     		mov	r3, r0
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 40
+
+
+ 1511              	.LVL127:
+ 411:App/Src/fault_command.c ****     }
+ 1512              		.loc 1 411 16 view .LVU298
+ 1513 00dc E0E7     		b	.L91
+ 1514              	.LVL128:
+ 1515              	.L116:
+ 418:App/Src/fault_command.c ****       duration = FaultCommand_JsonGetUintDefault(json, "duration_ms", FAULT_COMMAND_DEFAULT_DURATIO
+ 1516              		.loc 1 418 7 is_stmt 1 view .LVU299
+ 418:App/Src/fault_command.c ****       duration = FaultCommand_JsonGetUintDefault(json, "duration_ms", FAULT_COMMAND_DEFAULT_DURATIO
+ 1517              		.loc 1 418 12 is_stmt 0 view .LVU300
+ 1518 00de 41F29412 		movw	r2, #4500
+ 1519 00e2 5D49     		ldr	r1, .L125+40
+ 1520 00e4 2046     		mov	r0, r4
+ 1521 00e6 FFF7FEFF 		bl	FaultCommand_JsonGetUintDefault
+ 1522              	.LVL129:
+ 418:App/Src/fault_command.c ****       duration = FaultCommand_JsonGetUintDefault(json, "duration_ms", FAULT_COMMAND_DEFAULT_DURATIO
+ 1523              		.loc 1 418 10 discriminator 1 view .LVU301
+ 1524 00ea 0690     		str	r0, [sp, #24]
+ 419:App/Src/fault_command.c ****       slew = FaultCommand_JsonGetUintDefault(json, "slew_mv_per_ms", FAULT_COMMAND_DEFAULT_SLEW_MV_
+ 1525              		.loc 1 419 7 is_stmt 1 view .LVU302
+ 419:App/Src/fault_command.c ****       slew = FaultCommand_JsonGetUintDefault(json, "slew_mv_per_ms", FAULT_COMMAND_DEFAULT_SLEW_MV_
+ 1526              		.loc 1 419 18 is_stmt 0 view .LVU303
+ 1527 00ec 6422     		movs	r2, #100
+ 1528 00ee 5B49     		ldr	r1, .L125+44
+ 1529 00f0 2046     		mov	r0, r4
+ 1530 00f2 FFF7FEFF 		bl	FaultCommand_JsonGetUintDefault
+ 1531              	.LVL130:
+ 1532 00f6 0546     		mov	r5, r0
+ 1533              	.LVL131:
+ 420:App/Src/fault_command.c ****       status = FaultCommand_RunOverVoltage((uint8_t)cell, (uint16_t)mv, duration, (uint16_t)slew);
+ 1534              		.loc 1 420 7 is_stmt 1 view .LVU304
+ 420:App/Src/fault_command.c ****       status = FaultCommand_RunOverVoltage((uint8_t)cell, (uint16_t)mv, duration, (uint16_t)slew);
+ 1535              		.loc 1 420 14 is_stmt 0 view .LVU305
+ 1536 00f8 40F6B832 		movw	r2, #3000
+ 1537 00fc 5849     		ldr	r1, .L125+48
+ 1538 00fe 2046     		mov	r0, r4
+ 1539              	.LVL132:
+ 420:App/Src/fault_command.c ****       status = FaultCommand_RunOverVoltage((uint8_t)cell, (uint16_t)mv, duration, (uint16_t)slew);
+ 1540              		.loc 1 420 14 view .LVU306
+ 1541 0100 FFF7FEFF 		bl	FaultCommand_JsonGetUintDefault
+ 1542              	.LVL133:
+ 421:App/Src/fault_command.c ****     }
+ 1543              		.loc 1 421 7 is_stmt 1 view .LVU307
+ 421:App/Src/fault_command.c ****     }
+ 1544              		.loc 1 421 16 is_stmt 0 view .LVU308
+ 1545 0104 83B2     		uxth	r3, r0
+ 1546 0106 2A46     		mov	r2, r5
+ 1547 0108 BDF81810 		ldrh	r1, [sp, #24]
+ 1548 010c 9DF81C00 		ldrb	r0, [sp, #28]	@ zero_extendqisi2
+ 1549              	.LVL134:
+ 421:App/Src/fault_command.c ****     }
+ 1550              		.loc 1 421 16 view .LVU309
+ 1551 0110 FFF7FEFF 		bl	FaultCommand_RunOverVoltage
+ 1552              	.LVL135:
+ 1553 0114 0346     		mov	r3, r0
+ 1554              	.LVL136:
+ 421:App/Src/fault_command.c ****     }
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 41
+
+
+ 1555              		.loc 1 421 16 view .LVU310
+ 1556 0116 C3E7     		b	.L91
+ 1557              	.LVL137:
+ 1558              	.L94:
+ 424:App/Src/fault_command.c ****   {
+ 1559              		.loc 1 424 8 is_stmt 1 view .LVU311
+ 424:App/Src/fault_command.c ****   {
+ 1560              		.loc 1 424 13 is_stmt 0 view .LVU312
+ 1561 0118 5249     		ldr	r1, .L125+52
+ 1562 011a 08A8     		add	r0, sp, #32
+ 1563 011c FFF7FEFF 		bl	strcmp
+ 1564              	.LVL138:
+ 424:App/Src/fault_command.c ****   {
+ 1565              		.loc 1 424 11 discriminator 1 view .LVU313
+ 1566 0120 20B1     		cbz	r0, .L95
+ 424:App/Src/fault_command.c ****   {
+ 1567              		.loc 1 424 41 discriminator 2 view .LVU314
+ 1568 0122 5149     		ldr	r1, .L125+56
+ 1569 0124 08A8     		add	r0, sp, #32
+ 1570 0126 FFF7FEFF 		bl	strcmp
+ 1571              	.LVL139:
+ 424:App/Src/fault_command.c ****   {
+ 1572              		.loc 1 424 37 discriminator 3 view .LVU315
+ 1573 012a 20BB     		cbnz	r0, .L96
+ 1574              	.L95:
+ 426:App/Src/fault_command.c ****     {
+ 1575              		.loc 1 426 5 is_stmt 1 view .LVU316
+ 426:App/Src/fault_command.c ****     {
+ 1576              		.loc 1 426 9 is_stmt 0 view .LVU317
+ 1577 012c 07AA     		add	r2, sp, #28
+ 1578 012e 4749     		ldr	r1, .L125+28
+ 1579 0130 2046     		mov	r0, r4
+ 1580 0132 FFF7FEFF 		bl	FaultCommand_JsonGetUint
+ 1581              	.LVL140:
+ 426:App/Src/fault_command.c ****     {
+ 1582              		.loc 1 426 8 discriminator 1 view .LVU318
+ 1583 0136 08B9     		cbnz	r0, .L119
+ 379:App/Src/fault_command.c **** 
+ 1584              		.loc 1 379 21 view .LVU319
+ 1585 0138 0123     		movs	r3, #1
+ 1586 013a B1E7     		b	.L91
+ 1587              	.L119:
+ 428:App/Src/fault_command.c ****       duration = FaultCommand_JsonGetUintDefault(json, "duration_ms", FAULT_COMMAND_DEFAULT_DURATIO
+ 1588              		.loc 1 428 7 is_stmt 1 view .LVU320
+ 428:App/Src/fault_command.c ****       duration = FaultCommand_JsonGetUintDefault(json, "duration_ms", FAULT_COMMAND_DEFAULT_DURATIO
+ 1589              		.loc 1 428 12 is_stmt 0 view .LVU321
+ 1590 013c 4FF47A72 		mov	r2, #1000
+ 1591 0140 4549     		ldr	r1, .L125+40
+ 1592 0142 2046     		mov	r0, r4
+ 1593 0144 FFF7FEFF 		bl	FaultCommand_JsonGetUintDefault
+ 1594              	.LVL141:
+ 428:App/Src/fault_command.c ****       duration = FaultCommand_JsonGetUintDefault(json, "duration_ms", FAULT_COMMAND_DEFAULT_DURATIO
+ 1595              		.loc 1 428 10 discriminator 1 view .LVU322
+ 1596 0148 0690     		str	r0, [sp, #24]
+ 429:App/Src/fault_command.c ****       slew = FaultCommand_JsonGetUintDefault(json, "slew_mv_per_ms", FAULT_COMMAND_DEFAULT_SLEW_MV_
+ 1597              		.loc 1 429 7 is_stmt 1 view .LVU323
+ 429:App/Src/fault_command.c ****       slew = FaultCommand_JsonGetUintDefault(json, "slew_mv_per_ms", FAULT_COMMAND_DEFAULT_SLEW_MV_
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 42
+
+
+ 1598              		.loc 1 429 18 is_stmt 0 view .LVU324
+ 1599 014a 6422     		movs	r2, #100
+ 1600 014c 4349     		ldr	r1, .L125+44
+ 1601 014e 2046     		mov	r0, r4
+ 1602 0150 FFF7FEFF 		bl	FaultCommand_JsonGetUintDefault
+ 1603              	.LVL142:
+ 1604 0154 0546     		mov	r5, r0
+ 1605              	.LVL143:
+ 430:App/Src/fault_command.c ****       status = FaultCommand_RunUnderVoltage((uint8_t)cell, (uint16_t)mv, duration, (uint16_t)slew);
+ 1606              		.loc 1 430 7 is_stmt 1 view .LVU325
+ 430:App/Src/fault_command.c ****       status = FaultCommand_RunUnderVoltage((uint8_t)cell, (uint16_t)mv, duration, (uint16_t)slew);
+ 1607              		.loc 1 430 14 is_stmt 0 view .LVU326
+ 1608 0156 40F6B832 		movw	r2, #3000
+ 1609 015a 4149     		ldr	r1, .L125+48
+ 1610 015c 2046     		mov	r0, r4
+ 1611              	.LVL144:
+ 430:App/Src/fault_command.c ****       status = FaultCommand_RunUnderVoltage((uint8_t)cell, (uint16_t)mv, duration, (uint16_t)slew);
+ 1612              		.loc 1 430 14 view .LVU327
+ 1613 015e FFF7FEFF 		bl	FaultCommand_JsonGetUintDefault
+ 1614              	.LVL145:
+ 431:App/Src/fault_command.c ****     }
+ 1615              		.loc 1 431 7 is_stmt 1 view .LVU328
+ 431:App/Src/fault_command.c ****     }
+ 1616              		.loc 1 431 16 is_stmt 0 view .LVU329
+ 1617 0162 83B2     		uxth	r3, r0
+ 1618 0164 2A46     		mov	r2, r5
+ 1619 0166 BDF81810 		ldrh	r1, [sp, #24]
+ 1620 016a 9DF81C00 		ldrb	r0, [sp, #28]	@ zero_extendqisi2
+ 1621              	.LVL146:
+ 431:App/Src/fault_command.c ****     }
+ 1622              		.loc 1 431 16 view .LVU330
+ 1623 016e FFF7FEFF 		bl	FaultCommand_RunUnderVoltage
+ 1624              	.LVL147:
+ 1625 0172 0346     		mov	r3, r0
+ 1626              	.LVL148:
+ 431:App/Src/fault_command.c ****     }
+ 1627              		.loc 1 431 16 view .LVU331
+ 1628 0174 94E7     		b	.L91
+ 1629              	.LVL149:
+ 1630              	.L96:
+ 434:App/Src/fault_command.c ****   {
+ 1631              		.loc 1 434 8 is_stmt 1 view .LVU332
+ 434:App/Src/fault_command.c ****   {
+ 1632              		.loc 1 434 12 is_stmt 0 view .LVU333
+ 1633 0176 3D49     		ldr	r1, .L125+60
+ 1634 0178 08A8     		add	r0, sp, #32
+ 1635 017a FFF7FEFF 		bl	strcmp
+ 1636              	.LVL150:
+ 434:App/Src/fault_command.c ****   {
+ 1637              		.loc 1 434 11 discriminator 1 view .LVU334
+ 1638 017e 90B1     		cbz	r0, .L120
+ 456:App/Src/fault_command.c ****   {
+ 1639              		.loc 1 456 8 is_stmt 1 view .LVU335
+ 456:App/Src/fault_command.c ****   {
+ 1640              		.loc 1 456 12 is_stmt 0 view .LVU336
+ 1641 0180 3B49     		ldr	r1, .L125+64
+ 1642 0182 08A8     		add	r0, sp, #32
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 43
+
+
+ 1643 0184 FFF7FEFF 		bl	strcmp
+ 1644              	.LVL151:
+ 456:App/Src/fault_command.c ****   {
+ 1645              		.loc 1 456 11 discriminator 1 view .LVU337
+ 1646 0188 0028     		cmp	r0, #0
+ 1647 018a 4BD1     		bne	.L99
+ 458:App/Src/fault_command.c ****     {
+ 1648              		.loc 1 458 5 is_stmt 1 view .LVU338
+ 458:App/Src/fault_command.c ****     {
+ 1649              		.loc 1 458 9 is_stmt 0 view .LVU339
+ 1650 018c 07AA     		add	r2, sp, #28
+ 1651 018e 2F49     		ldr	r1, .L125+28
+ 1652 0190 2046     		mov	r0, r4
+ 1653 0192 FFF7FEFF 		bl	FaultCommand_JsonGetUint
+ 1654              	.LVL152:
+ 458:App/Src/fault_command.c ****     {
+ 1655              		.loc 1 458 8 discriminator 1 view .LVU340
+ 1656 0196 0028     		cmp	r0, #0
+ 1657 0198 40D0     		beq	.L100
+ 460:App/Src/fault_command.c ****     }
+ 1658              		.loc 1 460 7 is_stmt 1 view .LVU341
+ 460:App/Src/fault_command.c ****     }
+ 1659              		.loc 1 460 16 is_stmt 0 view .LVU342
+ 1660 019a 9DF81C00 		ldrb	r0, [sp, #28]	@ zero_extendqisi2
+ 1661 019e FFF7FEFF 		bl	VoltageSim_ClearCellFault
+ 1662              	.LVL153:
+ 1663 01a2 0346     		mov	r3, r0
+ 1664              	.LVL154:
+ 460:App/Src/fault_command.c ****     }
+ 1665              		.loc 1 460 16 view .LVU343
+ 1666 01a4 7CE7     		b	.L91
+ 1667              	.LVL155:
+ 1668              	.L120:
+ 1669              	.LBB8:
+ 436:App/Src/fault_command.c ****     uint32_t highMv;
+ 1670              		.loc 1 436 5 is_stmt 1 view .LVU344
+ 437:App/Src/fault_command.c ****     uint32_t lowCell;
+ 1671              		.loc 1 437 5 view .LVU345
+ 438:App/Src/fault_command.c ****     uint32_t lowMv;
+ 1672              		.loc 1 438 5 view .LVU346
+ 439:App/Src/fault_command.c **** 
+ 1673              		.loc 1 439 5 view .LVU347
+ 441:App/Src/fault_command.c ****         (FaultCommand_JsonGetUint(json, "high_mv", &highMv) != 0U) &&
+ 1674              		.loc 1 441 5 view .LVU348
+ 441:App/Src/fault_command.c ****         (FaultCommand_JsonGetUint(json, "high_mv", &highMv) != 0U) &&
+ 1675              		.loc 1 441 10 is_stmt 0 view .LVU349
+ 1676 01a6 02AA     		add	r2, sp, #8
+ 1677 01a8 3249     		ldr	r1, .L125+68
+ 1678 01aa 2046     		mov	r0, r4
+ 1679 01ac FFF7FEFF 		bl	FaultCommand_JsonGetUint
+ 1680              	.LVL156:
+ 441:App/Src/fault_command.c ****         (FaultCommand_JsonGetUint(json, "high_mv", &highMv) != 0U) &&
+ 1681              		.loc 1 441 8 discriminator 1 view .LVU350
+ 1682 01b0 08B9     		cbnz	r0, .L121
+ 1683              	.LBE8:
+ 379:App/Src/fault_command.c **** 
+ 1684              		.loc 1 379 21 view .LVU351
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 44
+
+
+ 1685 01b2 0123     		movs	r3, #1
+ 1686 01b4 74E7     		b	.L91
+ 1687              	.L121:
+ 1688              	.LBB9:
+ 442:App/Src/fault_command.c ****         (FaultCommand_JsonGetUint(json, "low_cell", &lowCell) != 0U) &&
+ 1689              		.loc 1 442 10 view .LVU352
+ 1690 01b6 03AA     		add	r2, sp, #12
+ 1691 01b8 2F49     		ldr	r1, .L125+72
+ 1692 01ba 2046     		mov	r0, r4
+ 1693 01bc FFF7FEFF 		bl	FaultCommand_JsonGetUint
+ 1694              	.LVL157:
+ 441:App/Src/fault_command.c ****         (FaultCommand_JsonGetUint(json, "high_mv", &highMv) != 0U) &&
+ 1695              		.loc 1 441 72 discriminator 2 view .LVU353
+ 1696 01c0 08B9     		cbnz	r0, .L122
+ 1697              	.LBE9:
+ 379:App/Src/fault_command.c **** 
+ 1698              		.loc 1 379 21 view .LVU354
+ 1699 01c2 0123     		movs	r3, #1
+ 1700 01c4 6CE7     		b	.L91
+ 1701              	.L122:
+ 1702              	.LBB10:
+ 443:App/Src/fault_command.c ****         (FaultCommand_JsonGetUint(json, "low_mv", &lowMv) != 0U))
+ 1703              		.loc 1 443 10 view .LVU355
+ 1704 01c6 04AA     		add	r2, sp, #16
+ 1705 01c8 2C49     		ldr	r1, .L125+76
+ 1706 01ca 2046     		mov	r0, r4
+ 1707 01cc FFF7FEFF 		bl	FaultCommand_JsonGetUint
+ 1708              	.LVL158:
+ 442:App/Src/fault_command.c ****         (FaultCommand_JsonGetUint(json, "low_cell", &lowCell) != 0U) &&
+ 1709              		.loc 1 442 68 view .LVU356
+ 1710 01d0 08B9     		cbnz	r0, .L123
+ 1711              	.LBE10:
+ 379:App/Src/fault_command.c **** 
+ 1712              		.loc 1 379 21 view .LVU357
+ 1713 01d2 0123     		movs	r3, #1
+ 1714 01d4 64E7     		b	.L91
+ 1715              	.L123:
+ 1716              	.LBB11:
+ 444:App/Src/fault_command.c ****     {
+ 1717              		.loc 1 444 10 view .LVU358
+ 1718 01d6 05AA     		add	r2, sp, #20
+ 1719 01d8 2949     		ldr	r1, .L125+80
+ 1720 01da 2046     		mov	r0, r4
+ 1721 01dc FFF7FEFF 		bl	FaultCommand_JsonGetUint
+ 1722              	.LVL159:
+ 443:App/Src/fault_command.c ****         (FaultCommand_JsonGetUint(json, "low_mv", &lowMv) != 0U))
+ 1723              		.loc 1 443 70 view .LVU359
+ 1724 01e0 08B9     		cbnz	r0, .L124
+ 1725              	.LBE11:
+ 379:App/Src/fault_command.c **** 
+ 1726              		.loc 1 379 21 view .LVU360
+ 1727 01e2 0123     		movs	r3, #1
+ 379:App/Src/fault_command.c **** 
+ 1728              		.loc 1 379 21 view .LVU361
+ 1729 01e4 5CE7     		b	.L91
+ 1730              	.L124:
+ 1731              	.LBB12:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 45
+
+
+ 446:App/Src/fault_command.c ****       slew = FaultCommand_JsonGetUintDefault(json, "slew_mv_per_ms", FAULT_COMMAND_DEFAULT_SLEW_MV_
+ 1732              		.loc 1 446 7 is_stmt 1 view .LVU362
+ 446:App/Src/fault_command.c ****       slew = FaultCommand_JsonGetUintDefault(json, "slew_mv_per_ms", FAULT_COMMAND_DEFAULT_SLEW_MV_
+ 1733              		.loc 1 446 18 is_stmt 0 view .LVU363
+ 1734 01e6 6422     		movs	r2, #100
+ 1735 01e8 1C49     		ldr	r1, .L125+44
+ 1736 01ea 2046     		mov	r0, r4
+ 1737 01ec FFF7FEFF 		bl	FaultCommand_JsonGetUintDefault
+ 1738              	.LVL160:
+ 1739 01f0 0546     		mov	r5, r0
+ 1740              	.LVL161:
+ 447:App/Src/fault_command.c ****       status = FaultCommand_RunDiff((uint8_t)highCell,
+ 1741              		.loc 1 447 7 is_stmt 1 view .LVU364
+ 447:App/Src/fault_command.c ****       status = FaultCommand_RunDiff((uint8_t)highCell,
+ 1742              		.loc 1 447 14 is_stmt 0 view .LVU365
+ 1743 01f2 40F6B832 		movw	r2, #3000
+ 1744 01f6 1A49     		ldr	r1, .L125+48
+ 1745 01f8 2046     		mov	r0, r4
+ 1746              	.LVL162:
+ 447:App/Src/fault_command.c ****       status = FaultCommand_RunDiff((uint8_t)highCell,
+ 1747              		.loc 1 447 14 view .LVU366
+ 1748 01fa FFF7FEFF 		bl	FaultCommand_JsonGetUintDefault
+ 1749              	.LVL163:
+ 448:App/Src/fault_command.c ****                                     (uint16_t)highMv,
+ 1750              		.loc 1 448 7 is_stmt 1 view .LVU367
+ 448:App/Src/fault_command.c ****                                     (uint16_t)highMv,
+ 1751              		.loc 1 448 16 is_stmt 0 view .LVU368
+ 1752 01fe 80B2     		uxth	r0, r0
+ 1753              	.LVL164:
+ 448:App/Src/fault_command.c ****                                     (uint16_t)highMv,
+ 1754              		.loc 1 448 16 view .LVU369
+ 1755 0200 0190     		str	r0, [sp, #4]
+ 1756 0202 0095     		str	r5, [sp]
+ 1757 0204 BDF81430 		ldrh	r3, [sp, #20]
+ 1758 0208 9DF81020 		ldrb	r2, [sp, #16]	@ zero_extendqisi2
+ 1759 020c BDF80C10 		ldrh	r1, [sp, #12]
+ 1760 0210 9DF80800 		ldrb	r0, [sp, #8]	@ zero_extendqisi2
+ 1761 0214 FFF7FEFF 		bl	FaultCommand_RunDiff
+ 1762              	.LVL165:
+ 1763 0218 0346     		mov	r3, r0
+ 1764              	.LVL166:
+ 448:App/Src/fault_command.c ****                                     (uint16_t)highMv,
+ 1765              		.loc 1 448 16 view .LVU370
+ 1766 021a 41E7     		b	.L91
+ 1767              	.LVL167:
+ 1768              	.L100:
+ 448:App/Src/fault_command.c ****                                     (uint16_t)highMv,
+ 1769              		.loc 1 448 16 view .LVU371
+ 1770              	.LBE12:
+ 464:App/Src/fault_command.c ****     }
+ 1771              		.loc 1 464 7 is_stmt 1 view .LVU372
+ 464:App/Src/fault_command.c ****     }
+ 1772              		.loc 1 464 16 is_stmt 0 view .LVU373
+ 1773 021c FFF7FEFF 		bl	VoltageSim_ClearAllFaults
+ 1774              	.LVL168:
+ 1775 0220 0346     		mov	r3, r0
+ 1776              	.LVL169:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 46
+
+
+ 464:App/Src/fault_command.c ****     }
+ 1777              		.loc 1 464 16 view .LVU374
+ 1778 0222 3DE7     		b	.L91
+ 1779              	.LVL170:
+ 1780              	.L99:
+ 469:App/Src/fault_command.c ****     return;
+ 1781              		.loc 1 469 5 is_stmt 1 view .LVU375
+ 1782 0224 174A     		ldr	r2, .L125+84
+ 1783 0226 3946     		mov	r1, r7
+ 1784 0228 3046     		mov	r0, r6
+ 1785 022a FFF7FEFF 		bl	FaultCommand_Write
+ 1786              	.LVL171:
+ 470:App/Src/fault_command.c ****   }
+ 1787              		.loc 1 470 5 view .LVU376
+ 1788 022e 3CE7     		b	.L85
+ 1789              	.L126:
+ 1790              		.align	2
+ 1791              	.L125:
+ 1792 0230 00000000 		.word	.LC26
+ 1793 0234 2C000000 		.word	.LC28
+ 1794 0238 34000000 		.word	.LC29
+ 1795 023c 88000000 		.word	.LC31
+ 1796 0240 94000000 		.word	.LC33
+ 1797 0244 A0000000 		.word	.LC35
+ 1798 0248 A4000000 		.word	.LC36
+ 1799 024c 98000000 		.word	.LC34
+ 1800 0250 04000000 		.word	.LC27
+ 1801 0254 3C000000 		.word	.LC30
+ 1802 0258 90000000 		.word	.LC32
+ 1803 025c B4000000 		.word	.LC37
+ 1804 0260 C0000000 		.word	.LC38
+ 1805 0264 D0000000 		.word	.LC39
+ 1806 0268 D4000000 		.word	.LC40
+ 1807 026c E4000000 		.word	.LC41
+ 1808 0270 14010000 		.word	.LC46
+ 1809 0274 EC000000 		.word	.LC42
+ 1810 0278 F8000000 		.word	.LC43
+ 1811 027c 00010000 		.word	.LC44
+ 1812 0280 0C010000 		.word	.LC45
+ 1813 0284 1C010000 		.word	.LC47
+ 1814              		.cfi_endproc
+ 1815              	.LFE167:
+ 1817              		.section	.rodata.FaultCommand_ExecuteText.str1.4,"aMS",%progbits,1
+ 1818              		.align	2
+ 1819              	.LC48:
+ 1820 0000 3F00     		.ascii	"?\000"
+ 1821 0002 0000     		.align	2
+ 1822              	.LC49:
+ 1823 0004 6E6F726D 		.ascii	"normal %u\000"
+ 1823      616C2025 
+ 1823      7500
+ 1824 000e 0000     		.align	2
+ 1825              	.LC50:
+ 1826 0010 73657420 		.ascii	"set %u %u\000"
+ 1826      25752025 
+ 1826      7500
+ 1827 001a 0000     		.align	2
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 47
+
+
+ 1828              	.LC51:
+ 1829 001c 6F762000 		.ascii	"ov \000"
+ 1830              		.align	2
+ 1831              	.LC52:
+ 1832 0020 6F762025 		.ascii	"ov %u %u %lu %u\000"
+ 1832      75202575 
+ 1832      20256C75 
+ 1832      20257500 
+ 1833              		.align	2
+ 1834              	.LC53:
+ 1835 0030 75762000 		.ascii	"uv \000"
+ 1836              		.align	2
+ 1837              	.LC54:
+ 1838 0034 75762025 		.ascii	"uv %u %u %lu %u\000"
+ 1838      75202575 
+ 1838      20256C75 
+ 1838      20257500 
+ 1839              		.align	2
+ 1840              	.LC55:
+ 1841 0044 64696666 		.ascii	"diff \000"
+ 1841      2000
+ 1842 004a 0000     		.align	2
+ 1843              	.LC56:
+ 1844 004c 64696666 		.ascii	"diff %u %u %u %u %lu %u\000"
+ 1844      20257520 
+ 1844      25752025 
+ 1844      75202575 
+ 1844      20256C75 
+ 1845              		.align	2
+ 1846              	.LC57:
+ 1847 0064 636C6561 		.ascii	"clear %u\000"
+ 1847      72202575 
+ 1847      00
+ 1848 006d 000000   		.align	2
+ 1849              	.LC58:
+ 1850 0070 5B636D64 		.ascii	"[cmd] unknown: %s\015\012\000"
+ 1850      5D20756E 
+ 1850      6B6E6F77 
+ 1850      6E3A2025 
+ 1850      730D0A00 
+ 1851              		.section	.text.FaultCommand_ExecuteText,"ax",%progbits
+ 1852              		.align	1
+ 1853              		.syntax unified
+ 1854              		.thumb
+ 1855              		.thumb_func
+ 1857              	FaultCommand_ExecuteText:
+ 1858              	.LVL172:
+ 1859              	.LFB162:
+ 171:App/Src/fault_command.c ****   unsigned int cell;
+ 1860              		.loc 1 171 1 view -0
+ 1861              		.cfi_startproc
+ 1862              		@ args = 0, pretend = 0, frame = 40
+ 1863              		@ frame_needed = 0, uses_anonymous_args = 0
+ 171:App/Src/fault_command.c ****   unsigned int cell;
+ 1864              		.loc 1 171 1 is_stmt 0 view .LVU378
+ 1865 0000 70B5     		push	{r4, r5, r6, lr}
+ 1866              	.LCFI42:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 48
+
+
+ 1867              		.cfi_def_cfa_offset 16
+ 1868              		.cfi_offset 4, -16
+ 1869              		.cfi_offset 5, -12
+ 1870              		.cfi_offset 6, -8
+ 1871              		.cfi_offset 14, -4
+ 1872 0002 8EB0     		sub	sp, sp, #56
+ 1873              	.LCFI43:
+ 1874              		.cfi_def_cfa_offset 72
+ 1875 0004 0446     		mov	r4, r0
+ 1876 0006 0D46     		mov	r5, r1
+ 1877 0008 1646     		mov	r6, r2
+ 172:App/Src/fault_command.c ****   unsigned int millivolts;
+ 1878              		.loc 1 172 3 is_stmt 1 view .LVU379
+ 173:App/Src/fault_command.c ****   unsigned int target;
+ 1879              		.loc 1 173 3 view .LVU380
+ 174:App/Src/fault_command.c ****   unsigned long duration;
+ 1880              		.loc 1 174 3 view .LVU381
+ 175:App/Src/fault_command.c ****   unsigned int slew;
+ 1881              		.loc 1 175 3 view .LVU382
+ 176:App/Src/fault_command.c **** 
+ 1882              		.loc 1 176 3 view .LVU383
+ 178:App/Src/fault_command.c ****   {
+ 1883              		.loc 1 178 3 view .LVU384
+ 178:App/Src/fault_command.c ****   {
+ 1884              		.loc 1 178 8 is_stmt 0 view .LVU385
+ 1885 000a 8949     		ldr	r1, .L155
+ 1886              	.LVL173:
+ 178:App/Src/fault_command.c ****   {
+ 1887              		.loc 1 178 8 view .LVU386
+ 1888 000c FFF7FEFF 		bl	strcmp
+ 1889              	.LVL174:
+ 178:App/Src/fault_command.c ****   {
+ 1890              		.loc 1 178 6 discriminator 1 view .LVU387
+ 1891 0010 20B1     		cbz	r0, .L128
+ 178:App/Src/fault_command.c ****   {
+ 1892              		.loc 1 178 39 discriminator 2 view .LVU388
+ 1893 0012 8849     		ldr	r1, .L155+4
+ 1894 0014 2046     		mov	r0, r4
+ 1895 0016 FFF7FEFF 		bl	strcmp
+ 1896              	.LVL175:
+ 178:App/Src/fault_command.c ****   {
+ 1897              		.loc 1 178 35 discriminator 3 view .LVU389
+ 1898 001a 28B9     		cbnz	r0, .L129
+ 1899              	.L128:
+ 180:App/Src/fault_command.c ****   }
+ 1900              		.loc 1 180 5 is_stmt 1 view .LVU390
+ 1901 001c 3146     		mov	r1, r6
+ 1902 001e 2846     		mov	r0, r5
+ 1903 0020 FFF7FEFF 		bl	FaultCommand_WriteTextHelp
+ 1904              	.LVL176:
+ 1905              	.L127:
+ 289:App/Src/fault_command.c **** 
+ 1906              		.loc 1 289 1 is_stmt 0 view .LVU391
+ 1907 0024 0EB0     		add	sp, sp, #56
+ 1908              	.LCFI44:
+ 1909              		.cfi_remember_state
+ 1910              		.cfi_def_cfa_offset 16
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 49
+
+
+ 1911              		@ sp needed
+ 1912 0026 70BD     		pop	{r4, r5, r6, pc}
+ 1913              	.LVL177:
+ 1914              	.L129:
+ 1915              	.LCFI45:
+ 1916              		.cfi_restore_state
+ 182:App/Src/fault_command.c ****   {
+ 1917              		.loc 1 182 8 is_stmt 1 view .LVU392
+ 182:App/Src/fault_command.c ****   {
+ 1918              		.loc 1 182 12 is_stmt 0 view .LVU393
+ 1919 0028 8349     		ldr	r1, .L155+8
+ 1920 002a 2046     		mov	r0, r4
+ 1921 002c FFF7FEFF 		bl	strcmp
+ 1922              	.LVL178:
+ 182:App/Src/fault_command.c ****   {
+ 1923              		.loc 1 182 11 discriminator 1 view .LVU394
+ 1924 0030 C0B1     		cbz	r0, .L145
+ 186:App/Src/fault_command.c ****   {
+ 1925              		.loc 1 186 8 is_stmt 1 view .LVU395
+ 186:App/Src/fault_command.c ****   {
+ 1926              		.loc 1 186 12 is_stmt 0 view .LVU396
+ 1927 0032 0622     		movs	r2, #6
+ 1928 0034 8149     		ldr	r1, .L155+12
+ 1929 0036 2046     		mov	r0, r4
+ 1930 0038 FFF7FEFF 		bl	strncmp
+ 1931              	.LVL179:
+ 186:App/Src/fault_command.c ****   {
+ 1932              		.loc 1 186 11 discriminator 1 view .LVU397
+ 1933 003c B8B9     		cbnz	r0, .L132
+ 188:App/Src/fault_command.c ****     (void)sscanf(line, "normal %u", &millivolts);
+ 1934              		.loc 1 188 5 is_stmt 1 view .LVU398
+ 188:App/Src/fault_command.c ****     (void)sscanf(line, "normal %u", &millivolts);
+ 1935              		.loc 1 188 16 is_stmt 0 view .LVU399
+ 1936 003e 4FF44863 		mov	r3, #3200
+ 1937 0042 0C93     		str	r3, [sp, #48]
+ 189:App/Src/fault_command.c ****     FaultCommand_WriteTextResult(write,
+ 1938              		.loc 1 189 5 is_stmt 1 view .LVU400
+ 189:App/Src/fault_command.c ****     FaultCommand_WriteTextResult(write,
+ 1939              		.loc 1 189 11 is_stmt 0 view .LVU401
+ 1940 0044 0CAA     		add	r2, sp, #48
+ 1941 0046 7E49     		ldr	r1, .L155+16
+ 1942 0048 2046     		mov	r0, r4
+ 1943 004a FFF7FEFF 		bl	sscanf
+ 1944              	.LVL180:
+ 190:App/Src/fault_command.c ****                                  context,
+ 1945              		.loc 1 190 5 is_stmt 1 view .LVU402
+ 1946 004e BDF83000 		ldrh	r0, [sp, #48]
+ 1947 0052 FFF7FEFF 		bl	FaultCommand_RunNormal
+ 1948              	.LVL181:
+ 1949 0056 0346     		mov	r3, r0
+ 190:App/Src/fault_command.c ****                                  context,
+ 1950              		.loc 1 190 5 is_stmt 0 discriminator 1 view .LVU403
+ 1951 0058 784A     		ldr	r2, .L155+12
+ 1952 005a 3146     		mov	r1, r6
+ 1953 005c 2846     		mov	r0, r5
+ 1954 005e FFF7FEFF 		bl	FaultCommand_WriteTextResult
+ 1955              	.LVL182:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 50
+
+
+ 1956 0062 DFE7     		b	.L127
+ 1957              	.L145:
+ 184:App/Src/fault_command.c ****   }
+ 1958              		.loc 1 184 5 is_stmt 1 view .LVU404
+ 1959 0064 3146     		mov	r1, r6
+ 1960 0066 2846     		mov	r0, r5
+ 1961 0068 FFF7FEFF 		bl	FaultCommand_WriteTextStatus
+ 1962              	.LVL183:
+ 1963 006c DAE7     		b	.L127
+ 1964              	.L132:
+ 195:App/Src/fault_command.c ****   {
+ 1965              		.loc 1 195 8 view .LVU405
+ 195:App/Src/fault_command.c ****   {
+ 1966              		.loc 1 195 12 is_stmt 0 view .LVU406
+ 1967 006e 0CAB     		add	r3, sp, #48
+ 1968 0070 0DAA     		add	r2, sp, #52
+ 1969 0072 7449     		ldr	r1, .L155+20
+ 1970 0074 2046     		mov	r0, r4
+ 1971 0076 FFF7FEFF 		bl	sscanf
+ 1972              	.LVL184:
+ 195:App/Src/fault_command.c ****   {
+ 1973              		.loc 1 195 11 discriminator 1 view .LVU407
+ 1974 007a 0228     		cmp	r0, #2
+ 1975 007c 25D0     		beq	.L146
+ 202:App/Src/fault_command.c ****   {
+ 1976              		.loc 1 202 8 is_stmt 1 view .LVU408
+ 202:App/Src/fault_command.c ****   {
+ 1977              		.loc 1 202 12 is_stmt 0 view .LVU409
+ 1978 007e 0322     		movs	r2, #3
+ 1979 0080 7149     		ldr	r1, .L155+24
+ 1980 0082 2046     		mov	r0, r4
+ 1981 0084 FFF7FEFF 		bl	strncmp
+ 1982              	.LVL185:
+ 202:App/Src/fault_command.c ****   {
+ 1983              		.loc 1 202 11 discriminator 1 view .LVU410
+ 1984 0088 60B3     		cbz	r0, .L147
+ 222:App/Src/fault_command.c ****   {
+ 1985              		.loc 1 222 8 is_stmt 1 view .LVU411
+ 222:App/Src/fault_command.c ****   {
+ 1986              		.loc 1 222 12 is_stmt 0 view .LVU412
+ 1987 008a 0322     		movs	r2, #3
+ 1988 008c 6F49     		ldr	r1, .L155+28
+ 1989 008e 2046     		mov	r0, r4
+ 1990 0090 FFF7FEFF 		bl	strncmp
+ 1991              	.LVL186:
+ 222:App/Src/fault_command.c ****   {
+ 1992              		.loc 1 222 11 discriminator 1 view .LVU413
+ 1993 0094 0028     		cmp	r0, #0
+ 1994 0096 51D0     		beq	.L148
+ 242:App/Src/fault_command.c ****   {
+ 1995              		.loc 1 242 8 is_stmt 1 view .LVU414
+ 242:App/Src/fault_command.c ****   {
+ 1996              		.loc 1 242 12 is_stmt 0 view .LVU415
+ 1997 0098 0522     		movs	r2, #5
+ 1998 009a 6D49     		ldr	r1, .L155+32
+ 1999 009c 2046     		mov	r0, r4
+ 2000 009e FFF7FEFF 		bl	strncmp
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 51
+
+
+ 2001              	.LVL187:
+ 242:App/Src/fault_command.c ****   {
+ 2002              		.loc 1 242 11 discriminator 1 view .LVU416
+ 2003 00a2 0028     		cmp	r0, #0
+ 2004 00a4 76D0     		beq	.L149
+ 274:App/Src/fault_command.c ****   {
+ 2005              		.loc 1 274 8 is_stmt 1 view .LVU417
+ 274:App/Src/fault_command.c ****   {
+ 2006              		.loc 1 274 12 is_stmt 0 view .LVU418
+ 2007 00a6 0522     		movs	r2, #5
+ 2008 00a8 6A49     		ldr	r1, .L155+36
+ 2009 00aa 2046     		mov	r0, r4
+ 2010 00ac FFF7FEFF 		bl	strncmp
+ 2011              	.LVL188:
+ 274:App/Src/fault_command.c ****   {
+ 2012              		.loc 1 274 11 discriminator 1 view .LVU419
+ 2013 00b0 0028     		cmp	r0, #0
+ 2014 00b2 00F0A180 		beq	.L150
+ 285:App/Src/fault_command.c ****   {
+ 2015              		.loc 1 285 8 is_stmt 1 view .LVU420
+ 285:App/Src/fault_command.c ****   {
+ 2016              		.loc 1 285 12 is_stmt 0 view .LVU421
+ 2017 00b6 2378     		ldrb	r3, [r4]	@ zero_extendqisi2
+ 285:App/Src/fault_command.c ****   {
+ 2018              		.loc 1 285 11 view .LVU422
+ 2019 00b8 002B     		cmp	r3, #0
+ 2020 00ba B3D0     		beq	.L127
+ 287:App/Src/fault_command.c ****   }
+ 2021              		.loc 1 287 5 is_stmt 1 view .LVU423
+ 2022 00bc 2346     		mov	r3, r4
+ 2023 00be 664A     		ldr	r2, .L155+40
+ 2024 00c0 3146     		mov	r1, r6
+ 2025 00c2 2846     		mov	r0, r5
+ 2026 00c4 FFF7FEFF 		bl	FaultCommand_WriteFormat
+ 2027              	.LVL189:
+ 2028 00c8 ACE7     		b	.L127
+ 2029              	.L146:
+ 197:App/Src/fault_command.c ****                                  context,
+ 2030              		.loc 1 197 5 view .LVU424
+ 2031 00ca BDF83010 		ldrh	r1, [sp, #48]
+ 2032 00ce 9DF83400 		ldrb	r0, [sp, #52]	@ zero_extendqisi2
+ 2033 00d2 FFF7FEFF 		bl	FaultCommand_RunSet
+ 2034              	.LVL190:
+ 2035 00d6 0346     		mov	r3, r0
+ 197:App/Src/fault_command.c ****                                  context,
+ 2036              		.loc 1 197 5 is_stmt 0 discriminator 1 view .LVU425
+ 2037 00d8 604A     		ldr	r2, .L155+44
+ 2038 00da 3146     		mov	r1, r6
+ 2039 00dc 2846     		mov	r0, r5
+ 2040 00de FFF7FEFF 		bl	FaultCommand_WriteTextResult
+ 2041              	.LVL191:
+ 2042 00e2 9FE7     		b	.L127
+ 2043              	.L147:
+ 204:App/Src/fault_command.c ****     target = VOLTAGE_SIM_DEFAULT_OV_MV;
+ 2044              		.loc 1 204 5 is_stmt 1 view .LVU426
+ 204:App/Src/fault_command.c ****     target = VOLTAGE_SIM_DEFAULT_OV_MV;
+ 2045              		.loc 1 204 10 is_stmt 0 view .LVU427
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 52
+
+
+ 2046 00e4 0D90     		str	r0, [sp, #52]
+ 205:App/Src/fault_command.c ****     duration = FAULT_COMMAND_DEFAULT_DURATION_MS;
+ 2047              		.loc 1 205 5 is_stmt 1 view .LVU428
+ 205:App/Src/fault_command.c ****     duration = FAULT_COMMAND_DEFAULT_DURATION_MS;
+ 2048              		.loc 1 205 12 is_stmt 0 view .LVU429
+ 2049 00e6 41F29413 		movw	r3, #4500
+ 2050 00ea 0B93     		str	r3, [sp, #44]
+ 206:App/Src/fault_command.c ****     slew = FAULT_COMMAND_DEFAULT_SLEW_MV_PER_MS;
+ 2051              		.loc 1 206 5 is_stmt 1 view .LVU430
+ 206:App/Src/fault_command.c ****     slew = FAULT_COMMAND_DEFAULT_SLEW_MV_PER_MS;
+ 2052              		.loc 1 206 14 is_stmt 0 view .LVU431
+ 2053 00ec 6423     		movs	r3, #100
+ 2054 00ee 0A93     		str	r3, [sp, #40]
+ 207:App/Src/fault_command.c ****     if (sscanf(line, "ov %u %u %lu %u", &cell, &target, &duration, &slew) < 1)
+ 2055              		.loc 1 207 5 is_stmt 1 view .LVU432
+ 207:App/Src/fault_command.c ****     if (sscanf(line, "ov %u %u %lu %u", &cell, &target, &duration, &slew) < 1)
+ 2056              		.loc 1 207 10 is_stmt 0 view .LVU433
+ 2057 00f0 40F6B833 		movw	r3, #3000
+ 2058 00f4 0993     		str	r3, [sp, #36]
+ 208:App/Src/fault_command.c ****     {
+ 2059              		.loc 1 208 5 is_stmt 1 view .LVU434
+ 208:App/Src/fault_command.c ****     {
+ 2060              		.loc 1 208 9 is_stmt 0 view .LVU435
+ 2061 00f6 09AB     		add	r3, sp, #36
+ 2062 00f8 0193     		str	r3, [sp, #4]
+ 2063 00fa 0AAB     		add	r3, sp, #40
+ 2064 00fc 0093     		str	r3, [sp]
+ 2065 00fe 0BAB     		add	r3, sp, #44
+ 2066 0100 0DAA     		add	r2, sp, #52
+ 2067 0102 5749     		ldr	r1, .L155+48
+ 2068 0104 2046     		mov	r0, r4
+ 2069 0106 FFF7FEFF 		bl	sscanf
+ 2070              	.LVL192:
+ 208:App/Src/fault_command.c ****     {
+ 2071              		.loc 1 208 8 discriminator 1 view .LVU436
+ 2072 010a 0028     		cmp	r0, #0
+ 2073 010c 0FDD     		ble	.L151
+ 214:App/Src/fault_command.c ****                                  context,
+ 2074              		.loc 1 214 5 is_stmt 1 view .LVU437
+ 2075 010e BDF82430 		ldrh	r3, [sp, #36]
+ 2076 0112 0A9A     		ldr	r2, [sp, #40]
+ 2077 0114 BDF82C10 		ldrh	r1, [sp, #44]
+ 2078 0118 9DF83400 		ldrb	r0, [sp, #52]	@ zero_extendqisi2
+ 2079 011c FFF7FEFF 		bl	FaultCommand_RunOverVoltage
+ 2080              	.LVL193:
+ 2081 0120 0346     		mov	r3, r0
+ 214:App/Src/fault_command.c ****                                  context,
+ 2082              		.loc 1 214 5 is_stmt 0 discriminator 1 view .LVU438
+ 2083 0122 504A     		ldr	r2, .L155+52
+ 2084 0124 3146     		mov	r1, r6
+ 2085 0126 2846     		mov	r0, r5
+ 2086 0128 FFF7FEFF 		bl	FaultCommand_WriteTextResult
+ 2087              	.LVL194:
+ 2088 012c 7AE7     		b	.L127
+ 2089              	.L151:
+ 210:App/Src/fault_command.c ****       return;
+ 2090              		.loc 1 210 7 is_stmt 1 view .LVU439
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 53
+
+
+ 2091 012e 0123     		movs	r3, #1
+ 2092 0130 4C4A     		ldr	r2, .L155+52
+ 2093 0132 3146     		mov	r1, r6
+ 2094 0134 2846     		mov	r0, r5
+ 2095 0136 FFF7FEFF 		bl	FaultCommand_WriteTextResult
+ 2096              	.LVL195:
+ 211:App/Src/fault_command.c ****     }
+ 2097              		.loc 1 211 7 view .LVU440
+ 2098 013a 73E7     		b	.L127
+ 2099              	.L148:
+ 224:App/Src/fault_command.c ****     target = VOLTAGE_SIM_DEFAULT_UV_MV;
+ 2100              		.loc 1 224 5 view .LVU441
+ 224:App/Src/fault_command.c ****     target = VOLTAGE_SIM_DEFAULT_UV_MV;
+ 2101              		.loc 1 224 10 is_stmt 0 view .LVU442
+ 2102 013c 0D90     		str	r0, [sp, #52]
+ 225:App/Src/fault_command.c ****     duration = FAULT_COMMAND_DEFAULT_DURATION_MS;
+ 2103              		.loc 1 225 5 is_stmt 1 view .LVU443
+ 225:App/Src/fault_command.c ****     duration = FAULT_COMMAND_DEFAULT_DURATION_MS;
+ 2104              		.loc 1 225 12 is_stmt 0 view .LVU444
+ 2105 013e 4FF47A73 		mov	r3, #1000
+ 2106 0142 0B93     		str	r3, [sp, #44]
+ 226:App/Src/fault_command.c ****     slew = FAULT_COMMAND_DEFAULT_SLEW_MV_PER_MS;
+ 2107              		.loc 1 226 5 is_stmt 1 view .LVU445
+ 226:App/Src/fault_command.c ****     slew = FAULT_COMMAND_DEFAULT_SLEW_MV_PER_MS;
+ 2108              		.loc 1 226 14 is_stmt 0 view .LVU446
+ 2109 0144 6423     		movs	r3, #100
+ 2110 0146 0A93     		str	r3, [sp, #40]
+ 227:App/Src/fault_command.c ****     if (sscanf(line, "uv %u %u %lu %u", &cell, &target, &duration, &slew) < 1)
+ 2111              		.loc 1 227 5 is_stmt 1 view .LVU447
+ 227:App/Src/fault_command.c ****     if (sscanf(line, "uv %u %u %lu %u", &cell, &target, &duration, &slew) < 1)
+ 2112              		.loc 1 227 10 is_stmt 0 view .LVU448
+ 2113 0148 40F6B833 		movw	r3, #3000
+ 2114 014c 0993     		str	r3, [sp, #36]
+ 228:App/Src/fault_command.c ****     {
+ 2115              		.loc 1 228 5 is_stmt 1 view .LVU449
+ 228:App/Src/fault_command.c ****     {
+ 2116              		.loc 1 228 9 is_stmt 0 view .LVU450
+ 2117 014e 09AB     		add	r3, sp, #36
+ 2118 0150 0193     		str	r3, [sp, #4]
+ 2119 0152 0AAB     		add	r3, sp, #40
+ 2120 0154 0093     		str	r3, [sp]
+ 2121 0156 0BAB     		add	r3, sp, #44
+ 2122 0158 0DAA     		add	r2, sp, #52
+ 2123 015a 4349     		ldr	r1, .L155+56
+ 2124 015c 2046     		mov	r0, r4
+ 2125 015e FFF7FEFF 		bl	sscanf
+ 2126              	.LVL196:
+ 228:App/Src/fault_command.c ****     {
+ 2127              		.loc 1 228 8 discriminator 1 view .LVU451
+ 2128 0162 0028     		cmp	r0, #0
+ 2129 0164 0FDD     		ble	.L152
+ 234:App/Src/fault_command.c ****                                  context,
+ 2130              		.loc 1 234 5 is_stmt 1 view .LVU452
+ 2131 0166 BDF82430 		ldrh	r3, [sp, #36]
+ 2132 016a 0A9A     		ldr	r2, [sp, #40]
+ 2133 016c BDF82C10 		ldrh	r1, [sp, #44]
+ 2134 0170 9DF83400 		ldrb	r0, [sp, #52]	@ zero_extendqisi2
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 54
+
+
+ 2135 0174 FFF7FEFF 		bl	FaultCommand_RunUnderVoltage
+ 2136              	.LVL197:
+ 2137 0178 0346     		mov	r3, r0
+ 234:App/Src/fault_command.c ****                                  context,
+ 2138              		.loc 1 234 5 is_stmt 0 discriminator 1 view .LVU453
+ 2139 017a 3C4A     		ldr	r2, .L155+60
+ 2140 017c 3146     		mov	r1, r6
+ 2141 017e 2846     		mov	r0, r5
+ 2142 0180 FFF7FEFF 		bl	FaultCommand_WriteTextResult
+ 2143              	.LVL198:
+ 2144 0184 4EE7     		b	.L127
+ 2145              	.L152:
+ 230:App/Src/fault_command.c ****       return;
+ 2146              		.loc 1 230 7 is_stmt 1 view .LVU454
+ 2147 0186 0123     		movs	r3, #1
+ 2148 0188 384A     		ldr	r2, .L155+60
+ 2149 018a 3146     		mov	r1, r6
+ 2150 018c 2846     		mov	r0, r5
+ 2151 018e FFF7FEFF 		bl	FaultCommand_WriteTextResult
+ 2152              	.LVL199:
+ 231:App/Src/fault_command.c ****     }
+ 2153              		.loc 1 231 7 view .LVU455
+ 2154 0192 47E7     		b	.L127
+ 2155              	.L149:
+ 2156              	.LBB13:
+ 244:App/Src/fault_command.c ****     unsigned int highMv;
+ 2157              		.loc 1 244 5 view .LVU456
+ 245:App/Src/fault_command.c ****     unsigned int lowCell;
+ 2158              		.loc 1 245 5 view .LVU457
+ 246:App/Src/fault_command.c ****     unsigned int lowMv;
+ 2159              		.loc 1 246 5 view .LVU458
+ 247:App/Src/fault_command.c **** 
+ 2160              		.loc 1 247 5 view .LVU459
+ 249:App/Src/fault_command.c ****     slew = FAULT_COMMAND_DEFAULT_SLEW_MV_PER_MS;
+ 2161              		.loc 1 249 5 view .LVU460
+ 249:App/Src/fault_command.c ****     slew = FAULT_COMMAND_DEFAULT_SLEW_MV_PER_MS;
+ 2162              		.loc 1 249 14 is_stmt 0 view .LVU461
+ 2163 0194 6423     		movs	r3, #100
+ 2164 0196 0A93     		str	r3, [sp, #40]
+ 250:App/Src/fault_command.c ****     if (sscanf(line,
+ 2165              		.loc 1 250 5 is_stmt 1 view .LVU462
+ 250:App/Src/fault_command.c ****     if (sscanf(line,
+ 2166              		.loc 1 250 10 is_stmt 0 view .LVU463
+ 2167 0198 40F6B833 		movw	r3, #3000
+ 2168 019c 0993     		str	r3, [sp, #36]
+ 251:App/Src/fault_command.c ****                "diff %u %u %u %u %lu %u",
+ 2169              		.loc 1 251 5 is_stmt 1 view .LVU464
+ 251:App/Src/fault_command.c ****                "diff %u %u %u %u %lu %u",
+ 2170              		.loc 1 251 9 is_stmt 0 view .LVU465
+ 2171 019e 09AB     		add	r3, sp, #36
+ 2172 01a0 0393     		str	r3, [sp, #12]
+ 2173 01a2 0AAB     		add	r3, sp, #40
+ 2174 01a4 0293     		str	r3, [sp, #8]
+ 2175 01a6 08AB     		add	r3, sp, #32
+ 2176 01a8 0193     		str	r3, [sp, #4]
+ 2177 01aa 07AB     		add	r3, sp, #28
+ 2178 01ac 0093     		str	r3, [sp]
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 55
+
+
+ 2179 01ae 06AB     		add	r3, sp, #24
+ 2180 01b0 05AA     		add	r2, sp, #20
+ 2181 01b2 2F49     		ldr	r1, .L155+64
+ 2182 01b4 2046     		mov	r0, r4
+ 2183 01b6 FFF7FEFF 		bl	sscanf
+ 2184              	.LVL200:
+ 251:App/Src/fault_command.c ****                "diff %u %u %u %u %lu %u",
+ 2185              		.loc 1 251 8 discriminator 1 view .LVU466
+ 2186 01ba 0328     		cmp	r0, #3
+ 2187 01bc 15DD     		ble	.L153
+ 264:App/Src/fault_command.c ****                                  context,
+ 2188              		.loc 1 264 5 is_stmt 1 view .LVU467
+ 2189 01be BDF82430 		ldrh	r3, [sp, #36]
+ 2190 01c2 0193     		str	r3, [sp, #4]
+ 2191 01c4 0A9B     		ldr	r3, [sp, #40]
+ 2192 01c6 0093     		str	r3, [sp]
+ 2193 01c8 BDF82030 		ldrh	r3, [sp, #32]
+ 2194 01cc 9DF81C20 		ldrb	r2, [sp, #28]	@ zero_extendqisi2
+ 2195 01d0 BDF81810 		ldrh	r1, [sp, #24]
+ 2196 01d4 9DF81400 		ldrb	r0, [sp, #20]	@ zero_extendqisi2
+ 2197 01d8 FFF7FEFF 		bl	FaultCommand_RunDiff
+ 2198              	.LVL201:
+ 2199 01dc 0346     		mov	r3, r0
+ 264:App/Src/fault_command.c ****                                  context,
+ 2200              		.loc 1 264 5 is_stmt 0 discriminator 1 view .LVU468
+ 2201 01de 254A     		ldr	r2, .L155+68
+ 2202 01e0 3146     		mov	r1, r6
+ 2203 01e2 2846     		mov	r0, r5
+ 2204 01e4 FFF7FEFF 		bl	FaultCommand_WriteTextResult
+ 2205              	.LVL202:
+ 2206              	.LBE13:
+ 2207 01e8 1CE7     		b	.L127
+ 2208              	.L153:
+ 2209              	.LBB14:
+ 260:App/Src/fault_command.c ****       return;
+ 2210              		.loc 1 260 7 is_stmt 1 view .LVU469
+ 2211 01ea 0123     		movs	r3, #1
+ 2212 01ec 214A     		ldr	r2, .L155+68
+ 2213 01ee 3146     		mov	r1, r6
+ 2214 01f0 2846     		mov	r0, r5
+ 2215 01f2 FFF7FEFF 		bl	FaultCommand_WriteTextResult
+ 2216              	.LVL203:
+ 261:App/Src/fault_command.c ****     }
+ 2217              		.loc 1 261 7 view .LVU470
+ 2218 01f6 15E7     		b	.L127
+ 2219              	.L150:
+ 261:App/Src/fault_command.c ****     }
+ 2220              		.loc 1 261 7 is_stmt 0 view .LVU471
+ 2221              	.LBE14:
+ 276:App/Src/fault_command.c ****     {
+ 2222              		.loc 1 276 5 is_stmt 1 view .LVU472
+ 276:App/Src/fault_command.c ****     {
+ 2223              		.loc 1 276 9 is_stmt 0 view .LVU473
+ 2224 01f8 0DAA     		add	r2, sp, #52
+ 2225 01fa 1F49     		ldr	r1, .L155+72
+ 2226 01fc 2046     		mov	r0, r4
+ 2227 01fe FFF7FEFF 		bl	sscanf
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 56
+
+
+ 2228              	.LVL204:
+ 276:App/Src/fault_command.c ****     {
+ 2229              		.loc 1 276 8 discriminator 1 view .LVU474
+ 2230 0202 0128     		cmp	r0, #1
+ 2231 0204 08D0     		beq	.L154
+ 282:App/Src/fault_command.c ****     }
+ 2232              		.loc 1 282 7 is_stmt 1 view .LVU475
+ 2233 0206 FFF7FEFF 		bl	VoltageSim_ClearAllFaults
+ 2234              	.LVL205:
+ 2235 020a 0346     		mov	r3, r0
+ 282:App/Src/fault_command.c ****     }
+ 2236              		.loc 1 282 7 is_stmt 0 discriminator 1 view .LVU476
+ 2237 020c 114A     		ldr	r2, .L155+36
+ 2238 020e 3146     		mov	r1, r6
+ 2239 0210 2846     		mov	r0, r5
+ 2240 0212 FFF7FEFF 		bl	FaultCommand_WriteTextResult
+ 2241              	.LVL206:
+ 2242 0216 05E7     		b	.L127
+ 2243              	.L154:
+ 278:App/Src/fault_command.c ****     }
+ 2244              		.loc 1 278 7 is_stmt 1 view .LVU477
+ 2245 0218 9DF83400 		ldrb	r0, [sp, #52]	@ zero_extendqisi2
+ 2246 021c FFF7FEFF 		bl	VoltageSim_ClearCellFault
+ 2247              	.LVL207:
+ 2248 0220 0346     		mov	r3, r0
+ 278:App/Src/fault_command.c ****     }
+ 2249              		.loc 1 278 7 is_stmt 0 discriminator 1 view .LVU478
+ 2250 0222 0C4A     		ldr	r2, .L155+36
+ 2251 0224 3146     		mov	r1, r6
+ 2252 0226 2846     		mov	r0, r5
+ 2253 0228 FFF7FEFF 		bl	FaultCommand_WriteTextResult
+ 2254              	.LVL208:
+ 2255 022c FAE6     		b	.L127
+ 2256              	.L156:
+ 2257 022e 00BF     		.align	2
+ 2258              	.L155:
+ 2259 0230 34000000 		.word	.LC29
+ 2260 0234 00000000 		.word	.LC48
+ 2261 0238 2C000000 		.word	.LC28
+ 2262 023c 88000000 		.word	.LC31
+ 2263 0240 04000000 		.word	.LC49
+ 2264 0244 10000000 		.word	.LC50
+ 2265 0248 1C000000 		.word	.LC51
+ 2266 024c 30000000 		.word	.LC53
+ 2267 0250 44000000 		.word	.LC55
+ 2268 0254 14010000 		.word	.LC46
+ 2269 0258 70000000 		.word	.LC58
+ 2270 025c 94000000 		.word	.LC33
+ 2271 0260 20000000 		.word	.LC52
+ 2272 0264 A0000000 		.word	.LC35
+ 2273 0268 34000000 		.word	.LC54
+ 2274 026c D0000000 		.word	.LC39
+ 2275 0270 4C000000 		.word	.LC56
+ 2276 0274 E4000000 		.word	.LC41
+ 2277 0278 64000000 		.word	.LC57
+ 2278              		.cfi_endproc
+ 2279              	.LFE162:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 57
+
+
+ 2281              		.section	.text.FaultCommand_ExecuteLine,"ax",%progbits
+ 2282              		.align	1
+ 2283              		.global	FaultCommand_ExecuteLine
+ 2284              		.syntax unified
+ 2285              		.thumb
+ 2286              		.thumb_func
+ 2288              	FaultCommand_ExecuteLine:
+ 2289              	.LVL209:
+ 2290              	.LFB168:
+ 475:App/Src/fault_command.c **** 
+ 476:App/Src/fault_command.c **** void FaultCommand_ExecuteLine(const char *line, FaultCommand_WriteFn write, void *context)
+ 477:App/Src/fault_command.c **** {
+ 2291              		.loc 1 477 1 is_stmt 1 view -0
+ 2292              		.cfi_startproc
+ 2293              		@ args = 0, pretend = 0, frame = 0
+ 2294              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2295              		.loc 1 477 1 is_stmt 0 view .LVU480
+ 2296 0000 38B5     		push	{r3, r4, r5, lr}
+ 2297              	.LCFI46:
+ 2298              		.cfi_def_cfa_offset 16
+ 2299              		.cfi_offset 3, -16
+ 2300              		.cfi_offset 4, -12
+ 2301              		.cfi_offset 5, -8
+ 2302              		.cfi_offset 14, -4
+ 2303 0002 0C46     		mov	r4, r1
+ 2304 0004 1546     		mov	r5, r2
+ 478:App/Src/fault_command.c ****   line = FaultCommand_SkipSpaces(line);
+ 2305              		.loc 1 478 3 is_stmt 1 view .LVU481
+ 2306              		.loc 1 478 10 is_stmt 0 view .LVU482
+ 2307 0006 FFF7FEFF 		bl	FaultCommand_SkipSpaces
+ 2308              	.LVL210:
+ 479:App/Src/fault_command.c **** 
+ 480:App/Src/fault_command.c ****   if (line == NULL)
+ 2309              		.loc 1 480 3 is_stmt 1 view .LVU483
+ 2310              		.loc 1 480 6 is_stmt 0 view .LVU484
+ 2311 000a 30B1     		cbz	r0, .L157
+ 481:App/Src/fault_command.c ****   {
+ 482:App/Src/fault_command.c ****     return;
+ 483:App/Src/fault_command.c ****   }
+ 484:App/Src/fault_command.c **** 
+ 485:App/Src/fault_command.c ****   if (*line == '{')
+ 2312              		.loc 1 485 3 is_stmt 1 view .LVU485
+ 2313              		.loc 1 485 7 is_stmt 0 view .LVU486
+ 2314 000c 0278     		ldrb	r2, [r0]	@ zero_extendqisi2
+ 2315              		.loc 1 485 6 view .LVU487
+ 2316 000e 7B2A     		cmp	r2, #123
+ 2317 0010 04D0     		beq	.L161
+ 486:App/Src/fault_command.c ****   {
+ 487:App/Src/fault_command.c ****     FaultCommand_ExecuteJson(line, write, context);
+ 488:App/Src/fault_command.c ****   }
+ 489:App/Src/fault_command.c ****   else
+ 490:App/Src/fault_command.c ****   {
+ 491:App/Src/fault_command.c ****     FaultCommand_ExecuteText(line, write, context);
+ 2318              		.loc 1 491 5 is_stmt 1 view .LVU488
+ 2319 0012 2A46     		mov	r2, r5
+ 2320 0014 2146     		mov	r1, r4
+ 2321 0016 FFF7FEFF 		bl	FaultCommand_ExecuteText
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 58
+
+
+ 2322              	.LVL211:
+ 2323              	.L157:
+ 492:App/Src/fault_command.c ****   }
+ 493:App/Src/fault_command.c **** }
+ 2324              		.loc 1 493 1 is_stmt 0 view .LVU489
+ 2325 001a 38BD     		pop	{r3, r4, r5, pc}
+ 2326              	.LVL212:
+ 2327              	.L161:
+ 487:App/Src/fault_command.c ****   }
+ 2328              		.loc 1 487 5 is_stmt 1 view .LVU490
+ 2329 001c 2A46     		mov	r2, r5
+ 2330 001e 2146     		mov	r1, r4
+ 2331 0020 FFF7FEFF 		bl	FaultCommand_ExecuteJson
+ 2332              	.LVL213:
+ 487:App/Src/fault_command.c ****   }
+ 2333              		.loc 1 487 5 is_stmt 0 view .LVU491
+ 2334 0024 F9E7     		b	.L157
+ 2335              		.cfi_endproc
+ 2336              	.LFE168:
+ 2338              		.text
+ 2339              	.Letext0:
+ 2340              		.file 2 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 2341              		.file 3 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 2342              		.file 4 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
+ 2343              		.file 5 "App/Inc/fault_command.h"
+ 2344              		.file 6 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/lib/g
+ 2345              		.file 7 "App/Inc/voltage_sim.h"
+ 2346              		.file 8 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 2347              		.file 9 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 2348              		.file 10 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-
+ 2349              		.file 11 "<built-in>"
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 59
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 fault_command.c
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:20     .text.FaultCommand_Write:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:25     .text.FaultCommand_Write:00000000 FaultCommand_Write
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:65     .text.FaultCommand_SkipSpaces:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:70     .text.FaultCommand_SkipSpaces:00000000 FaultCommand_SkipSpaces
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:102    .rodata.FaultCommand_WriteTextHelp.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:137    .text.FaultCommand_WriteTextHelp:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:142    .text.FaultCommand_WriteTextHelp:00000000 FaultCommand_WriteTextHelp
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:224    .text.FaultCommand_WriteTextHelp:00000068 $d
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:238    .rodata.FaultCommand_FindJsonKey.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:242    .text.FaultCommand_FindJsonKey:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:247    .text.FaultCommand_FindJsonKey:00000000 FaultCommand_FindJsonKey
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:295    .text.FaultCommand_FindJsonKey:00000020 $d
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:300    .text.FaultCommand_JsonGetString:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:305    .text.FaultCommand_JsonGetString:00000000 FaultCommand_JsonGetString
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:443    .text.FaultCommand_WriteFormat:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:448    .text.FaultCommand_WriteFormat:00000000 FaultCommand_WriteFormat
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:521    .rodata.FaultCommand_WriteJsonStatus.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:539    .text.FaultCommand_WriteJsonStatus:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:544    .text.FaultCommand_WriteJsonStatus:00000000 FaultCommand_WriteJsonStatus
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:665    .text.FaultCommand_WriteJsonStatus:00000084 $d
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:674    .rodata.FaultCommand_WriteJsonResult.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:684    .text.FaultCommand_WriteJsonResult:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:689    .text.FaultCommand_WriteJsonResult:00000000 FaultCommand_WriteJsonResult
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:736    .text.FaultCommand_WriteJsonResult:00000018 $d
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:743    .rodata.FaultCommand_WriteTextStatus.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:757    .text.FaultCommand_WriteTextStatus:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:762    .text.FaultCommand_WriteTextStatus:00000000 FaultCommand_WriteTextStatus
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:884    .text.FaultCommand_WriteTextStatus:00000080 $d
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:892    .rodata.FaultCommand_WriteTextResult.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:902    .text.FaultCommand_WriteTextResult:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:907    .text.FaultCommand_WriteTextResult:00000000 FaultCommand_WriteTextResult
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:955    .text.FaultCommand_WriteTextResult:0000001c $d
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:962    .text.FaultCommand_RunNormal:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:967    .text.FaultCommand_RunNormal:00000000 FaultCommand_RunNormal
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:990    .text.FaultCommand_RunSet:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:995    .text.FaultCommand_RunSet:00000000 FaultCommand_RunSet
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:1018   .text.FaultCommand_RunOverVoltage:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:1023   .text.FaultCommand_RunOverVoltage:00000000 FaultCommand_RunOverVoltage
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:1046   .text.FaultCommand_RunUnderVoltage:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:1051   .text.FaultCommand_RunUnderVoltage:00000000 FaultCommand_RunUnderVoltage
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:1074   .text.FaultCommand_RunDiff:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:1079   .text.FaultCommand_RunDiff:00000000 FaultCommand_RunDiff
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:1114   .text.FaultCommand_JsonGetUint:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:1119   .text.FaultCommand_JsonGetUint:00000000 FaultCommand_JsonGetUint
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:1197   .text.FaultCommand_JsonGetUintDefault:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:1202   .text.FaultCommand_JsonGetUintDefault:00000000 FaultCommand_JsonGetUintDefault
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:1239   .rodata.FaultCommand_ExecuteJson.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:1307   .text.FaultCommand_ExecuteJson:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:1312   .text.FaultCommand_ExecuteJson:00000000 FaultCommand_ExecuteJson
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:1792   .text.FaultCommand_ExecuteJson:00000230 $d
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:1818   .rodata.FaultCommand_ExecuteText.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:1852   .text.FaultCommand_ExecuteText:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:1857   .text.FaultCommand_ExecuteText:00000000 FaultCommand_ExecuteText
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:2259   .text.FaultCommand_ExecuteText:00000230 $d
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:2282   .text.FaultCommand_ExecuteLine:00000000 $t
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccAneLyI.s 			page 60
+
+
+C:\Users\hh\AppData\Local\Temp\ccAneLyI.s:2288   .text.FaultCommand_ExecuteLine:00000000 FaultCommand_ExecuteLine
+
+UNDEFINED SYMBOLS
+snprintf
+strstr
+strchr
+vsnprintf
+VoltageSim_GetActiveFaultCount
+VoltageSim_GetLastCellVoltageMv
+VoltageSim_GetFaultTypeName
+VoltageSim_GetCellFaultInfo
+VoltageSim_SetAllCellsVoltageMv
+VoltageSim_SetCellVoltageMv
+VoltageSim_InjectCellOverVoltageRamp
+VoltageSim_InjectCellUnderVoltageRamp
+VoltageSim_InjectVoltageDifference
+strtoul
+strcmp
+VoltageSim_ClearCellFault
+VoltageSim_ClearAllFaults
+strncmp
+sscanf

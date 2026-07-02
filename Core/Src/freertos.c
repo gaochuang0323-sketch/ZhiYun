@@ -28,6 +28,9 @@
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 
+#include "fault_console.h"
+#include "voltage_sim.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -117,18 +120,32 @@ void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
   uint32_t heartbeat = 0;
+  uint32_t lastHeartbeatTick = 0;
 
   printf("[rtos] defaultTask started\r\n");
 
   /* Infinite loop */
   for(;;)
   {
-    HAL_GPIO_TogglePin(LED_YL_GPIO_Port, LED_YL_Pin);
-    HAL_GPIO_TogglePin(LED_RY_GPIO_Port, LED_RY_Pin);
-    printf("[rtos] heartbeat=%lu tick=%lu\r\n",
-           (unsigned long)heartbeat++,
-           (unsigned long)HAL_GetTick());
-    osDelay(1000);
+    uint32_t now = HAL_GetTick();
+
+    if (VoltageSim_Process(now) != HAL_OK)
+    {
+      printf("[rtos] voltage simulator process failed\r\n");
+    }
+    FaultConsole_Process();
+
+    if ((now - lastHeartbeatTick) >= 1000U)
+    {
+      lastHeartbeatTick = now;
+      HAL_GPIO_TogglePin(LED_YL_GPIO_Port, LED_YL_Pin);
+      HAL_GPIO_TogglePin(LED_RY_GPIO_Port, LED_RY_Pin);
+      printf("[rtos] heartbeat=%lu tick=%lu\r\n",
+             (unsigned long)heartbeat++,
+             (unsigned long)now);
+    }
+
+    osDelay(1);
   }
   /* USER CODE END StartDefaultTask */
 }

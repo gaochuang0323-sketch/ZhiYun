@@ -31,6 +31,8 @@
 #include <stdio.h>
 
 #include "dac81416.h"
+#include "fault_console.h"
+#include "voltage_sim.h"
 
 /* USER CODE END Includes */
 
@@ -117,7 +119,15 @@ int main(void)
     printf("[boot] DAC81416 init failed\r\n");
     Error_Handler();
   }
-  printf("[boot] DAC81416 SPI/GPIO ready\r\n");
+  printf("[boot] DAC81416 ready, VREF=2.5V internal, range=0-5V\r\n");
+  if (VoltageSim_Init(VOLTAGE_SIM_DEFAULT_NORMAL_MV) != HAL_OK)
+  {
+    printf("[boot] voltage simulator init failed\r\n");
+    Error_Handler();
+  }
+  printf("[boot] voltage simulator ready, cells=13, normal=%umV\r\n",
+         (unsigned int)VOLTAGE_SIM_DEFAULT_NORMAL_MV);
+  FaultConsole_Init();
 
   /* USER CODE END 2 */
 
