@@ -18,7 +18,19 @@ typedef enum
 
 typedef struct
 {
+  uint8_t enabled;
+  uint8_t isExtended;
+  uint32_t id;
+  uint32_t mask;
+  uint8_t minLength;
+  uint8_t dataMask[BSP_CAN_MAX_DATA_LEN];
+  uint8_t dataValue[BSP_CAN_MAX_DATA_LEN];
+} BmsResponseLog_Filter;
+
+typedef struct
+{
   uint8_t armed;
+  BmsResponseLog_Filter filter;
   BmsResponseLog_TriggerType triggerType;
   uint8_t primaryCell;
   uint8_t secondaryCell;
@@ -26,6 +38,7 @@ typedef struct
   uint16_t secondaryMillivolts;
   uint32_t triggerTick;
   uint32_t canFramesAfterTrigger;
+  uint32_t filterMissCount;
   uint8_t responseCaptured;
   uint32_t responseTick;
   uint32_t responseDelayMs;
@@ -43,6 +56,13 @@ void BmsResponseLog_RecordFaultTrigger(BmsResponseLog_TriggerType type,
 void BmsResponseLog_Clear(void);
 BmsResponseLog_Status BmsResponseLog_GetStatus(void);
 const char *BmsResponseLog_GetTriggerName(BmsResponseLog_TriggerType type);
+HAL_StatusTypeDef BmsResponseLog_SetFilter(uint8_t enabled,
+                                           uint8_t isExtended,
+                                           uint32_t id,
+                                           uint32_t mask);
+void BmsResponseLog_DisableFilter(void);
+HAL_StatusTypeDef BmsResponseLog_SetDataFilter(uint8_t index, uint8_t mask, uint8_t value);
+void BmsResponseLog_ClearDataFilter(void);
 
 #ifdef __cplusplus
 }

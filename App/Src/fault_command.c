@@ -73,6 +73,10 @@ static void FaultCommand_WriteTextHelp(FaultCommand_WriteFn write, void *context
   FaultCommand_Write(write, context, "  can send <std_id_hex> <len> [byte_hex ...]\r\n");
   FaultCommand_Write(write, context, "  log status\r\n");
   FaultCommand_Write(write, context, "  log clear\r\n");
+  FaultCommand_Write(write, context, "  log filter <std|ext> <id_hex> [mask_hex]\r\n");
+  FaultCommand_Write(write, context, "  log filter off\r\n");
+  FaultCommand_Write(write, context, "  log data <index> <mask_hex> <value_hex>\r\n");
+  FaultCommand_Write(write, context, "  log data clear\r\n");
   FaultCommand_Write(write, context, "  safe status\r\n");
   FaultCommand_Write(write, context, "  safe stop [safe_mv]\r\n");
   FaultCommand_Write(write, context, "  safe release\r\n");
@@ -129,7 +133,7 @@ static void FaultCommand_WriteTextBmsResponseLog(FaultCommand_WriteFn write, voi
 
   FaultCommand_WriteFormat(write,
                            context,
-                           "\r\n[log] armed=%u trigger=%s t1=%lums primary=C%02u/%umV secondary=C%02u/%umV can_after=%lu captured=%u",
+                           "\r\n[log] armed=%u trigger=%s t1=%lums primary=C%02u/%umV secondary=C%02u/%umV can_after=%lu filter_miss=%lu captured=%u",
                            status.armed,
                            BmsResponseLog_GetTriggerName(status.triggerType),
                            (unsigned long)status.triggerTick,
@@ -138,7 +142,26 @@ static void FaultCommand_WriteTextBmsResponseLog(FaultCommand_WriteFn write, voi
                            status.secondaryCell,
                            status.secondaryMillivolts,
                            (unsigned long)status.canFramesAfterTrigger,
+                           (unsigned long)status.filterMissCount,
                            status.responseCaptured);
+
+  FaultCommand_WriteFormat(write,
+                           context,
+                           "\r\n[log] filter enabled=%u type=%s id=0x%lX mask=0x%lX min_len=%u data=",
+                           status.filter.enabled,
+                           status.filter.isExtended ? "ext" : "std",
+                           (unsigned long)status.filter.id,
+                           (unsigned long)status.filter.mask,
+                           status.filter.minLength);
+  for (uint8_t index = 0U; index < BSP_CAN_MAX_DATA_LEN; index++)
+  {
+    FaultCommand_WriteFormat(write,
+                             context,
+                             "%s%02X/%02X",
+                             (index == 0U) ? "" : " ",
+                             status.filter.dataValue[index],
+                             status.filter.dataMask[index]);
+  }
 
   if (status.responseCaptured != 0U)
   {
@@ -361,20 +384,46 @@ static void FaultCommand_WriteJsonBmsResponseLog(FaultCommand_WriteFn write, voi
 
   FaultCommand_WriteFormat(write,
                            context,
-                           "{\"ok\":true,\"log\":{\"armed\":%u,\"trigger\":\"%s\",\"trigger_tick\":%lu,\"primary_cell\":%u,\"primary_mv\":%u,\"secondary_cell\":%u,\"secondary_mv\":%u,\"can_after\":%lu,\"captured\":%u,\"response_tick\":%lu,\"delay_ms\":%lu,\"response_id\":%lu,\"response_id_hex\":\"0x%lX\",\"response_ext\":%u,\"response_len\":%u,\"response_data\":[",
+                           "{\"ok\":true,\"log\":{\"armed\":%u,\"trigger\":\"%s\",\"trigger_tick\":%lu,",
                            status.armed,
                            BmsResponseLog_GetTriggerName(status.triggerType),
-                           (unsigned long)status.triggerTick,
+                           (unsigned long)status.triggerTick);
+  FaultCommand_WriteFormat(write,
+                           context,
+                           "\"primary_cell\":%u,\"primary_mv\":%u,\"secondary_cell\":%u,\"secondary_mv\":%u,",
                            status.primaryCell,
                            status.primaryMillivolts,
                            status.secondaryCell,
-                           status.secondaryMillivolts,
+                           status.secondaryMillivolts);
+  FaultCommand_WriteFormat(write,
+                           context,
+                           "\"can_after\":%lu,\"filter_miss\":%lu,\"captured\":%u,",
                            (unsigned long)status.canFramesAfterTrigger,
-                           status.responseCaptured,
+                           (unsigned long)status.filterMissCount,
+                           status.responseCaptured);
+  FaultCommand_WriteFormat(write,
+                           context,
+                           "\"filter\":{\"enabled\":%u,\"extended\":%u,\"id\":%lu,\"id_hex\":\"0x%lX\",",
+                           status.filter.enabled,
+                           status.filter.isExtended,
+                           (unsigned long)status.filter.id,
+                           (unsigned long)status.filter.id);
+  FaultCommand_WriteFormat(write,
+                           context,
+                           "\"mask\":%lu,\"mask_hex\":\"0x%lX\",\"min_len\":%u},",
+                           (unsigned long)status.filter.mask,
+                           (unsigned long)status.filter.mask,
+                           status.filter.minLength);
+  FaultCommand_WriteFormat(write,
+                           context,
+                           "\"response_tick\":%lu,\"delay_ms\":%lu,\"response_id\":%lu,\"response_id_hex\":\"0x%lX\",",
                            (unsigned long)status.responseTick,
                            (unsigned long)status.responseDelayMs,
                            (unsigned long)status.responseCanId,
-                           (unsigned long)status.responseCanId,
+                           (unsigned long)status.responseCanId);
+  FaultCommand_WriteFormat(write,
+                           context,
+                           "\"response_ext\":%u,\"response_len\":%u,\"response_data\":[",
                            status.responseCanIsExtended,
                            status.responseCanLength);
 
@@ -596,6 +645,70 @@ static HAL_StatusTypeDef FaultCommand_ParseCanSendText(const char *line)
   }
 
   return BspCan_SendClassic((uint32_t)id, 0U, data, (uint8_t)length);
+}
+
+static HAL_StatusTypeDef FaultCommand_ParseLogFilterText(const char *line)
+{
+  char type[8];
+  unsigned long id;
+  unsigned long mask;
+  int parsed;
+  uint8_t isExtended;
+
+  if (strcmp(line, "log filter off") == 0)
+  {
+    BmsResponseLog_DisableFilter();
+    return HAL_OK;
+  }
+
+  mask = 0x7FFUL;
+  parsed = sscanf(line, "log filter %7s %lx %lx", type, &id, &mask);
+  if (parsed < 2)
+  {
+    return HAL_ERROR;
+  }
+
+  if (strcmp(type, "std") == 0)
+  {
+    isExtended = 0U;
+  }
+  else if (strcmp(type, "ext") == 0)
+  {
+    isExtended = 1U;
+    if (parsed == 2)
+    {
+      mask = 0x1FFFFFFFUL;
+    }
+  }
+  else
+  {
+    return HAL_ERROR;
+  }
+
+  return BmsResponseLog_SetFilter(1U, isExtended, (uint32_t)id, (uint32_t)mask);
+}
+
+static HAL_StatusTypeDef FaultCommand_ParseLogDataText(const char *line)
+{
+  unsigned int index;
+  unsigned int mask;
+  unsigned int value;
+
+  if (strcmp(line, "log data clear") == 0)
+  {
+    BmsResponseLog_ClearDataFilter();
+    return HAL_OK;
+  }
+
+  if ((sscanf(line, "log data %u %x %x", &index, &mask, &value) != 3) ||
+      (index >= BSP_CAN_MAX_DATA_LEN) ||
+      (mask > 0xFFU) ||
+      (value > 0xFFU))
+  {
+    return HAL_ERROR;
+  }
+
+  return BmsResponseLog_SetDataFilter((uint8_t)index, (uint8_t)mask, (uint8_t)value);
 }
 
 static void FaultCommand_ExecuteText(const char *line, FaultCommand_WriteFn write, void *context)
@@ -922,6 +1035,22 @@ static void FaultCommand_ExecuteText(const char *line, FaultCommand_WriteFn writ
   {
     BmsResponseLog_Clear();
     FaultCommand_WriteTextResult(write, context, "log", HAL_OK);
+  }
+  else if (strncmp(line, "log filter ", 11U) == 0)
+  {
+    FaultCommand_WriteTextResult(write,
+                                 context,
+                                 "log",
+                                 FaultCommand_ParseLogFilterText(line));
+    FaultCommand_WriteTextBmsResponseLog(write, context);
+  }
+  else if (strncmp(line, "log data ", 9U) == 0)
+  {
+    FaultCommand_WriteTextResult(write,
+                                 context,
+                                 "log",
+                                 FaultCommand_ParseLogDataText(line));
+    FaultCommand_WriteTextBmsResponseLog(write, context);
   }
   else if (strcmp(line, "safe status") == 0)
   {
@@ -1409,6 +1538,74 @@ static void FaultCommand_ExecuteJson(const char *json, FaultCommand_WriteFn writ
       {
         BmsResponseLog_Clear();
         status = HAL_OK;
+      }
+      else if (strcmp(action, "filter") == 0)
+      {
+        char typeName[8];
+        uint32_t id;
+        uint32_t mask;
+        uint8_t isExtended = 0U;
+
+        if (FaultCommand_JsonGetString(json, "type", typeName, sizeof(typeName)) == 0U)
+        {
+          FaultCommand_WriteJsonResult(write, context, cmd, HAL_ERROR);
+          return;
+        }
+
+        if (strcmp(typeName, "off") == 0)
+        {
+          BmsResponseLog_DisableFilter();
+          FaultCommand_WriteJsonBmsResponseLog(write, context);
+          return;
+        }
+
+        if (strcmp(typeName, "std") == 0)
+        {
+          isExtended = 0U;
+          mask = FaultCommand_JsonGetUintDefault(json, "mask", 0x7FFU);
+        }
+        else if (strcmp(typeName, "ext") == 0)
+        {
+          isExtended = 1U;
+          mask = FaultCommand_JsonGetUintDefault(json, "mask", 0x1FFFFFFFU);
+        }
+        else
+        {
+          FaultCommand_WriteJsonResult(write, context, cmd, HAL_ERROR);
+          return;
+        }
+
+        if (FaultCommand_JsonGetUint(json, "id", &id) != 0U)
+        {
+          status = BmsResponseLog_SetFilter(1U, isExtended, id, mask);
+          FaultCommand_WriteJsonBmsResponseLog(write, context);
+          return;
+        }
+      }
+      else if (strcmp(action, "data") == 0)
+      {
+        uint32_t index;
+        uint32_t mask;
+        uint32_t value;
+
+        if ((FaultCommand_JsonGetUint(json, "index", &index) != 0U) &&
+            (FaultCommand_JsonGetUint(json, "mask", &mask) != 0U) &&
+            (FaultCommand_JsonGetUint(json, "value", &value) != 0U) &&
+            (mask <= 0xFFU) &&
+            (value <= 0xFFU))
+        {
+          status = BmsResponseLog_SetDataFilter((uint8_t)index,
+                                                (uint8_t)mask,
+                                                (uint8_t)value);
+          FaultCommand_WriteJsonBmsResponseLog(write, context);
+          return;
+        }
+      }
+      else if (strcmp(action, "data_clear") == 0)
+      {
+        BmsResponseLog_ClearDataFilter();
+        FaultCommand_WriteJsonBmsResponseLog(write, context);
+        return;
       }
     }
   }
