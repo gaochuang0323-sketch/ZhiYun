@@ -28,6 +28,7 @@
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 
+#include "bsp_can.h"
 #include "fault_console.h"
 #include "tcp_json_server.h"
 #include "voltage_sim.h"
@@ -144,6 +145,7 @@ void StartDefaultTask(void *argument)
       printf("[rtos] waveform generator process failed\r\n");
     }
     FaultConsole_Process();
+    BspCan_Process();
 
     if ((now - lastHeartbeatTick) >= 1000U)
     {

@@ -10,9 +10,10 @@
 - 13 串电芯电压模拟，默认 3200mV
 - 单体过压、单体欠压、压差过大故障注入
 - 支持故障持续时间和 mV/ms 斜率控制
-- 支持单通道方波、正弦波输出，用于 DAC/后级功放动态验证
+- 支持单通道方波、单通道正弦波、13 路同相同步正弦波输出，用于 DAC/后级功放动态验证
 - 支持每通道 mV 级软件 offset 校准
 - 支持 USART 文本/JSON 命令，LwIP TCP JSON server 默认端口 5000
+- 支持 FDCAN1 Classic CAN 500kbps 基础收发与日志打印
 
 ## 编译与下载
 
@@ -52,12 +53,15 @@ wave status
 wave stop
 wave square <cell> <low_mv> <high_mv> <period_ms>
 wave sine <cell> <offset_mv> <amplitude_mv> <period_ms>
+wave sine all <offset_mv> <amplitude_mv> <period_ms>
 cal status
 cal set <cell> <offset_mv>
 cal trim <cell> <target_mv> <measured_mv>
 cal clear [cell]
 test static <mv>
 test slew <cell> <low_mv> <high_mv> <period_ms>
+can status
+can send <std_id_hex> <len> [byte_hex ...]
 clear [cell]
 ```
 
@@ -70,10 +74,13 @@ uv 3 1000 100 3000
 diff 1 3500 2 2800 200 3000
 wave square 1 1000 4000 1000
 wave sine 1 2500 1000 1000
+wave sine all 2500 1000 1000
 test static 2500
 test slew 1 1000 4000 1000
 cal trim 1 2500 2485
 cal status
+can status
+can send 123 8 01 02 03 04 05 06 07 08
 clear
 normal 3200
 ```
@@ -83,6 +90,7 @@ normal 3200
 - `wave square`/`test slew` 会持续输出方波，直到执行 `wave stop`、`clear`、`normal`、`set`、`ov`、`uv` 或 `diff`。
 - `cal trim 1 2500 2485` 表示 C01 目标 2500mV、实测 2485mV，固件会在当前 offset 基础上自动增加 15mV。
 - offset 限幅为 `+/-500mV`，避免误输入把输出推到危险状态。
+- `can send` 当前发送标准帧；收到的 CAN 帧会通过串口日志打印 `[can] rx ...`。
 
 ### JSON 命令
 
@@ -98,6 +106,7 @@ normal 3200
 {"cmd":"diff","high_cell":1,"high_mv":3500,"low_cell":2,"low_mv":2800,"duration_ms":200,"slew_mv_per_ms":3000}
 {"cmd":"wave","type":"square","cell":1,"low_mv":1000,"high_mv":4000,"period_ms":1000}
 {"cmd":"wave","type":"sine","cell":1,"offset_mv":2500,"amplitude_mv":1000,"period_ms":1000}
+{"cmd":"wave","type":"sine_all","offset_mv":2500,"amplitude_mv":1000,"period_ms":1000}
 {"cmd":"wave_stop"}
 {"cmd":"cal","action":"status"}
 {"cmd":"cal","action":"set","cell":1,"offset_mv":15}
@@ -105,6 +114,9 @@ normal 3200
 {"cmd":"cal","action":"clear","cell":1}
 {"cmd":"test","type":"static","mv":2500}
 {"cmd":"test","type":"slew","cell":1,"low_mv":1000,"high_mv":4000,"period_ms":1000}
+{"cmd":"can","action":"status"}
+{"cmd":"can","action":"send","id":291,"len":8,"d0":1,"d1":2,"d2":3,"d3":4,"d4":5,"d5":6,"d6":7,"d7":8}
+{"cmd":"can","action":"send","extended":1,"id":418385920,"len":2,"d0":170,"d1":85}
 {"cmd":"clear"}
 {"cmd":"clear","cell":7}
 ```
@@ -125,9 +137,28 @@ normal 3200
 1. 静态校准：依次发送 `test static 1000`、`test static 2500`、`test static 4500`，用万用表记录每路输出误差。
 2. 软件补偿：例如 C01 目标 2500mV、实测 2485mV，发送 `cal trim 1 2500 2485`，再用 `cal status` 检查 offset。
 3. 压摆率测试：发送 `test slew 1 1000 4000 1000`，示波器 CH1 接 DAC/功放前，CH2 接输出端，测 CH2 的 10%~90% 上升时间。
-4. 正弦验证：发送 `wave sine 1 2500 1000 1000`，确认后级输出无明显削顶、振荡或异常漂移。
+4. 单通道正弦验证：发送 `wave sine 1 2500 1000 1000`，确认后级输出无明显削顶、振荡或异常漂移。
+5. 13 路正弦验证：发送 `wave sine all 2500 1000 1000`，确认 C01~C13 能同相同步刷新。
 
 当前波形发生器由 FreeRTOS 1ms 周期推进，适合低频功能验证和硬件调试。需要更高频率、更低抖动时，应进入硬件定时器 + SPI DMA + LDAC 同步刷新阶段。
+
+## CAN 调试流程
+
+当前 FDCAN1 配置为 Classic CAN 500kbps：
+
+- PA11：FDCAN1_RX
+- PA12：FDCAN1_TX
+- 标准帧/扩展帧全部接收至 Rx FIFO0
+- Tx FIFO 深度 8，Rx FIFO0 深度 8
+
+建议先用 USB-CAN 工具验证：
+
+1. CANH/CANL 接好，确认总线两端共有 120Ω 终端电阻。
+2. 上电后串口应看到 `[can] FDCAN1 started, classic CAN 500kbps`。
+3. PC 端发任意 CAN 帧，串口应打印 `[can] rx std/ext id=... data=...`。
+4. 串口发送 `can send 123 8 01 02 03 04 05 06 07 08`，PC 端应收到 ID `0x123` 的标准帧。
+
+如果你的 BMS CAN 速率不是 500kbps，需要调整 `Core/Src/fdcan.c` 中 FDCAN1 nominal bit timing。
 
 ## 命令层复用
 

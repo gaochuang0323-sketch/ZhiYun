@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "bms_response_log.h"
+#include "bsp_can.h"
 #include "voltage_sim.h"
 #include "waveform_gen.h"
 
@@ -58,12 +60,17 @@ static void FaultCommand_WriteTextHelp(FaultCommand_WriteFn write, void *context
   FaultCommand_Write(write, context, "  wave stop\r\n");
   FaultCommand_Write(write, context, "  wave square <cell> <low_mv> <high_mv> <period_ms>\r\n");
   FaultCommand_Write(write, context, "  wave sine <cell> <offset_mv> <amplitude_mv> <period_ms>\r\n");
+  FaultCommand_Write(write, context, "  wave sine all <offset_mv> <amplitude_mv> <period_ms>\r\n");
   FaultCommand_Write(write, context, "  cal status\r\n");
   FaultCommand_Write(write, context, "  cal set <cell> <offset_mv>\r\n");
   FaultCommand_Write(write, context, "  cal trim <cell> <target_mv> <measured_mv>\r\n");
   FaultCommand_Write(write, context, "  cal clear [cell]\r\n");
   FaultCommand_Write(write, context, "  test static <mv>\r\n");
   FaultCommand_Write(write, context, "  test slew <cell> <low_mv> <high_mv> <period_ms>\r\n");
+  FaultCommand_Write(write, context, "  can status\r\n");
+  FaultCommand_Write(write, context, "  can send <std_id_hex> <len> [byte_hex ...]\r\n");
+  FaultCommand_Write(write, context, "  log status\r\n");
+  FaultCommand_Write(write, context, "  log clear\r\n");
   FaultCommand_Write(write, context, "  clear [cell]\r\n");
   FaultCommand_Write(write, context, "  JSON examples: {\"cmd\":\"status\"}, {\"cmd\":\"cal\",\"action\":\"trim\",\"cell\":1,\"target_mv\":2500,\"measured_mv\":2485}\r\n");
 }
@@ -80,6 +87,72 @@ static void FaultCommand_WriteTextWaveStatus(FaultCommand_WriteFn write, void *c
                            status.cell,
                            (unsigned long)status.periodMs,
                            status.lastMillivolts);
+}
+
+static void FaultCommand_WriteTextCanStatus(FaultCommand_WriteFn write, void *context)
+{
+  BspCan_Status status = BspCan_GetStatus();
+
+  FaultCommand_WriteFormat(write,
+                           context,
+                           "\r\n[can] started=%u tx=%lu rx=%lu err=%lu last_id=0x%lX last_len=%u last_tick=%lu last_data=",
+                           status.started,
+                           (unsigned long)status.txCount,
+                           (unsigned long)status.rxCount,
+                           (unsigned long)status.errorCount,
+                           (unsigned long)status.lastRxId,
+                           status.lastRxLength,
+                           (unsigned long)status.lastRxTick);
+
+  for (uint8_t index = 0U; index < status.lastRxLength; index++)
+  {
+    FaultCommand_WriteFormat(write,
+                             context,
+                             "%02X%s",
+                             status.lastRxData[index],
+                             (index + 1U == status.lastRxLength) ? "" : " ");
+  }
+  FaultCommand_Write(write, context, "\r\n");
+}
+
+static void FaultCommand_WriteTextBmsResponseLog(FaultCommand_WriteFn write, void *context)
+{
+  BmsResponseLog_Status status = BmsResponseLog_GetStatus();
+
+  FaultCommand_WriteFormat(write,
+                           context,
+                           "\r\n[log] armed=%u trigger=%s t1=%lums primary=C%02u/%umV secondary=C%02u/%umV can_after=%lu captured=%u",
+                           status.armed,
+                           BmsResponseLog_GetTriggerName(status.triggerType),
+                           (unsigned long)status.triggerTick,
+                           status.primaryCell,
+                           status.primaryMillivolts,
+                           status.secondaryCell,
+                           status.secondaryMillivolts,
+                           (unsigned long)status.canFramesAfterTrigger,
+                           status.responseCaptured);
+
+  if (status.responseCaptured != 0U)
+  {
+    FaultCommand_WriteFormat(write,
+                             context,
+                             " t2=%lums delay=%lums id=0x%lX ext=%u len=%u data=",
+                             (unsigned long)status.responseTick,
+                             (unsigned long)status.responseDelayMs,
+                             (unsigned long)status.responseCanId,
+                             status.responseCanIsExtended,
+                             status.responseCanLength);
+    for (uint8_t index = 0U; index < status.responseCanLength; index++)
+    {
+      FaultCommand_WriteFormat(write,
+                               context,
+                               "%02X%s",
+                               status.responseCanData[index],
+                               (index + 1U == status.responseCanLength) ? "" : " ");
+    }
+  }
+
+  FaultCommand_Write(write, context, "\r\n");
 }
 
 static void FaultCommand_WriteTextStatus(FaultCommand_WriteFn write, void *context)
@@ -185,6 +258,68 @@ static void FaultCommand_WriteJsonStatus(FaultCommand_WriteFn write, void *conte
   FaultCommand_Write(write, context, "]}\r\n");
 }
 
+static void FaultCommand_WriteJsonCanStatus(FaultCommand_WriteFn write, void *context)
+{
+  BspCan_Status status = BspCan_GetStatus();
+
+  FaultCommand_WriteFormat(write,
+                           context,
+                           "{\"ok\":true,\"can\":{\"started\":%u,\"tx\":%lu,\"rx\":%lu,\"err\":%lu,\"last_id\":%lu,\"last_id_hex\":\"0x%lX\",\"last_ext\":%u,\"last_len\":%u,\"last_tick\":%lu,\"last_data\":[",
+                           status.started,
+                           (unsigned long)status.txCount,
+                           (unsigned long)status.rxCount,
+                           (unsigned long)status.errorCount,
+                           (unsigned long)status.lastRxId,
+                           (unsigned long)status.lastRxId,
+                           status.lastRxIsExtended,
+                           status.lastRxLength,
+                           (unsigned long)status.lastRxTick);
+
+  for (uint8_t index = 0U; index < status.lastRxLength; index++)
+  {
+    FaultCommand_WriteFormat(write,
+                             context,
+                             "%s%u",
+                             (index == 0U) ? "" : ",",
+                             status.lastRxData[index]);
+  }
+  FaultCommand_Write(write, context, "]}}\r\n");
+}
+
+static void FaultCommand_WriteJsonBmsResponseLog(FaultCommand_WriteFn write, void *context)
+{
+  BmsResponseLog_Status status = BmsResponseLog_GetStatus();
+
+  FaultCommand_WriteFormat(write,
+                           context,
+                           "{\"ok\":true,\"log\":{\"armed\":%u,\"trigger\":\"%s\",\"trigger_tick\":%lu,\"primary_cell\":%u,\"primary_mv\":%u,\"secondary_cell\":%u,\"secondary_mv\":%u,\"can_after\":%lu,\"captured\":%u,\"response_tick\":%lu,\"delay_ms\":%lu,\"response_id\":%lu,\"response_id_hex\":\"0x%lX\",\"response_ext\":%u,\"response_len\":%u,\"response_data\":[",
+                           status.armed,
+                           BmsResponseLog_GetTriggerName(status.triggerType),
+                           (unsigned long)status.triggerTick,
+                           status.primaryCell,
+                           status.primaryMillivolts,
+                           status.secondaryCell,
+                           status.secondaryMillivolts,
+                           (unsigned long)status.canFramesAfterTrigger,
+                           status.responseCaptured,
+                           (unsigned long)status.responseTick,
+                           (unsigned long)status.responseDelayMs,
+                           (unsigned long)status.responseCanId,
+                           (unsigned long)status.responseCanId,
+                           status.responseCanIsExtended,
+                           status.responseCanLength);
+
+  for (uint8_t index = 0U; index < status.responseCanLength; index++)
+  {
+    FaultCommand_WriteFormat(write,
+                             context,
+                             "%s%u",
+                             (index == 0U) ? "" : ",",
+                             status.responseCanData[index]);
+  }
+  FaultCommand_Write(write, context, "]}}\r\n");
+}
+
 static HAL_StatusTypeDef FaultCommand_RunNormal(uint16_t millivolts)
 {
   WaveformGen_Stop();
@@ -221,8 +356,16 @@ static HAL_StatusTypeDef FaultCommand_RunOverVoltage(uint8_t cell,
                                                      uint32_t duration,
                                                      uint16_t slew)
 {
+  HAL_StatusTypeDef status;
+
   WaveformGen_Stop();
-  return VoltageSim_InjectCellOverVoltageRamp(cell, target, duration, slew);
+  status = VoltageSim_InjectCellOverVoltageRamp(cell, target, duration, slew);
+  if (status == HAL_OK)
+  {
+    BmsResponseLog_RecordFaultTrigger(BMS_RESPONSE_LOG_TRIGGER_OV, cell, target, 0U, 0U);
+  }
+
+  return status;
 }
 
 static HAL_StatusTypeDef FaultCommand_RunUnderVoltage(uint8_t cell,
@@ -230,8 +373,16 @@ static HAL_StatusTypeDef FaultCommand_RunUnderVoltage(uint8_t cell,
                                                       uint32_t duration,
                                                       uint16_t slew)
 {
+  HAL_StatusTypeDef status;
+
   WaveformGen_Stop();
-  return VoltageSim_InjectCellUnderVoltageRamp(cell, target, duration, slew);
+  status = VoltageSim_InjectCellUnderVoltageRamp(cell, target, duration, slew);
+  if (status == HAL_OK)
+  {
+    BmsResponseLog_RecordFaultTrigger(BMS_RESPONSE_LOG_TRIGGER_UV, cell, target, 0U, 0U);
+  }
+
+  return status;
 }
 
 static HAL_StatusTypeDef FaultCommand_RunDiff(uint8_t highCell,
@@ -241,8 +392,63 @@ static HAL_StatusTypeDef FaultCommand_RunDiff(uint8_t highCell,
                                               uint32_t duration,
                                               uint16_t slew)
 {
+  HAL_StatusTypeDef status;
+
   WaveformGen_Stop();
-  return VoltageSim_InjectVoltageDifference(highCell, highMv, lowCell, lowMv, duration, slew);
+  status = VoltageSim_InjectVoltageDifference(highCell, highMv, lowCell, lowMv, duration, slew);
+  if (status == HAL_OK)
+  {
+    BmsResponseLog_RecordFaultTrigger(BMS_RESPONSE_LOG_TRIGGER_DIFF,
+                                      highCell,
+                                      highMv,
+                                      lowCell,
+                                      lowMv);
+  }
+
+  return status;
+}
+
+static HAL_StatusTypeDef FaultCommand_ParseCanSendText(const char *line)
+{
+  unsigned long id;
+  unsigned int length;
+  int consumed = 0;
+  const char *cursor;
+  uint8_t data[BSP_CAN_MAX_DATA_LEN] = {0};
+
+  if (sscanf(line, "can send %lx %u %n", &id, &length, &consumed) < 2)
+  {
+    return HAL_ERROR;
+  }
+
+  if ((id > 0x7FFUL) || (length > BSP_CAN_MAX_DATA_LEN))
+  {
+    return HAL_ERROR;
+  }
+
+  cursor = line + consumed;
+  for (uint8_t index = 0U; index < length; index++)
+  {
+    char *endPtr;
+    unsigned long value;
+
+    cursor = FaultCommand_SkipSpaces(cursor);
+    if ((cursor == NULL) || (*cursor == '\0'))
+    {
+      return HAL_ERROR;
+    }
+
+    value = strtoul(cursor, &endPtr, 16);
+    if ((endPtr == cursor) || (value > 0xFFUL))
+    {
+      return HAL_ERROR;
+    }
+
+    data[index] = (uint8_t)value;
+    cursor = endPtr;
+  }
+
+  return BspCan_SendClassic((uint32_t)id, 0U, data, (uint8_t)length);
 }
 
 static void FaultCommand_ExecuteText(const char *line, FaultCommand_WriteFn write, void *context)
@@ -386,6 +592,25 @@ static void FaultCommand_ExecuteText(const char *line, FaultCommand_WriteFn writ
                                                          (uint16_t)highMv,
                                                          (uint32_t)periodMs));
   }
+  else if (strncmp(line, "wave sine all ", 14U) == 0)
+  {
+    if (sscanf(line,
+               "wave sine all %u %u %lu",
+               &centerMv,
+               &amplitudeMv,
+               &periodMs) != 3)
+    {
+      FaultCommand_WriteTextResult(write, context, "wave", HAL_ERROR);
+      return;
+    }
+
+    FaultCommand_WriteTextResult(write,
+                                 context,
+                                 "wave",
+                                 WaveformGen_StartSineAll((uint16_t)centerMv,
+                                                          (uint16_t)amplitudeMv,
+                                                          (uint32_t)periodMs));
+  }
   else if (strncmp(line, "wave sine ", 10U) == 0)
   {
     if (sscanf(line,
@@ -488,6 +713,26 @@ static void FaultCommand_ExecuteText(const char *line, FaultCommand_WriteFn writ
                                                          (uint16_t)lowMv,
                                                          (uint16_t)highMv,
                                                          (uint32_t)periodMs));
+  }
+  else if (strcmp(line, "can status") == 0)
+  {
+    FaultCommand_WriteTextCanStatus(write, context);
+  }
+  else if (strncmp(line, "can send ", 9U) == 0)
+  {
+    FaultCommand_WriteTextResult(write,
+                                 context,
+                                 "can",
+                                 FaultCommand_ParseCanSendText(line));
+  }
+  else if (strcmp(line, "log status") == 0)
+  {
+    FaultCommand_WriteTextBmsResponseLog(write, context);
+  }
+  else if (strcmp(line, "log clear") == 0)
+  {
+    BmsResponseLog_Clear();
+    FaultCommand_WriteTextResult(write, context, "log", HAL_OK);
   }
   else if (strncmp(line, "clear", 5U) == 0)
   {
@@ -639,7 +884,7 @@ static void FaultCommand_ExecuteJson(const char *json, FaultCommand_WriteFn writ
   {
     FaultCommand_Write(write,
                        context,
-                       "{\"ok\":true,\"commands\":[\"status\",\"normal\",\"set\",\"ov\",\"uv\",\"diff\",\"wave\",\"wave_stop\",\"cal\",\"test\",\"clear\"]}\r\n");
+                       "{\"ok\":true,\"commands\":[\"status\",\"normal\",\"set\",\"ov\",\"uv\",\"diff\",\"wave\",\"wave_stop\",\"cal\",\"test\",\"can\",\"log\",\"clear\"]}\r\n");
     return;
   }
 
@@ -734,6 +979,21 @@ static void FaultCommand_ExecuteJson(const char *json, FaultCommand_WriteFn writ
                                          (uint16_t)offset,
                                          (uint16_t)amplitude,
                                          period);
+        }
+      }
+      else if (strcmp(type, "sine_all") == 0)
+      {
+        uint32_t offset;
+        uint32_t amplitude;
+        uint32_t period;
+
+        if ((FaultCommand_JsonGetUint(json, "offset_mv", &offset) != 0U) &&
+            (FaultCommand_JsonGetUint(json, "amplitude_mv", &amplitude) != 0U))
+        {
+          period = FaultCommand_JsonGetUintDefault(json, "period_ms", 1000U);
+          status = WaveformGen_StartSineAll((uint16_t)offset,
+                                            (uint16_t)amplitude,
+                                            period);
         }
       }
       else if (strcmp(type, "stop") == 0)
@@ -835,6 +1095,71 @@ static void FaultCommand_ExecuteJson(const char *json, FaultCommand_WriteFn writ
                                            (uint16_t)high,
                                            period);
         }
+      }
+    }
+  }
+  else if (strcmp(cmd, "can") == 0)
+  {
+    char action[16];
+
+    if (FaultCommand_JsonGetString(json, "action", action, sizeof(action)) != 0U)
+    {
+      if (strcmp(action, "status") == 0)
+      {
+        FaultCommand_WriteJsonCanStatus(write, context);
+        return;
+      }
+      else if (strcmp(action, "send") == 0)
+      {
+        uint32_t id;
+        uint32_t length;
+        uint32_t extended;
+        uint8_t data[BSP_CAN_MAX_DATA_LEN] = {0};
+
+        if ((FaultCommand_JsonGetUint(json, "id", &id) != 0U) &&
+            (FaultCommand_JsonGetUint(json, "len", &length) != 0U) &&
+            (length <= BSP_CAN_MAX_DATA_LEN))
+        {
+          extended = FaultCommand_JsonGetUintDefault(json, "extended", 0U);
+          status = HAL_OK;
+
+          for (uint8_t index = 0U; index < length; index++)
+          {
+            char key[8];
+            uint32_t value;
+
+            (void)snprintf(key, sizeof(key), "d%u", index);
+            if ((FaultCommand_JsonGetUint(json, key, &value) == 0U) || (value > 0xFFU))
+            {
+              status = HAL_ERROR;
+              break;
+            }
+            data[index] = (uint8_t)value;
+          }
+
+          if (status == HAL_OK)
+          {
+            status = BspCan_SendClassic(id, (extended != 0U) ? 1U : 0U, data, (uint8_t)length);
+          }
+        }
+      }
+    }
+  }
+  else if (strcmp(cmd, "log") == 0)
+  {
+    char action[16];
+
+    if (FaultCommand_JsonGetString(json, "action", action, sizeof(action)) != 0U)
+    {
+      if (strcmp(action, "status") == 0)
+      {
+        FaultCommand_WriteJsonBmsResponseLog(write, context);
+        return;
+      }
+      else if (strcmp(action, "clear") == 0)
+      {
+        BmsResponseLog_Clear();
+        status = HAL_OK;
       }
     }
   }

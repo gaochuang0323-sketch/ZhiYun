@@ -31,6 +31,7 @@
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 
+#include "bsp_can.h"
 #include "dac81416.h"
 #include "fault_console.h"
 #include "voltage_sim.h"
@@ -128,6 +129,10 @@ int main(void)
   }
   printf("[boot] voltage simulator ready, cells=13, normal=%umV\r\n",
          (unsigned int)VOLTAGE_SIM_DEFAULT_NORMAL_MV);
+  if (BspCan_Init() != HAL_OK)
+  {
+    printf("[boot] FDCAN1 init/start failed\r\n");
+  }
   FaultConsole_Init();
 
   /* USER CODE END 2 */

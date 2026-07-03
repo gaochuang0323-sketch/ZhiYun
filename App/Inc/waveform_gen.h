@@ -11,7 +11,8 @@ typedef enum
 {
   WAVEFORM_GEN_NONE = 0,
   WAVEFORM_GEN_SQUARE,
-  WAVEFORM_GEN_SINE
+  WAVEFORM_GEN_SINE,
+  WAVEFORM_GEN_SINE_ALL
 } WaveformGen_Type;
 
 typedef struct
@@ -35,6 +36,9 @@ HAL_StatusTypeDef WaveformGen_StartSine(uint8_t cell,
                                         uint16_t offsetMillivolts,
                                         uint16_t amplitudeMillivolts,
                                         uint32_t periodMs);
+HAL_StatusTypeDef WaveformGen_StartSineAll(uint16_t offsetMillivolts,
+                                           uint16_t amplitudeMillivolts,
+                                           uint32_t periodMs);
 void WaveformGen_Stop(void);
 HAL_StatusTypeDef WaveformGen_Process(uint32_t nowMs);
 WaveformGen_Status WaveformGen_GetStatus(void);

@@ -99,6 +99,38 @@ HAL_StatusTypeDef WaveformGen_StartSine(uint8_t cell,
   return WaveformGen_Start();
 }
 
+HAL_StatusTypeDef WaveformGen_StartSineAll(uint16_t offsetMillivolts,
+                                           uint16_t amplitudeMillivolts,
+                                           uint32_t periodMs)
+{
+  uint32_t minMv;
+  uint32_t maxMv;
+
+  minMv = (offsetMillivolts > amplitudeMillivolts) ?
+          ((uint32_t)offsetMillivolts - amplitudeMillivolts) :
+          0U;
+  maxMv = (uint32_t)offsetMillivolts + amplitudeMillivolts;
+
+  if ((WaveformGen_IsValidVoltage(offsetMillivolts) == 0U) ||
+      (amplitudeMillivolts == 0U) ||
+      (minMv < VOLTAGE_SIM_MIN_MV) ||
+      (maxMv > VOLTAGE_SIM_MAX_MV) ||
+      (periodMs < WAVEFORM_GEN_MIN_PERIOD_MS))
+  {
+    return HAL_ERROR;
+  }
+
+  waveformStatus.type = WAVEFORM_GEN_SINE_ALL;
+  waveformStatus.cell = 0U;
+  waveformStatus.lowMillivolts = 0U;
+  waveformStatus.highMillivolts = 0U;
+  waveformStatus.offsetMillivolts = offsetMillivolts;
+  waveformStatus.amplitudeMillivolts = amplitudeMillivolts;
+  waveformStatus.periodMs = periodMs;
+
+  return WaveformGen_Start();
+}
+
 void WaveformGen_Stop(void)
 {
   waveformStatus.active = 0U;
@@ -123,7 +155,8 @@ HAL_StatusTypeDef WaveformGen_Process(uint32_t nowMs)
                waveformStatus.lowMillivolts :
                waveformStatus.highMillivolts;
   }
-  else if (waveformStatus.type == WAVEFORM_GEN_SINE)
+  else if ((waveformStatus.type == WAVEFORM_GEN_SINE) ||
+           (waveformStatus.type == WAVEFORM_GEN_SINE_ALL))
   {
     uint32_t tableIndex = (phaseMs * WAVEFORM_GEN_SINE_TABLE_SIZE) / waveformStatus.periodMs;
     int32_t scaled = ((int32_t)waveformStatus.amplitudeMillivolts *
@@ -141,7 +174,15 @@ HAL_StatusTypeDef WaveformGen_Process(uint32_t nowMs)
     return HAL_OK;
   }
 
-  if (VoltageSim_SetCellVoltageMv(waveformStatus.cell, outputMv) != HAL_OK)
+  if (waveformStatus.type == WAVEFORM_GEN_SINE_ALL)
+  {
+    if (VoltageSim_SetAllCellsVoltageMv(outputMv) != HAL_OK)
+    {
+      WaveformGen_Stop();
+      return HAL_ERROR;
+    }
+  }
+  else if (VoltageSim_SetCellVoltageMv(waveformStatus.cell, outputMv) != HAL_OK)
   {
     WaveformGen_Stop();
     return HAL_ERROR;
@@ -166,6 +207,9 @@ const char *WaveformGen_GetTypeName(WaveformGen_Type type)
 
     case WAVEFORM_GEN_SINE:
       return "sine";
+
+    case WAVEFORM_GEN_SINE_ALL:
+      return "sine_all";
 
     case WAVEFORM_GEN_NONE:
     default:
