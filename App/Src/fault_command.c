@@ -7,6 +7,8 @@
 
 #include "bms_response_log.h"
 #include "bsp_can.h"
+#include "bsp_sram.h"
+#include "dac_safety.h"
 #include "voltage_sim.h"
 #include "waveform_gen.h"
 
@@ -26,7 +28,7 @@ static void FaultCommand_WriteFormat(FaultCommand_WriteFn write,
                                      const char *format,
                                      ...)
 {
-  char buffer[192];
+  char buffer[512];
   va_list args;
 
   va_start(args, format);
@@ -71,6 +73,12 @@ static void FaultCommand_WriteTextHelp(FaultCommand_WriteFn write, void *context
   FaultCommand_Write(write, context, "  can send <std_id_hex> <len> [byte_hex ...]\r\n");
   FaultCommand_Write(write, context, "  log status\r\n");
   FaultCommand_Write(write, context, "  log clear\r\n");
+  FaultCommand_Write(write, context, "  safe status\r\n");
+  FaultCommand_Write(write, context, "  safe stop [safe_mv]\r\n");
+  FaultCommand_Write(write, context, "  safe release\r\n");
+  FaultCommand_Write(write, context, "  emergency stop [safe_mv]\r\n");
+  FaultCommand_Write(write, context, "  sram status\r\n");
+  FaultCommand_Write(write, context, "  sram test [bytes]\r\n");
   FaultCommand_Write(write, context, "  clear [cell]\r\n");
   FaultCommand_Write(write, context, "  JSON examples: {\"cmd\":\"status\"}, {\"cmd\":\"cal\",\"action\":\"trim\",\"cell\":1,\"target_mv\":2500,\"measured_mv\":2485}\r\n");
 }
@@ -155,10 +163,65 @@ static void FaultCommand_WriteTextBmsResponseLog(FaultCommand_WriteFn write, voi
   FaultCommand_Write(write, context, "\r\n");
 }
 
+static void FaultCommand_WriteTextSafetyStatus(FaultCommand_WriteFn write, void *context)
+{
+  DacSafety_Status status = DacSafety_GetStatus();
+
+  FaultCommand_WriteFormat(write,
+                           context,
+                           "\r\n[safe] emergency=%u safe_mv=%u alarm_pin=%u alarm_active=%u alarm_latched=%u alarm_count=%lu last_alarm_tick=%lu\r\n",
+                           status.emergencyActive,
+                           status.safeMillivolts,
+                           status.alarmPinState,
+                           status.alarmActive,
+                           status.alarmLatched,
+                           (unsigned long)status.alarmCount,
+                           (unsigned long)status.lastAlarmTick);
+}
+
+static void FaultCommand_WriteTextSramStatus(FaultCommand_WriteFn write, void *context)
+{
+  BspSram_Status status = BspSram_GetStatus();
+
+  FaultCommand_WriteFormat(write,
+                           context,
+                           "\r\n[sram] base=0x%08lX size=%lubytes bus=%u-bit last=%s test_bytes=%lu pass=%lu fail=%lu tick=%lu",
+                           (unsigned long)status.baseAddress,
+                           (unsigned long)status.sizeBytes,
+                           status.busWidthBits,
+                           BspSram_GetResultName(status.lastResult),
+                           (unsigned long)status.lastTestBytes,
+                           (unsigned long)status.passCount,
+                           (unsigned long)status.failCount,
+                           (unsigned long)status.lastTestTick);
+
+  if (status.lastResult == HAL_ERROR)
+  {
+    FaultCommand_WriteFormat(write,
+                             context,
+                             " fail_addr=0x%08lX expected=0x%04X actual=0x%04X",
+                             (unsigned long)status.lastFailedAddress,
+                             status.expected,
+                             status.actual);
+  }
+
+  FaultCommand_Write(write, context, "\r\n");
+}
+
 static void FaultCommand_WriteTextStatus(FaultCommand_WriteFn write, void *context)
 {
+  DacSafety_Status safety = DacSafety_GetStatus();
+
   FaultCommand_WriteFormat(write, context, "\r\n[status] active_faults=%u\r\n",
                            VoltageSim_GetActiveFaultCount());
+  FaultCommand_WriteFormat(write,
+                           context,
+                           "  safety emergency=%u safe=%umV alarm_active=%u alarm_latched=%u alarm_count=%lu\r\n",
+                           safety.emergencyActive,
+                           safety.safeMillivolts,
+                           safety.alarmActive,
+                           safety.alarmLatched,
+                           (unsigned long)safety.alarmCount);
 
   for (uint8_t cell = 1U; cell <= VOLTAGE_SIM_CELL_COUNT; cell++)
   {
@@ -226,11 +289,17 @@ static void FaultCommand_WriteJsonResult(FaultCommand_WriteFn write,
 static void FaultCommand_WriteJsonStatus(FaultCommand_WriteFn write, void *context)
 {
   WaveformGen_Status waveform = WaveformGen_GetStatus();
+  DacSafety_Status safety = DacSafety_GetStatus();
 
   FaultCommand_WriteFormat(write,
                            context,
-                           "{\"ok\":true,\"active_faults\":%u,\"waveform\":{\"active\":%u,\"type\":\"%s\",\"cell\":%u,\"period_ms\":%lu,\"last_mv\":%u},\"cells\":[",
+                           "{\"ok\":true,\"active_faults\":%u,\"safety\":{\"emergency\":%u,\"safe_mv\":%u,\"alarm_active\":%u,\"alarm_latched\":%u,\"alarm_count\":%lu},\"waveform\":{\"active\":%u,\"type\":\"%s\",\"cell\":%u,\"period_ms\":%lu,\"last_mv\":%u},\"cells\":[",
                            VoltageSim_GetActiveFaultCount(),
+                           safety.emergencyActive,
+                           safety.safeMillivolts,
+                           safety.alarmActive,
+                           safety.alarmLatched,
+                           (unsigned long)safety.alarmCount,
                            waveform.active,
                            WaveformGen_GetTypeName(waveform.type),
                            waveform.cell,
@@ -320,14 +389,77 @@ static void FaultCommand_WriteJsonBmsResponseLog(FaultCommand_WriteFn write, voi
   FaultCommand_Write(write, context, "]}}\r\n");
 }
 
+static void FaultCommand_WriteJsonSafetyStatus(FaultCommand_WriteFn write, void *context)
+{
+  DacSafety_Status status = DacSafety_GetStatus();
+
+  FaultCommand_WriteFormat(write,
+                           context,
+                           "{\"ok\":true,\"safe\":{\"emergency\":%u,\"safe_mv\":%u,\"alarm_pin\":%u,\"alarm_active\":%u,\"alarm_latched\":%u,\"alarm_count\":%lu,\"last_alarm_tick\":%lu}}\r\n",
+                           status.emergencyActive,
+                           status.safeMillivolts,
+                           status.alarmPinState,
+                           status.alarmActive,
+                           status.alarmLatched,
+                           (unsigned long)status.alarmCount,
+                           (unsigned long)status.lastAlarmTick);
+}
+
+static void FaultCommand_WriteJsonSramStatus(FaultCommand_WriteFn write,
+                                             void *context,
+                                             HAL_StatusTypeDef commandResult)
+{
+  BspSram_Status status = BspSram_GetStatus();
+
+  FaultCommand_WriteFormat(write,
+                           context,
+                           "{\"ok\":%s,\"sram\":{\"base\":%lu,\"base_hex\":\"0x%08lX\",",
+                           (commandResult == HAL_OK) ? "true" : "false",
+                           (unsigned long)status.baseAddress,
+                           (unsigned long)status.baseAddress);
+  FaultCommand_WriteFormat(write,
+                           context,
+                           "\"size_bytes\":%lu,\"bus_width_bits\":%u,\"last\":\"%s\",",
+                           (unsigned long)status.sizeBytes,
+                           status.busWidthBits,
+                           BspSram_GetResultName(status.lastResult));
+  FaultCommand_WriteFormat(write,
+                           context,
+                           "\"test_bytes\":%lu,\"pass\":%lu,\"fail\":%lu,\"tick\":%lu,",
+                           (unsigned long)status.lastTestBytes,
+                           (unsigned long)status.passCount,
+                           (unsigned long)status.failCount,
+                           (unsigned long)status.lastTestTick);
+  FaultCommand_WriteFormat(write,
+                           context,
+                           "\"fail_addr\":%lu,\"fail_addr_hex\":\"0x%08lX\",",
+                           (unsigned long)status.lastFailedAddress,
+                           (unsigned long)status.lastFailedAddress);
+  FaultCommand_WriteFormat(write,
+                           context,
+                           "\"expected\":%u,\"actual\":%u}}\r\n",
+                           status.expected,
+                           status.actual);
+}
+
 static HAL_StatusTypeDef FaultCommand_RunNormal(uint16_t millivolts)
 {
+  if (DacSafety_IsOutputAllowed() == 0U)
+  {
+    return HAL_BUSY;
+  }
+
   WaveformGen_Stop();
   return VoltageSim_SetAllCellsVoltageMv(millivolts);
 }
 
 static HAL_StatusTypeDef FaultCommand_RunSet(uint8_t cell, uint16_t millivolts)
 {
+  if (DacSafety_IsOutputAllowed() == 0U)
+  {
+    return HAL_BUSY;
+  }
+
   WaveformGen_Stop();
   return VoltageSim_SetCellVoltageMv(cell, millivolts);
 }
@@ -358,6 +490,11 @@ static HAL_StatusTypeDef FaultCommand_RunOverVoltage(uint8_t cell,
 {
   HAL_StatusTypeDef status;
 
+  if (DacSafety_IsOutputAllowed() == 0U)
+  {
+    return HAL_BUSY;
+  }
+
   WaveformGen_Stop();
   status = VoltageSim_InjectCellOverVoltageRamp(cell, target, duration, slew);
   if (status == HAL_OK)
@@ -374,6 +511,11 @@ static HAL_StatusTypeDef FaultCommand_RunUnderVoltage(uint8_t cell,
                                                       uint16_t slew)
 {
   HAL_StatusTypeDef status;
+
+  if (DacSafety_IsOutputAllowed() == 0U)
+  {
+    return HAL_BUSY;
+  }
 
   WaveformGen_Stop();
   status = VoltageSim_InjectCellUnderVoltageRamp(cell, target, duration, slew);
@@ -393,6 +535,11 @@ static HAL_StatusTypeDef FaultCommand_RunDiff(uint8_t highCell,
                                               uint16_t slew)
 {
   HAL_StatusTypeDef status;
+
+  if (DacSafety_IsOutputAllowed() == 0U)
+  {
+    return HAL_BUSY;
+  }
 
   WaveformGen_Stop();
   status = VoltageSim_InjectVoltageDifference(highCell, highMv, lowCell, lowMv, duration, slew);
@@ -573,6 +720,12 @@ static void FaultCommand_ExecuteText(const char *line, FaultCommand_WriteFn writ
   }
   else if (strncmp(line, "wave square ", 12U) == 0)
   {
+    if (DacSafety_IsOutputAllowed() == 0U)
+    {
+      FaultCommand_WriteTextResult(write, context, "wave", HAL_BUSY);
+      return;
+    }
+
     if (sscanf(line,
                "wave square %u %u %u %lu",
                &cell,
@@ -594,6 +747,12 @@ static void FaultCommand_ExecuteText(const char *line, FaultCommand_WriteFn writ
   }
   else if (strncmp(line, "wave sine all ", 14U) == 0)
   {
+    if (DacSafety_IsOutputAllowed() == 0U)
+    {
+      FaultCommand_WriteTextResult(write, context, "wave", HAL_BUSY);
+      return;
+    }
+
     if (sscanf(line,
                "wave sine all %u %u %lu",
                &centerMv,
@@ -613,6 +772,12 @@ static void FaultCommand_ExecuteText(const char *line, FaultCommand_WriteFn writ
   }
   else if (strncmp(line, "wave sine ", 10U) == 0)
   {
+    if (DacSafety_IsOutputAllowed() == 0U)
+    {
+      FaultCommand_WriteTextResult(write, context, "wave", HAL_BUSY);
+      return;
+    }
+
     if (sscanf(line,
                "wave sine %u %u %u %lu",
                &cell,
@@ -638,6 +803,12 @@ static void FaultCommand_ExecuteText(const char *line, FaultCommand_WriteFn writ
   }
   else if (strncmp(line, "cal set ", 8U) == 0)
   {
+    if (DacSafety_IsOutputAllowed() == 0U)
+    {
+      FaultCommand_WriteTextResult(write, context, "cal", HAL_BUSY);
+      return;
+    }
+
     if (sscanf(line, "cal set %u %d", &cell, &calOffsetMv) != 2)
     {
       FaultCommand_WriteTextResult(write, context, "cal", HAL_ERROR);
@@ -652,6 +823,12 @@ static void FaultCommand_ExecuteText(const char *line, FaultCommand_WriteFn writ
   }
   else if (strncmp(line, "cal trim ", 9U) == 0)
   {
+    if (DacSafety_IsOutputAllowed() == 0U)
+    {
+      FaultCommand_WriteTextResult(write, context, "cal", HAL_BUSY);
+      return;
+    }
+
     if (sscanf(line, "cal trim %u %u %u", &cell, &target, &measuredMv) != 3)
     {
       FaultCommand_WriteTextResult(write, context, "cal", HAL_ERROR);
@@ -667,6 +844,12 @@ static void FaultCommand_ExecuteText(const char *line, FaultCommand_WriteFn writ
   }
   else if (strncmp(line, "cal clear", 9U) == 0)
   {
+    if (DacSafety_IsOutputAllowed() == 0U)
+    {
+      FaultCommand_WriteTextResult(write, context, "cal", HAL_BUSY);
+      return;
+    }
+
     if (sscanf(line, "cal clear %u", &cell) == 1)
     {
       FaultCommand_WriteTextResult(write,
@@ -695,6 +878,12 @@ static void FaultCommand_ExecuteText(const char *line, FaultCommand_WriteFn writ
   }
   else if (strncmp(line, "test slew ", 10U) == 0)
   {
+    if (DacSafety_IsOutputAllowed() == 0U)
+    {
+      FaultCommand_WriteTextResult(write, context, "test", HAL_BUSY);
+      return;
+    }
+
     if (sscanf(line,
                "test slew %u %u %u %lu",
                &cell,
@@ -734,8 +923,48 @@ static void FaultCommand_ExecuteText(const char *line, FaultCommand_WriteFn writ
     BmsResponseLog_Clear();
     FaultCommand_WriteTextResult(write, context, "log", HAL_OK);
   }
+  else if (strcmp(line, "safe status") == 0)
+  {
+    FaultCommand_WriteTextSafetyStatus(write, context);
+  }
+  else if ((strncmp(line, "safe stop", 9U) == 0) ||
+           (strncmp(line, "emergency stop", 14U) == 0))
+  {
+    millivolts = DAC_SAFETY_DEFAULT_SAFE_MV;
+    (void)sscanf(line, "safe stop %u", &millivolts);
+    (void)sscanf(line, "emergency stop %u", &millivolts);
+    FaultCommand_WriteTextResult(write,
+                                 context,
+                                 "safe",
+                                 DacSafety_EmergencyStop((uint16_t)millivolts));
+  }
+  else if (strcmp(line, "safe release") == 0)
+  {
+    DacSafety_Release();
+    FaultCommand_WriteTextResult(write, context, "safe", HAL_OK);
+  }
+  else if (strcmp(line, "sram status") == 0)
+  {
+    FaultCommand_WriteTextSramStatus(write, context);
+  }
+  else if (strncmp(line, "sram test", 9U) == 0)
+  {
+    unsigned long bytes = BSP_SRAM_DEFAULT_TEST_BYTES;
+    HAL_StatusTypeDef status;
+
+    (void)sscanf(line, "sram test %lu", &bytes);
+    status = BspSram_RunSelfTest((uint32_t)bytes);
+    FaultCommand_WriteTextResult(write, context, "sram", status);
+    FaultCommand_WriteTextSramStatus(write, context);
+  }
   else if (strncmp(line, "clear", 5U) == 0)
   {
+    if (DacSafety_IsOutputAllowed() == 0U)
+    {
+      FaultCommand_WriteTextResult(write, context, "clear", HAL_BUSY);
+      return;
+    }
+
     WaveformGen_Stop();
     if (sscanf(line, "clear %u", &cell) == 1)
     {
@@ -884,7 +1113,7 @@ static void FaultCommand_ExecuteJson(const char *json, FaultCommand_WriteFn writ
   {
     FaultCommand_Write(write,
                        context,
-                       "{\"ok\":true,\"commands\":[\"status\",\"normal\",\"set\",\"ov\",\"uv\",\"diff\",\"wave\",\"wave_stop\",\"cal\",\"test\",\"can\",\"log\",\"clear\"]}\r\n");
+                       "{\"ok\":true,\"commands\":[\"status\",\"normal\",\"set\",\"ov\",\"uv\",\"diff\",\"wave\",\"wave_stop\",\"cal\",\"test\",\"can\",\"log\",\"safe\",\"sram\",\"clear\"]}\r\n");
     return;
   }
 
@@ -947,7 +1176,11 @@ static void FaultCommand_ExecuteJson(const char *json, FaultCommand_WriteFn writ
   {
     if (FaultCommand_JsonGetString(json, "type", type, sizeof(type)) != 0U)
     {
-      if (strcmp(type, "square") == 0)
+      if ((strcmp(type, "stop") != 0) && (DacSafety_IsOutputAllowed() == 0U))
+      {
+        status = HAL_BUSY;
+      }
+      else if (strcmp(type, "square") == 0)
       {
         uint32_t low;
         uint32_t high;
@@ -1033,7 +1266,11 @@ static void FaultCommand_ExecuteJson(const char *json, FaultCommand_WriteFn writ
       {
         int32_t signedOffset;
 
-        if ((FaultCommand_JsonGetUint(json, "cell", &cell) != 0U) &&
+        if (DacSafety_IsOutputAllowed() == 0U)
+        {
+          status = HAL_BUSY;
+        }
+        else if ((FaultCommand_JsonGetUint(json, "cell", &cell) != 0U) &&
             (FaultCommand_JsonGetInt(json, "offset_mv", &signedOffset) != 0U))
         {
           status = VoltageSim_SetCellCalibrationOffsetMv((uint8_t)cell,
@@ -1045,7 +1282,11 @@ static void FaultCommand_ExecuteJson(const char *json, FaultCommand_WriteFn writ
         uint32_t targetMv;
         uint32_t measuredMv;
 
-        if ((FaultCommand_JsonGetUint(json, "cell", &cell) != 0U) &&
+        if (DacSafety_IsOutputAllowed() == 0U)
+        {
+          status = HAL_BUSY;
+        }
+        else if ((FaultCommand_JsonGetUint(json, "cell", &cell) != 0U) &&
             (FaultCommand_JsonGetUint(json, "target_mv", &targetMv) != 0U) &&
             (FaultCommand_JsonGetUint(json, "measured_mv", &measuredMv) != 0U))
         {
@@ -1056,7 +1297,11 @@ static void FaultCommand_ExecuteJson(const char *json, FaultCommand_WriteFn writ
       }
       else if (strcmp(action, "clear") == 0)
       {
-        if (FaultCommand_JsonGetUint(json, "cell", &cell) != 0U)
+        if (DacSafety_IsOutputAllowed() == 0U)
+        {
+          status = HAL_BUSY;
+        }
+        else if (FaultCommand_JsonGetUint(json, "cell", &cell) != 0U)
         {
           status = VoltageSim_ClearCellCalibrationOffset((uint8_t)cell);
         }
@@ -1085,7 +1330,11 @@ static void FaultCommand_ExecuteJson(const char *json, FaultCommand_WriteFn writ
         uint32_t high;
         uint32_t period;
 
-        if ((FaultCommand_JsonGetUint(json, "cell", &cell) != 0U) &&
+        if (DacSafety_IsOutputAllowed() == 0U)
+        {
+          status = HAL_BUSY;
+        }
+        else if ((FaultCommand_JsonGetUint(json, "cell", &cell) != 0U) &&
             (FaultCommand_JsonGetUint(json, "low_mv", &low) != 0U) &&
             (FaultCommand_JsonGetUint(json, "high_mv", &high) != 0U))
         {
@@ -1163,16 +1412,68 @@ static void FaultCommand_ExecuteJson(const char *json, FaultCommand_WriteFn writ
       }
     }
   }
+  else if (strcmp(cmd, "safe") == 0)
+  {
+    char action[16];
+
+    if (FaultCommand_JsonGetString(json, "action", action, sizeof(action)) != 0U)
+    {
+      if (strcmp(action, "status") == 0)
+      {
+        FaultCommand_WriteJsonSafetyStatus(write, context);
+        return;
+      }
+      else if ((strcmp(action, "stop") == 0) || (strcmp(action, "emergency_stop") == 0))
+      {
+        mv = FaultCommand_JsonGetUintDefault(json, "mv", DAC_SAFETY_DEFAULT_SAFE_MV);
+        status = DacSafety_EmergencyStop((uint16_t)mv);
+      }
+      else if (strcmp(action, "release") == 0)
+      {
+        DacSafety_Release();
+        status = HAL_OK;
+      }
+    }
+  }
+  else if (strcmp(cmd, "sram") == 0)
+  {
+    char action[16];
+
+    if (FaultCommand_JsonGetString(json, "action", action, sizeof(action)) != 0U)
+    {
+      if (strcmp(action, "status") == 0)
+      {
+        FaultCommand_WriteJsonSramStatus(write, context, HAL_OK);
+        return;
+      }
+      else if (strcmp(action, "test") == 0)
+      {
+        uint32_t bytes = FaultCommand_JsonGetUintDefault(json,
+                                                         "bytes",
+                                                         BSP_SRAM_DEFAULT_TEST_BYTES);
+        status = BspSram_RunSelfTest(bytes);
+        FaultCommand_WriteJsonSramStatus(write, context, status);
+        return;
+      }
+    }
+  }
   else if (strcmp(cmd, "clear") == 0)
   {
-    WaveformGen_Stop();
-    if (FaultCommand_JsonGetUint(json, "cell", &cell) != 0U)
+    if (DacSafety_IsOutputAllowed() == 0U)
     {
-      status = VoltageSim_ClearCellFault((uint8_t)cell);
+      status = HAL_BUSY;
     }
     else
     {
-      status = VoltageSim_ClearAllFaults();
+      WaveformGen_Stop();
+      if (FaultCommand_JsonGetUint(json, "cell", &cell) != 0U)
+      {
+        status = VoltageSim_ClearCellFault((uint8_t)cell);
+      }
+      else
+      {
+        status = VoltageSim_ClearAllFaults();
+      }
     }
   }
   else

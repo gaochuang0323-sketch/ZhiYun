@@ -36,9 +36,10 @@ build/fault_command.o: App/Src/fault_command.c App/Inc/fault_command.h \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h \
- App/Inc/bms_response_log.h BSP/Inc/bsp_can.h App/Inc/voltage_sim.h \
+ App/Inc/bms_response_log.h BSP/Inc/bsp_can.h BSP/Inc/bsp_sram.h \
+ App/Inc/dac_safety.h App/Inc/voltage_sim.h \
  Drivers/DAC81416/Inc/dac81416.h BSP/Inc/bsp_dac81416.h Core/Inc/spi.h \
- Core/Inc/main.h App/Inc/waveform_gen.h
+ Core/Inc/main.h App/Inc/voltage_sim.h App/Inc/waveform_gen.h
 App/Inc/fault_command.h:
 Core/Inc/main.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h:
@@ -83,9 +84,12 @@ Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h:
 App/Inc/bms_response_log.h:
 BSP/Inc/bsp_can.h:
+BSP/Inc/bsp_sram.h:
+App/Inc/dac_safety.h:
 App/Inc/voltage_sim.h:
 Drivers/DAC81416/Inc/dac81416.h:
 BSP/Inc/bsp_dac81416.h:
 Core/Inc/spi.h:
 Core/Inc/main.h:
+App/Inc/voltage_sim.h:
 App/Inc/waveform_gen.h:

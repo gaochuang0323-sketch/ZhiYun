@@ -32,7 +32,9 @@
 #include <stdio.h>
 
 #include "bsp_can.h"
+#include "bsp_sram.h"
 #include "dac81416.h"
+#include "dac_safety.h"
 #include "fault_console.h"
 #include "voltage_sim.h"
 
@@ -116,6 +118,11 @@ int main(void)
          (unsigned long)HAL_RCC_GetHCLKFreq(),
          (unsigned long)HAL_RCC_GetPCLK1Freq(),
          (unsigned long)HAL_RCC_GetPCLK2Freq());
+  BspSram_Init();
+  printf("[boot] external SRAM mapped at 0x%08lX, size=%lu bytes, bus=%u-bit\r\n",
+         (unsigned long)BSP_SRAM_BASE_ADDRESS,
+         (unsigned long)BSP_SRAM_SIZE_BYTES,
+         (unsigned int)BSP_SRAM_BUS_WIDTH_BITS);
   if (DAC81416_Init() != HAL_OK)
   {
     printf("[boot] DAC81416 init failed\r\n");
@@ -129,6 +136,7 @@ int main(void)
   }
   printf("[boot] voltage simulator ready, cells=13, normal=%umV\r\n",
          (unsigned int)VOLTAGE_SIM_DEFAULT_NORMAL_MV);
+  DacSafety_Init(DAC_SAFETY_DEFAULT_SAFE_MV);
   if (BspCan_Init() != HAL_OK)
   {
     printf("[boot] FDCAN1 init/start failed\r\n");
@@ -245,6 +253,20 @@ void MPU_Config(void)
   MPU_InitStruct.AccessPermission = MPU_REGION_NO_ACCESS;
   MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_DISABLE;
   MPU_InitStruct.IsShareable = MPU_ACCESS_SHAREABLE;
+  MPU_InitStruct.IsCacheable = MPU_ACCESS_NOT_CACHEABLE;
+  MPU_InitStruct.IsBufferable = MPU_ACCESS_NOT_BUFFERABLE;
+
+  HAL_MPU_ConfigRegion(&MPU_InitStruct);
+
+  MPU_InitStruct.Enable = MPU_REGION_ENABLE;
+  MPU_InitStruct.Number = MPU_REGION_NUMBER1;
+  MPU_InitStruct.BaseAddress = BSP_SRAM_BASE_ADDRESS;
+  MPU_InitStruct.Size = MPU_REGION_SIZE_1MB;
+  MPU_InitStruct.SubRegionDisable = 0x00;
+  MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL0;
+  MPU_InitStruct.AccessPermission = MPU_REGION_FULL_ACCESS;
+  MPU_InitStruct.DisableExec = MPU_INSTRUCTION_ACCESS_DISABLE;
+  MPU_InitStruct.IsShareable = MPU_ACCESS_NOT_SHAREABLE;
   MPU_InitStruct.IsCacheable = MPU_ACCESS_NOT_CACHEABLE;
   MPU_InitStruct.IsBufferable = MPU_ACCESS_NOT_BUFFERABLE;
 

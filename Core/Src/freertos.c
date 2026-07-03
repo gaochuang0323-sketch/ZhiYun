@@ -29,6 +29,7 @@
 #include <stdio.h>
 
 #include "bsp_can.h"
+#include "dac_safety.h"
 #include "fault_console.h"
 #include "tcp_json_server.h"
 #include "voltage_sim.h"
@@ -59,7 +60,7 @@
 osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
-  .stack_size = 128 * 4,
+  .stack_size = 1024 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 
@@ -144,6 +145,7 @@ void StartDefaultTask(void *argument)
     {
       printf("[rtos] waveform generator process failed\r\n");
     }
+    DacSafety_Process(now);
     FaultConsole_Process();
     BspCan_Process();
 

@@ -80,7 +80,8 @@ build/main.o: Core/Src/main.c Core/Inc/main.h \
  Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h \
  Middlewares/Third_Party/LwIP/src/include/lwip/tcpip.h Core/Inc/spi.h \
  Core/Inc/usart.h Core/Inc/gpio.h Core/Inc/fmc.h BSP/Inc/bsp_can.h \
- Drivers/DAC81416/Inc/dac81416.h BSP/Inc/bsp_dac81416.h \
+ BSP/Inc/bsp_sram.h Drivers/DAC81416/Inc/dac81416.h \
+ BSP/Inc/bsp_dac81416.h App/Inc/dac_safety.h App/Inc/voltage_sim.h \
  App/Inc/fault_console.h App/Inc/voltage_sim.h
 Core/Inc/main.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h:
@@ -174,7 +175,10 @@ Core/Inc/usart.h:
 Core/Inc/gpio.h:
 Core/Inc/fmc.h:
 BSP/Inc/bsp_can.h:
+BSP/Inc/bsp_sram.h:
 Drivers/DAC81416/Inc/dac81416.h:
 BSP/Inc/bsp_dac81416.h:
+App/Inc/dac_safety.h:
+App/Inc/voltage_sim.h:
 App/Inc/fault_console.h:
 App/Inc/voltage_sim.h:

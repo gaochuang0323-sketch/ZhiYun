@@ -46,9 +46,10 @@ build/freertos.o: Core/Src/freertos.c \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h \
  Drivers/CMSIS/RTOS2/Include/cmsis_os2.h BSP/Inc/bsp_can.h \
- App/Inc/fault_console.h App/Inc/tcp_json_server.h App/Inc/voltage_sim.h \
+ App/Inc/dac_safety.h App/Inc/voltage_sim.h \
  Drivers/DAC81416/Inc/dac81416.h BSP/Inc/bsp_dac81416.h Core/Inc/spi.h \
- Core/Inc/main.h App/Inc/waveform_gen.h
+ Core/Inc/main.h App/Inc/fault_console.h App/Inc/tcp_json_server.h \
+ App/Inc/voltage_sim.h App/Inc/waveform_gen.h
 Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
 Core/Inc/FreeRTOSConfig.h:
 Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h:
@@ -101,11 +102,13 @@ Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h:
 Drivers/CMSIS/RTOS2/Include/cmsis_os2.h:
 BSP/Inc/bsp_can.h:
-App/Inc/fault_console.h:
-App/Inc/tcp_json_server.h:
+App/Inc/dac_safety.h:
 App/Inc/voltage_sim.h:
 Drivers/DAC81416/Inc/dac81416.h:
 BSP/Inc/bsp_dac81416.h:
 Core/Inc/spi.h:
 Core/Inc/main.h:
+App/Inc/fault_console.h:
+App/Inc/tcp_json_server.h:
+App/Inc/voltage_sim.h:
 App/Inc/waveform_gen.h:

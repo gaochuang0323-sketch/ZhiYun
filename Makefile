@@ -49,6 +49,7 @@ Core/Src/usart.c \
 Core/Src/stm32h7xx_it.c \
 Core/Src/stm32h7xx_hal_msp.c \
 App/Src/bms_response_log.c \
+App/Src/dac_safety.c \
 App/Src/fault_command.c \
 App/Src/fault_console.c \
 App/Src/tcp_json_server.c \
@@ -56,6 +57,7 @@ App/Src/voltage_sim.c \
 App/Src/waveform_gen.c \
 BSP/Src/bsp_eth.c \
 BSP/Src/bsp_can.c \
+BSP/Src/bsp_sram.c \
 BSP/Src/bsp_dac81416.c \
 Drivers/DAC81416/Src/dac81416.c \
 Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_cortex.c \

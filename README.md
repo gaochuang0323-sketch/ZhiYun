@@ -12,6 +12,7 @@
 - 支持故障持续时间和 mV/ms 斜率控制
 - 支持单通道方波、单通道正弦波、13 路同相同步正弦波输出，用于 DAC/后级功放动态验证
 - 支持每通道 mV 级软件 offset 校准
+- 支持 DAC 急停锁存、安全电压输出、nALMOUT 周期监测
 - 支持 USART 文本/JSON 命令，LwIP TCP JSON server 默认端口 5000
 - 支持 FDCAN1 Classic CAN 500kbps 基础收发与日志打印
 
@@ -62,6 +63,10 @@ test static <mv>
 test slew <cell> <low_mv> <high_mv> <period_ms>
 can status
 can send <std_id_hex> <len> [byte_hex ...]
+safe status
+safe stop [safe_mv]
+safe release
+emergency stop [safe_mv]
 clear [cell]
 ```
 
@@ -81,6 +86,9 @@ cal trim 1 2500 2485
 cal status
 can status
 can send 123 8 01 02 03 04 05 06 07 08
+safe status
+safe stop 3200
+safe release
 clear
 normal 3200
 ```
@@ -117,6 +125,9 @@ normal 3200
 {"cmd":"can","action":"status"}
 {"cmd":"can","action":"send","id":291,"len":8,"d0":1,"d1":2,"d2":3,"d3":4,"d4":5,"d5":6,"d6":7,"d7":8}
 {"cmd":"can","action":"send","extended":1,"id":418385920,"len":2,"d0":170,"d1":85}
+{"cmd":"safe","action":"status"}
+{"cmd":"safe","action":"stop","mv":3200}
+{"cmd":"safe","action":"release"}
 {"cmd":"clear"}
 {"cmd":"clear","cell":7}
 ```
