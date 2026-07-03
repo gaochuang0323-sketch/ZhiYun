@@ -20,7 +20,8 @@
 #include "main.h"
 #include "FreeRTOS.h"
 #include "cmsis_os2.h"
-#include "eth.h"
+#include "fdcan.h"
+#include "lwip.h"
 #include "spi.h"
 #include "usart.h"
 #include "gpio.h"
@@ -102,10 +103,10 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_ETH_Init();
   MX_FMC_Init();
   MX_SPI1_Init();
   MX_USART1_UART_Init();
+  MX_FDCAN1_Init();
   /* USER CODE BEGIN 2 */
   setvbuf(stdout, NULL, _IONBF, 0);
   printf("\r\n[boot] project start\r\n");

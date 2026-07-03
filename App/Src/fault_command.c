@@ -6,6 +6,7 @@
 #include <string.h>
 
 #include "voltage_sim.h"
+#include "waveform_gen.h"
 
 #define FAULT_COMMAND_DEFAULT_DURATION_MS 100U
 #define FAULT_COMMAND_DEFAULT_SLEW_MV_PER_MS 3000U
@@ -53,8 +54,32 @@ static void FaultCommand_WriteTextHelp(FaultCommand_WriteFn write, void *context
   FaultCommand_Write(write, context, "  ov <cell> [mv] [duration_ms] [slew_mv_per_ms]\r\n");
   FaultCommand_Write(write, context, "  uv <cell> [mv] [duration_ms] [slew_mv_per_ms]\r\n");
   FaultCommand_Write(write, context, "  diff <high_cell> <high_mv> <low_cell> <low_mv> [duration_ms] [slew_mv_per_ms]\r\n");
+  FaultCommand_Write(write, context, "  wave status\r\n");
+  FaultCommand_Write(write, context, "  wave stop\r\n");
+  FaultCommand_Write(write, context, "  wave square <cell> <low_mv> <high_mv> <period_ms>\r\n");
+  FaultCommand_Write(write, context, "  wave sine <cell> <offset_mv> <amplitude_mv> <period_ms>\r\n");
+  FaultCommand_Write(write, context, "  cal status\r\n");
+  FaultCommand_Write(write, context, "  cal set <cell> <offset_mv>\r\n");
+  FaultCommand_Write(write, context, "  cal trim <cell> <target_mv> <measured_mv>\r\n");
+  FaultCommand_Write(write, context, "  cal clear [cell]\r\n");
+  FaultCommand_Write(write, context, "  test static <mv>\r\n");
+  FaultCommand_Write(write, context, "  test slew <cell> <low_mv> <high_mv> <period_ms>\r\n");
   FaultCommand_Write(write, context, "  clear [cell]\r\n");
-  FaultCommand_Write(write, context, "  JSON examples: {\"cmd\":\"status\"}, {\"cmd\":\"ov\",\"cell\":7}\r\n");
+  FaultCommand_Write(write, context, "  JSON examples: {\"cmd\":\"status\"}, {\"cmd\":\"cal\",\"action\":\"trim\",\"cell\":1,\"target_mv\":2500,\"measured_mv\":2485}\r\n");
+}
+
+static void FaultCommand_WriteTextWaveStatus(FaultCommand_WriteFn write, void *context)
+{
+  WaveformGen_Status status = WaveformGen_GetStatus();
+
+  FaultCommand_WriteFormat(write,
+                           context,
+                           "[wave] active=%u type=%s cell=%u period=%lums last=%umV\r\n",
+                           status.active,
+                           WaveformGen_GetTypeName(status.type),
+                           status.cell,
+                           (unsigned long)status.periodMs,
+                           status.lastMillivolts);
 }
 
 static void FaultCommand_WriteTextStatus(FaultCommand_WriteFn write, void *context)
@@ -69,6 +94,13 @@ static void FaultCommand_WriteTextStatus(FaultCommand_WriteFn write, void *conte
     FaultCommand_WriteFormat(write, context, "  C%02u=%umV",
                              cell,
                              VoltageSim_GetLastCellVoltageMv(cell));
+    if (VoltageSim_GetCellCalibrationOffsetMv(cell) != 0)
+    {
+      FaultCommand_WriteFormat(write,
+                               context,
+                               " cal=%dmV",
+                               (int)VoltageSim_GetCellCalibrationOffsetMv(cell));
+    }
     if (info.type != VOLTAGE_SIM_FAULT_NONE)
     {
       FaultCommand_WriteFormat(write,
@@ -81,6 +113,20 @@ static void FaultCommand_WriteTextStatus(FaultCommand_WriteFn write, void *conte
                                info.slewRateMvPerMs);
     }
     FaultCommand_Write(write, context, "\r\n");
+  }
+}
+
+static void FaultCommand_WriteTextCalibrationStatus(FaultCommand_WriteFn write, void *context)
+{
+  FaultCommand_Write(write, context, "\r\n[cal]\r\n");
+
+  for (uint8_t cell = 1U; cell <= VOLTAGE_SIM_CELL_COUNT; cell++)
+  {
+    FaultCommand_WriteFormat(write,
+                             context,
+                             "  C%02u offset=%dmV\r\n",
+                             cell,
+                             (int)VoltageSim_GetCellCalibrationOffsetMv(cell));
   }
 }
 
@@ -106,10 +152,17 @@ static void FaultCommand_WriteJsonResult(FaultCommand_WriteFn write,
 
 static void FaultCommand_WriteJsonStatus(FaultCommand_WriteFn write, void *context)
 {
+  WaveformGen_Status waveform = WaveformGen_GetStatus();
+
   FaultCommand_WriteFormat(write,
                            context,
-                           "{\"ok\":true,\"active_faults\":%u,\"cells\":[",
-                           VoltageSim_GetActiveFaultCount());
+                           "{\"ok\":true,\"active_faults\":%u,\"waveform\":{\"active\":%u,\"type\":\"%s\",\"cell\":%u,\"period_ms\":%lu,\"last_mv\":%u},\"cells\":[",
+                           VoltageSim_GetActiveFaultCount(),
+                           waveform.active,
+                           WaveformGen_GetTypeName(waveform.type),
+                           waveform.cell,
+                           (unsigned long)waveform.periodMs,
+                           waveform.lastMillivolts);
 
   for (uint8_t cell = 1U; cell <= VOLTAGE_SIM_CELL_COUNT; cell++)
   {
@@ -117,10 +170,11 @@ static void FaultCommand_WriteJsonStatus(FaultCommand_WriteFn write, void *conte
 
     FaultCommand_WriteFormat(write,
                              context,
-                             "%s{\"cell\":%u,\"mv\":%u,\"fault\":\"%s\",\"target_mv\":%u,\"restore_mv\":%u,\"duration_ms\":%lu,\"slew_mv_per_ms\":%u}",
+                             "%s{\"cell\":%u,\"mv\":%u,\"cal_mv\":%d,\"fault\":\"%s\",\"target_mv\":%u,\"restore_mv\":%u,\"duration_ms\":%lu,\"slew_mv_per_ms\":%u}",
                              (cell == 1U) ? "" : ",",
                              cell,
                              VoltageSim_GetLastCellVoltageMv(cell),
+                             (int)VoltageSim_GetCellCalibrationOffsetMv(cell),
                              VoltageSim_GetFaultTypeName(info.type),
                              info.targetMillivolts,
                              info.restoreMillivolts,
@@ -133,12 +187,33 @@ static void FaultCommand_WriteJsonStatus(FaultCommand_WriteFn write, void *conte
 
 static HAL_StatusTypeDef FaultCommand_RunNormal(uint16_t millivolts)
 {
+  WaveformGen_Stop();
   return VoltageSim_SetAllCellsVoltageMv(millivolts);
 }
 
 static HAL_StatusTypeDef FaultCommand_RunSet(uint8_t cell, uint16_t millivolts)
 {
+  WaveformGen_Stop();
   return VoltageSim_SetCellVoltageMv(cell, millivolts);
+}
+
+static HAL_StatusTypeDef FaultCommand_RunCalibrationTrim(uint8_t cell,
+                                                         uint16_t targetMillivolts,
+                                                         uint16_t measuredMillivolts)
+{
+  int32_t offset;
+
+  offset = (int32_t)VoltageSim_GetCellCalibrationOffsetMv(cell) +
+           (int32_t)targetMillivolts -
+           (int32_t)measuredMillivolts;
+
+  if ((offset < -VOLTAGE_SIM_CAL_OFFSET_LIMIT_MV) ||
+      (offset > VOLTAGE_SIM_CAL_OFFSET_LIMIT_MV))
+  {
+    return HAL_ERROR;
+  }
+
+  return VoltageSim_SetCellCalibrationOffsetMv(cell, (int16_t)offset);
 }
 
 static HAL_StatusTypeDef FaultCommand_RunOverVoltage(uint8_t cell,
@@ -146,6 +221,7 @@ static HAL_StatusTypeDef FaultCommand_RunOverVoltage(uint8_t cell,
                                                      uint32_t duration,
                                                      uint16_t slew)
 {
+  WaveformGen_Stop();
   return VoltageSim_InjectCellOverVoltageRamp(cell, target, duration, slew);
 }
 
@@ -154,6 +230,7 @@ static HAL_StatusTypeDef FaultCommand_RunUnderVoltage(uint8_t cell,
                                                       uint32_t duration,
                                                       uint16_t slew)
 {
+  WaveformGen_Stop();
   return VoltageSim_InjectCellUnderVoltageRamp(cell, target, duration, slew);
 }
 
@@ -164,6 +241,7 @@ static HAL_StatusTypeDef FaultCommand_RunDiff(uint8_t highCell,
                                               uint32_t duration,
                                               uint16_t slew)
 {
+  WaveformGen_Stop();
   return VoltageSim_InjectVoltageDifference(highCell, highMv, lowCell, lowMv, duration, slew);
 }
 
@@ -174,6 +252,13 @@ static void FaultCommand_ExecuteText(const char *line, FaultCommand_WriteFn writ
   unsigned int target;
   unsigned long duration;
   unsigned int slew;
+  unsigned int lowMv;
+  unsigned int highMv;
+  unsigned int centerMv;
+  unsigned int amplitudeMv;
+  unsigned long periodMs;
+  int calOffsetMv;
+  unsigned int measuredMv;
 
   if ((strcmp(line, "help") == 0) || (strcmp(line, "?") == 0))
   {
@@ -271,8 +356,142 @@ static void FaultCommand_ExecuteText(const char *line, FaultCommand_WriteFn writ
                                                       (uint32_t)duration,
                                                       (uint16_t)slew));
   }
+  else if (strcmp(line, "wave status") == 0)
+  {
+    FaultCommand_WriteTextWaveStatus(write, context);
+  }
+  else if (strcmp(line, "wave stop") == 0)
+  {
+    WaveformGen_Stop();
+    FaultCommand_WriteTextResult(write, context, "wave", HAL_OK);
+  }
+  else if (strncmp(line, "wave square ", 12U) == 0)
+  {
+    if (sscanf(line,
+               "wave square %u %u %u %lu",
+               &cell,
+               &lowMv,
+               &highMv,
+               &periodMs) != 4)
+    {
+      FaultCommand_WriteTextResult(write, context, "wave", HAL_ERROR);
+      return;
+    }
+
+    FaultCommand_WriteTextResult(write,
+                                 context,
+                                 "wave",
+                                 WaveformGen_StartSquare((uint8_t)cell,
+                                                         (uint16_t)lowMv,
+                                                         (uint16_t)highMv,
+                                                         (uint32_t)periodMs));
+  }
+  else if (strncmp(line, "wave sine ", 10U) == 0)
+  {
+    if (sscanf(line,
+               "wave sine %u %u %u %lu",
+               &cell,
+               &centerMv,
+               &amplitudeMv,
+               &periodMs) != 4)
+    {
+      FaultCommand_WriteTextResult(write, context, "wave", HAL_ERROR);
+      return;
+    }
+
+    FaultCommand_WriteTextResult(write,
+                                 context,
+                                 "wave",
+                                 WaveformGen_StartSine((uint8_t)cell,
+                                                       (uint16_t)centerMv,
+                                                       (uint16_t)amplitudeMv,
+                                                       (uint32_t)periodMs));
+  }
+  else if (strcmp(line, "cal status") == 0)
+  {
+    FaultCommand_WriteTextCalibrationStatus(write, context);
+  }
+  else if (strncmp(line, "cal set ", 8U) == 0)
+  {
+    if (sscanf(line, "cal set %u %d", &cell, &calOffsetMv) != 2)
+    {
+      FaultCommand_WriteTextResult(write, context, "cal", HAL_ERROR);
+      return;
+    }
+
+    FaultCommand_WriteTextResult(write,
+                                 context,
+                                 "cal",
+                                 VoltageSim_SetCellCalibrationOffsetMv((uint8_t)cell,
+                                                                        (int16_t)calOffsetMv));
+  }
+  else if (strncmp(line, "cal trim ", 9U) == 0)
+  {
+    if (sscanf(line, "cal trim %u %u %u", &cell, &target, &measuredMv) != 3)
+    {
+      FaultCommand_WriteTextResult(write, context, "cal", HAL_ERROR);
+      return;
+    }
+
+    FaultCommand_WriteTextResult(write,
+                                 context,
+                                 "cal",
+                                 FaultCommand_RunCalibrationTrim((uint8_t)cell,
+                                                                 (uint16_t)target,
+                                                                 (uint16_t)measuredMv));
+  }
+  else if (strncmp(line, "cal clear", 9U) == 0)
+  {
+    if (sscanf(line, "cal clear %u", &cell) == 1)
+    {
+      FaultCommand_WriteTextResult(write,
+                                   context,
+                                   "cal",
+                                   VoltageSim_ClearCellCalibrationOffset((uint8_t)cell));
+    }
+    else
+    {
+      VoltageSim_ClearAllCalibrationOffsets();
+      FaultCommand_WriteTextResult(write, context, "cal", HAL_OK);
+    }
+  }
+  else if (strncmp(line, "test static ", 12U) == 0)
+  {
+    if (sscanf(line, "test static %u", &millivolts) != 1)
+    {
+      FaultCommand_WriteTextResult(write, context, "test", HAL_ERROR);
+      return;
+    }
+
+    FaultCommand_WriteTextResult(write,
+                                 context,
+                                 "test",
+                                 FaultCommand_RunNormal((uint16_t)millivolts));
+  }
+  else if (strncmp(line, "test slew ", 10U) == 0)
+  {
+    if (sscanf(line,
+               "test slew %u %u %u %lu",
+               &cell,
+               &lowMv,
+               &highMv,
+               &periodMs) != 4)
+    {
+      FaultCommand_WriteTextResult(write, context, "test", HAL_ERROR);
+      return;
+    }
+
+    FaultCommand_WriteTextResult(write,
+                                 context,
+                                 "test",
+                                 WaveformGen_StartSquare((uint8_t)cell,
+                                                         (uint16_t)lowMv,
+                                                         (uint16_t)highMv,
+                                                         (uint32_t)periodMs));
+  }
   else if (strncmp(line, "clear", 5U) == 0)
   {
+    WaveformGen_Stop();
     if (sscanf(line, "clear %u", &cell) == 1)
     {
       FaultCommand_WriteTextResult(write, context, "clear", VoltageSim_ClearCellFault((uint8_t)cell));
@@ -361,6 +580,31 @@ static uint8_t FaultCommand_JsonGetUint(const char *json, const char *key, uint3
   return 1U;
 }
 
+static uint8_t FaultCommand_JsonGetInt(const char *json, const char *key, int32_t *value)
+{
+  const char *cursor = FaultCommand_FindJsonKey(json, key);
+
+  if ((cursor == NULL) || (value == NULL))
+  {
+    return 0U;
+  }
+
+  cursor = strchr(cursor, ':');
+  if (cursor == NULL)
+  {
+    return 0U;
+  }
+
+  cursor++;
+  while (*cursor == ' ')
+  {
+    cursor++;
+  }
+
+  *value = (int32_t)strtol(cursor, NULL, 10);
+  return 1U;
+}
+
 static uint32_t FaultCommand_JsonGetUintDefault(const char *json, const char *key, uint32_t defaultValue)
 {
   uint32_t value = defaultValue;
@@ -372,6 +616,7 @@ static uint32_t FaultCommand_JsonGetUintDefault(const char *json, const char *ke
 static void FaultCommand_ExecuteJson(const char *json, FaultCommand_WriteFn write, void *context)
 {
   char cmd[16];
+  char type[16];
   uint32_t cell;
   uint32_t mv;
   uint32_t duration;
@@ -394,7 +639,7 @@ static void FaultCommand_ExecuteJson(const char *json, FaultCommand_WriteFn writ
   {
     FaultCommand_Write(write,
                        context,
-                       "{\"ok\":true,\"commands\":[\"status\",\"normal\",\"set\",\"ov\",\"uv\",\"diff\",\"clear\"]}\r\n");
+                       "{\"ok\":true,\"commands\":[\"status\",\"normal\",\"set\",\"ov\",\"uv\",\"diff\",\"wave\",\"wave_stop\",\"cal\",\"test\",\"clear\"]}\r\n");
     return;
   }
 
@@ -453,8 +698,149 @@ static void FaultCommand_ExecuteJson(const char *json, FaultCommand_WriteFn writ
                                     (uint16_t)slew);
     }
   }
+  else if (strcmp(cmd, "wave") == 0)
+  {
+    if (FaultCommand_JsonGetString(json, "type", type, sizeof(type)) != 0U)
+    {
+      if (strcmp(type, "square") == 0)
+      {
+        uint32_t low;
+        uint32_t high;
+        uint32_t period;
+
+        if ((FaultCommand_JsonGetUint(json, "cell", &cell) != 0U) &&
+            (FaultCommand_JsonGetUint(json, "low_mv", &low) != 0U) &&
+            (FaultCommand_JsonGetUint(json, "high_mv", &high) != 0U))
+        {
+          period = FaultCommand_JsonGetUintDefault(json, "period_ms", 1000U);
+          status = WaveformGen_StartSquare((uint8_t)cell,
+                                           (uint16_t)low,
+                                           (uint16_t)high,
+                                           period);
+        }
+      }
+      else if (strcmp(type, "sine") == 0)
+      {
+        uint32_t offset;
+        uint32_t amplitude;
+        uint32_t period;
+
+        if ((FaultCommand_JsonGetUint(json, "cell", &cell) != 0U) &&
+            (FaultCommand_JsonGetUint(json, "offset_mv", &offset) != 0U) &&
+            (FaultCommand_JsonGetUint(json, "amplitude_mv", &amplitude) != 0U))
+        {
+          period = FaultCommand_JsonGetUintDefault(json, "period_ms", 1000U);
+          status = WaveformGen_StartSine((uint8_t)cell,
+                                         (uint16_t)offset,
+                                         (uint16_t)amplitude,
+                                         period);
+        }
+      }
+      else if (strcmp(type, "stop") == 0)
+      {
+        WaveformGen_Stop();
+        status = HAL_OK;
+      }
+    }
+  }
+  else if (strcmp(cmd, "wave_stop") == 0)
+  {
+    WaveformGen_Stop();
+    status = HAL_OK;
+  }
+  else if (strcmp(cmd, "cal") == 0)
+  {
+    char action[16];
+
+    if (FaultCommand_JsonGetString(json, "action", action, sizeof(action)) != 0U)
+    {
+      if (strcmp(action, "status") == 0)
+      {
+        FaultCommand_Write(write, context, "{\"ok\":true,\"calibration\":[");
+        for (uint8_t calCell = 1U; calCell <= VOLTAGE_SIM_CELL_COUNT; calCell++)
+        {
+          FaultCommand_WriteFormat(write,
+                                   context,
+                                   "%s{\"cell\":%u,\"offset_mv\":%d}",
+                                   (calCell == 1U) ? "" : ",",
+                                   calCell,
+                                   (int)VoltageSim_GetCellCalibrationOffsetMv(calCell));
+        }
+        FaultCommand_Write(write, context, "]}\r\n");
+        return;
+      }
+      else if (strcmp(action, "set") == 0)
+      {
+        int32_t signedOffset;
+
+        if ((FaultCommand_JsonGetUint(json, "cell", &cell) != 0U) &&
+            (FaultCommand_JsonGetInt(json, "offset_mv", &signedOffset) != 0U))
+        {
+          status = VoltageSim_SetCellCalibrationOffsetMv((uint8_t)cell,
+                                                         (int16_t)signedOffset);
+        }
+      }
+      else if (strcmp(action, "trim") == 0)
+      {
+        uint32_t targetMv;
+        uint32_t measuredMv;
+
+        if ((FaultCommand_JsonGetUint(json, "cell", &cell) != 0U) &&
+            (FaultCommand_JsonGetUint(json, "target_mv", &targetMv) != 0U) &&
+            (FaultCommand_JsonGetUint(json, "measured_mv", &measuredMv) != 0U))
+        {
+          status = FaultCommand_RunCalibrationTrim((uint8_t)cell,
+                                                  (uint16_t)targetMv,
+                                                  (uint16_t)measuredMv);
+        }
+      }
+      else if (strcmp(action, "clear") == 0)
+      {
+        if (FaultCommand_JsonGetUint(json, "cell", &cell) != 0U)
+        {
+          status = VoltageSim_ClearCellCalibrationOffset((uint8_t)cell);
+        }
+        else
+        {
+          VoltageSim_ClearAllCalibrationOffsets();
+          status = HAL_OK;
+        }
+      }
+    }
+  }
+  else if (strcmp(cmd, "test") == 0)
+  {
+    if (FaultCommand_JsonGetString(json, "type", type, sizeof(type)) != 0U)
+    {
+      if (strcmp(type, "static") == 0)
+      {
+        if (FaultCommand_JsonGetUint(json, "mv", &mv) != 0U)
+        {
+          status = FaultCommand_RunNormal((uint16_t)mv);
+        }
+      }
+      else if (strcmp(type, "slew") == 0)
+      {
+        uint32_t low;
+        uint32_t high;
+        uint32_t period;
+
+        if ((FaultCommand_JsonGetUint(json, "cell", &cell) != 0U) &&
+            (FaultCommand_JsonGetUint(json, "low_mv", &low) != 0U) &&
+            (FaultCommand_JsonGetUint(json, "high_mv", &high) != 0U))
+        {
+          period = FaultCommand_JsonGetUintDefault(json, "period_ms", 1000U);
+          status = WaveformGen_StartSquare((uint8_t)cell,
+                                           (uint16_t)low,
+                                           (uint16_t)high,
+                                           period);
+        }
+      }
+    }
+  }
   else if (strcmp(cmd, "clear") == 0)
   {
+    WaveformGen_Stop();
     if (FaultCommand_JsonGetUint(json, "cell", &cell) != 0U)
     {
       status = VoltageSim_ClearCellFault((uint8_t)cell);

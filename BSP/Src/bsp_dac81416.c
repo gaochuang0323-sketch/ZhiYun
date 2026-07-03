@@ -131,7 +131,10 @@ void DAC_SetLDACPin(GPIO_PinState state)
 void DAC_LDAC_Update(void)
 {
   DAC_SetLDACPin(GPIO_PIN_RESET);
-  HAL_Delay(1U);
+  for (volatile uint32_t delay = 0U; delay < 200U; delay++)
+  {
+    __NOP();
+  }
   DAC_SetLDACPin(GPIO_PIN_SET);
 }
 

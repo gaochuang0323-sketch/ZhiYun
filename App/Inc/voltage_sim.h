@@ -13,6 +13,7 @@ extern "C" {
 #define VOLTAGE_SIM_DEFAULT_NORMAL_MV 3200U
 #define VOLTAGE_SIM_DEFAULT_OV_MV     4500U
 #define VOLTAGE_SIM_DEFAULT_UV_MV     1000U
+#define VOLTAGE_SIM_CAL_OFFSET_LIMIT_MV 500
 
 typedef enum
 {
@@ -58,6 +59,10 @@ HAL_StatusTypeDef VoltageSim_InjectVoltageDifference(uint8_t highCell,
 HAL_StatusTypeDef VoltageSim_ClearCellFault(uint8_t cell);
 HAL_StatusTypeDef VoltageSim_ClearAllFaults(void);
 HAL_StatusTypeDef VoltageSim_Process(uint32_t nowMs);
+HAL_StatusTypeDef VoltageSim_SetCellCalibrationOffsetMv(uint8_t cell, int16_t offsetMillivolts);
+HAL_StatusTypeDef VoltageSim_ClearCellCalibrationOffset(uint8_t cell);
+void VoltageSim_ClearAllCalibrationOffsets(void);
+int16_t VoltageSim_GetCellCalibrationOffsetMv(uint8_t cell);
 uint16_t VoltageSim_MillivoltsToDacCode(uint16_t millivolts);
 uint16_t VoltageSim_GetLastCellVoltageMv(uint8_t cell);
 VoltageSim_CellFaultInfo VoltageSim_GetCellFaultInfo(uint8_t cell);

@@ -20,6 +20,7 @@ build/fault_command.o: App/Src/fault_command.c App/Inc/fault_command.h \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth_ex.h \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_exti.h \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cortex.h \
+ Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_fdcan.h \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash.h \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash_ex.h \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hsem.h \
@@ -36,7 +37,8 @@ build/fault_command.o: App/Src/fault_command.c App/Inc/fault_command.h \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h \
  App/Inc/voltage_sim.h Drivers/DAC81416/Inc/dac81416.h \
- BSP/Inc/bsp_dac81416.h Core/Inc/spi.h Core/Inc/main.h
+ BSP/Inc/bsp_dac81416.h Core/Inc/spi.h Core/Inc/main.h \
+ App/Inc/waveform_gen.h
 App/Inc/fault_command.h:
 Core/Inc/main.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h:
@@ -63,6 +65,7 @@ Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth_ex.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_exti.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cortex.h:
+Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_fdcan.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash_ex.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hsem.h:
@@ -83,3 +86,4 @@ Drivers/DAC81416/Inc/dac81416.h:
 BSP/Inc/bsp_dac81416.h:
 Core/Inc/spi.h:
 Core/Inc/main.h:
+App/Inc/waveform_gen.h:

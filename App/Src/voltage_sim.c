@@ -1,6 +1,7 @@
 #include "voltage_sim.h"
 
 static uint16_t cellVoltageMv[VOLTAGE_SIM_CELL_COUNT];
+static int16_t cellCalibrationOffsetMv[VOLTAGE_SIM_CELL_COUNT];
 static VoltageSim_CellFaultInfo cellFaultInfo[VOLTAGE_SIM_CELL_COUNT];
 static uint32_t faultLastUpdateMs[VOLTAGE_SIM_CELL_COUNT];
 static uint32_t faultHoldStartedMs[VOLTAGE_SIM_CELL_COUNT];
@@ -14,6 +15,23 @@ static uint8_t VoltageSim_IsValidCell(uint8_t cell)
 static uint8_t VoltageSim_IsValidVoltage(uint16_t millivolts)
 {
   return ((millivolts >= VOLTAGE_SIM_MIN_MV) && (millivolts <= VOLTAGE_SIM_MAX_MV)) ? 1U : 0U;
+}
+
+static uint16_t VoltageSim_ApplyCalibration(uint8_t cell, uint16_t millivolts)
+{
+  int32_t calibrated = (int32_t)millivolts + cellCalibrationOffsetMv[cell - 1U];
+
+  if (calibrated < VOLTAGE_SIM_MIN_MV)
+  {
+    return VOLTAGE_SIM_MIN_MV;
+  }
+
+  if (calibrated > VOLTAGE_SIM_MAX_MV)
+  {
+    return VOLTAGE_SIM_MAX_MV;
+  }
+
+  return (uint16_t)calibrated;
 }
 
 static void VoltageSim_ClearFaultRecord(uint8_t cell)
@@ -36,13 +54,15 @@ static HAL_StatusTypeDef VoltageSim_WriteCellVoltageMv(uint8_t cell,
 {
   HAL_StatusTypeDef status;
   uint16_t dacCode;
+  uint16_t calibratedMillivolts;
 
   if ((VoltageSim_IsValidCell(cell) == 0U) || (VoltageSim_IsValidVoltage(millivolts) == 0U))
   {
     return HAL_ERROR;
   }
 
-  dacCode = VoltageSim_MillivoltsToDacCode(millivolts);
+  calibratedMillivolts = VoltageSim_ApplyCalibration(cell, millivolts);
+  dacCode = VoltageSim_MillivoltsToDacCode(calibratedMillivolts);
   status = DAC_WriteChannel((uint8_t)(cell - 1U), dacCode);
   if (status != HAL_OK)
   {
@@ -431,6 +451,45 @@ uint16_t VoltageSim_MillivoltsToDacCode(uint16_t millivolts)
                     VOLTAGE_SIM_MAX_MV);
 }
 
+HAL_StatusTypeDef VoltageSim_SetCellCalibrationOffsetMv(uint8_t cell, int16_t offsetMillivolts)
+{
+  if ((VoltageSim_IsValidCell(cell) == 0U) ||
+      (offsetMillivolts < -VOLTAGE_SIM_CAL_OFFSET_LIMIT_MV) ||
+      (offsetMillivolts > VOLTAGE_SIM_CAL_OFFSET_LIMIT_MV))
+  {
+    return HAL_ERROR;
+  }
+
+  cellCalibrationOffsetMv[cell - 1U] = offsetMillivolts;
+  return VoltageSim_WriteCellVoltageMv(cell, cellVoltageMv[cell - 1U], 1U);
+}
+
+HAL_StatusTypeDef VoltageSim_ClearCellCalibrationOffset(uint8_t cell)
+{
+  return VoltageSim_SetCellCalibrationOffsetMv(cell, 0);
+}
+
+void VoltageSim_ClearAllCalibrationOffsets(void)
+{
+  for (uint8_t cell = 1U; cell <= VOLTAGE_SIM_CELL_COUNT; cell++)
+  {
+    cellCalibrationOffsetMv[cell - 1U] = 0;
+    (void)VoltageSim_WriteCellVoltageMv(cell, cellVoltageMv[cell - 1U], 0U);
+  }
+
+  DAC_LDAC_Update();
+}
+
+int16_t VoltageSim_GetCellCalibrationOffsetMv(uint8_t cell)
+{
+  if (VoltageSim_IsValidCell(cell) == 0U)
+  {
+    return 0;
+  }
+
+  return cellCalibrationOffsetMv[cell - 1U];
+}
+
 uint16_t VoltageSim_GetLastCellVoltageMv(uint8_t cell)
 {
   if (VoltageSim_IsValidCell(cell) == 0U)
@@ -443,7 +502,7 @@ uint16_t VoltageSim_GetLastCellVoltageMv(uint8_t cell)
 
 VoltageSim_CellFaultInfo VoltageSim_GetCellFaultInfo(uint8_t cell)
 {
-  VoltageSim_CellFaultInfo emptyInfo = {VOLTAGE_SIM_FAULT_NONE, 0U, 0U};
+  VoltageSim_CellFaultInfo emptyInfo = {VOLTAGE_SIM_FAULT_NONE, 0U, 0U, 0U, 0U};
 
   if (VoltageSim_IsValidCell(cell) == 0U)
   {

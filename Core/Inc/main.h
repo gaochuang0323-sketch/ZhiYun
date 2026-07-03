@@ -57,6 +57,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define DAC_CS_Pin GPIO_PIN_4
+#define DAC_CS_GPIO_Port GPIOA
 #define temp6a_Pin GPIO_PIN_6
 #define temp6a_GPIO_Port GPIOG
 #define temp6b_Pin GPIO_PIN_7
@@ -91,8 +93,6 @@ void Error_Handler(void);
 #define temp1a_GPIO_Port GPIOB
 #define temp1b_Pin GPIO_PIN_4
 #define temp1b_GPIO_Port GPIOB
-#define DAC_CS_Pin GPIO_PIN_4
-#define DAC_CS_GPIO_Port GPIOA
 #define TOGGLE2_Pin GPIO_PIN_5
 #define TOGGLE2_GPIO_Port GPIOB
 #define TOGGLE1_Pin GPIO_PIN_6

@@ -1,0 +1,65 @@
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccqxIoAT.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"bsp_eth.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "BSP/Src/bsp_eth.c"
+  19              		.section	.text.BSP_ETH_PHY_Reset,"ax",%progbits
+  20              		.align	1
+  21              		.global	BSP_ETH_PHY_Reset
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	BSP_ETH_PHY_Reset:
+  27              	.LFB146:
+   1:BSP/Src/bsp_eth.c **** #include "bsp_eth.h"
+   2:BSP/Src/bsp_eth.c **** 
+   3:BSP/Src/bsp_eth.c **** void BSP_ETH_PHY_Reset(void)
+   4:BSP/Src/bsp_eth.c **** {
+  28              		.loc 1 4 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+   5:BSP/Src/bsp_eth.c **** #if defined(ETH_nRST_Pin) && defined(ETH_nRST_GPIO_Port)
+   6:BSP/Src/bsp_eth.c ****   HAL_GPIO_WritePin(ETH_nRST_GPIO_Port, ETH_nRST_Pin, GPIO_PIN_RESET);
+   7:BSP/Src/bsp_eth.c ****   HAL_Delay(200U);
+   8:BSP/Src/bsp_eth.c ****   HAL_GPIO_WritePin(ETH_nRST_GPIO_Port, ETH_nRST_Pin, GPIO_PIN_SET);
+   9:BSP/Src/bsp_eth.c ****   HAL_Delay(300U);
+  10:BSP/Src/bsp_eth.c **** #else
+  11:BSP/Src/bsp_eth.c ****   /*
+  12:BSP/Src/bsp_eth.c ****    * Current EIS-Replayer hardware pulls ETH_nRST high and does not connect it
+  13:BSP/Src/bsp_eth.c ****    * to the MCU. PHY reset is therefore handled by hardware power-on reset only.
+  14:BSP/Src/bsp_eth.c ****    */
+  15:BSP/Src/bsp_eth.c **** #endif
+  16:BSP/Src/bsp_eth.c **** }
+  33              		.loc 1 16 1 view .LVU1
+  34 0000 7047     		bx	lr
+  35              		.cfi_endproc
+  36              	.LFE146:
+  38              		.text
+  39              	.Letext0:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccqxIoAT.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 bsp_eth.c
+C:\Users\hh\AppData\Local\Temp\ccqxIoAT.s:20     .text.BSP_ETH_PHY_Reset:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccqxIoAT.s:26     .text.BSP_ETH_PHY_Reset:00000000 BSP_ETH_PHY_Reset
+
+NO UNDEFINED SYMBOLS

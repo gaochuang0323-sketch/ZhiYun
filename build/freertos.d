@@ -29,6 +29,7 @@ build/freertos.o: Core/Src/freertos.c \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth_ex.h \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_exti.h \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cortex.h \
+ Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_fdcan.h \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash.h \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash_ex.h \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hsem.h \
@@ -45,8 +46,9 @@ build/freertos.o: Core/Src/freertos.c \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h \
  Drivers/CMSIS/RTOS2/Include/cmsis_os2.h App/Inc/fault_console.h \
- App/Inc/voltage_sim.h Drivers/DAC81416/Inc/dac81416.h \
- BSP/Inc/bsp_dac81416.h Core/Inc/spi.h Core/Inc/main.h
+ App/Inc/tcp_json_server.h App/Inc/voltage_sim.h \
+ Drivers/DAC81416/Inc/dac81416.h BSP/Inc/bsp_dac81416.h Core/Inc/spi.h \
+ Core/Inc/main.h App/Inc/waveform_gen.h
 Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
 Core/Inc/FreeRTOSConfig.h:
 Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h:
@@ -81,6 +83,7 @@ Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_eth_ex.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_exti.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_cortex.h:
+Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_fdcan.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_flash_ex.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_hsem.h:
@@ -98,8 +101,10 @@ Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h:
 Drivers/CMSIS/RTOS2/Include/cmsis_os2.h:
 App/Inc/fault_console.h:
+App/Inc/tcp_json_server.h:
 App/Inc/voltage_sim.h:
 Drivers/DAC81416/Inc/dac81416.h:
 BSP/Inc/bsp_dac81416.h:
 Core/Inc/spi.h:
 Core/Inc/main.h:
+App/Inc/waveform_gen.h:

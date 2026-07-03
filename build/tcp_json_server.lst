@@ -1,0 +1,943 @@
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"tcp_json_server.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "App/Src/tcp_json_server.c"
+  19              		.section	.text.TcpJsonServer_Write,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	TcpJsonServer_Write:
+  26              	.LVL0:
+  27              	.LFB172:
+   1:App/Src/tcp_json_server.c **** #include "tcp_json_server.h"
+   2:App/Src/tcp_json_server.c **** 
+   3:App/Src/tcp_json_server.c **** #include <stdio.h>
+   4:App/Src/tcp_json_server.c **** #include <string.h>
+   5:App/Src/tcp_json_server.c **** 
+   6:App/Src/tcp_json_server.c **** #include "cmsis_os2.h"
+   7:App/Src/tcp_json_server.c **** #include "fault_command.h"
+   8:App/Src/tcp_json_server.c **** #include "lwip/api.h"
+   9:App/Src/tcp_json_server.c **** #include "lwip/err.h"
+  10:App/Src/tcp_json_server.c **** 
+  11:App/Src/tcp_json_server.c **** #define TCP_JSON_SERVER_STACK_SIZE 2048U
+  12:App/Src/tcp_json_server.c **** #define TCP_JSON_SERVER_LINE_SIZE 256U
+  13:App/Src/tcp_json_server.c **** 
+  14:App/Src/tcp_json_server.c **** static osThreadId_t tcpJsonServerHandle;
+  15:App/Src/tcp_json_server.c **** 
+  16:App/Src/tcp_json_server.c **** typedef struct
+  17:App/Src/tcp_json_server.c **** {
+  18:App/Src/tcp_json_server.c ****   struct netconn *conn;
+  19:App/Src/tcp_json_server.c **** } TcpJsonServer_OutputContext;
+  20:App/Src/tcp_json_server.c **** 
+  21:App/Src/tcp_json_server.c **** static void TcpJsonServer_Write(const char *text, void *context)
+  22:App/Src/tcp_json_server.c **** {
+  28              		.loc 1 22 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  23:App/Src/tcp_json_server.c ****   TcpJsonServer_OutputContext *output = (TcpJsonServer_OutputContext *)context;
+  32              		.loc 1 23 3 view .LVU1
+  24:App/Src/tcp_json_server.c **** 
+  25:App/Src/tcp_json_server.c ****   if ((output == NULL) || (output->conn == NULL) || (text == NULL))
+  33              		.loc 1 25 3 view .LVU2
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s 			page 2
+
+
+  34              		.loc 1 25 6 is_stmt 0 view .LVU3
+  35 0000 89B1     		cbz	r1, .L4
+  22:App/Src/tcp_json_server.c ****   TcpJsonServer_OutputContext *output = (TcpJsonServer_OutputContext *)context;
+  36              		.loc 1 22 1 view .LVU4
+  37 0002 30B5     		push	{r4, r5, lr}
+  38              	.LCFI0:
+  39              		.cfi_def_cfa_offset 12
+  40              		.cfi_offset 4, -12
+  41              		.cfi_offset 5, -8
+  42              		.cfi_offset 14, -4
+  43 0004 83B0     		sub	sp, sp, #12
+  44              	.LCFI1:
+  45              		.cfi_def_cfa_offset 24
+  46              		.loc 1 25 34 discriminator 1 view .LVU5
+  47 0006 0C68     		ldr	r4, [r1]
+  48              		.loc 1 25 24 discriminator 1 view .LVU6
+  49 0008 5CB1     		cbz	r4, .L1
+  50              		.loc 1 25 50 discriminator 2 view .LVU7
+  51 000a 0546     		mov	r5, r0
+  52 000c 48B1     		cbz	r0, .L1
+  26:App/Src/tcp_json_server.c ****   {
+  27:App/Src/tcp_json_server.c ****     return;
+  28:App/Src/tcp_json_server.c ****   }
+  29:App/Src/tcp_json_server.c **** 
+  30:App/Src/tcp_json_server.c ****   (void)netconn_write(output->conn, text, strlen(text), NETCONN_COPY);
+  53              		.loc 1 30 3 is_stmt 1 view .LVU8
+  54              		.loc 1 30 9 is_stmt 0 view .LVU9
+  55 000e FFF7FEFF 		bl	strlen
+  56              	.LVL1:
+  57              		.loc 1 30 9 view .LVU10
+  58 0012 0246     		mov	r2, r0
+  59              		.loc 1 30 9 discriminator 1 view .LVU11
+  60 0014 0023     		movs	r3, #0
+  61 0016 0093     		str	r3, [sp]
+  62 0018 0123     		movs	r3, #1
+  63 001a 2946     		mov	r1, r5
+  64 001c 2046     		mov	r0, r4
+  65 001e FFF7FEFF 		bl	netconn_write_partly
+  66              	.LVL2:
+  67              	.L1:
+  31:App/Src/tcp_json_server.c **** }
+  68              		.loc 1 31 1 view .LVU12
+  69 0022 03B0     		add	sp, sp, #12
+  70              	.LCFI2:
+  71              		.cfi_def_cfa_offset 12
+  72              		@ sp needed
+  73 0024 30BD     		pop	{r4, r5, pc}
+  74              	.LVL3:
+  75              	.L4:
+  76              	.LCFI3:
+  77              		.cfi_def_cfa_offset 0
+  78              		.cfi_restore 4
+  79              		.cfi_restore 5
+  80              		.cfi_restore 14
+  81              		.loc 1 31 1 view .LVU13
+  82 0026 7047     		bx	lr
+  83              		.cfi_endproc
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s 			page 3
+
+
+  84              	.LFE172:
+  86              		.section	.text.TcpJsonServer_HandleLine,"ax",%progbits
+  87              		.align	1
+  88              		.syntax unified
+  89              		.thumb
+  90              		.thumb_func
+  92              	TcpJsonServer_HandleLine:
+  93              	.LVL4:
+  94              	.LFB173:
+  32:App/Src/tcp_json_server.c **** 
+  33:App/Src/tcp_json_server.c **** static void TcpJsonServer_HandleLine(struct netconn *conn, const char *line)
+  34:App/Src/tcp_json_server.c **** {
+  95              		.loc 1 34 1 is_stmt 1 view -0
+  96              		.cfi_startproc
+  97              		@ args = 0, pretend = 0, frame = 8
+  98              		@ frame_needed = 0, uses_anonymous_args = 0
+  99              		.loc 1 34 1 is_stmt 0 view .LVU15
+ 100 0000 00B5     		push	{lr}
+ 101              	.LCFI4:
+ 102              		.cfi_def_cfa_offset 4
+ 103              		.cfi_offset 14, -4
+ 104 0002 83B0     		sub	sp, sp, #12
+ 105              	.LCFI5:
+ 106              		.cfi_def_cfa_offset 16
+ 107 0004 0B46     		mov	r3, r1
+  35:App/Src/tcp_json_server.c ****   TcpJsonServer_OutputContext output = {conn};
+ 108              		.loc 1 35 3 is_stmt 1 view .LVU16
+ 109              		.loc 1 35 31 is_stmt 0 view .LVU17
+ 110 0006 0190     		str	r0, [sp, #4]
+  36:App/Src/tcp_json_server.c **** 
+  37:App/Src/tcp_json_server.c ****   FaultCommand_ExecuteLine(line, TcpJsonServer_Write, &output);
+ 111              		.loc 1 37 3 is_stmt 1 view .LVU18
+ 112 0008 01AA     		add	r2, sp, #4
+ 113 000a 0349     		ldr	r1, .L9
+ 114              	.LVL5:
+ 115              		.loc 1 37 3 is_stmt 0 view .LVU19
+ 116 000c 1846     		mov	r0, r3
+ 117              	.LVL6:
+ 118              		.loc 1 37 3 view .LVU20
+ 119 000e FFF7FEFF 		bl	FaultCommand_ExecuteLine
+ 120              	.LVL7:
+  38:App/Src/tcp_json_server.c **** }
+ 121              		.loc 1 38 1 view .LVU21
+ 122 0012 03B0     		add	sp, sp, #12
+ 123              	.LCFI6:
+ 124              		.cfi_def_cfa_offset 4
+ 125              		@ sp needed
+ 126 0014 00BD     		pop	{pc}
+ 127              	.L10:
+ 128 0016 00BF     		.align	2
+ 129              	.L9:
+ 130 0018 00000000 		.word	TcpJsonServer_Write
+ 131              		.cfi_endproc
+ 132              	.LFE173:
+ 134              		.section	.rodata.TcpJsonServer_HandleClient.str1.4,"aMS",%progbits,1
+ 135              		.align	2
+ 136              	.LC0:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s 			page 4
+
+
+ 137 0000 7B226F6B 		.ascii	"{\"ok\":true,\"service\":\"bms-fault-simulator\",\""
+ 137      223A7472 
+ 137      75652C22 
+ 137      73657276 
+ 137      69636522 
+ 138 002c 68696E74 		.ascii	"hint\":\"send one JSON command per line\"}\015\012\000"
+ 138      223A2273 
+ 138      656E6420 
+ 138      6F6E6520 
+ 138      4A534F4E 
+ 139 0056 0000     		.align	2
+ 140              	.LC1:
+ 141 0058 7B226F6B 		.ascii	"{\"ok\":false,\"error\":\"line_too_long\"}\015\012\000"
+ 141      223A6661 
+ 141      6C73652C 
+ 141      22657272 
+ 141      6F72223A 
+ 142              		.section	.text.TcpJsonServer_HandleClient,"ax",%progbits
+ 143              		.align	1
+ 144              		.syntax unified
+ 145              		.thumb
+ 146              		.thumb_func
+ 148              	TcpJsonServer_HandleClient:
+ 149              	.LVL8:
+ 150              	.LFB174:
+  39:App/Src/tcp_json_server.c **** 
+  40:App/Src/tcp_json_server.c **** static void TcpJsonServer_HandleClient(struct netconn *conn)
+  41:App/Src/tcp_json_server.c **** {
+ 151              		.loc 1 41 1 is_stmt 1 view -0
+ 152              		.cfi_startproc
+ 153              		@ args = 0, pretend = 0, frame = 272
+ 154              		@ frame_needed = 0, uses_anonymous_args = 0
+ 155              		.loc 1 41 1 is_stmt 0 view .LVU23
+ 156 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 157              	.LCFI7:
+ 158              		.cfi_def_cfa_offset 20
+ 159              		.cfi_offset 4, -20
+ 160              		.cfi_offset 5, -16
+ 161              		.cfi_offset 6, -12
+ 162              		.cfi_offset 7, -8
+ 163              		.cfi_offset 14, -4
+ 164 0002 C7B0     		sub	sp, sp, #284
+ 165              	.LCFI8:
+ 166              		.cfi_def_cfa_offset 304
+ 167 0004 0646     		mov	r6, r0
+  42:App/Src/tcp_json_server.c ****   struct netbuf *buf;
+ 168              		.loc 1 42 3 is_stmt 1 view .LVU24
+  43:App/Src/tcp_json_server.c ****   char line[TCP_JSON_SERVER_LINE_SIZE];
+ 169              		.loc 1 43 3 view .LVU25
+  44:App/Src/tcp_json_server.c ****   uint16_t lineLength = 0U;
+ 170              		.loc 1 44 3 view .LVU26
+ 171              	.LVL9:
+  45:App/Src/tcp_json_server.c **** 
+  46:App/Src/tcp_json_server.c ****   const char *hello =
+ 172              		.loc 1 46 3 view .LVU27
+  47:App/Src/tcp_json_server.c ****     "{\"ok\":true,\"service\":\"bms-fault-simulator\",\"hint\":\"send one JSON command per line\"}\
+  48:App/Src/tcp_json_server.c **** 
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s 			page 5
+
+
+  49:App/Src/tcp_json_server.c ****   (void)netconn_write(conn, hello, strlen(hello), NETCONN_COPY);
+ 173              		.loc 1 49 3 view .LVU28
+ 174              		.loc 1 49 9 is_stmt 0 discriminator 1 view .LVU29
+ 175 0006 0025     		movs	r5, #0
+ 176 0008 0095     		str	r5, [sp]
+ 177 000a 0123     		movs	r3, #1
+ 178 000c 5522     		movs	r2, #85
+ 179 000e 2049     		ldr	r1, .L25
+ 180 0010 FFF7FEFF 		bl	netconn_write_partly
+ 181              	.LVL10:
+  50:App/Src/tcp_json_server.c **** 
+  51:App/Src/tcp_json_server.c ****   while (netconn_recv(conn, &buf) == ERR_OK)
+ 182              		.loc 1 51 3 is_stmt 1 view .LVU30
+ 183              		.loc 1 51 9 is_stmt 0 view .LVU31
+ 184 0014 34E0     		b	.L12
+ 185              	.LVL11:
+ 186              	.L23:
+ 187              	.LBB2:
+ 188              	.LBB3:
+ 189              	.LBB4:
+  52:App/Src/tcp_json_server.c ****   {
+  53:App/Src/tcp_json_server.c ****     void *data;
+  54:App/Src/tcp_json_server.c ****     u16_t len;
+  55:App/Src/tcp_json_server.c **** 
+  56:App/Src/tcp_json_server.c ****     do
+  57:App/Src/tcp_json_server.c ****     {
+  58:App/Src/tcp_json_server.c ****       netbuf_data(buf, &data, &len);
+  59:App/Src/tcp_json_server.c **** 
+  60:App/Src/tcp_json_server.c ****       for (u16_t index = 0U; index < len; index++)
+  61:App/Src/tcp_json_server.c ****       {
+  62:App/Src/tcp_json_server.c ****         char ch = ((char *)data)[index];
+  63:App/Src/tcp_json_server.c **** 
+  64:App/Src/tcp_json_server.c ****         if ((ch == '\r') || (ch == '\n'))
+  65:App/Src/tcp_json_server.c ****         {
+  66:App/Src/tcp_json_server.c ****           if (lineLength > 0U)
+ 190              		.loc 1 66 11 is_stmt 1 view .LVU32
+ 191              		.loc 1 66 14 is_stmt 0 view .LVU33
+ 192 0016 95B9     		cbnz	r5, .L21
+ 193              	.LVL12:
+ 194              	.L16:
+ 195              		.loc 1 66 14 view .LVU34
+ 196              	.LBE4:
+  60:App/Src/tcp_json_server.c ****       {
+ 197              		.loc 1 60 48 is_stmt 1 discriminator 2 view .LVU35
+ 198 0018 0134     		adds	r4, r4, #1
+ 199              	.LVL13:
+  60:App/Src/tcp_json_server.c ****       {
+ 200              		.loc 1 60 48 is_stmt 0 discriminator 2 view .LVU36
+ 201 001a A4B2     		uxth	r4, r4
+ 202              	.LVL14:
+ 203              	.L13:
+  60:App/Src/tcp_json_server.c ****       {
+ 204              		.loc 1 60 36 is_stmt 1 discriminator 1 view .LVU37
+ 205 001c BDF80E30 		ldrh	r3, [sp, #14]
+ 206 0020 A342     		cmp	r3, r4
+ 207 0022 1DD9     		bls	.L22
+ 208              	.LBB5:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s 			page 6
+
+
+  62:App/Src/tcp_json_server.c **** 
+ 209              		.loc 1 62 9 view .LVU38
+  62:App/Src/tcp_json_server.c **** 
+ 210              		.loc 1 62 20 is_stmt 0 view .LVU39
+ 211 0024 049B     		ldr	r3, [sp, #16]
+  62:App/Src/tcp_json_server.c **** 
+ 212              		.loc 1 62 14 view .LVU40
+ 213 0026 1B5D     		ldrb	r3, [r3, r4]	@ zero_extendqisi2
+ 214              	.LVL15:
+  64:App/Src/tcp_json_server.c ****         {
+ 215              		.loc 1 64 9 is_stmt 1 view .LVU41
+  64:App/Src/tcp_json_server.c ****         {
+ 216              		.loc 1 64 12 is_stmt 0 view .LVU42
+ 217 0028 0A2B     		cmp	r3, #10
+ 218 002a 18BF     		it	ne
+ 219 002c 0D2B     		cmpne	r3, #13
+ 220 002e F2D0     		beq	.L23
+  67:App/Src/tcp_json_server.c ****           {
+  68:App/Src/tcp_json_server.c ****             line[lineLength] = '\0';
+  69:App/Src/tcp_json_server.c ****             TcpJsonServer_HandleLine(conn, line);
+  70:App/Src/tcp_json_server.c ****             lineLength = 0U;
+  71:App/Src/tcp_json_server.c ****           }
+  72:App/Src/tcp_json_server.c ****           continue;
+  73:App/Src/tcp_json_server.c ****         }
+  74:App/Src/tcp_json_server.c **** 
+  75:App/Src/tcp_json_server.c ****         if (lineLength < (TCP_JSON_SERVER_LINE_SIZE - 1U))
+ 221              		.loc 1 75 9 is_stmt 1 view .LVU43
+ 222              		.loc 1 75 12 is_stmt 0 view .LVU44
+ 223 0030 FE2D     		cmp	r5, #254
+ 224 0032 0CD8     		bhi	.L17
+  76:App/Src/tcp_json_server.c ****         {
+  77:App/Src/tcp_json_server.c ****           line[lineLength++] = ch;
+ 225              		.loc 1 77 11 is_stmt 1 view .LVU45
+ 226              		.loc 1 77 26 is_stmt 0 view .LVU46
+ 227 0034 6A1C     		adds	r2, r5, #1
+ 228              	.LVL16:
+ 229              		.loc 1 77 30 view .LVU47
+ 230 0036 05A9     		add	r1, sp, #20
+ 231 0038 4B55     		strb	r3, [r1, r5]
+ 232              		.loc 1 77 26 view .LVU48
+ 233 003a 95B2     		uxth	r5, r2
+ 234 003c ECE7     		b	.L16
+ 235              	.LVL17:
+ 236              	.L21:
+  68:App/Src/tcp_json_server.c ****             TcpJsonServer_HandleLine(conn, line);
+ 237              		.loc 1 68 13 is_stmt 1 view .LVU49
+  68:App/Src/tcp_json_server.c ****             TcpJsonServer_HandleLine(conn, line);
+ 238              		.loc 1 68 30 is_stmt 0 view .LVU50
+ 239 003e 05A9     		add	r1, sp, #20
+ 240 0040 0027     		movs	r7, #0
+ 241 0042 4F55     		strb	r7, [r1, r5]
+  69:App/Src/tcp_json_server.c ****             lineLength = 0U;
+ 242              		.loc 1 69 13 is_stmt 1 view .LVU51
+ 243 0044 3046     		mov	r0, r6
+ 244 0046 FFF7FEFF 		bl	TcpJsonServer_HandleLine
+ 245              	.LVL18:
+  70:App/Src/tcp_json_server.c ****           }
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s 			page 7
+
+
+ 246              		.loc 1 70 13 view .LVU52
+  70:App/Src/tcp_json_server.c ****           }
+ 247              		.loc 1 70 24 is_stmt 0 view .LVU53
+ 248 004a 3D46     		mov	r5, r7
+  72:App/Src/tcp_json_server.c ****         }
+ 249              		.loc 1 72 11 is_stmt 1 view .LVU54
+ 250 004c E4E7     		b	.L16
+ 251              	.LVL19:
+ 252              	.L17:
+  78:App/Src/tcp_json_server.c ****         }
+  79:App/Src/tcp_json_server.c ****         else
+  80:App/Src/tcp_json_server.c ****         {
+  81:App/Src/tcp_json_server.c ****           lineLength = 0U;
+ 253              		.loc 1 81 11 view .LVU55
+  82:App/Src/tcp_json_server.c ****           (void)netconn_write(conn,
+ 254              		.loc 1 82 11 view .LVU56
+ 255              		.loc 1 82 17 is_stmt 0 view .LVU57
+ 256 004e 0025     		movs	r5, #0
+ 257 0050 0095     		str	r5, [sp]
+ 258 0052 0123     		movs	r3, #1
+ 259              	.LVL20:
+ 260              		.loc 1 82 17 view .LVU58
+ 261 0054 2622     		movs	r2, #38
+ 262 0056 0F49     		ldr	r1, .L25+4
+ 263 0058 3046     		mov	r0, r6
+ 264 005a FFF7FEFF 		bl	netconn_write_partly
+ 265              	.LVL21:
+ 266 005e DBE7     		b	.L16
+ 267              	.LVL22:
+ 268              	.L22:
+ 269              		.loc 1 82 17 view .LVU59
+ 270              	.LBE5:
+ 271              	.LBE3:
+  83:App/Src/tcp_json_server.c ****                               "{\"ok\":false,\"error\":\"line_too_long\"}\r\n",
+  84:App/Src/tcp_json_server.c ****                               38U,
+  85:App/Src/tcp_json_server.c ****                               NETCONN_COPY);
+  86:App/Src/tcp_json_server.c ****         }
+  87:App/Src/tcp_json_server.c ****       }
+  88:App/Src/tcp_json_server.c ****     } while (netbuf_next(buf) >= 0);
+ 272              		.loc 1 88 31 is_stmt 1 view .LVU60
+ 273              		.loc 1 88 14 is_stmt 0 view .LVU61
+ 274 0060 4598     		ldr	r0, [sp, #276]
+ 275 0062 FFF7FEFF 		bl	netbuf_next
+ 276              	.LVL23:
+ 277              		.loc 1 88 31 discriminator 1 view .LVU62
+ 278 0066 0028     		cmp	r0, #0
+ 279 0068 07DB     		blt	.L24
+ 280              	.LVL24:
+ 281              	.L19:
+  53:App/Src/tcp_json_server.c ****     u16_t len;
+ 282              		.loc 1 53 5 is_stmt 1 view .LVU63
+  54:App/Src/tcp_json_server.c **** 
+ 283              		.loc 1 54 5 view .LVU64
+  56:App/Src/tcp_json_server.c ****     {
+ 284              		.loc 1 56 5 view .LVU65
+  58:App/Src/tcp_json_server.c **** 
+ 285              		.loc 1 58 7 view .LVU66
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s 			page 8
+
+
+ 286 006a 0DF10E02 		add	r2, sp, #14
+ 287 006e 04A9     		add	r1, sp, #16
+ 288 0070 4598     		ldr	r0, [sp, #276]
+ 289 0072 FFF7FEFF 		bl	netbuf_data
+ 290              	.LVL25:
+  60:App/Src/tcp_json_server.c ****       {
+ 291              		.loc 1 60 7 view .LVU67
+ 292              	.LBB6:
+  60:App/Src/tcp_json_server.c ****       {
+ 293              		.loc 1 60 12 view .LVU68
+  60:App/Src/tcp_json_server.c ****       {
+ 294              		.loc 1 60 18 is_stmt 0 view .LVU69
+ 295 0076 0024     		movs	r4, #0
+  60:App/Src/tcp_json_server.c ****       {
+ 296              		.loc 1 60 7 view .LVU70
+ 297 0078 D0E7     		b	.L13
+ 298              	.LVL26:
+ 299              	.L24:
+  60:App/Src/tcp_json_server.c ****       {
+ 300              		.loc 1 60 7 view .LVU71
+ 301              	.LBE6:
+  89:App/Src/tcp_json_server.c **** 
+  90:App/Src/tcp_json_server.c ****     netbuf_delete(buf);
+ 302              		.loc 1 90 5 is_stmt 1 view .LVU72
+ 303 007a 4598     		ldr	r0, [sp, #276]
+ 304 007c FFF7FEFF 		bl	netbuf_delete
+ 305              	.LVL27:
+ 306              	.L12:
+ 307              		.loc 1 90 5 is_stmt 0 view .LVU73
+ 308              	.LBE2:
+  51:App/Src/tcp_json_server.c ****   {
+ 309              		.loc 1 51 35 is_stmt 1 view .LVU74
+  51:App/Src/tcp_json_server.c ****   {
+ 310              		.loc 1 51 10 is_stmt 0 view .LVU75
+ 311 0080 45A9     		add	r1, sp, #276
+ 312 0082 3046     		mov	r0, r6
+ 313 0084 FFF7FEFF 		bl	netconn_recv
+ 314              	.LVL28:
+  51:App/Src/tcp_json_server.c ****   {
+ 315              		.loc 1 51 35 discriminator 1 view .LVU76
+ 316 0088 0028     		cmp	r0, #0
+ 317 008a EED0     		beq	.L19
+  91:App/Src/tcp_json_server.c ****   }
+  92:App/Src/tcp_json_server.c **** }
+ 318              		.loc 1 92 1 view .LVU77
+ 319 008c 47B0     		add	sp, sp, #284
+ 320              	.LCFI9:
+ 321              		.cfi_def_cfa_offset 20
+ 322              		@ sp needed
+ 323 008e F0BD     		pop	{r4, r5, r6, r7, pc}
+ 324              	.LVL29:
+ 325              	.L26:
+ 326              		.loc 1 92 1 view .LVU78
+ 327              		.align	2
+ 328              	.L25:
+ 329 0090 00000000 		.word	.LC0
+ 330 0094 58000000 		.word	.LC1
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s 			page 9
+
+
+ 331              		.cfi_endproc
+ 332              	.LFE174:
+ 334              		.section	.rodata.TcpJsonServer_Task.str1.4,"aMS",%progbits,1
+ 335              		.align	2
+ 336              	.LC2:
+ 337 0000 5B746370 		.ascii	"[tcp] netconn_new failed\015\000"
+ 337      5D206E65 
+ 337      74636F6E 
+ 337      6E5F6E65 
+ 337      77206661 
+ 338 001a 0000     		.align	2
+ 339              	.LC3:
+ 340 001c 5B746370 		.ascii	"[tcp] bind %u failed err=%d\015\012\000"
+ 340      5D206269 
+ 340      6E642025 
+ 340      75206661 
+ 340      696C6564 
+ 341 003a 0000     		.align	2
+ 342              	.LC4:
+ 343 003c 5B746370 		.ascii	"[tcp] listen failed err=%d\015\012\000"
+ 343      5D206C69 
+ 343      7374656E 
+ 343      20666169 
+ 343      6C656420 
+ 344 0059 000000   		.align	2
+ 345              	.LC5:
+ 346 005c 5B746370 		.ascii	"[tcp] JSON server listening on port %u\015\012\000"
+ 346      5D204A53 
+ 346      4F4E2073 
+ 346      65727665 
+ 346      72206C69 
+ 347 0085 000000   		.align	2
+ 348              	.LC6:
+ 349 0088 5B746370 		.ascii	"[tcp] client connected\015\000"
+ 349      5D20636C 
+ 349      69656E74 
+ 349      20636F6E 
+ 349      6E656374 
+ 350              		.align	2
+ 351              	.LC7:
+ 352 00a0 5B746370 		.ascii	"[tcp] client disconnected\015\000"
+ 352      5D20636C 
+ 352      69656E74 
+ 352      20646973 
+ 352      636F6E6E 
+ 353              		.section	.text.TcpJsonServer_Task,"ax",%progbits
+ 354              		.align	1
+ 355              		.syntax unified
+ 356              		.thumb
+ 357              		.thumb_func
+ 359              	TcpJsonServer_Task:
+ 360              	.LVL30:
+ 361              	.LFB175:
+  93:App/Src/tcp_json_server.c **** 
+  94:App/Src/tcp_json_server.c **** static void TcpJsonServer_Task(void *argument)
+  95:App/Src/tcp_json_server.c **** {
+ 362              		.loc 1 95 1 is_stmt 1 view -0
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s 			page 10
+
+
+ 363              		.cfi_startproc
+ 364              		@ args = 0, pretend = 0, frame = 8
+ 365              		@ frame_needed = 0, uses_anonymous_args = 0
+ 366              		.loc 1 95 1 is_stmt 0 view .LVU80
+ 367 0000 10B5     		push	{r4, lr}
+ 368              	.LCFI10:
+ 369              		.cfi_def_cfa_offset 8
+ 370              		.cfi_offset 4, -8
+ 371              		.cfi_offset 14, -4
+ 372 0002 82B0     		sub	sp, sp, #8
+ 373              	.LCFI11:
+ 374              		.cfi_def_cfa_offset 16
+  96:App/Src/tcp_json_server.c ****   struct netconn *server;
+ 375              		.loc 1 96 3 is_stmt 1 view .LVU81
+  97:App/Src/tcp_json_server.c ****   err_t err;
+ 376              		.loc 1 97 3 view .LVU82
+  98:App/Src/tcp_json_server.c **** 
+  99:App/Src/tcp_json_server.c ****   (void)argument;
+ 377              		.loc 1 99 3 view .LVU83
+ 100:App/Src/tcp_json_server.c **** 
+ 101:App/Src/tcp_json_server.c ****   server = netconn_new(NETCONN_TCP);
+ 378              		.loc 1 101 3 view .LVU84
+ 379              		.loc 1 101 12 is_stmt 0 view .LVU85
+ 380 0004 0022     		movs	r2, #0
+ 381 0006 1146     		mov	r1, r2
+ 382 0008 1020     		movs	r0, #16
+ 383              	.LVL31:
+ 384              		.loc 1 101 12 view .LVU86
+ 385 000a FFF7FEFF 		bl	netconn_new_with_proto_and_callback
+ 386              	.LVL32:
+ 102:App/Src/tcp_json_server.c ****   if (server == NULL)
+ 387              		.loc 1 102 3 is_stmt 1 view .LVU87
+ 388              		.loc 1 102 6 is_stmt 0 view .LVU88
+ 389 000e 88B1     		cbz	r0, .L35
+ 390 0010 0446     		mov	r4, r0
+ 103:App/Src/tcp_json_server.c ****   {
+ 104:App/Src/tcp_json_server.c ****     printf("[tcp] netconn_new failed\r\n");
+ 105:App/Src/tcp_json_server.c ****     osThreadExit();
+ 106:App/Src/tcp_json_server.c ****   }
+ 107:App/Src/tcp_json_server.c **** 
+ 108:App/Src/tcp_json_server.c ****   err = netconn_bind(server, IP_ADDR_ANY, TCP_JSON_SERVER_PORT);
+ 391              		.loc 1 108 3 is_stmt 1 view .LVU89
+ 392              		.loc 1 108 9 is_stmt 0 view .LVU90
+ 393 0012 41F28832 		movw	r2, #5000
+ 394 0016 2349     		ldr	r1, .L36
+ 395 0018 FFF7FEFF 		bl	netconn_bind
+ 396              	.LVL33:
+ 109:App/Src/tcp_json_server.c ****   if (err != ERR_OK)
+ 397              		.loc 1 109 3 is_stmt 1 view .LVU91
+ 398              		.loc 1 109 6 is_stmt 0 view .LVU92
+ 399 001c 0246     		mov	r2, r0
+ 400 001e 70B1     		cbz	r0, .L29
+ 110:App/Src/tcp_json_server.c ****   {
+ 111:App/Src/tcp_json_server.c ****     printf("[tcp] bind %u failed err=%d\r\n", TCP_JSON_SERVER_PORT, err);
+ 401              		.loc 1 111 5 is_stmt 1 view .LVU93
+ 402 0020 41F28831 		movw	r1, #5000
+ 403 0024 2048     		ldr	r0, .L36+4
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s 			page 11
+
+
+ 404              	.LVL34:
+ 405              		.loc 1 111 5 is_stmt 0 view .LVU94
+ 406 0026 FFF7FEFF 		bl	printf
+ 407              	.LVL35:
+ 112:App/Src/tcp_json_server.c ****     netconn_delete(server);
+ 408              		.loc 1 112 5 is_stmt 1 view .LVU95
+ 409 002a 2046     		mov	r0, r4
+ 410 002c FFF7FEFF 		bl	netconn_delete
+ 411              	.LVL36:
+ 113:App/Src/tcp_json_server.c ****     osThreadExit();
+ 412              		.loc 1 113 5 view .LVU96
+ 413 0030 FFF7FEFF 		bl	osThreadExit
+ 414              	.LVL37:
+ 415              	.L35:
+ 104:App/Src/tcp_json_server.c ****     osThreadExit();
+ 416              		.loc 1 104 5 view .LVU97
+ 417 0034 1D48     		ldr	r0, .L36+8
+ 418              	.LVL38:
+ 104:App/Src/tcp_json_server.c ****     osThreadExit();
+ 419              		.loc 1 104 5 is_stmt 0 view .LVU98
+ 420 0036 FFF7FEFF 		bl	puts
+ 421              	.LVL39:
+ 105:App/Src/tcp_json_server.c ****   }
+ 422              		.loc 1 105 5 is_stmt 1 view .LVU99
+ 423 003a FFF7FEFF 		bl	osThreadExit
+ 424              	.LVL40:
+ 425              	.L29:
+ 114:App/Src/tcp_json_server.c ****   }
+ 115:App/Src/tcp_json_server.c **** 
+ 116:App/Src/tcp_json_server.c ****   err = netconn_listen(server);
+ 426              		.loc 1 116 3 view .LVU100
+ 427              		.loc 1 116 9 is_stmt 0 view .LVU101
+ 428 003e FF21     		movs	r1, #255
+ 429 0040 2046     		mov	r0, r4
+ 430              	.LVL41:
+ 431              		.loc 1 116 9 view .LVU102
+ 432 0042 FFF7FEFF 		bl	netconn_listen_with_backlog
+ 433              	.LVL42:
+ 117:App/Src/tcp_json_server.c ****   if (err != ERR_OK)
+ 434              		.loc 1 117 3 is_stmt 1 view .LVU103
+ 435              		.loc 1 117 6 is_stmt 0 view .LVU104
+ 436 0046 0146     		mov	r1, r0
+ 437 0048 38B1     		cbz	r0, .L30
+ 118:App/Src/tcp_json_server.c ****   {
+ 119:App/Src/tcp_json_server.c ****     printf("[tcp] listen failed err=%d\r\n", err);
+ 438              		.loc 1 119 5 is_stmt 1 view .LVU105
+ 439 004a 1948     		ldr	r0, .L36+12
+ 440              	.LVL43:
+ 441              		.loc 1 119 5 is_stmt 0 view .LVU106
+ 442 004c FFF7FEFF 		bl	printf
+ 443              	.LVL44:
+ 120:App/Src/tcp_json_server.c ****     netconn_delete(server);
+ 444              		.loc 1 120 5 is_stmt 1 view .LVU107
+ 445 0050 2046     		mov	r0, r4
+ 446 0052 FFF7FEFF 		bl	netconn_delete
+ 447              	.LVL45:
+ 121:App/Src/tcp_json_server.c ****     osThreadExit();
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s 			page 12
+
+
+ 448              		.loc 1 121 5 view .LVU108
+ 449 0056 FFF7FEFF 		bl	osThreadExit
+ 450              	.LVL46:
+ 451              	.L30:
+ 122:App/Src/tcp_json_server.c ****   }
+ 123:App/Src/tcp_json_server.c **** 
+ 124:App/Src/tcp_json_server.c ****   printf("[tcp] JSON server listening on port %u\r\n", TCP_JSON_SERVER_PORT);
+ 452              		.loc 1 124 3 view .LVU109
+ 453 005a 41F28831 		movw	r1, #5000
+ 454 005e 1548     		ldr	r0, .L36+16
+ 455              	.LVL47:
+ 456              		.loc 1 124 3 is_stmt 0 view .LVU110
+ 457 0060 FFF7FEFF 		bl	printf
+ 458              	.LVL48:
+ 459 0064 02E0     		b	.L33
+ 460              	.LVL49:
+ 461              	.L31:
+ 462              	.LBB7:
+ 125:App/Src/tcp_json_server.c **** 
+ 126:App/Src/tcp_json_server.c ****   for (;;)
+ 127:App/Src/tcp_json_server.c ****   {
+ 128:App/Src/tcp_json_server.c ****     struct netconn *client = NULL;
+ 129:App/Src/tcp_json_server.c **** 
+ 130:App/Src/tcp_json_server.c ****     err = netconn_accept(server, &client);
+ 131:App/Src/tcp_json_server.c ****     if ((err == ERR_OK) && (client != NULL))
+ 132:App/Src/tcp_json_server.c ****     {
+ 133:App/Src/tcp_json_server.c ****       printf("[tcp] client connected\r\n");
+ 134:App/Src/tcp_json_server.c ****       TcpJsonServer_HandleClient(client);
+ 135:App/Src/tcp_json_server.c ****       netconn_close(client);
+ 136:App/Src/tcp_json_server.c ****       netconn_delete(client);
+ 137:App/Src/tcp_json_server.c ****       printf("[tcp] client disconnected\r\n");
+ 138:App/Src/tcp_json_server.c ****     }
+ 139:App/Src/tcp_json_server.c ****     else
+ 140:App/Src/tcp_json_server.c ****     {
+ 141:App/Src/tcp_json_server.c ****       osDelay(100U);
+ 463              		.loc 1 141 7 is_stmt 1 view .LVU111
+ 464 0066 6420     		movs	r0, #100
+ 465              	.LVL50:
+ 466              		.loc 1 141 7 is_stmt 0 view .LVU112
+ 467 0068 FFF7FEFF 		bl	osDelay
+ 468              	.LVL51:
+ 469              	.LBE7:
+ 126:App/Src/tcp_json_server.c ****   {
+ 470              		.loc 1 126 3 is_stmt 1 view .LVU113
+ 471              	.L33:
+ 126:App/Src/tcp_json_server.c ****   {
+ 472              		.loc 1 126 3 view .LVU114
+ 473              	.LBB8:
+ 128:App/Src/tcp_json_server.c **** 
+ 474              		.loc 1 128 5 view .LVU115
+ 128:App/Src/tcp_json_server.c **** 
+ 475              		.loc 1 128 21 is_stmt 0 view .LVU116
+ 476 006c 0023     		movs	r3, #0
+ 477 006e 0193     		str	r3, [sp, #4]
+ 130:App/Src/tcp_json_server.c ****     if ((err == ERR_OK) && (client != NULL))
+ 478              		.loc 1 130 5 is_stmt 1 view .LVU117
+ 130:App/Src/tcp_json_server.c ****     if ((err == ERR_OK) && (client != NULL))
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s 			page 13
+
+
+ 479              		.loc 1 130 11 is_stmt 0 view .LVU118
+ 480 0070 01A9     		add	r1, sp, #4
+ 481 0072 2046     		mov	r0, r4
+ 482 0074 FFF7FEFF 		bl	netconn_accept
+ 483              	.LVL52:
+ 131:App/Src/tcp_json_server.c ****     {
+ 484              		.loc 1 131 5 is_stmt 1 view .LVU119
+ 131:App/Src/tcp_json_server.c ****     {
+ 485              		.loc 1 131 8 is_stmt 0 view .LVU120
+ 486 0078 0028     		cmp	r0, #0
+ 487 007a F4D1     		bne	.L31
+ 131:App/Src/tcp_json_server.c ****     {
+ 488              		.loc 1 131 36 discriminator 1 view .LVU121
+ 489 007c 019B     		ldr	r3, [sp, #4]
+ 131:App/Src/tcp_json_server.c ****     {
+ 490              		.loc 1 131 25 discriminator 1 view .LVU122
+ 491 007e 002B     		cmp	r3, #0
+ 492 0080 F1D0     		beq	.L31
+ 133:App/Src/tcp_json_server.c ****       TcpJsonServer_HandleClient(client);
+ 493              		.loc 1 133 7 is_stmt 1 view .LVU123
+ 494 0082 0D48     		ldr	r0, .L36+20
+ 495              	.LVL53:
+ 133:App/Src/tcp_json_server.c ****       TcpJsonServer_HandleClient(client);
+ 496              		.loc 1 133 7 is_stmt 0 view .LVU124
+ 497 0084 FFF7FEFF 		bl	puts
+ 498              	.LVL54:
+ 134:App/Src/tcp_json_server.c ****       netconn_close(client);
+ 499              		.loc 1 134 7 is_stmt 1 view .LVU125
+ 500 0088 0198     		ldr	r0, [sp, #4]
+ 501 008a FFF7FEFF 		bl	TcpJsonServer_HandleClient
+ 502              	.LVL55:
+ 135:App/Src/tcp_json_server.c ****       netconn_delete(client);
+ 503              		.loc 1 135 7 view .LVU126
+ 504 008e 0198     		ldr	r0, [sp, #4]
+ 505 0090 FFF7FEFF 		bl	netconn_close
+ 506              	.LVL56:
+ 136:App/Src/tcp_json_server.c ****       printf("[tcp] client disconnected\r\n");
+ 507              		.loc 1 136 7 view .LVU127
+ 508 0094 0198     		ldr	r0, [sp, #4]
+ 509 0096 FFF7FEFF 		bl	netconn_delete
+ 510              	.LVL57:
+ 137:App/Src/tcp_json_server.c ****     }
+ 511              		.loc 1 137 7 view .LVU128
+ 512 009a 0848     		ldr	r0, .L36+24
+ 513 009c FFF7FEFF 		bl	puts
+ 514              	.LVL58:
+ 515 00a0 E4E7     		b	.L33
+ 516              	.L37:
+ 517 00a2 00BF     		.align	2
+ 518              	.L36:
+ 519 00a4 00000000 		.word	ip_addr_any
+ 520 00a8 1C000000 		.word	.LC3
+ 521 00ac 00000000 		.word	.LC2
+ 522 00b0 3C000000 		.word	.LC4
+ 523 00b4 5C000000 		.word	.LC5
+ 524 00b8 88000000 		.word	.LC6
+ 525 00bc A0000000 		.word	.LC7
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s 			page 14
+
+
+ 526              	.LBE8:
+ 527              		.cfi_endproc
+ 528              	.LFE175:
+ 530              		.section	.text.TcpJsonServer_Start,"ax",%progbits
+ 531              		.align	1
+ 532              		.global	TcpJsonServer_Start
+ 533              		.syntax unified
+ 534              		.thumb
+ 535              		.thumb_func
+ 537              	TcpJsonServer_Start:
+ 538              	.LFB176:
+ 142:App/Src/tcp_json_server.c ****     }
+ 143:App/Src/tcp_json_server.c ****   }
+ 144:App/Src/tcp_json_server.c **** }
+ 145:App/Src/tcp_json_server.c **** 
+ 146:App/Src/tcp_json_server.c **** void TcpJsonServer_Start(void)
+ 147:App/Src/tcp_json_server.c **** {
+ 539              		.loc 1 147 1 view -0
+ 540              		.cfi_startproc
+ 541              		@ args = 0, pretend = 0, frame = 0
+ 542              		@ frame_needed = 0, uses_anonymous_args = 0
+ 543 0000 08B5     		push	{r3, lr}
+ 544              	.LCFI12:
+ 545              		.cfi_def_cfa_offset 8
+ 546              		.cfi_offset 3, -8
+ 547              		.cfi_offset 14, -4
+ 148:App/Src/tcp_json_server.c ****   static const osThreadAttr_t attributes = {
+ 548              		.loc 1 148 3 view .LVU130
+ 149:App/Src/tcp_json_server.c ****     .name = "TcpJson",
+ 150:App/Src/tcp_json_server.c ****     .stack_size = TCP_JSON_SERVER_STACK_SIZE,
+ 151:App/Src/tcp_json_server.c ****     .priority = (osPriority_t)osPriorityBelowNormal,
+ 152:App/Src/tcp_json_server.c ****   };
+ 153:App/Src/tcp_json_server.c **** 
+ 154:App/Src/tcp_json_server.c ****   if (tcpJsonServerHandle == NULL)
+ 549              		.loc 1 154 3 view .LVU131
+ 550              		.loc 1 154 27 is_stmt 0 view .LVU132
+ 551 0002 064B     		ldr	r3, .L42
+ 552 0004 1B68     		ldr	r3, [r3]
+ 553              		.loc 1 154 6 view .LVU133
+ 554 0006 03B1     		cbz	r3, .L41
+ 555              	.L38:
+ 155:App/Src/tcp_json_server.c ****   {
+ 156:App/Src/tcp_json_server.c ****     tcpJsonServerHandle = osThreadNew(TcpJsonServer_Task, NULL, &attributes);
+ 157:App/Src/tcp_json_server.c ****   }
+ 158:App/Src/tcp_json_server.c **** }
+ 556              		.loc 1 158 1 view .LVU134
+ 557 0008 08BD     		pop	{r3, pc}
+ 558              	.L41:
+ 156:App/Src/tcp_json_server.c ****   }
+ 559              		.loc 1 156 5 is_stmt 1 view .LVU135
+ 156:App/Src/tcp_json_server.c ****   }
+ 560              		.loc 1 156 27 is_stmt 0 view .LVU136
+ 561 000a 054A     		ldr	r2, .L42+4
+ 562 000c 1946     		mov	r1, r3
+ 563 000e 0548     		ldr	r0, .L42+8
+ 564 0010 FFF7FEFF 		bl	osThreadNew
+ 565              	.LVL59:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s 			page 15
+
+
+ 156:App/Src/tcp_json_server.c ****   }
+ 566              		.loc 1 156 25 discriminator 1 view .LVU137
+ 567 0014 014B     		ldr	r3, .L42
+ 568 0016 1860     		str	r0, [r3]
+ 569              		.loc 1 158 1 view .LVU138
+ 570 0018 F6E7     		b	.L38
+ 571              	.L43:
+ 572 001a 00BF     		.align	2
+ 573              	.L42:
+ 574 001c 00000000 		.word	tcpJsonServerHandle
+ 575 0020 00000000 		.word	attributes.0
+ 576 0024 00000000 		.word	TcpJsonServer_Task
+ 577              		.cfi_endproc
+ 578              	.LFE176:
+ 580              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 581              		.align	2
+ 582              	.LC8:
+ 583 0000 5463704A 		.ascii	"TcpJson\000"
+ 583      736F6E00 
+ 584              		.section	.rodata.attributes.0,"a"
+ 585              		.align	2
+ 588              	attributes.0:
+ 589 0000 00000000 		.word	.LC8
+ 590 0004 00000000 		.space	16
+ 590      00000000 
+ 590      00000000 
+ 590      00000000 
+ 591 0014 00080000 		.word	2048
+ 592 0018 10000000 		.word	16
+ 593 001c 00000000 		.space	8
+ 593      00000000 
+ 594              		.section	.bss.tcpJsonServerHandle,"aw",%nobits
+ 595              		.align	2
+ 598              	tcpJsonServerHandle:
+ 599 0000 00000000 		.space	4
+ 600              		.text
+ 601              	.Letext0:
+ 602              		.file 2 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 603              		.file 3 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 604              		.file 4 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/lib/g
+ 605              		.file 5 "Drivers/CMSIS/RTOS2/Include/cmsis_os2.h"
+ 606              		.file 6 "App/Inc/fault_command.h"
+ 607              		.file 7 "Middlewares/Third_Party/LwIP/src/include/lwip/arch.h"
+ 608              		.file 8 "Middlewares/Third_Party/LwIP/src/include/lwip/err.h"
+ 609              		.file 9 "Middlewares/Third_Party/LwIP/src/include/lwip/pbuf.h"
+ 610              		.file 10 "Middlewares/Third_Party/LwIP/src/include/lwip/ip4_addr.h"
+ 611              		.file 11 "Middlewares/Third_Party/LwIP/src/include/lwip/ip_addr.h"
+ 612              		.file 12 "Middlewares/Third_Party/LwIP/src/include/lwip/netbuf.h"
+ 613              		.file 13 "Middlewares/Third_Party/LwIP/system/arch/sys_arch.h"
+ 614              		.file 14 "Middlewares/Third_Party/LwIP/src/include/lwip/api.h"
+ 615              		.file 15 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-
+ 616              		.file 16 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-
+ 617              		.file 17 "<built-in>"
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s 			page 16
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 tcp_json_server.c
+C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s:20     .text.TcpJsonServer_Write:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s:25     .text.TcpJsonServer_Write:00000000 TcpJsonServer_Write
+C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s:87     .text.TcpJsonServer_HandleLine:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s:92     .text.TcpJsonServer_HandleLine:00000000 TcpJsonServer_HandleLine
+C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s:130    .text.TcpJsonServer_HandleLine:00000018 $d
+C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s:135    .rodata.TcpJsonServer_HandleClient.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s:143    .text.TcpJsonServer_HandleClient:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s:148    .text.TcpJsonServer_HandleClient:00000000 TcpJsonServer_HandleClient
+C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s:329    .text.TcpJsonServer_HandleClient:00000090 $d
+C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s:335    .rodata.TcpJsonServer_Task.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s:354    .text.TcpJsonServer_Task:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s:359    .text.TcpJsonServer_Task:00000000 TcpJsonServer_Task
+C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s:519    .text.TcpJsonServer_Task:000000a4 $d
+C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s:531    .text.TcpJsonServer_Start:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s:537    .text.TcpJsonServer_Start:00000000 TcpJsonServer_Start
+C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s:574    .text.TcpJsonServer_Start:0000001c $d
+C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s:598    .bss.tcpJsonServerHandle:00000000 tcpJsonServerHandle
+C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s:588    .rodata.attributes.0:00000000 attributes.0
+C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s:581    .rodata.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s:585    .rodata.attributes.0:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccyvVZ3j.s:595    .bss.tcpJsonServerHandle:00000000 $d
+
+UNDEFINED SYMBOLS
+strlen
+netconn_write_partly
+FaultCommand_ExecuteLine
+netbuf_next
+netbuf_data
+netbuf_delete
+netconn_recv
+netconn_new_with_proto_and_callback
+netconn_bind
+printf
+netconn_delete
+osThreadExit
+puts
+netconn_listen_with_backlog
+osDelay
+netconn_accept
+netconn_close
+ip_addr_any
+osThreadNew

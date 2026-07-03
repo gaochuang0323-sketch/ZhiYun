@@ -29,7 +29,9 @@
 #include <stdio.h>
 
 #include "fault_console.h"
+#include "tcp_json_server.h"
 #include "voltage_sim.h"
+#include "waveform_gen.h"
 
 /* USER CODE END Includes */
 
@@ -67,6 +69,7 @@ const osThreadAttr_t defaultTask_attributes = {
 
 void StartDefaultTask(void *argument);
 
+extern void MX_LWIP_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /**
@@ -118,11 +121,14 @@ void MX_FREERTOS_Init(void) {
 /* USER CODE END Header_StartDefaultTask */
 void StartDefaultTask(void *argument)
 {
+  /* init code for LWIP */
+  MX_LWIP_Init();
   /* USER CODE BEGIN StartDefaultTask */
   uint32_t heartbeat = 0;
   uint32_t lastHeartbeatTick = 0;
 
   printf("[rtos] defaultTask started\r\n");
+  TcpJsonServer_Start();
 
   /* Infinite loop */
   for(;;)
@@ -132,6 +138,10 @@ void StartDefaultTask(void *argument)
     if (VoltageSim_Process(now) != HAL_OK)
     {
       printf("[rtos] voltage simulator process failed\r\n");
+    }
+    if (WaveformGen_Process(now) != HAL_OK)
+    {
+      printf("[rtos] waveform generator process failed\r\n");
     }
     FaultConsole_Process();
 
