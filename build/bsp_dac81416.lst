@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 1
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 1
   43              		.cfi_offset 4, -8
   44              		.cfi_offset 14, -4
   45              	.LBB2:
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 2
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s 			page 2
 
 
   13:BSP/Src/bsp_dac81416.c ****   {
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 1
   85 002c 00000000 		.word	dacSpiMutex
   86              	.LBE3:
   87              		.cfi_endproc
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 3
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s 			page 3
 
 
   88              	.LFE146:
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 1
  124              		.loc 1 31 22 is_stmt 0 view .LVU25
  125 0012 054B     		ldr	r3, .L19
  126 0014 1868     		ldr	r0, [r3]
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 4
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s 			page 4
 
 
   31:BSP/Src/bsp_dac81416.c ****     {
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 1
  174              	.L21:
   45:BSP/Src/bsp_dac81416.c ****   {
   46:BSP/Src/bsp_dac81416.c ****     (void)osMutexRelease(dacSpiMutex);
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 5
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s 			page 5
 
 
   47:BSP/Src/bsp_dac81416.c ****   }
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 1
  214 0000 014B     		ldr	r3, .L28
  215 0002 1860     		str	r0, [r3]
   60:BSP/Src/bsp_dac81416.c **** }
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 6
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s 			page 6
 
 
  216              		.loc 1 60 1 view .LVU44
@@ -338,104 +338,149 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 1
  247 0008 00000000 		.word	dacSpiTimeoutMs
  248              		.cfi_endproc
  249              	.LFE151:
- 251              		.section	.text.DAC_SPI_Transmit,"ax",%progbits
+ 251              		.section	.text.DAC_SPI_TransmitFrames24,"ax",%progbits
  252              		.align	1
- 253              		.global	DAC_SPI_Transmit
+ 253              		.global	DAC_SPI_TransmitFrames24
  254              		.syntax unified
  255              		.thumb
  256              		.thumb_func
- 258              	DAC_SPI_Transmit:
+ 258              	DAC_SPI_TransmitFrames24:
  259              	.LVL13:
- 260              	.LFB152:
+ 260              	.LFB154:
   66:BSP/Src/bsp_dac81416.c **** 
   67:BSP/Src/bsp_dac81416.c **** HAL_StatusTypeDef DAC_SPI_Transmit(uint8_t *txData, uint16_t size)
   68:BSP/Src/bsp_dac81416.c **** {
- 261              		.loc 1 68 1 is_stmt 1 view -0
+  69:BSP/Src/bsp_dac81416.c ****   uint32_t frame;
+  70:BSP/Src/bsp_dac81416.c **** 
+  71:BSP/Src/bsp_dac81416.c ****   if ((txData == NULL) || (size != 3U))
+  72:BSP/Src/bsp_dac81416.c ****   {
+  73:BSP/Src/bsp_dac81416.c ****     return HAL_ERROR;
+  74:BSP/Src/bsp_dac81416.c ****   }
+  75:BSP/Src/bsp_dac81416.c **** 
+  76:BSP/Src/bsp_dac81416.c ****   frame = ((uint32_t)txData[0] << 16) |
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s 			page 7
+
+
+  77:BSP/Src/bsp_dac81416.c ****           ((uint32_t)txData[1] << 8) |
+  78:BSP/Src/bsp_dac81416.c ****           (uint32_t)txData[2];
+  79:BSP/Src/bsp_dac81416.c **** 
+  80:BSP/Src/bsp_dac81416.c ****   return DAC_SPI_TransmitFrames24(&frame, 1U);
+  81:BSP/Src/bsp_dac81416.c **** }
+  82:BSP/Src/bsp_dac81416.c **** 
+  83:BSP/Src/bsp_dac81416.c **** HAL_StatusTypeDef DAC_SPI_TransmitReceive(uint8_t *txData, uint8_t *rxData, uint16_t size)
+  84:BSP/Src/bsp_dac81416.c **** {
+  85:BSP/Src/bsp_dac81416.c ****   HAL_StatusTypeDef status;
+  86:BSP/Src/bsp_dac81416.c ****   uint32_t txFrame;
+  87:BSP/Src/bsp_dac81416.c ****   uint32_t rxFrame = 0U;
+  88:BSP/Src/bsp_dac81416.c **** 
+  89:BSP/Src/bsp_dac81416.c ****   if ((txData == NULL) || (rxData == NULL) || (size != 3U))
+  90:BSP/Src/bsp_dac81416.c ****   {
+  91:BSP/Src/bsp_dac81416.c ****     return HAL_ERROR;
+  92:BSP/Src/bsp_dac81416.c ****   }
+  93:BSP/Src/bsp_dac81416.c **** 
+  94:BSP/Src/bsp_dac81416.c ****   txFrame = ((uint32_t)txData[0] << 16) |
+  95:BSP/Src/bsp_dac81416.c ****             ((uint32_t)txData[1] << 8) |
+  96:BSP/Src/bsp_dac81416.c ****             (uint32_t)txData[2];
+  97:BSP/Src/bsp_dac81416.c **** 
+  98:BSP/Src/bsp_dac81416.c ****   status = DAC_SPI_TransmitReceiveFrames24(&txFrame, &rxFrame, 1U);
+  99:BSP/Src/bsp_dac81416.c ****   if (status == HAL_OK)
+ 100:BSP/Src/bsp_dac81416.c ****   {
+ 101:BSP/Src/bsp_dac81416.c ****     rxData[0] = (uint8_t)(rxFrame >> 16);
+ 102:BSP/Src/bsp_dac81416.c ****     rxData[1] = (uint8_t)(rxFrame >> 8);
+ 103:BSP/Src/bsp_dac81416.c ****     rxData[2] = (uint8_t)rxFrame;
+ 104:BSP/Src/bsp_dac81416.c ****   }
+ 105:BSP/Src/bsp_dac81416.c **** 
+ 106:BSP/Src/bsp_dac81416.c ****   return status;
+ 107:BSP/Src/bsp_dac81416.c **** }
+ 108:BSP/Src/bsp_dac81416.c **** 
+ 109:BSP/Src/bsp_dac81416.c **** HAL_StatusTypeDef DAC_SPI_TransmitFrames24(const uint32_t *txFrames, uint16_t frameCount)
+ 110:BSP/Src/bsp_dac81416.c **** {
+ 261              		.loc 1 110 1 is_stmt 1 view -0
  262              		.cfi_startproc
  263              		@ args = 0, pretend = 0, frame = 0
  264              		@ frame_needed = 0, uses_anonymous_args = 0
- 265              		.loc 1 68 1 is_stmt 0 view .LVU49
+ 265              		.loc 1 110 1 is_stmt 0 view .LVU49
  266 0000 70B5     		push	{r4, r5, r6, lr}
  267              	.LCFI3:
  268              		.cfi_def_cfa_offset 16
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 7
-
-
  269              		.cfi_offset 4, -16
  270              		.cfi_offset 5, -12
  271              		.cfi_offset 6, -8
  272              		.cfi_offset 14, -4
-  69:BSP/Src/bsp_dac81416.c ****   HAL_StatusTypeDef status;
- 273              		.loc 1 69 3 is_stmt 1 view .LVU50
-  70:BSP/Src/bsp_dac81416.c **** 
-  71:BSP/Src/bsp_dac81416.c ****   if ((txData == NULL) || (size == 0U))
- 274              		.loc 1 71 3 view .LVU51
- 275              		.loc 1 71 6 is_stmt 0 view .LVU52
+ 111:BSP/Src/bsp_dac81416.c ****   HAL_StatusTypeDef status;
+ 273              		.loc 1 111 3 is_stmt 1 view .LVU50
+ 112:BSP/Src/bsp_dac81416.c **** 
+ 113:BSP/Src/bsp_dac81416.c ****   if ((txFrames == NULL) || (frameCount == 0U))
+ 274              		.loc 1 113 3 view .LVU51
+ 275              		.loc 1 113 6 is_stmt 0 view .LVU52
  276 0002 0029     		cmp	r1, #0
  277 0004 18BF     		it	ne
  278 0006 0028     		cmpne	r0, #0
  279 0008 03D1     		bne	.L37
-  72:BSP/Src/bsp_dac81416.c ****   {
-  73:BSP/Src/bsp_dac81416.c ****     return HAL_ERROR;
- 280              		.loc 1 73 12 view .LVU53
+ 114:BSP/Src/bsp_dac81416.c ****   {
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s 			page 8
+
+
+ 115:BSP/Src/bsp_dac81416.c ****     return HAL_ERROR;
+ 280              		.loc 1 115 12 view .LVU53
  281 000a 0123     		movs	r3, #1
  282 000c 1E46     		mov	r6, r3
  283              	.LVL14:
  284              	.L34:
-  74:BSP/Src/bsp_dac81416.c ****   }
-  75:BSP/Src/bsp_dac81416.c **** 
-  76:BSP/Src/bsp_dac81416.c ****   status = DAC_SPI_Lock();
-  77:BSP/Src/bsp_dac81416.c ****   if (status != HAL_OK)
-  78:BSP/Src/bsp_dac81416.c ****   {
-  79:BSP/Src/bsp_dac81416.c ****     return status;
-  80:BSP/Src/bsp_dac81416.c ****   }
-  81:BSP/Src/bsp_dac81416.c **** 
-  82:BSP/Src/bsp_dac81416.c ****   DAC_CS_LOW();
-  83:BSP/Src/bsp_dac81416.c ****   status = HAL_SPI_Transmit(&hspi1, txData, size, dacSpiTimeoutMs);
-  84:BSP/Src/bsp_dac81416.c ****   DAC_CS_HIGH();
-  85:BSP/Src/bsp_dac81416.c ****   DAC_SPI_Unlock();
-  86:BSP/Src/bsp_dac81416.c **** 
-  87:BSP/Src/bsp_dac81416.c ****   return status;
-  88:BSP/Src/bsp_dac81416.c **** }
- 285              		.loc 1 88 1 view .LVU54
+ 116:BSP/Src/bsp_dac81416.c ****   }
+ 117:BSP/Src/bsp_dac81416.c **** 
+ 118:BSP/Src/bsp_dac81416.c ****   status = DAC_SPI_Lock();
+ 119:BSP/Src/bsp_dac81416.c ****   if (status != HAL_OK)
+ 120:BSP/Src/bsp_dac81416.c ****   {
+ 121:BSP/Src/bsp_dac81416.c ****     return status;
+ 122:BSP/Src/bsp_dac81416.c ****   }
+ 123:BSP/Src/bsp_dac81416.c **** 
+ 124:BSP/Src/bsp_dac81416.c ****   DAC_CS_LOW();
+ 125:BSP/Src/bsp_dac81416.c ****   status = HAL_SPI_Transmit(&hspi1, (const uint8_t *)txFrames, frameCount, dacSpiTimeoutMs);
+ 126:BSP/Src/bsp_dac81416.c ****   DAC_CS_HIGH();
+ 127:BSP/Src/bsp_dac81416.c ****   DAC_SPI_Unlock();
+ 128:BSP/Src/bsp_dac81416.c **** 
+ 129:BSP/Src/bsp_dac81416.c ****   return status;
+ 130:BSP/Src/bsp_dac81416.c **** }
+ 285              		.loc 1 130 1 view .LVU54
  286 000e 3046     		mov	r0, r6
  287 0010 70BD     		pop	{r4, r5, r6, pc}
  288              	.LVL15:
  289              	.L37:
- 290              		.loc 1 88 1 view .LVU55
+ 290              		.loc 1 130 1 view .LVU55
  291 0012 0546     		mov	r5, r0
  292 0014 0C46     		mov	r4, r1
-  76:BSP/Src/bsp_dac81416.c ****   if (status != HAL_OK)
- 293              		.loc 1 76 3 is_stmt 1 view .LVU56
-  76:BSP/Src/bsp_dac81416.c ****   if (status != HAL_OK)
- 294              		.loc 1 76 12 is_stmt 0 view .LVU57
+ 118:BSP/Src/bsp_dac81416.c ****   if (status != HAL_OK)
+ 293              		.loc 1 118 3 is_stmt 1 view .LVU56
+ 118:BSP/Src/bsp_dac81416.c ****   if (status != HAL_OK)
+ 294              		.loc 1 118 12 is_stmt 0 view .LVU57
  295 0016 FFF7FEFF 		bl	DAC_SPI_Lock
  296              	.LVL16:
-  77:BSP/Src/bsp_dac81416.c ****   {
- 297              		.loc 1 77 3 is_stmt 1 view .LVU58
-  77:BSP/Src/bsp_dac81416.c ****   {
- 298              		.loc 1 77 6 is_stmt 0 view .LVU59
+ 119:BSP/Src/bsp_dac81416.c ****   {
+ 297              		.loc 1 119 3 is_stmt 1 view .LVU58
+ 119:BSP/Src/bsp_dac81416.c ****   {
+ 298              		.loc 1 119 6 is_stmt 0 view .LVU59
  299 001a 0646     		mov	r6, r0
  300 001c 0028     		cmp	r0, #0
  301 001e F6D1     		bne	.L34
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 8
-
-
-  82:BSP/Src/bsp_dac81416.c ****   status = HAL_SPI_Transmit(&hspi1, txData, size, dacSpiTimeoutMs);
- 302              		.loc 1 82 3 is_stmt 1 view .LVU60
+ 124:BSP/Src/bsp_dac81416.c ****   status = HAL_SPI_Transmit(&hspi1, (const uint8_t *)txFrames, frameCount, dacSpiTimeoutMs);
+ 302              		.loc 1 124 3 is_stmt 1 view .LVU60
  303 0020 0246     		mov	r2, r0
  304 0022 1021     		movs	r1, #16
  305 0024 0948     		ldr	r0, .L38
  306              	.LVL17:
-  82:BSP/Src/bsp_dac81416.c ****   status = HAL_SPI_Transmit(&hspi1, txData, size, dacSpiTimeoutMs);
- 307              		.loc 1 82 3 is_stmt 0 view .LVU61
+ 124:BSP/Src/bsp_dac81416.c ****   status = HAL_SPI_Transmit(&hspi1, (const uint8_t *)txFrames, frameCount, dacSpiTimeoutMs);
+ 307              		.loc 1 124 3 is_stmt 0 view .LVU61
  308 0026 FFF7FEFF 		bl	HAL_GPIO_WritePin
  309              	.LVL18:
-  83:BSP/Src/bsp_dac81416.c ****   DAC_CS_HIGH();
- 310              		.loc 1 83 3 is_stmt 1 view .LVU62
-  83:BSP/Src/bsp_dac81416.c ****   DAC_CS_HIGH();
- 311              		.loc 1 83 12 is_stmt 0 view .LVU63
+ 125:BSP/Src/bsp_dac81416.c ****   DAC_CS_HIGH();
+ 310              		.loc 1 125 3 is_stmt 1 view .LVU62
+ 125:BSP/Src/bsp_dac81416.c ****   DAC_CS_HIGH();
+ 311              		.loc 1 125 12 is_stmt 0 view .LVU63
  312 002a 094B     		ldr	r3, .L38+4
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s 			page 9
+
+
  313 002c 1B68     		ldr	r3, [r3]
  314 002e 2246     		mov	r2, r4
  315 0030 2946     		mov	r1, r5
@@ -444,21 +489,21 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 1
  318              	.LVL19:
  319 0038 0646     		mov	r6, r0
  320              	.LVL20:
-  84:BSP/Src/bsp_dac81416.c ****   DAC_SPI_Unlock();
- 321              		.loc 1 84 3 is_stmt 1 view .LVU64
+ 126:BSP/Src/bsp_dac81416.c ****   DAC_SPI_Unlock();
+ 321              		.loc 1 126 3 is_stmt 1 view .LVU64
  322 003a 0122     		movs	r2, #1
  323 003c 1021     		movs	r1, #16
  324 003e 0348     		ldr	r0, .L38
  325 0040 FFF7FEFF 		bl	HAL_GPIO_WritePin
  326              	.LVL21:
-  85:BSP/Src/bsp_dac81416.c **** 
- 327              		.loc 1 85 3 view .LVU65
+ 127:BSP/Src/bsp_dac81416.c **** 
+ 327              		.loc 1 127 3 view .LVU65
  328 0044 FFF7FEFF 		bl	DAC_SPI_Unlock
  329              	.LVL22:
-  87:BSP/Src/bsp_dac81416.c **** }
- 330              		.loc 1 87 3 view .LVU66
-  87:BSP/Src/bsp_dac81416.c **** }
- 331              		.loc 1 87 10 is_stmt 0 view .LVU67
+ 129:BSP/Src/bsp_dac81416.c **** }
+ 330              		.loc 1 129 3 view .LVU66
+ 129:BSP/Src/bsp_dac81416.c **** }
+ 331              		.loc 1 129 10 is_stmt 0 view .LVU67
  332 0048 E1E7     		b	.L34
  333              	.L39:
  334 004a 00BF     		.align	2
@@ -467,510 +512,737 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 1
  337 0050 00000000 		.word	dacSpiTimeoutMs
  338 0054 00000000 		.word	hspi1
  339              		.cfi_endproc
- 340              	.LFE152:
- 342              		.section	.text.DAC_SPI_TransmitReceive,"ax",%progbits
+ 340              	.LFE154:
+ 342              		.section	.text.DAC_SPI_Transmit,"ax",%progbits
  343              		.align	1
- 344              		.global	DAC_SPI_TransmitReceive
+ 344              		.global	DAC_SPI_Transmit
  345              		.syntax unified
  346              		.thumb
  347              		.thumb_func
- 349              	DAC_SPI_TransmitReceive:
+ 349              	DAC_SPI_Transmit:
  350              	.LVL23:
- 351              	.LFB153:
-  89:BSP/Src/bsp_dac81416.c **** 
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 9
-
-
-  90:BSP/Src/bsp_dac81416.c **** HAL_StatusTypeDef DAC_SPI_TransmitReceive(uint8_t *txData, uint8_t *rxData, uint16_t size)
-  91:BSP/Src/bsp_dac81416.c **** {
- 352              		.loc 1 91 1 is_stmt 1 view -0
+ 351              	.LFB152:
+  68:BSP/Src/bsp_dac81416.c ****   uint32_t frame;
+ 352              		.loc 1 68 1 is_stmt 1 view -0
  353              		.cfi_startproc
- 354              		@ args = 0, pretend = 0, frame = 0
+ 354              		@ args = 0, pretend = 0, frame = 8
  355              		@ frame_needed = 0, uses_anonymous_args = 0
- 356              		.loc 1 91 1 is_stmt 0 view .LVU69
- 357 0000 F0B5     		push	{r4, r5, r6, r7, lr}
- 358              	.LCFI4:
- 359              		.cfi_def_cfa_offset 20
- 360              		.cfi_offset 4, -20
- 361              		.cfi_offset 5, -16
- 362              		.cfi_offset 6, -12
- 363              		.cfi_offset 7, -8
- 364              		.cfi_offset 14, -4
- 365 0002 83B0     		sub	sp, sp, #12
- 366              	.LCFI5:
- 367              		.cfi_def_cfa_offset 32
-  92:BSP/Src/bsp_dac81416.c ****   HAL_StatusTypeDef status;
- 368              		.loc 1 92 3 is_stmt 1 view .LVU70
-  93:BSP/Src/bsp_dac81416.c **** 
-  94:BSP/Src/bsp_dac81416.c ****   if ((txData == NULL) || (rxData == NULL) || (size == 0U))
- 369              		.loc 1 94 3 view .LVU71
- 370              		.loc 1 94 6 is_stmt 0 view .LVU72
- 371 0004 0029     		cmp	r1, #0
- 372 0006 18BF     		it	ne
- 373 0008 0028     		cmpne	r0, #0
- 374 000a 21D0     		beq	.L42
- 375 000c 1446     		mov	r4, r2
- 376 000e 0646     		mov	r6, r0
- 377 0010 0D46     		mov	r5, r1
- 378              		.loc 1 94 44 discriminator 1 view .LVU73
- 379 0012 12B9     		cbnz	r2, .L45
-  95:BSP/Src/bsp_dac81416.c ****   {
-  96:BSP/Src/bsp_dac81416.c ****     return HAL_ERROR;
- 380              		.loc 1 96 12 view .LVU74
- 381 0014 0123     		movs	r3, #1
- 382 0016 1F46     		mov	r7, r3
- 383 0018 1CE0     		b	.L41
- 384              	.L45:
-  97:BSP/Src/bsp_dac81416.c ****   }
-  98:BSP/Src/bsp_dac81416.c **** 
-  99:BSP/Src/bsp_dac81416.c ****   status = DAC_SPI_Lock();
- 385              		.loc 1 99 3 is_stmt 1 view .LVU75
- 386              		.loc 1 99 12 is_stmt 0 view .LVU76
- 387 001a FFF7FEFF 		bl	DAC_SPI_Lock
- 388              	.LVL24:
- 100:BSP/Src/bsp_dac81416.c ****   if (status != HAL_OK)
- 389              		.loc 1 100 3 is_stmt 1 view .LVU77
- 390              		.loc 1 100 6 is_stmt 0 view .LVU78
- 391 001e 0746     		mov	r7, r0
- 392 0020 C0B9     		cbnz	r0, .L41
- 101:BSP/Src/bsp_dac81416.c ****   {
- 102:BSP/Src/bsp_dac81416.c ****     return status;
- 103:BSP/Src/bsp_dac81416.c ****   }
- 104:BSP/Src/bsp_dac81416.c **** 
- 105:BSP/Src/bsp_dac81416.c ****   DAC_CS_LOW();
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 10
+  69:BSP/Src/bsp_dac81416.c **** 
+ 356              		.loc 1 69 3 view .LVU69
+  71:BSP/Src/bsp_dac81416.c ****   {
+ 357              		.loc 1 71 3 view .LVU70
+  71:BSP/Src/bsp_dac81416.c ****   {
+ 358              		.loc 1 71 33 is_stmt 0 view .LVU71
+ 359 0000 0339     		subs	r1, r1, #3
+ 360              	.LVL24:
+  71:BSP/Src/bsp_dac81416.c ****   {
+ 361              		.loc 1 71 33 view .LVU72
+ 362 0002 18BF     		it	ne
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s 			page 10
 
 
- 393              		.loc 1 105 3 is_stmt 1 view .LVU79
- 394 0022 0246     		mov	r2, r0
- 395 0024 1021     		movs	r1, #16
- 396 0026 0D48     		ldr	r0, .L46
- 397              	.LVL25:
- 398              		.loc 1 105 3 is_stmt 0 view .LVU80
- 399 0028 FFF7FEFF 		bl	HAL_GPIO_WritePin
- 400              	.LVL26:
- 106:BSP/Src/bsp_dac81416.c ****   status = HAL_SPI_TransmitReceive(&hspi1, txData, rxData, size, dacSpiTimeoutMs);
- 401              		.loc 1 106 3 is_stmt 1 view .LVU81
- 402              		.loc 1 106 12 is_stmt 0 view .LVU82
- 403 002c 0C4B     		ldr	r3, .L46+4
- 404 002e 1B68     		ldr	r3, [r3]
- 405 0030 0093     		str	r3, [sp]
- 406 0032 2346     		mov	r3, r4
- 407 0034 2A46     		mov	r2, r5
- 408 0036 3146     		mov	r1, r6
- 409 0038 0A48     		ldr	r0, .L46+8
- 410 003a FFF7FEFF 		bl	HAL_SPI_TransmitReceive
- 411              	.LVL27:
- 412 003e 0746     		mov	r7, r0
- 413              	.LVL28:
- 107:BSP/Src/bsp_dac81416.c ****   DAC_CS_HIGH();
- 414              		.loc 1 107 3 is_stmt 1 view .LVU83
- 415 0040 0122     		movs	r2, #1
- 416 0042 1021     		movs	r1, #16
- 417 0044 0548     		ldr	r0, .L46
- 418 0046 FFF7FEFF 		bl	HAL_GPIO_WritePin
- 419              	.LVL29:
- 108:BSP/Src/bsp_dac81416.c ****   DAC_SPI_Unlock();
- 420              		.loc 1 108 3 view .LVU84
- 421 004a FFF7FEFF 		bl	DAC_SPI_Unlock
- 422              	.LVL30:
- 109:BSP/Src/bsp_dac81416.c **** 
- 110:BSP/Src/bsp_dac81416.c ****   return status;
- 423              		.loc 1 110 3 view .LVU85
- 424              		.loc 1 110 10 is_stmt 0 view .LVU86
- 425 004e 01E0     		b	.L41
- 426              	.LVL31:
- 427              	.L42:
-  96:BSP/Src/bsp_dac81416.c ****   }
- 428              		.loc 1 96 12 view .LVU87
- 429 0050 0123     		movs	r3, #1
- 430 0052 1F46     		mov	r7, r3
- 431              	.LVL32:
- 432              	.L41:
- 111:BSP/Src/bsp_dac81416.c **** }
- 433              		.loc 1 111 1 view .LVU88
- 434 0054 3846     		mov	r0, r7
- 435 0056 03B0     		add	sp, sp, #12
- 436              	.LCFI6:
- 437              		.cfi_def_cfa_offset 20
- 438              		@ sp needed
- 439 0058 F0BD     		pop	{r4, r5, r6, r7, pc}
- 440              	.L47:
- 441 005a 00BF     		.align	2
- 442              	.L46:
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 11
+ 363 0004 0121     		movne	r1, #1
+ 364              	.LVL25:
+  71:BSP/Src/bsp_dac81416.c ****   {
+ 365              		.loc 1 71 24 view .LVU73
+ 366 0006 0028     		cmp	r0, #0
+ 367 0008 08BF     		it	eq
+ 368 000a 41F00101 		orreq	r1, r1, #1
+  71:BSP/Src/bsp_dac81416.c ****   {
+ 369              		.loc 1 71 6 view .LVU74
+ 370 000e 09B1     		cbz	r1, .L47
+  73:BSP/Src/bsp_dac81416.c ****   }
+ 371              		.loc 1 73 12 view .LVU75
+ 372 0010 0120     		movs	r0, #1
+ 373              	.LVL26:
+  81:BSP/Src/bsp_dac81416.c **** 
+ 374              		.loc 1 81 1 view .LVU76
+ 375 0012 7047     		bx	lr
+ 376              	.LVL27:
+ 377              	.L47:
+  68:BSP/Src/bsp_dac81416.c ****   uint32_t frame;
+ 378              		.loc 1 68 1 view .LVU77
+ 379 0014 00B5     		push	{lr}
+ 380              	.LCFI4:
+ 381              		.cfi_def_cfa_offset 4
+ 382              		.cfi_offset 14, -4
+ 383 0016 83B0     		sub	sp, sp, #12
+ 384              	.LCFI5:
+ 385              		.cfi_def_cfa_offset 16
+  76:BSP/Src/bsp_dac81416.c ****           ((uint32_t)txData[1] << 8) |
+ 386              		.loc 1 76 3 is_stmt 1 view .LVU78
+  76:BSP/Src/bsp_dac81416.c ****           ((uint32_t)txData[1] << 8) |
+ 387              		.loc 1 76 28 is_stmt 0 view .LVU79
+ 388 0018 0178     		ldrb	r1, [r0]	@ zero_extendqisi2
+  77:BSP/Src/bsp_dac81416.c ****           (uint32_t)txData[2];
+ 389              		.loc 1 77 28 view .LVU80
+ 390 001a 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+  77:BSP/Src/bsp_dac81416.c ****           (uint32_t)txData[2];
+ 391              		.loc 1 77 32 view .LVU81
+ 392 001c 1B02     		lsls	r3, r3, #8
+  76:BSP/Src/bsp_dac81416.c ****           ((uint32_t)txData[1] << 8) |
+ 393              		.loc 1 76 39 view .LVU82
+ 394 001e 43EA0143 		orr	r3, r3, r1, lsl #16
+  78:BSP/Src/bsp_dac81416.c **** 
+ 395              		.loc 1 78 27 view .LVU83
+ 396 0022 8278     		ldrb	r2, [r0, #2]	@ zero_extendqisi2
+  77:BSP/Src/bsp_dac81416.c ****           (uint32_t)txData[2];
+ 397              		.loc 1 77 38 view .LVU84
+ 398 0024 1343     		orrs	r3, r3, r2
+  76:BSP/Src/bsp_dac81416.c ****           ((uint32_t)txData[1] << 8) |
+ 399              		.loc 1 76 9 view .LVU85
+ 400 0026 0193     		str	r3, [sp, #4]
+  80:BSP/Src/bsp_dac81416.c **** }
+ 401              		.loc 1 80 3 is_stmt 1 view .LVU86
+  80:BSP/Src/bsp_dac81416.c **** }
+ 402              		.loc 1 80 10 is_stmt 0 view .LVU87
+ 403 0028 0121     		movs	r1, #1
+ 404 002a 01A8     		add	r0, sp, #4
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s 			page 11
 
 
- 443 005c 00000258 		.word	1476526080
- 444 0060 00000000 		.word	dacSpiTimeoutMs
- 445 0064 00000000 		.word	hspi1
- 446              		.cfi_endproc
- 447              	.LFE153:
- 449              		.section	.text.DAC_SetResetPin,"ax",%progbits
- 450              		.align	1
- 451              		.global	DAC_SetResetPin
- 452              		.syntax unified
- 453              		.thumb
- 454              		.thumb_func
- 456              	DAC_SetResetPin:
- 457              	.LVL33:
- 458              	.LFB154:
- 112:BSP/Src/bsp_dac81416.c **** 
- 113:BSP/Src/bsp_dac81416.c **** void DAC_SetResetPin(GPIO_PinState state)
- 114:BSP/Src/bsp_dac81416.c **** {
- 459              		.loc 1 114 1 is_stmt 1 view -0
- 460              		.cfi_startproc
- 461              		@ args = 0, pretend = 0, frame = 0
- 462              		@ frame_needed = 0, uses_anonymous_args = 0
- 463              		.loc 1 114 1 is_stmt 0 view .LVU90
- 464 0000 08B5     		push	{r3, lr}
- 465              	.LCFI7:
- 466              		.cfi_def_cfa_offset 8
- 467              		.cfi_offset 3, -8
- 468              		.cfi_offset 14, -4
- 469 0002 0246     		mov	r2, r0
- 115:BSP/Src/bsp_dac81416.c ****   HAL_GPIO_WritePin(DAC_RESET_GPIO_Port, DAC_RESET_Pin, state);
- 470              		.loc 1 115 3 is_stmt 1 view .LVU91
- 471 0004 0821     		movs	r1, #8
- 472 0006 0248     		ldr	r0, .L50
- 473              	.LVL34:
- 474              		.loc 1 115 3 is_stmt 0 view .LVU92
- 475 0008 FFF7FEFF 		bl	HAL_GPIO_WritePin
- 476              	.LVL35:
- 116:BSP/Src/bsp_dac81416.c **** }
- 477              		.loc 1 116 1 view .LVU93
- 478 000c 08BD     		pop	{r3, pc}
- 479              	.L51:
- 480 000e 00BF     		.align	2
- 481              	.L50:
- 482 0010 000C0258 		.word	1476529152
- 483              		.cfi_endproc
- 484              	.LFE154:
- 486              		.section	.text.DAC_ResetHardware,"ax",%progbits
- 487              		.align	1
- 488              		.global	DAC_ResetHardware
- 489              		.syntax unified
- 490              		.thumb
- 491              		.thumb_func
- 493              	DAC_ResetHardware:
- 494              	.LFB155:
- 117:BSP/Src/bsp_dac81416.c **** 
- 118:BSP/Src/bsp_dac81416.c **** void DAC_ResetHardware(void)
- 119:BSP/Src/bsp_dac81416.c **** {
- 495              		.loc 1 119 1 is_stmt 1 view -0
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 12
+ 405              	.LVL28:
+  80:BSP/Src/bsp_dac81416.c **** }
+ 406              		.loc 1 80 10 view .LVU88
+ 407 002c FFF7FEFF 		bl	DAC_SPI_TransmitFrames24
+ 408              	.LVL29:
+  81:BSP/Src/bsp_dac81416.c **** 
+ 409              		.loc 1 81 1 view .LVU89
+ 410 0030 03B0     		add	sp, sp, #12
+ 411              	.LCFI6:
+ 412              		.cfi_def_cfa_offset 4
+ 413              		@ sp needed
+ 414 0032 00BD     		pop	{pc}
+ 415              		.cfi_endproc
+ 416              	.LFE152:
+ 418              		.section	.text.DAC_SPI_TransmitReceiveFrames24,"ax",%progbits
+ 419              		.align	1
+ 420              		.global	DAC_SPI_TransmitReceiveFrames24
+ 421              		.syntax unified
+ 422              		.thumb
+ 423              		.thumb_func
+ 425              	DAC_SPI_TransmitReceiveFrames24:
+ 426              	.LVL30:
+ 427              	.LFB155:
+ 131:BSP/Src/bsp_dac81416.c **** 
+ 132:BSP/Src/bsp_dac81416.c **** HAL_StatusTypeDef DAC_SPI_TransmitReceiveFrames24(const uint32_t *txFrames,
+ 133:BSP/Src/bsp_dac81416.c ****                                                   uint32_t *rxFrames,
+ 134:BSP/Src/bsp_dac81416.c ****                                                   uint16_t frameCount)
+ 135:BSP/Src/bsp_dac81416.c **** {
+ 428              		.loc 1 135 1 is_stmt 1 view -0
+ 429              		.cfi_startproc
+ 430              		@ args = 0, pretend = 0, frame = 0
+ 431              		@ frame_needed = 0, uses_anonymous_args = 0
+ 432              		.loc 1 135 1 is_stmt 0 view .LVU91
+ 433 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 434              	.LCFI7:
+ 435              		.cfi_def_cfa_offset 20
+ 436              		.cfi_offset 4, -20
+ 437              		.cfi_offset 5, -16
+ 438              		.cfi_offset 6, -12
+ 439              		.cfi_offset 7, -8
+ 440              		.cfi_offset 14, -4
+ 441 0002 83B0     		sub	sp, sp, #12
+ 442              	.LCFI8:
+ 443              		.cfi_def_cfa_offset 32
+ 136:BSP/Src/bsp_dac81416.c ****   HAL_StatusTypeDef status;
+ 444              		.loc 1 136 3 is_stmt 1 view .LVU92
+ 137:BSP/Src/bsp_dac81416.c **** 
+ 138:BSP/Src/bsp_dac81416.c ****   if ((txFrames == NULL) || (rxFrames == NULL) || (frameCount == 0U))
+ 445              		.loc 1 138 3 view .LVU93
+ 446              		.loc 1 138 6 is_stmt 0 view .LVU94
+ 447 0004 0029     		cmp	r1, #0
+ 448 0006 18BF     		it	ne
+ 449 0008 0028     		cmpne	r0, #0
+ 450 000a 21D0     		beq	.L50
+ 451 000c 1446     		mov	r4, r2
+ 452 000e 0646     		mov	r6, r0
+ 453 0010 0D46     		mov	r5, r1
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s 			page 12
 
 
- 496              		.cfi_startproc
- 497              		@ args = 0, pretend = 0, frame = 0
- 498              		@ frame_needed = 0, uses_anonymous_args = 0
- 499 0000 08B5     		push	{r3, lr}
- 500              	.LCFI8:
- 501              		.cfi_def_cfa_offset 8
- 502              		.cfi_offset 3, -8
- 503              		.cfi_offset 14, -4
- 120:BSP/Src/bsp_dac81416.c ****   DAC_SetResetPin(GPIO_PIN_RESET);
- 504              		.loc 1 120 3 view .LVU95
- 505 0002 0020     		movs	r0, #0
- 506 0004 FFF7FEFF 		bl	DAC_SetResetPin
- 507              	.LVL36:
- 121:BSP/Src/bsp_dac81416.c ****   HAL_Delay(1U);
- 508              		.loc 1 121 3 view .LVU96
- 509 0008 0120     		movs	r0, #1
- 510 000a FFF7FEFF 		bl	HAL_Delay
- 511              	.LVL37:
- 122:BSP/Src/bsp_dac81416.c ****   DAC_SetResetPin(GPIO_PIN_SET);
- 512              		.loc 1 122 3 view .LVU97
- 513 000e 0120     		movs	r0, #1
- 514 0010 FFF7FEFF 		bl	DAC_SetResetPin
- 515              	.LVL38:
- 123:BSP/Src/bsp_dac81416.c ****   HAL_Delay(1U);
- 516              		.loc 1 123 3 view .LVU98
- 517 0014 0120     		movs	r0, #1
- 518 0016 FFF7FEFF 		bl	HAL_Delay
- 519              	.LVL39:
- 124:BSP/Src/bsp_dac81416.c **** }
- 520              		.loc 1 124 1 is_stmt 0 view .LVU99
- 521 001a 08BD     		pop	{r3, pc}
+ 454              		.loc 1 138 48 discriminator 1 view .LVU95
+ 455 0012 12B9     		cbnz	r2, .L53
+ 139:BSP/Src/bsp_dac81416.c ****   {
+ 140:BSP/Src/bsp_dac81416.c ****     return HAL_ERROR;
+ 456              		.loc 1 140 12 view .LVU96
+ 457 0014 0123     		movs	r3, #1
+ 458 0016 1F46     		mov	r7, r3
+ 459 0018 1CE0     		b	.L49
+ 460              	.L53:
+ 141:BSP/Src/bsp_dac81416.c ****   }
+ 142:BSP/Src/bsp_dac81416.c **** 
+ 143:BSP/Src/bsp_dac81416.c ****   status = DAC_SPI_Lock();
+ 461              		.loc 1 143 3 is_stmt 1 view .LVU97
+ 462              		.loc 1 143 12 is_stmt 0 view .LVU98
+ 463 001a FFF7FEFF 		bl	DAC_SPI_Lock
+ 464              	.LVL31:
+ 144:BSP/Src/bsp_dac81416.c ****   if (status != HAL_OK)
+ 465              		.loc 1 144 3 is_stmt 1 view .LVU99
+ 466              		.loc 1 144 6 is_stmt 0 view .LVU100
+ 467 001e 0746     		mov	r7, r0
+ 468 0020 C0B9     		cbnz	r0, .L49
+ 145:BSP/Src/bsp_dac81416.c ****   {
+ 146:BSP/Src/bsp_dac81416.c ****     return status;
+ 147:BSP/Src/bsp_dac81416.c ****   }
+ 148:BSP/Src/bsp_dac81416.c **** 
+ 149:BSP/Src/bsp_dac81416.c ****   DAC_CS_LOW();
+ 469              		.loc 1 149 3 is_stmt 1 view .LVU101
+ 470 0022 0246     		mov	r2, r0
+ 471 0024 1021     		movs	r1, #16
+ 472 0026 0D48     		ldr	r0, .L54
+ 473              	.LVL32:
+ 474              		.loc 1 149 3 is_stmt 0 view .LVU102
+ 475 0028 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 476              	.LVL33:
+ 150:BSP/Src/bsp_dac81416.c ****   status = HAL_SPI_TransmitReceive(&hspi1,
+ 477              		.loc 1 150 3 is_stmt 1 view .LVU103
+ 478              		.loc 1 150 12 is_stmt 0 view .LVU104
+ 479 002c 0C4B     		ldr	r3, .L54+4
+ 480 002e 1B68     		ldr	r3, [r3]
+ 481 0030 0093     		str	r3, [sp]
+ 482 0032 2346     		mov	r3, r4
+ 483 0034 2A46     		mov	r2, r5
+ 484 0036 3146     		mov	r1, r6
+ 485 0038 0A48     		ldr	r0, .L54+8
+ 486 003a FFF7FEFF 		bl	HAL_SPI_TransmitReceive
+ 487              	.LVL34:
+ 488 003e 0746     		mov	r7, r0
+ 489              	.LVL35:
+ 151:BSP/Src/bsp_dac81416.c ****                                    (const uint8_t *)txFrames,
+ 152:BSP/Src/bsp_dac81416.c ****                                    (uint8_t *)rxFrames,
+ 153:BSP/Src/bsp_dac81416.c ****                                    frameCount,
+ 154:BSP/Src/bsp_dac81416.c ****                                    dacSpiTimeoutMs);
+ 155:BSP/Src/bsp_dac81416.c ****   DAC_CS_HIGH();
+ 490              		.loc 1 155 3 is_stmt 1 view .LVU105
+ 491 0040 0122     		movs	r2, #1
+ 492 0042 1021     		movs	r1, #16
+ 493 0044 0548     		ldr	r0, .L54
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s 			page 13
+
+
+ 494 0046 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 495              	.LVL36:
+ 156:BSP/Src/bsp_dac81416.c ****   DAC_SPI_Unlock();
+ 496              		.loc 1 156 3 view .LVU106
+ 497 004a FFF7FEFF 		bl	DAC_SPI_Unlock
+ 498              	.LVL37:
+ 157:BSP/Src/bsp_dac81416.c **** 
+ 158:BSP/Src/bsp_dac81416.c ****   return status;
+ 499              		.loc 1 158 3 view .LVU107
+ 500              		.loc 1 158 10 is_stmt 0 view .LVU108
+ 501 004e 01E0     		b	.L49
+ 502              	.LVL38:
+ 503              	.L50:
+ 140:BSP/Src/bsp_dac81416.c ****   }
+ 504              		.loc 1 140 12 view .LVU109
+ 505 0050 0123     		movs	r3, #1
+ 506 0052 1F46     		mov	r7, r3
+ 507              	.LVL39:
+ 508              	.L49:
+ 159:BSP/Src/bsp_dac81416.c **** }
+ 509              		.loc 1 159 1 view .LVU110
+ 510 0054 3846     		mov	r0, r7
+ 511 0056 03B0     		add	sp, sp, #12
+ 512              	.LCFI9:
+ 513              		.cfi_def_cfa_offset 20
+ 514              		@ sp needed
+ 515 0058 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 516              	.L55:
+ 517 005a 00BF     		.align	2
+ 518              	.L54:
+ 519 005c 00000258 		.word	1476526080
+ 520 0060 00000000 		.word	dacSpiTimeoutMs
+ 521 0064 00000000 		.word	hspi1
  522              		.cfi_endproc
  523              	.LFE155:
- 525              		.section	.text.DAC_SetLDACPin,"ax",%progbits
+ 525              		.section	.text.DAC_SPI_TransmitReceive,"ax",%progbits
  526              		.align	1
- 527              		.global	DAC_SetLDACPin
+ 527              		.global	DAC_SPI_TransmitReceive
  528              		.syntax unified
  529              		.thumb
  530              		.thumb_func
- 532              	DAC_SetLDACPin:
+ 532              	DAC_SPI_TransmitReceive:
  533              	.LVL40:
- 534              	.LFB156:
- 125:BSP/Src/bsp_dac81416.c **** 
- 126:BSP/Src/bsp_dac81416.c **** void DAC_SetLDACPin(GPIO_PinState state)
- 127:BSP/Src/bsp_dac81416.c **** {
- 535              		.loc 1 127 1 is_stmt 1 view -0
+ 534              	.LFB153:
+  84:BSP/Src/bsp_dac81416.c ****   HAL_StatusTypeDef status;
+ 535              		.loc 1 84 1 is_stmt 1 view -0
  536              		.cfi_startproc
- 537              		@ args = 0, pretend = 0, frame = 0
+ 537              		@ args = 0, pretend = 0, frame = 8
  538              		@ frame_needed = 0, uses_anonymous_args = 0
- 539              		.loc 1 127 1 is_stmt 0 view .LVU101
- 540 0000 08B5     		push	{r3, lr}
- 541              	.LCFI9:
+  84:BSP/Src/bsp_dac81416.c ****   HAL_StatusTypeDef status;
+ 539              		.loc 1 84 1 is_stmt 0 view .LVU112
+ 540 0000 10B5     		push	{r4, lr}
+ 541              	.LCFI10:
  542              		.cfi_def_cfa_offset 8
- 543              		.cfi_offset 3, -8
+ 543              		.cfi_offset 4, -8
  544              		.cfi_offset 14, -4
- 545 0002 0246     		mov	r2, r0
- 128:BSP/Src/bsp_dac81416.c ****   HAL_GPIO_WritePin(DAC_nLDAC_GPIO_Port, DAC_nLDAC_Pin, state);
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 13
+ 545 0002 82B0     		sub	sp, sp, #8
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s 			page 14
 
 
- 546              		.loc 1 128 3 is_stmt 1 view .LVU102
- 547 0004 4021     		movs	r1, #64
- 548 0006 0248     		ldr	r0, .L56
- 549              	.LVL41:
- 550              		.loc 1 128 3 is_stmt 0 view .LVU103
- 551 0008 FFF7FEFF 		bl	HAL_GPIO_WritePin
- 552              	.LVL42:
- 129:BSP/Src/bsp_dac81416.c **** }
- 553              		.loc 1 129 1 view .LVU104
- 554 000c 08BD     		pop	{r3, pc}
- 555              	.L57:
- 556 000e 00BF     		.align	2
- 557              	.L56:
- 558 0010 000C0258 		.word	1476529152
- 559              		.cfi_endproc
- 560              	.LFE156:
- 562              		.section	.text.BSP_DAC81416_Init,"ax",%progbits
- 563              		.align	1
- 564              		.global	BSP_DAC81416_Init
- 565              		.syntax unified
- 566              		.thumb
- 567              		.thumb_func
- 569              	BSP_DAC81416_Init:
- 570              	.LFB149:
+ 546              	.LCFI11:
+ 547              		.cfi_def_cfa_offset 16
+  85:BSP/Src/bsp_dac81416.c ****   uint32_t txFrame;
+ 548              		.loc 1 85 3 is_stmt 1 view .LVU113
+  86:BSP/Src/bsp_dac81416.c ****   uint32_t rxFrame = 0U;
+ 549              		.loc 1 86 3 view .LVU114
+  87:BSP/Src/bsp_dac81416.c **** 
+ 550              		.loc 1 87 3 view .LVU115
+  87:BSP/Src/bsp_dac81416.c **** 
+ 551              		.loc 1 87 12 is_stmt 0 view .LVU116
+ 552 0004 0023     		movs	r3, #0
+ 553 0006 0093     		str	r3, [sp]
+  89:BSP/Src/bsp_dac81416.c ****   {
+ 554              		.loc 1 89 3 is_stmt 1 view .LVU117
+  89:BSP/Src/bsp_dac81416.c ****   {
+ 555              		.loc 1 89 6 is_stmt 0 view .LVU118
+ 556 0008 9942     		cmp	r1, r3
+ 557 000a 18BF     		it	ne
+ 558 000c 9842     		cmpne	r0, r3
+ 559 000e 1DD0     		beq	.L58
+ 560 0010 0C46     		mov	r4, r1
+  89:BSP/Src/bsp_dac81416.c ****   {
+ 561              		.loc 1 89 44 discriminator 1 view .LVU119
+ 562 0012 032A     		cmp	r2, #3
+ 563 0014 02D0     		beq	.L61
+  91:BSP/Src/bsp_dac81416.c ****   }
+ 564              		.loc 1 91 12 view .LVU120
+ 565 0016 0120     		movs	r0, #1
+ 566              	.LVL41:
+ 567              	.L57:
+ 107:BSP/Src/bsp_dac81416.c **** 
+ 568              		.loc 1 107 1 view .LVU121
+ 569 0018 02B0     		add	sp, sp, #8
+ 570              	.LCFI12:
+ 571              		.cfi_remember_state
+ 572              		.cfi_def_cfa_offset 8
+ 573              		@ sp needed
+ 574 001a 10BD     		pop	{r4, pc}
+ 575              	.LVL42:
+ 576              	.L61:
+ 577              	.LCFI13:
+ 578              		.cfi_restore_state
+  94:BSP/Src/bsp_dac81416.c ****             ((uint32_t)txData[1] << 8) |
+ 579              		.loc 1 94 3 is_stmt 1 view .LVU122
+  94:BSP/Src/bsp_dac81416.c ****             ((uint32_t)txData[1] << 8) |
+ 580              		.loc 1 94 30 is_stmt 0 view .LVU123
+ 581 001c 0278     		ldrb	r2, [r0]	@ zero_extendqisi2
+ 582              	.LVL43:
+  95:BSP/Src/bsp_dac81416.c ****             (uint32_t)txData[2];
+ 583              		.loc 1 95 30 view .LVU124
+ 584 001e 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+  95:BSP/Src/bsp_dac81416.c ****             (uint32_t)txData[2];
+ 585              		.loc 1 95 34 view .LVU125
+ 586 0020 1B02     		lsls	r3, r3, #8
+  94:BSP/Src/bsp_dac81416.c ****             ((uint32_t)txData[1] << 8) |
+ 587              		.loc 1 94 41 view .LVU126
+ 588 0022 43EA0243 		orr	r3, r3, r2, lsl #16
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s 			page 15
+
+
+  96:BSP/Src/bsp_dac81416.c **** 
+ 589              		.loc 1 96 29 view .LVU127
+ 590 0026 8278     		ldrb	r2, [r0, #2]	@ zero_extendqisi2
+  95:BSP/Src/bsp_dac81416.c ****             (uint32_t)txData[2];
+ 591              		.loc 1 95 40 view .LVU128
+ 592 0028 1343     		orrs	r3, r3, r2
+  94:BSP/Src/bsp_dac81416.c ****             ((uint32_t)txData[1] << 8) |
+ 593              		.loc 1 94 11 view .LVU129
+ 594 002a 0193     		str	r3, [sp, #4]
+  98:BSP/Src/bsp_dac81416.c ****   if (status == HAL_OK)
+ 595              		.loc 1 98 3 is_stmt 1 view .LVU130
+  98:BSP/Src/bsp_dac81416.c ****   if (status == HAL_OK)
+ 596              		.loc 1 98 12 is_stmt 0 view .LVU131
+ 597 002c 0122     		movs	r2, #1
+ 598 002e 6946     		mov	r1, sp
+ 599              	.LVL44:
+  98:BSP/Src/bsp_dac81416.c ****   if (status == HAL_OK)
+ 600              		.loc 1 98 12 view .LVU132
+ 601 0030 01A8     		add	r0, sp, #4
+ 602              	.LVL45:
+  98:BSP/Src/bsp_dac81416.c ****   if (status == HAL_OK)
+ 603              		.loc 1 98 12 view .LVU133
+ 604 0032 FFF7FEFF 		bl	DAC_SPI_TransmitReceiveFrames24
+ 605              	.LVL46:
+  99:BSP/Src/bsp_dac81416.c ****   {
+ 606              		.loc 1 99 3 is_stmt 1 view .LVU134
+  99:BSP/Src/bsp_dac81416.c ****   {
+ 607              		.loc 1 99 6 is_stmt 0 view .LVU135
+ 608 0036 0028     		cmp	r0, #0
+ 609 0038 EED1     		bne	.L57
+ 101:BSP/Src/bsp_dac81416.c ****     rxData[1] = (uint8_t)(rxFrame >> 8);
+ 610              		.loc 1 101 5 is_stmt 1 view .LVU136
+ 101:BSP/Src/bsp_dac81416.c ****     rxData[1] = (uint8_t)(rxFrame >> 8);
+ 611              		.loc 1 101 35 is_stmt 0 view .LVU137
+ 612 003a 009B     		ldr	r3, [sp]
+ 101:BSP/Src/bsp_dac81416.c ****     rxData[1] = (uint8_t)(rxFrame >> 8);
+ 613              		.loc 1 101 17 view .LVU138
+ 614 003c C3F30742 		ubfx	r2, r3, #16, #8
+ 101:BSP/Src/bsp_dac81416.c ****     rxData[1] = (uint8_t)(rxFrame >> 8);
+ 615              		.loc 1 101 15 view .LVU139
+ 616 0040 2270     		strb	r2, [r4]
+ 102:BSP/Src/bsp_dac81416.c ****     rxData[2] = (uint8_t)rxFrame;
+ 617              		.loc 1 102 5 is_stmt 1 view .LVU140
+ 102:BSP/Src/bsp_dac81416.c ****     rxData[2] = (uint8_t)rxFrame;
+ 618              		.loc 1 102 17 is_stmt 0 view .LVU141
+ 619 0042 C3F30722 		ubfx	r2, r3, #8, #8
+ 102:BSP/Src/bsp_dac81416.c ****     rxData[2] = (uint8_t)rxFrame;
+ 620              		.loc 1 102 15 view .LVU142
+ 621 0046 6270     		strb	r2, [r4, #1]
+ 103:BSP/Src/bsp_dac81416.c ****   }
+ 622              		.loc 1 103 5 is_stmt 1 view .LVU143
+ 103:BSP/Src/bsp_dac81416.c ****   }
+ 623              		.loc 1 103 15 is_stmt 0 view .LVU144
+ 624 0048 A370     		strb	r3, [r4, #2]
+ 625 004a E5E7     		b	.L57
+ 626              	.LVL47:
+ 627              	.L58:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s 			page 16
+
+
+  91:BSP/Src/bsp_dac81416.c ****   }
+ 628              		.loc 1 91 12 view .LVU145
+ 629 004c 0120     		movs	r0, #1
+ 630              	.LVL48:
+  91:BSP/Src/bsp_dac81416.c ****   }
+ 631              		.loc 1 91 12 view .LVU146
+ 632 004e E3E7     		b	.L57
+ 633              		.cfi_endproc
+ 634              	.LFE153:
+ 636              		.section	.text.DAC_SetResetPin,"ax",%progbits
+ 637              		.align	1
+ 638              		.global	DAC_SetResetPin
+ 639              		.syntax unified
+ 640              		.thumb
+ 641              		.thumb_func
+ 643              	DAC_SetResetPin:
+ 644              	.LVL49:
+ 645              	.LFB156:
+ 160:BSP/Src/bsp_dac81416.c **** 
+ 161:BSP/Src/bsp_dac81416.c **** void DAC_SetResetPin(GPIO_PinState state)
+ 162:BSP/Src/bsp_dac81416.c **** {
+ 646              		.loc 1 162 1 is_stmt 1 view -0
+ 647              		.cfi_startproc
+ 648              		@ args = 0, pretend = 0, frame = 0
+ 649              		@ frame_needed = 0, uses_anonymous_args = 0
+ 650              		.loc 1 162 1 is_stmt 0 view .LVU148
+ 651 0000 08B5     		push	{r3, lr}
+ 652              	.LCFI14:
+ 653              		.cfi_def_cfa_offset 8
+ 654              		.cfi_offset 3, -8
+ 655              		.cfi_offset 14, -4
+ 656 0002 0246     		mov	r2, r0
+ 163:BSP/Src/bsp_dac81416.c ****   HAL_GPIO_WritePin(DAC_RESET_GPIO_Port, DAC_RESET_Pin, state);
+ 657              		.loc 1 163 3 is_stmt 1 view .LVU149
+ 658 0004 0821     		movs	r1, #8
+ 659 0006 0248     		ldr	r0, .L64
+ 660              	.LVL50:
+ 661              		.loc 1 163 3 is_stmt 0 view .LVU150
+ 662 0008 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 663              	.LVL51:
+ 164:BSP/Src/bsp_dac81416.c **** }
+ 664              		.loc 1 164 1 view .LVU151
+ 665 000c 08BD     		pop	{r3, pc}
+ 666              	.L65:
+ 667 000e 00BF     		.align	2
+ 668              	.L64:
+ 669 0010 000C0258 		.word	1476529152
+ 670              		.cfi_endproc
+ 671              	.LFE156:
+ 673              		.section	.text.DAC_ResetHardware,"ax",%progbits
+ 674              		.align	1
+ 675              		.global	DAC_ResetHardware
+ 676              		.syntax unified
+ 677              		.thumb
+ 678              		.thumb_func
+ 680              	DAC_ResetHardware:
+ 681              	.LFB157:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s 			page 17
+
+
+ 165:BSP/Src/bsp_dac81416.c **** 
+ 166:BSP/Src/bsp_dac81416.c **** void DAC_ResetHardware(void)
+ 167:BSP/Src/bsp_dac81416.c **** {
+ 682              		.loc 1 167 1 is_stmt 1 view -0
+ 683              		.cfi_startproc
+ 684              		@ args = 0, pretend = 0, frame = 0
+ 685              		@ frame_needed = 0, uses_anonymous_args = 0
+ 686 0000 08B5     		push	{r3, lr}
+ 687              	.LCFI15:
+ 688              		.cfi_def_cfa_offset 8
+ 689              		.cfi_offset 3, -8
+ 690              		.cfi_offset 14, -4
+ 168:BSP/Src/bsp_dac81416.c ****   DAC_SetResetPin(GPIO_PIN_RESET);
+ 691              		.loc 1 168 3 view .LVU153
+ 692 0002 0020     		movs	r0, #0
+ 693 0004 FFF7FEFF 		bl	DAC_SetResetPin
+ 694              	.LVL52:
+ 169:BSP/Src/bsp_dac81416.c ****   HAL_Delay(10U);
+ 695              		.loc 1 169 3 view .LVU154
+ 696 0008 0A20     		movs	r0, #10
+ 697 000a FFF7FEFF 		bl	HAL_Delay
+ 698              	.LVL53:
+ 170:BSP/Src/bsp_dac81416.c ****   DAC_SetResetPin(GPIO_PIN_SET);
+ 699              		.loc 1 170 3 view .LVU155
+ 700 000e 0120     		movs	r0, #1
+ 701 0010 FFF7FEFF 		bl	DAC_SetResetPin
+ 702              	.LVL54:
+ 171:BSP/Src/bsp_dac81416.c ****   HAL_Delay(10U);
+ 703              		.loc 1 171 3 view .LVU156
+ 704 0014 0A20     		movs	r0, #10
+ 705 0016 FFF7FEFF 		bl	HAL_Delay
+ 706              	.LVL55:
+ 172:BSP/Src/bsp_dac81416.c **** }
+ 707              		.loc 1 172 1 is_stmt 0 view .LVU157
+ 708 001a 08BD     		pop	{r3, pc}
+ 709              		.cfi_endproc
+ 710              	.LFE157:
+ 712              		.section	.text.DAC_SetLDACPin,"ax",%progbits
+ 713              		.align	1
+ 714              		.global	DAC_SetLDACPin
+ 715              		.syntax unified
+ 716              		.thumb
+ 717              		.thumb_func
+ 719              	DAC_SetLDACPin:
+ 720              	.LVL56:
+ 721              	.LFB158:
+ 173:BSP/Src/bsp_dac81416.c **** 
+ 174:BSP/Src/bsp_dac81416.c **** void DAC_SetLDACPin(GPIO_PinState state)
+ 175:BSP/Src/bsp_dac81416.c **** {
+ 722              		.loc 1 175 1 is_stmt 1 view -0
+ 723              		.cfi_startproc
+ 724              		@ args = 0, pretend = 0, frame = 0
+ 725              		@ frame_needed = 0, uses_anonymous_args = 0
+ 726              		.loc 1 175 1 is_stmt 0 view .LVU159
+ 727 0000 08B5     		push	{r3, lr}
+ 728              	.LCFI16:
+ 729              		.cfi_def_cfa_offset 8
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s 			page 18
+
+
+ 730              		.cfi_offset 3, -8
+ 731              		.cfi_offset 14, -4
+ 732 0002 0246     		mov	r2, r0
+ 176:BSP/Src/bsp_dac81416.c ****   HAL_GPIO_WritePin(DAC_nLDAC_GPIO_Port, DAC_nLDAC_Pin, state);
+ 733              		.loc 1 176 3 is_stmt 1 view .LVU160
+ 734 0004 4021     		movs	r1, #64
+ 735 0006 0248     		ldr	r0, .L70
+ 736              	.LVL57:
+ 737              		.loc 1 176 3 is_stmt 0 view .LVU161
+ 738 0008 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 739              	.LVL58:
+ 177:BSP/Src/bsp_dac81416.c **** }
+ 740              		.loc 1 177 1 view .LVU162
+ 741 000c 08BD     		pop	{r3, pc}
+ 742              	.L71:
+ 743 000e 00BF     		.align	2
+ 744              	.L70:
+ 745 0010 000C0258 		.word	1476529152
+ 746              		.cfi_endproc
+ 747              	.LFE158:
+ 749              		.section	.text.BSP_DAC81416_Init,"ax",%progbits
+ 750              		.align	1
+ 751              		.global	BSP_DAC81416_Init
+ 752              		.syntax unified
+ 753              		.thumb
+ 754              		.thumb_func
+ 756              	BSP_DAC81416_Init:
+ 757              	.LFB149:
   51:BSP/Src/bsp_dac81416.c ****   DAC_CS_HIGH();
- 571              		.loc 1 51 1 is_stmt 1 view -0
- 572              		.cfi_startproc
- 573              		@ args = 0, pretend = 0, frame = 0
- 574              		@ frame_needed = 0, uses_anonymous_args = 0
- 575 0000 08B5     		push	{r3, lr}
- 576              	.LCFI10:
- 577              		.cfi_def_cfa_offset 8
- 578              		.cfi_offset 3, -8
- 579              		.cfi_offset 14, -4
+ 758              		.loc 1 51 1 is_stmt 1 view -0
+ 759              		.cfi_startproc
+ 760              		@ args = 0, pretend = 0, frame = 0
+ 761              		@ frame_needed = 0, uses_anonymous_args = 0
+ 762 0000 08B5     		push	{r3, lr}
+ 763              	.LCFI17:
+ 764              		.cfi_def_cfa_offset 8
+ 765              		.cfi_offset 3, -8
+ 766              		.cfi_offset 14, -4
   52:BSP/Src/bsp_dac81416.c ****   DAC_SetResetPin(GPIO_PIN_SET);
- 580              		.loc 1 52 3 view .LVU106
- 581 0002 0122     		movs	r2, #1
- 582 0004 1021     		movs	r1, #16
- 583 0006 0548     		ldr	r0, .L60
- 584 0008 FFF7FEFF 		bl	HAL_GPIO_WritePin
- 585              	.LVL43:
+ 767              		.loc 1 52 3 view .LVU164
+ 768 0002 0122     		movs	r2, #1
+ 769 0004 1021     		movs	r1, #16
+ 770 0006 0548     		ldr	r0, .L74
+ 771 0008 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 772              	.LVL59:
   53:BSP/Src/bsp_dac81416.c ****   DAC_SetLDACPin(GPIO_PIN_SET);
- 586              		.loc 1 53 3 view .LVU107
- 587 000c 0120     		movs	r0, #1
- 588 000e FFF7FEFF 		bl	DAC_SetResetPin
- 589              	.LVL44:
+ 773              		.loc 1 53 3 view .LVU165
+ 774 000c 0120     		movs	r0, #1
+ 775 000e FFF7FEFF 		bl	DAC_SetResetPin
+ 776              	.LVL60:
   54:BSP/Src/bsp_dac81416.c **** }
- 590              		.loc 1 54 3 view .LVU108
- 591 0012 0120     		movs	r0, #1
- 592 0014 FFF7FEFF 		bl	DAC_SetLDACPin
- 593              	.LVL45:
+ 777              		.loc 1 54 3 view .LVU166
+ 778 0012 0120     		movs	r0, #1
+ 779 0014 FFF7FEFF 		bl	DAC_SetLDACPin
+ 780              	.LVL61:
   55:BSP/Src/bsp_dac81416.c **** 
- 594              		.loc 1 55 1 is_stmt 0 view .LVU109
- 595 0018 08BD     		pop	{r3, pc}
- 596              	.L61:
- 597 001a 00BF     		.align	2
- 598              	.L60:
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 14
+ 781              		.loc 1 55 1 is_stmt 0 view .LVU167
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s 			page 19
 
 
- 599 001c 00000258 		.word	1476526080
- 600              		.cfi_endproc
- 601              	.LFE149:
- 603              		.section	.text.DAC_LDAC_Update,"ax",%progbits
- 604              		.align	1
- 605              		.global	DAC_LDAC_Update
- 606              		.syntax unified
- 607              		.thumb
- 608              		.thumb_func
- 610              	DAC_LDAC_Update:
- 611              	.LFB157:
- 130:BSP/Src/bsp_dac81416.c **** 
- 131:BSP/Src/bsp_dac81416.c **** void DAC_LDAC_Update(void)
- 132:BSP/Src/bsp_dac81416.c **** {
- 612              		.loc 1 132 1 is_stmt 1 view -0
- 613              		.cfi_startproc
- 614              		@ args = 0, pretend = 0, frame = 8
- 615              		@ frame_needed = 0, uses_anonymous_args = 0
- 616 0000 00B5     		push	{lr}
- 617              	.LCFI11:
- 618              		.cfi_def_cfa_offset 4
- 619              		.cfi_offset 14, -4
- 620 0002 83B0     		sub	sp, sp, #12
- 621              	.LCFI12:
- 622              		.cfi_def_cfa_offset 16
- 133:BSP/Src/bsp_dac81416.c ****   DAC_SetLDACPin(GPIO_PIN_RESET);
- 623              		.loc 1 133 3 view .LVU111
- 624 0004 0020     		movs	r0, #0
- 625 0006 FFF7FEFF 		bl	DAC_SetLDACPin
- 626              	.LVL46:
- 134:BSP/Src/bsp_dac81416.c ****   for (volatile uint32_t delay = 0U; delay < 200U; delay++)
- 627              		.loc 1 134 3 view .LVU112
- 628              	.LBB4:
- 629              		.loc 1 134 8 view .LVU113
- 630              		.loc 1 134 26 is_stmt 0 view .LVU114
- 631 000a 0023     		movs	r3, #0
- 632 000c 0193     		str	r3, [sp, #4]
- 633              		.loc 1 134 3 view .LVU115
- 634 000e 03E0     		b	.L63
- 635              	.L64:
- 135:BSP/Src/bsp_dac81416.c ****   {
- 136:BSP/Src/bsp_dac81416.c ****     __NOP();
- 636              		.loc 1 136 5 is_stmt 1 view .LVU116
- 637              		.syntax unified
- 638              	@ 136 "BSP/Src/bsp_dac81416.c" 1
- 639 0010 00BF     		nop
- 640              	@ 0 "" 2
- 134:BSP/Src/bsp_dac81416.c ****   for (volatile uint32_t delay = 0U; delay < 200U; delay++)
- 641              		.loc 1 134 57 discriminator 3 view .LVU117
- 642              		.thumb
- 643              		.syntax unified
- 644 0012 019B     		ldr	r3, [sp, #4]
- 645 0014 0133     		adds	r3, r3, #1
- 646 0016 0193     		str	r3, [sp, #4]
- 647              	.L63:
- 134:BSP/Src/bsp_dac81416.c ****   for (volatile uint32_t delay = 0U; delay < 200U; delay++)
- 648              		.loc 1 134 44 discriminator 1 view .LVU118
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 15
+ 782 0018 08BD     		pop	{r3, pc}
+ 783              	.L75:
+ 784 001a 00BF     		.align	2
+ 785              	.L74:
+ 786 001c 00000258 		.word	1476526080
+ 787              		.cfi_endproc
+ 788              	.LFE149:
+ 790              		.section	.text.DAC_LDAC_Update,"ax",%progbits
+ 791              		.align	1
+ 792              		.global	DAC_LDAC_Update
+ 793              		.syntax unified
+ 794              		.thumb
+ 795              		.thumb_func
+ 797              	DAC_LDAC_Update:
+ 798              	.LFB159:
+ 178:BSP/Src/bsp_dac81416.c **** 
+ 179:BSP/Src/bsp_dac81416.c **** void DAC_LDAC_Update(void)
+ 180:BSP/Src/bsp_dac81416.c **** {
+ 799              		.loc 1 180 1 is_stmt 1 view -0
+ 800              		.cfi_startproc
+ 801              		@ args = 0, pretend = 0, frame = 0
+ 802              		@ frame_needed = 0, uses_anonymous_args = 0
+ 803 0000 08B5     		push	{r3, lr}
+ 804              	.LCFI18:
+ 805              		.cfi_def_cfa_offset 8
+ 806              		.cfi_offset 3, -8
+ 807              		.cfi_offset 14, -4
+ 181:BSP/Src/bsp_dac81416.c ****   DAC_SetLDACPin(GPIO_PIN_RESET);
+ 808              		.loc 1 181 3 view .LVU169
+ 809 0002 0020     		movs	r0, #0
+ 810 0004 FFF7FEFF 		bl	DAC_SetLDACPin
+ 811              	.LVL62:
+ 182:BSP/Src/bsp_dac81416.c ****   HAL_Delay(1U);
+ 812              		.loc 1 182 3 view .LVU170
+ 813 0008 0120     		movs	r0, #1
+ 814 000a FFF7FEFF 		bl	HAL_Delay
+ 815              	.LVL63:
+ 183:BSP/Src/bsp_dac81416.c ****   DAC_SetLDACPin(GPIO_PIN_SET);
+ 816              		.loc 1 183 3 view .LVU171
+ 817 000e 0120     		movs	r0, #1
+ 818 0010 FFF7FEFF 		bl	DAC_SetLDACPin
+ 819              	.LVL64:
+ 184:BSP/Src/bsp_dac81416.c **** }
+ 820              		.loc 1 184 1 is_stmt 0 view .LVU172
+ 821 0014 08BD     		pop	{r3, pc}
+ 822              		.cfi_endproc
+ 823              	.LFE159:
+ 825              		.section	.text.DAC_ReadAlarmPin,"ax",%progbits
+ 826              		.align	1
+ 827              		.global	DAC_ReadAlarmPin
+ 828              		.syntax unified
+ 829              		.thumb
+ 830              		.thumb_func
+ 832              	DAC_ReadAlarmPin:
+ 833              	.LFB160:
+ 185:BSP/Src/bsp_dac81416.c **** 
+ 186:BSP/Src/bsp_dac81416.c **** uint8_t DAC_ReadAlarmPin(void)
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s 			page 20
 
 
- 649 0018 019B     		ldr	r3, [sp, #4]
- 650 001a C72B     		cmp	r3, #199
- 651 001c F8D9     		bls	.L64
- 652              	.LBE4:
- 137:BSP/Src/bsp_dac81416.c ****   }
- 138:BSP/Src/bsp_dac81416.c ****   DAC_SetLDACPin(GPIO_PIN_SET);
- 653              		.loc 1 138 3 view .LVU119
- 654 001e 0120     		movs	r0, #1
- 655 0020 FFF7FEFF 		bl	DAC_SetLDACPin
- 656              	.LVL47:
- 139:BSP/Src/bsp_dac81416.c **** }
- 657              		.loc 1 139 1 is_stmt 0 view .LVU120
- 658 0024 03B0     		add	sp, sp, #12
- 659              	.LCFI13:
- 660              		.cfi_def_cfa_offset 4
- 661              		@ sp needed
- 662 0026 00BD     		pop	{pc}
- 663              		.cfi_endproc
- 664              	.LFE157:
- 666              		.section	.text.DAC_ReadAlarmPin,"ax",%progbits
- 667              		.align	1
- 668              		.global	DAC_ReadAlarmPin
- 669              		.syntax unified
- 670              		.thumb
- 671              		.thumb_func
- 673              	DAC_ReadAlarmPin:
- 674              	.LFB158:
- 140:BSP/Src/bsp_dac81416.c **** 
- 141:BSP/Src/bsp_dac81416.c **** uint8_t DAC_ReadAlarmPin(void)
- 142:BSP/Src/bsp_dac81416.c **** {
- 675              		.loc 1 142 1 is_stmt 1 view -0
- 676              		.cfi_startproc
- 677              		@ args = 0, pretend = 0, frame = 0
- 678              		@ frame_needed = 0, uses_anonymous_args = 0
- 679 0000 08B5     		push	{r3, lr}
- 680              	.LCFI14:
- 681              		.cfi_def_cfa_offset 8
- 682              		.cfi_offset 3, -8
- 683              		.cfi_offset 14, -4
- 143:BSP/Src/bsp_dac81416.c ****   return (HAL_GPIO_ReadPin(DAC_ALMOUT_GPIO_Port, DAC_ALMOUT_Pin) == GPIO_PIN_SET) ? 1U : 0U;
- 684              		.loc 1 143 3 view .LVU122
- 685              		.loc 1 143 11 is_stmt 0 view .LVU123
- 686 0002 0421     		movs	r1, #4
- 687 0004 0348     		ldr	r0, .L70
- 688 0006 FFF7FEFF 		bl	HAL_GPIO_ReadPin
- 689              	.LVL48:
- 690              		.loc 1 143 88 discriminator 1 view .LVU124
- 691 000a 0128     		cmp	r0, #1
- 692 000c 00D0     		beq	.L67
- 693              		.loc 1 143 88 discriminator 3 view .LVU125
- 694 000e 0020     		movs	r0, #0
- 695              	.L67:
- 144:BSP/Src/bsp_dac81416.c **** }
- 696              		.loc 1 144 1 view .LVU126
- 697 0010 08BD     		pop	{r3, pc}
- 698              	.L71:
- 699 0012 00BF     		.align	2
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 16
-
-
- 700              	.L70:
- 701 0014 000C0258 		.word	1476529152
- 702              		.cfi_endproc
- 703              	.LFE158:
- 705              		.section	.data.dacSpiTimeoutMs,"aw"
- 706              		.align	2
- 709              	dacSpiTimeoutMs:
- 710 0000 64000000 		.word	100
- 711              		.section	.bss.dacSpiMutex,"aw",%nobits
- 712              		.align	2
- 715              	dacSpiMutex:
- 716 0000 00000000 		.space	4
- 717              		.text
- 718              	.Letext0:
- 719              		.file 2 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
- 720              		.file 3 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
- 721              		.file 4 "Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h"
- 722              		.file 5 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
- 723              		.file 6 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h"
- 724              		.file 7 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h"
- 725              		.file 8 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi.h"
- 726              		.file 9 "Drivers/CMSIS/RTOS2/Include/cmsis_os2.h"
- 727              		.file 10 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h"
- 728              		.file 11 "Core/Inc/spi.h"
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 17
+ 187:BSP/Src/bsp_dac81416.c **** {
+ 834              		.loc 1 187 1 is_stmt 1 view -0
+ 835              		.cfi_startproc
+ 836              		@ args = 0, pretend = 0, frame = 0
+ 837              		@ frame_needed = 0, uses_anonymous_args = 0
+ 838 0000 08B5     		push	{r3, lr}
+ 839              	.LCFI19:
+ 840              		.cfi_def_cfa_offset 8
+ 841              		.cfi_offset 3, -8
+ 842              		.cfi_offset 14, -4
+ 188:BSP/Src/bsp_dac81416.c ****   return (HAL_GPIO_ReadPin(DAC_ALMOUT_GPIO_Port, DAC_ALMOUT_Pin) == GPIO_PIN_SET) ? 1U : 0U;
+ 843              		.loc 1 188 3 view .LVU174
+ 844              		.loc 1 188 11 is_stmt 0 view .LVU175
+ 845 0002 0421     		movs	r1, #4
+ 846 0004 0348     		ldr	r0, .L82
+ 847 0006 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 848              	.LVL65:
+ 849              		.loc 1 188 88 discriminator 1 view .LVU176
+ 850 000a 0128     		cmp	r0, #1
+ 851 000c 00D0     		beq	.L79
+ 852              		.loc 1 188 88 discriminator 3 view .LVU177
+ 853 000e 0020     		movs	r0, #0
+ 854              	.L79:
+ 189:BSP/Src/bsp_dac81416.c **** }
+ 855              		.loc 1 189 1 view .LVU178
+ 856 0010 08BD     		pop	{r3, pc}
+ 857              	.L83:
+ 858 0012 00BF     		.align	2
+ 859              	.L82:
+ 860 0014 000C0258 		.word	1476529152
+ 861              		.cfi_endproc
+ 862              	.LFE160:
+ 864              		.section	.data.dacSpiTimeoutMs,"aw"
+ 865              		.align	2
+ 868              	dacSpiTimeoutMs:
+ 869 0000 64000000 		.word	100
+ 870              		.section	.bss.dacSpiMutex,"aw",%nobits
+ 871              		.align	2
+ 874              	dacSpiMutex:
+ 875 0000 00000000 		.space	4
+ 876              		.text
+ 877              	.Letext0:
+ 878              		.file 2 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 879              		.file 3 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 880              		.file 4 "Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h"
+ 881              		.file 5 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
+ 882              		.file 6 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h"
+ 883              		.file 7 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h"
+ 884              		.file 8 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi.h"
+ 885              		.file 9 "Drivers/CMSIS/RTOS2/Include/cmsis_os2.h"
+ 886              		.file 10 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h"
+ 887              		.file 11 "Core/Inc/spi.h"
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s 			page 21
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 bsp_dac81416.c
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:20     .text.DAC_SPI_EnsureMutex:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:25     .text.DAC_SPI_EnsureMutex:00000000 DAC_SPI_EnsureMutex
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:85     .text.DAC_SPI_EnsureMutex:0000002c $d
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:715    .bss.dacSpiMutex:00000000 dacSpiMutex
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:91     .text.DAC_SPI_Lock:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:96     .text.DAC_SPI_Lock:00000000 DAC_SPI_Lock
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:145    .text.DAC_SPI_Lock:00000028 $d
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:709    .data.dacSpiTimeoutMs:00000000 dacSpiTimeoutMs
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:151    .text.DAC_SPI_Unlock:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:156    .text.DAC_SPI_Unlock:00000000 DAC_SPI_Unlock
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:193    .text.DAC_SPI_Unlock:0000001c $d
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:198    .text.BSP_DAC81416_SetTimeout:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:204    .text.BSP_DAC81416_SetTimeout:00000000 BSP_DAC81416_SetTimeout
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:221    .text.BSP_DAC81416_SetTimeout:00000008 $d
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:226    .text.BSP_DAC81416_GetTimeout:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:232    .text.BSP_DAC81416_GetTimeout:00000000 BSP_DAC81416_GetTimeout
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:247    .text.BSP_DAC81416_GetTimeout:00000008 $d
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:252    .text.DAC_SPI_Transmit:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:258    .text.DAC_SPI_Transmit:00000000 DAC_SPI_Transmit
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:336    .text.DAC_SPI_Transmit:0000004c $d
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:343    .text.DAC_SPI_TransmitReceive:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:349    .text.DAC_SPI_TransmitReceive:00000000 DAC_SPI_TransmitReceive
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:443    .text.DAC_SPI_TransmitReceive:0000005c $d
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:450    .text.DAC_SetResetPin:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:456    .text.DAC_SetResetPin:00000000 DAC_SetResetPin
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:482    .text.DAC_SetResetPin:00000010 $d
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:487    .text.DAC_ResetHardware:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:493    .text.DAC_ResetHardware:00000000 DAC_ResetHardware
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:526    .text.DAC_SetLDACPin:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:532    .text.DAC_SetLDACPin:00000000 DAC_SetLDACPin
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:558    .text.DAC_SetLDACPin:00000010 $d
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:563    .text.BSP_DAC81416_Init:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:569    .text.BSP_DAC81416_Init:00000000 BSP_DAC81416_Init
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:599    .text.BSP_DAC81416_Init:0000001c $d
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:604    .text.DAC_LDAC_Update:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:610    .text.DAC_LDAC_Update:00000000 DAC_LDAC_Update
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:667    .text.DAC_ReadAlarmPin:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:673    .text.DAC_ReadAlarmPin:00000000 DAC_ReadAlarmPin
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:701    .text.DAC_ReadAlarmPin:00000014 $d
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:706    .data.dacSpiTimeoutMs:00000000 $d
-C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s:712    .bss.dacSpiMutex:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:20     .text.DAC_SPI_EnsureMutex:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:25     .text.DAC_SPI_EnsureMutex:00000000 DAC_SPI_EnsureMutex
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:85     .text.DAC_SPI_EnsureMutex:0000002c $d
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:874    .bss.dacSpiMutex:00000000 dacSpiMutex
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:91     .text.DAC_SPI_Lock:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:96     .text.DAC_SPI_Lock:00000000 DAC_SPI_Lock
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:145    .text.DAC_SPI_Lock:00000028 $d
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:868    .data.dacSpiTimeoutMs:00000000 dacSpiTimeoutMs
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:151    .text.DAC_SPI_Unlock:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:156    .text.DAC_SPI_Unlock:00000000 DAC_SPI_Unlock
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:193    .text.DAC_SPI_Unlock:0000001c $d
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:198    .text.BSP_DAC81416_SetTimeout:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:204    .text.BSP_DAC81416_SetTimeout:00000000 BSP_DAC81416_SetTimeout
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:221    .text.BSP_DAC81416_SetTimeout:00000008 $d
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:226    .text.BSP_DAC81416_GetTimeout:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:232    .text.BSP_DAC81416_GetTimeout:00000000 BSP_DAC81416_GetTimeout
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:247    .text.BSP_DAC81416_GetTimeout:00000008 $d
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:252    .text.DAC_SPI_TransmitFrames24:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:258    .text.DAC_SPI_TransmitFrames24:00000000 DAC_SPI_TransmitFrames24
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:336    .text.DAC_SPI_TransmitFrames24:0000004c $d
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:343    .text.DAC_SPI_Transmit:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:349    .text.DAC_SPI_Transmit:00000000 DAC_SPI_Transmit
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:419    .text.DAC_SPI_TransmitReceiveFrames24:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:425    .text.DAC_SPI_TransmitReceiveFrames24:00000000 DAC_SPI_TransmitReceiveFrames24
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:519    .text.DAC_SPI_TransmitReceiveFrames24:0000005c $d
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:526    .text.DAC_SPI_TransmitReceive:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:532    .text.DAC_SPI_TransmitReceive:00000000 DAC_SPI_TransmitReceive
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:637    .text.DAC_SetResetPin:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:643    .text.DAC_SetResetPin:00000000 DAC_SetResetPin
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:669    .text.DAC_SetResetPin:00000010 $d
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:674    .text.DAC_ResetHardware:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:680    .text.DAC_ResetHardware:00000000 DAC_ResetHardware
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:713    .text.DAC_SetLDACPin:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:719    .text.DAC_SetLDACPin:00000000 DAC_SetLDACPin
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:745    .text.DAC_SetLDACPin:00000010 $d
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:750    .text.BSP_DAC81416_Init:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:756    .text.BSP_DAC81416_Init:00000000 BSP_DAC81416_Init
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:786    .text.BSP_DAC81416_Init:0000001c $d
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:791    .text.DAC_LDAC_Update:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:797    .text.DAC_LDAC_Update:00000000 DAC_LDAC_Update
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:826    .text.DAC_ReadAlarmPin:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:832    .text.DAC_ReadAlarmPin:00000000 DAC_ReadAlarmPin
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:860    .text.DAC_ReadAlarmPin:00000014 $d
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:865    .data.dacSpiTimeoutMs:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s:871    .bss.dacSpiMutex:00000000 $d
 
 UNDEFINED SYMBOLS
 osKernelLock
@@ -981,10 +1253,10 @@ osMutexAcquire
 osMutexRelease
 HAL_GPIO_WritePin
 HAL_SPI_Transmit
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZPhgIY.s 			page 22
+
+
 hspi1
 HAL_SPI_TransmitReceive
 HAL_Delay
 HAL_GPIO_ReadPin
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccuDl8Ha.s 			page 18
-
-

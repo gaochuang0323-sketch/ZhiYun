@@ -66,9 +66,51 @@ uint32_t BSP_DAC81416_GetTimeout(void)
 
 HAL_StatusTypeDef DAC_SPI_Transmit(uint8_t *txData, uint16_t size)
 {
+  uint32_t frame;
+
+  if ((txData == NULL) || (size != 3U))
+  {
+    return HAL_ERROR;
+  }
+
+  frame = ((uint32_t)txData[0] << 16) |
+          ((uint32_t)txData[1] << 8) |
+          (uint32_t)txData[2];
+
+  return DAC_SPI_TransmitFrames24(&frame, 1U);
+}
+
+HAL_StatusTypeDef DAC_SPI_TransmitReceive(uint8_t *txData, uint8_t *rxData, uint16_t size)
+{
+  HAL_StatusTypeDef status;
+  uint32_t txFrame;
+  uint32_t rxFrame = 0U;
+
+  if ((txData == NULL) || (rxData == NULL) || (size != 3U))
+  {
+    return HAL_ERROR;
+  }
+
+  txFrame = ((uint32_t)txData[0] << 16) |
+            ((uint32_t)txData[1] << 8) |
+            (uint32_t)txData[2];
+
+  status = DAC_SPI_TransmitReceiveFrames24(&txFrame, &rxFrame, 1U);
+  if (status == HAL_OK)
+  {
+    rxData[0] = (uint8_t)(rxFrame >> 16);
+    rxData[1] = (uint8_t)(rxFrame >> 8);
+    rxData[2] = (uint8_t)rxFrame;
+  }
+
+  return status;
+}
+
+HAL_StatusTypeDef DAC_SPI_TransmitFrames24(const uint32_t *txFrames, uint16_t frameCount)
+{
   HAL_StatusTypeDef status;
 
-  if ((txData == NULL) || (size == 0U))
+  if ((txFrames == NULL) || (frameCount == 0U))
   {
     return HAL_ERROR;
   }
@@ -80,18 +122,20 @@ HAL_StatusTypeDef DAC_SPI_Transmit(uint8_t *txData, uint16_t size)
   }
 
   DAC_CS_LOW();
-  status = HAL_SPI_Transmit(&hspi1, txData, size, dacSpiTimeoutMs);
+  status = HAL_SPI_Transmit(&hspi1, (const uint8_t *)txFrames, frameCount, dacSpiTimeoutMs);
   DAC_CS_HIGH();
   DAC_SPI_Unlock();
 
   return status;
 }
 
-HAL_StatusTypeDef DAC_SPI_TransmitReceive(uint8_t *txData, uint8_t *rxData, uint16_t size)
+HAL_StatusTypeDef DAC_SPI_TransmitReceiveFrames24(const uint32_t *txFrames,
+                                                  uint32_t *rxFrames,
+                                                  uint16_t frameCount)
 {
   HAL_StatusTypeDef status;
 
-  if ((txData == NULL) || (rxData == NULL) || (size == 0U))
+  if ((txFrames == NULL) || (rxFrames == NULL) || (frameCount == 0U))
   {
     return HAL_ERROR;
   }
@@ -103,7 +147,11 @@ HAL_StatusTypeDef DAC_SPI_TransmitReceive(uint8_t *txData, uint8_t *rxData, uint
   }
 
   DAC_CS_LOW();
-  status = HAL_SPI_TransmitReceive(&hspi1, txData, rxData, size, dacSpiTimeoutMs);
+  status = HAL_SPI_TransmitReceive(&hspi1,
+                                   (const uint8_t *)txFrames,
+                                   (uint8_t *)rxFrames,
+                                   frameCount,
+                                   dacSpiTimeoutMs);
   DAC_CS_HIGH();
   DAC_SPI_Unlock();
 
@@ -118,9 +166,9 @@ void DAC_SetResetPin(GPIO_PinState state)
 void DAC_ResetHardware(void)
 {
   DAC_SetResetPin(GPIO_PIN_RESET);
-  HAL_Delay(1U);
+  HAL_Delay(10U);
   DAC_SetResetPin(GPIO_PIN_SET);
-  HAL_Delay(1U);
+  HAL_Delay(10U);
 }
 
 void DAC_SetLDACPin(GPIO_PinState state)
@@ -131,10 +179,7 @@ void DAC_SetLDACPin(GPIO_PinState state)
 void DAC_LDAC_Update(void)
 {
   DAC_SetLDACPin(GPIO_PIN_RESET);
-  for (volatile uint32_t delay = 0U; delay < 200U; delay++)
-  {
-    __NOP();
-  }
+  HAL_Delay(1U);
   DAC_SetLDACPin(GPIO_PIN_SET);
 }
 

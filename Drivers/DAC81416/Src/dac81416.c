@@ -2,6 +2,8 @@
 
 #include <stddef.h>
 
+#define DAC81416_READ_TRANSACTION_FRAMES 2U
+
 static HAL_StatusTypeDef dacLastStatus = HAL_OK;
 
 static uint8_t DAC81416_IsValidRange(uint8_t range)
@@ -30,11 +32,11 @@ static uint16_t DAC81416_BuildRangeRegister(uint8_t range)
   return (uint16_t)(value | (value << 4) | (value << 8) | (value << 12));
 }
 
-static void DAC81416_BuildFrame(uint8_t rw, uint8_t addr, uint16_t data, uint8_t frame[3])
+static uint32_t DAC81416_BuildFrame(uint8_t rw, uint8_t addr, uint16_t data)
 {
-  frame[0] = (uint8_t)((rw & DAC81416_CMD_READ) | (addr & 0x3FU));
-  frame[1] = (uint8_t)(data >> 8);
-  frame[2] = (uint8_t)(data & 0xFFU);
+  uint32_t command = (uint32_t)((rw & DAC81416_CMD_READ) | (addr & 0x3FU));
+
+  return (uint32_t)((command << 16) | data);
 }
 
 HAL_StatusTypeDef DAC81416_Init(void)
@@ -70,35 +72,29 @@ HAL_StatusTypeDef DAC81416_Init(void)
 
 HAL_StatusTypeDef DAC_WriteRegister(uint8_t cmd, uint8_t addr, uint16_t data)
 {
-  uint8_t tx[3];
+  uint32_t tx;
   uint8_t rw = (cmd & DAC81416_CMD_READ) ? DAC81416_CMD_READ : DAC81416_CMD_WRITE;
 
-  DAC81416_BuildFrame(rw, addr, data, tx);
-  dacLastStatus = DAC_SPI_Transmit(tx, sizeof(tx));
+  tx = DAC81416_BuildFrame(rw, addr, data);
+  dacLastStatus = DAC_SPI_TransmitFrames24(&tx, 1U);
   return dacLastStatus;
 }
 
 uint16_t DAC_ReadRegister(uint8_t cmd, uint8_t addr)
 {
-  uint8_t tx[3];
-  uint8_t rx[3] = {0};
+  uint32_t tx[DAC81416_READ_TRANSACTION_FRAMES];
+  uint32_t rx[DAC81416_READ_TRANSACTION_FRAMES] = {0U, 0U};
   uint8_t readCmd = (cmd & DAC81416_CMD_READ) ? cmd : DAC81416_CMD_READ;
 
-  DAC81416_BuildFrame(readCmd, addr, 0x0000U, tx);
-  dacLastStatus = DAC_SPI_TransmitReceive(tx, rx, sizeof(tx));
+  tx[0] = DAC81416_BuildFrame(readCmd, addr, 0x0000U);
+  tx[1] = DAC81416_BuildFrame(DAC81416_CMD_WRITE, DAC81416_REG_NOP, 0x0000U);
+  dacLastStatus = DAC_SPI_TransmitReceiveFrames24(tx, rx, DAC81416_READ_TRANSACTION_FRAMES);
   if (dacLastStatus != HAL_OK)
   {
     return 0U;
   }
 
-  DAC81416_BuildFrame(DAC81416_CMD_WRITE, DAC81416_REG_NOP, 0x0000U, tx);
-  dacLastStatus = DAC_SPI_TransmitReceive(tx, rx, sizeof(tx));
-  if (dacLastStatus != HAL_OK)
-  {
-    return 0U;
-  }
-
-  return (uint16_t)(((uint16_t)rx[1] << 8) | rx[2]);
+  return (uint16_t)(rx[1] & 0xFFFFU);
 }
 
 HAL_StatusTypeDef DAC_SoftwareReset(void)

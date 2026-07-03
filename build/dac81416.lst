@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 1
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccJjicA9.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -31,17 +31,19 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 1
    2:Drivers/DAC81416/Src/dac81416.c **** 
    3:Drivers/DAC81416/Src/dac81416.c **** #include <stddef.h>
    4:Drivers/DAC81416/Src/dac81416.c **** 
-   5:Drivers/DAC81416/Src/dac81416.c **** static HAL_StatusTypeDef dacLastStatus = HAL_OK;
+   5:Drivers/DAC81416/Src/dac81416.c **** #define DAC81416_READ_TRANSACTION_FRAMES 2U
    6:Drivers/DAC81416/Src/dac81416.c **** 
-   7:Drivers/DAC81416/Src/dac81416.c **** static uint8_t DAC81416_IsValidRange(uint8_t range)
-   8:Drivers/DAC81416/Src/dac81416.c **** {
-  28              		.loc 1 8 1 view -0
+   7:Drivers/DAC81416/Src/dac81416.c **** static HAL_StatusTypeDef dacLastStatus = HAL_OK;
+   8:Drivers/DAC81416/Src/dac81416.c **** 
+   9:Drivers/DAC81416/Src/dac81416.c **** static uint8_t DAC81416_IsValidRange(uint8_t range)
+  10:Drivers/DAC81416/Src/dac81416.c **** {
+  28              		.loc 1 10 1 view -0
   29              		.cfi_startproc
   30              		@ args = 0, pretend = 0, frame = 0
   31              		@ frame_needed = 0, uses_anonymous_args = 0
   32              		@ link register save eliminated.
-   9:Drivers/DAC81416/Src/dac81416.c ****   switch (range)
-  33              		.loc 1 9 3 view .LVU1
+  11:Drivers/DAC81416/Src/dac81416.c ****   switch (range)
+  33              		.loc 1 11 3 view .LVU1
   34 0000 0A28     		cmp	r0, #10
   35 0002 09D8     		bhi	.L2
   36 0004 0928     		cmp	r0, #9
@@ -50,89 +52,89 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 1
   39 000a 0FD9     		bls	.L5
   40 000c 0428     		cmp	r0, #4
   41 000e 01D0     		beq	.L9
-  10:Drivers/DAC81416/Src/dac81416.c ****   {
-  11:Drivers/DAC81416/Src/dac81416.c ****     case DAC81416_RANGE_0V_TO_5V:
-  12:Drivers/DAC81416/Src/dac81416.c ****     case DAC81416_RANGE_0V_TO_10V:
-  13:Drivers/DAC81416/Src/dac81416.c ****     case DAC81416_RANGE_0V_TO_20V:
-  14:Drivers/DAC81416/Src/dac81416.c ****     case DAC81416_RANGE_0V_TO_40V:
-  15:Drivers/DAC81416/Src/dac81416.c ****     case DAC81416_RANGE_NEG_5V_TO_5V:
-  16:Drivers/DAC81416/Src/dac81416.c ****     case DAC81416_RANGE_NEG_10V_TO_10V:
-  17:Drivers/DAC81416/Src/dac81416.c ****     case DAC81416_RANGE_NEG_20V_TO_20V:
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 2
+  12:Drivers/DAC81416/Src/dac81416.c ****   {
+  13:Drivers/DAC81416/Src/dac81416.c ****     case DAC81416_RANGE_0V_TO_5V:
+  14:Drivers/DAC81416/Src/dac81416.c ****     case DAC81416_RANGE_0V_TO_10V:
+  15:Drivers/DAC81416/Src/dac81416.c ****     case DAC81416_RANGE_0V_TO_20V:
+  16:Drivers/DAC81416/Src/dac81416.c ****     case DAC81416_RANGE_0V_TO_40V:
+  17:Drivers/DAC81416/Src/dac81416.c ****     case DAC81416_RANGE_NEG_5V_TO_5V:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccJjicA9.s 			page 2
 
 
-  18:Drivers/DAC81416/Src/dac81416.c ****     case DAC81416_RANGE_NEG_2V5_TO_2V5:
-  19:Drivers/DAC81416/Src/dac81416.c ****       return 1U;
-  20:Drivers/DAC81416/Src/dac81416.c **** 
-  21:Drivers/DAC81416/Src/dac81416.c ****     default:
-  22:Drivers/DAC81416/Src/dac81416.c ****       return 0U;
-  42              		.loc 1 22 14 is_stmt 0 view .LVU2
+  18:Drivers/DAC81416/Src/dac81416.c ****     case DAC81416_RANGE_NEG_10V_TO_10V:
+  19:Drivers/DAC81416/Src/dac81416.c ****     case DAC81416_RANGE_NEG_20V_TO_20V:
+  20:Drivers/DAC81416/Src/dac81416.c ****     case DAC81416_RANGE_NEG_2V5_TO_2V5:
+  21:Drivers/DAC81416/Src/dac81416.c ****       return 1U;
+  22:Drivers/DAC81416/Src/dac81416.c **** 
+  23:Drivers/DAC81416/Src/dac81416.c ****     default:
+  24:Drivers/DAC81416/Src/dac81416.c ****       return 0U;
+  42              		.loc 1 24 14 is_stmt 0 view .LVU2
   43 0010 0020     		movs	r0, #0
   44              	.LVL1:
-  45              		.loc 1 22 14 view .LVU3
+  45              		.loc 1 24 14 view .LVU3
   46 0012 7047     		bx	lr
   47              	.LVL2:
   48              	.L9:
-   9:Drivers/DAC81416/Src/dac81416.c ****   switch (range)
-  49              		.loc 1 9 3 view .LVU4
+  11:Drivers/DAC81416/Src/dac81416.c ****   switch (range)
+  49              		.loc 1 11 3 view .LVU4
   50 0014 0120     		movs	r0, #1
   51              	.LVL3:
-   9:Drivers/DAC81416/Src/dac81416.c ****   switch (range)
-  52              		.loc 1 9 3 view .LVU5
+  11:Drivers/DAC81416/Src/dac81416.c ****   switch (range)
+  52              		.loc 1 11 3 view .LVU5
   53 0016 7047     		bx	lr
   54              	.LVL4:
   55              	.L2:
-   9:Drivers/DAC81416/Src/dac81416.c ****   switch (range)
-  56              		.loc 1 9 3 view .LVU6
+  11:Drivers/DAC81416/Src/dac81416.c ****   switch (range)
+  56              		.loc 1 11 3 view .LVU6
   57 0018 0C28     		cmp	r0, #12
   58 001a 09D0     		beq	.L7
   59 001c 0E28     		cmp	r0, #14
   60 001e 01D0     		beq	.L10
-  61              		.loc 1 22 14 view .LVU7
+  61              		.loc 1 24 14 view .LVU7
   62 0020 0020     		movs	r0, #0
   63              	.LVL5:
-  23:Drivers/DAC81416/Src/dac81416.c ****   }
-  24:Drivers/DAC81416/Src/dac81416.c **** }
-  64              		.loc 1 24 1 view .LVU8
+  25:Drivers/DAC81416/Src/dac81416.c ****   }
+  26:Drivers/DAC81416/Src/dac81416.c **** }
+  64              		.loc 1 26 1 view .LVU8
   65 0022 7047     		bx	lr
   66              	.LVL6:
   67              	.L10:
-   9:Drivers/DAC81416/Src/dac81416.c ****   {
-  68              		.loc 1 9 3 view .LVU9
+  11:Drivers/DAC81416/Src/dac81416.c ****   {
+  68              		.loc 1 11 3 view .LVU9
   69 0024 0120     		movs	r0, #1
   70              	.LVL7:
-   9:Drivers/DAC81416/Src/dac81416.c ****   {
-  71              		.loc 1 9 3 view .LVU10
+  11:Drivers/DAC81416/Src/dac81416.c ****   {
+  71              		.loc 1 11 3 view .LVU10
   72 0026 7047     		bx	lr
   73              	.LVL8:
   74              	.L4:
-   9:Drivers/DAC81416/Src/dac81416.c ****   {
-  75              		.loc 1 9 3 view .LVU11
+  11:Drivers/DAC81416/Src/dac81416.c ****   {
+  75              		.loc 1 11 3 view .LVU11
   76 0028 0120     		movs	r0, #1
   77              	.LVL9:
-   9:Drivers/DAC81416/Src/dac81416.c ****   {
-  78              		.loc 1 9 3 view .LVU12
+  11:Drivers/DAC81416/Src/dac81416.c ****   {
+  78              		.loc 1 11 3 view .LVU12
   79 002a 7047     		bx	lr
   80              	.LVL10:
   81              	.L5:
-   9:Drivers/DAC81416/Src/dac81416.c ****   {
-  82              		.loc 1 9 3 view .LVU13
+  11:Drivers/DAC81416/Src/dac81416.c ****   {
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccJjicA9.s 			page 3
+
+
+  82              		.loc 1 11 3 view .LVU13
   83 002c 0120     		movs	r0, #1
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 3
-
-
   84              	.LVL11:
-   9:Drivers/DAC81416/Src/dac81416.c ****   {
-  85              		.loc 1 9 3 view .LVU14
+  11:Drivers/DAC81416/Src/dac81416.c ****   {
+  85              		.loc 1 11 3 view .LVU14
   86 002e 7047     		bx	lr
   87              	.LVL12:
   88              	.L7:
-   9:Drivers/DAC81416/Src/dac81416.c ****   {
-  89              		.loc 1 9 3 view .LVU15
+  11:Drivers/DAC81416/Src/dac81416.c ****   {
+  89              		.loc 1 11 3 view .LVU15
   90 0030 0120     		movs	r0, #1
   91              	.LVL13:
-   9:Drivers/DAC81416/Src/dac81416.c ****   {
-  92              		.loc 1 9 3 view .LVU16
+  11:Drivers/DAC81416/Src/dac81416.c ****   {
+  92              		.loc 1 11 3 view .LVU16
   93 0032 7047     		bx	lr
   94              		.cfi_endproc
   95              	.LFE146:
@@ -144,28 +146,28 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 1
  103              	DAC81416_BuildRangeRegister:
  104              	.LVL14:
  105              	.LFB147:
-  25:Drivers/DAC81416/Src/dac81416.c **** 
-  26:Drivers/DAC81416/Src/dac81416.c **** static uint16_t DAC81416_BuildRangeRegister(uint8_t range)
-  27:Drivers/DAC81416/Src/dac81416.c **** {
- 106              		.loc 1 27 1 is_stmt 1 view -0
+  27:Drivers/DAC81416/Src/dac81416.c **** 
+  28:Drivers/DAC81416/Src/dac81416.c **** static uint16_t DAC81416_BuildRangeRegister(uint8_t range)
+  29:Drivers/DAC81416/Src/dac81416.c **** {
+ 106              		.loc 1 29 1 is_stmt 1 view -0
  107              		.cfi_startproc
  108              		@ args = 0, pretend = 0, frame = 0
  109              		@ frame_needed = 0, uses_anonymous_args = 0
  110              		@ link register save eliminated.
-  28:Drivers/DAC81416/Src/dac81416.c ****   uint16_t value = (uint16_t)(range & 0x0FU);
- 111              		.loc 1 28 3 view .LVU18
-  29:Drivers/DAC81416/Src/dac81416.c **** 
-  30:Drivers/DAC81416/Src/dac81416.c ****   return (uint16_t)(value | (value << 4) | (value << 8) | (value << 12));
- 112              		.loc 1 30 3 view .LVU19
- 113              		.loc 1 30 27 is_stmt 0 view .LVU20
+  30:Drivers/DAC81416/Src/dac81416.c ****   uint16_t value = (uint16_t)(range & 0x0FU);
+ 111              		.loc 1 30 3 view .LVU18
+  31:Drivers/DAC81416/Src/dac81416.c **** 
+  32:Drivers/DAC81416/Src/dac81416.c ****   return (uint16_t)(value | (value << 4) | (value << 8) | (value << 12));
+ 112              		.loc 1 32 3 view .LVU19
+ 113              		.loc 1 32 27 is_stmt 0 view .LVU20
  114 0000 00F00F00 		and	r0, r0, #15
  115              	.LVL15:
- 116              		.loc 1 30 27 view .LVU21
+ 116              		.loc 1 32 27 view .LVU21
  117 0004 40EA0013 		orr	r3, r0, r0, lsl #4
- 118              		.loc 1 30 42 view .LVU22
+ 118              		.loc 1 32 42 view .LVU22
  119 0008 43EA0023 		orr	r3, r3, r0, lsl #8
-  31:Drivers/DAC81416/Src/dac81416.c **** }
- 120              		.loc 1 31 1 view .LVU23
+  33:Drivers/DAC81416/Src/dac81416.c **** }
+ 120              		.loc 1 33 1 view .LVU23
  121 000c 43EA0030 		orr	r0, r3, r0, lsl #12
  122 0010 7047     		bx	lr
  123              		.cfi_endproc
@@ -176,1156 +178,1128 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 1
  129              		.thumb
  130              		.thumb_func
  132              	DAC81416_BuildFrame:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccJjicA9.s 			page 4
+
+
  133              	.LVL16:
  134              	.LFB148:
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 4
-
-
-  32:Drivers/DAC81416/Src/dac81416.c **** 
-  33:Drivers/DAC81416/Src/dac81416.c **** static void DAC81416_BuildFrame(uint8_t rw, uint8_t addr, uint16_t data, uint8_t frame[3])
-  34:Drivers/DAC81416/Src/dac81416.c **** {
- 135              		.loc 1 34 1 is_stmt 1 view -0
+  34:Drivers/DAC81416/Src/dac81416.c **** 
+  35:Drivers/DAC81416/Src/dac81416.c **** static uint32_t DAC81416_BuildFrame(uint8_t rw, uint8_t addr, uint16_t data)
+  36:Drivers/DAC81416/Src/dac81416.c **** {
+ 135              		.loc 1 36 1 is_stmt 1 view -0
  136              		.cfi_startproc
  137              		@ args = 0, pretend = 0, frame = 0
  138              		@ frame_needed = 0, uses_anonymous_args = 0
  139              		@ link register save eliminated.
-  35:Drivers/DAC81416/Src/dac81416.c ****   frame[0] = (uint8_t)((rw & DAC81416_CMD_READ) | (addr & 0x3FU));
- 140              		.loc 1 35 3 view .LVU25
- 141              		.loc 1 35 28 is_stmt 0 view .LVU26
- 142 0000 00F08000 		and	r0, r0, #128
+  37:Drivers/DAC81416/Src/dac81416.c ****   uint32_t command = (uint32_t)((rw & DAC81416_CMD_READ) | (addr & 0x3FU));
+ 140              		.loc 1 37 3 view .LVU25
+ 141              		.loc 1 37 12 is_stmt 0 view .LVU26
+ 142 0000 00F0C000 		and	r0, r0, #192
  143              	.LVL17:
- 144              		.loc 1 35 57 view .LVU27
+ 144              		.loc 1 37 12 view .LVU27
  145 0004 01F03F01 		and	r1, r1, #63
  146              	.LVL18:
- 147              		.loc 1 35 14 view .LVU28
+ 147              		.loc 1 37 12 view .LVU28
  148 0008 0843     		orrs	r0, r0, r1
- 149              		.loc 1 35 12 view .LVU29
- 150 000a 1870     		strb	r0, [r3]
-  36:Drivers/DAC81416/Src/dac81416.c ****   frame[1] = (uint8_t)(data >> 8);
- 151              		.loc 1 36 3 is_stmt 1 view .LVU30
- 152              		.loc 1 36 14 is_stmt 0 view .LVU31
- 153 000c 110A     		lsrs	r1, r2, #8
- 154              		.loc 1 36 12 view .LVU32
- 155 000e 5970     		strb	r1, [r3, #1]
-  37:Drivers/DAC81416/Src/dac81416.c ****   frame[2] = (uint8_t)(data & 0xFFU);
- 156              		.loc 1 37 3 is_stmt 1 view .LVU33
- 157              		.loc 1 37 12 is_stmt 0 view .LVU34
- 158 0010 9A70     		strb	r2, [r3, #2]
-  38:Drivers/DAC81416/Src/dac81416.c **** }
- 159              		.loc 1 38 1 view .LVU35
- 160 0012 7047     		bx	lr
- 161              		.cfi_endproc
- 162              	.LFE148:
- 164              		.section	.text.DAC_WriteRegister,"ax",%progbits
- 165              		.align	1
- 166              		.global	DAC_WriteRegister
- 167              		.syntax unified
- 168              		.thumb
- 169              		.thumb_func
- 171              	DAC_WriteRegister:
- 172              	.LVL19:
- 173              	.LFB150:
-  39:Drivers/DAC81416/Src/dac81416.c **** 
-  40:Drivers/DAC81416/Src/dac81416.c **** HAL_StatusTypeDef DAC81416_Init(void)
-  41:Drivers/DAC81416/Src/dac81416.c **** {
-  42:Drivers/DAC81416/Src/dac81416.c ****   BSP_DAC81416_Init();
-  43:Drivers/DAC81416/Src/dac81416.c ****   DAC_ResetHardware();
-  44:Drivers/DAC81416/Src/dac81416.c **** 
-  45:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_WriteRegister(DAC81416_CMD_WRITE,
-  46:Drivers/DAC81416/Src/dac81416.c ****                                     DAC81416_REG_SPICONFIG,
-  47:Drivers/DAC81416/Src/dac81416.c ****                                     DAC81416_SPICONFIG_ACTIVE_VALUE);
-  48:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
-  49:Drivers/DAC81416/Src/dac81416.c ****   {
-  50:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
-  51:Drivers/DAC81416/Src/dac81416.c ****   }
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 5
+ 149              	.LVL19:
+  38:Drivers/DAC81416/Src/dac81416.c **** 
+  39:Drivers/DAC81416/Src/dac81416.c ****   return (uint32_t)((command << 16) | data);
+ 150              		.loc 1 39 3 is_stmt 1 view .LVU29
+  40:Drivers/DAC81416/Src/dac81416.c **** }
+ 151              		.loc 1 40 1 is_stmt 0 view .LVU30
+ 152 000a 42EA0040 		orr	r0, r2, r0, lsl #16
+ 153              	.LVL20:
+ 154              		.loc 1 40 1 view .LVU31
+ 155 000e 7047     		bx	lr
+ 156              		.cfi_endproc
+ 157              	.LFE148:
+ 159              		.section	.text.DAC_WriteRegister,"ax",%progbits
+ 160              		.align	1
+ 161              		.global	DAC_WriteRegister
+ 162              		.syntax unified
+ 163              		.thumb
+ 164              		.thumb_func
+ 166              	DAC_WriteRegister:
+ 167              	.LVL21:
+ 168              	.LFB150:
+  41:Drivers/DAC81416/Src/dac81416.c **** 
+  42:Drivers/DAC81416/Src/dac81416.c **** HAL_StatusTypeDef DAC81416_Init(void)
+  43:Drivers/DAC81416/Src/dac81416.c **** {
+  44:Drivers/DAC81416/Src/dac81416.c ****   BSP_DAC81416_Init();
+  45:Drivers/DAC81416/Src/dac81416.c ****   DAC_ResetHardware();
+  46:Drivers/DAC81416/Src/dac81416.c **** 
+  47:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_WriteRegister(DAC81416_CMD_WRITE,
+  48:Drivers/DAC81416/Src/dac81416.c ****                                     DAC81416_REG_SPICONFIG,
+  49:Drivers/DAC81416/Src/dac81416.c ****                                     DAC81416_SPICONFIG_ACTIVE_VALUE);
+  50:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
+  51:Drivers/DAC81416/Src/dac81416.c ****   {
+  52:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
+  53:Drivers/DAC81416/Src/dac81416.c ****   }
+  54:Drivers/DAC81416/Src/dac81416.c **** 
+  55:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_EnableInternalRef(1U);
+  56:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccJjicA9.s 			page 5
 
 
-  52:Drivers/DAC81416/Src/dac81416.c **** 
-  53:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_EnableInternalRef(1U);
-  54:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
-  55:Drivers/DAC81416/Src/dac81416.c ****   {
-  56:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
-  57:Drivers/DAC81416/Src/dac81416.c ****   }
-  58:Drivers/DAC81416/Src/dac81416.c **** 
-  59:Drivers/DAC81416/Src/dac81416.c ****   HAL_Delay(1U);
+  57:Drivers/DAC81416/Src/dac81416.c ****   {
+  58:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
+  59:Drivers/DAC81416/Src/dac81416.c ****   }
   60:Drivers/DAC81416/Src/dac81416.c **** 
-  61:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_ConfigAllChannels0To5V();
-  62:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
-  63:Drivers/DAC81416/Src/dac81416.c ****   {
-  64:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
-  65:Drivers/DAC81416/Src/dac81416.c ****   }
-  66:Drivers/DAC81416/Src/dac81416.c **** 
-  67:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_PowerDownChannels(0x0000U);
-  68:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
-  69:Drivers/DAC81416/Src/dac81416.c **** }
-  70:Drivers/DAC81416/Src/dac81416.c **** 
-  71:Drivers/DAC81416/Src/dac81416.c **** HAL_StatusTypeDef DAC_WriteRegister(uint8_t cmd, uint8_t addr, uint16_t data)
-  72:Drivers/DAC81416/Src/dac81416.c **** {
- 174              		.loc 1 72 1 is_stmt 1 view -0
- 175              		.cfi_startproc
- 176              		@ args = 0, pretend = 0, frame = 8
- 177              		@ frame_needed = 0, uses_anonymous_args = 0
- 178              		.loc 1 72 1 is_stmt 0 view .LVU37
- 179 0000 10B5     		push	{r4, lr}
- 180              	.LCFI0:
- 181              		.cfi_def_cfa_offset 8
- 182              		.cfi_offset 4, -8
- 183              		.cfi_offset 14, -4
- 184 0002 82B0     		sub	sp, sp, #8
- 185              	.LCFI1:
- 186              		.cfi_def_cfa_offset 16
-  73:Drivers/DAC81416/Src/dac81416.c ****   uint8_t tx[3];
- 187              		.loc 1 73 3 is_stmt 1 view .LVU38
-  74:Drivers/DAC81416/Src/dac81416.c ****   uint8_t rw = (cmd & DAC81416_CMD_READ) ? DAC81416_CMD_READ : DAC81416_CMD_WRITE;
- 188              		.loc 1 74 3 view .LVU39
- 189              	.LVL20:
-  75:Drivers/DAC81416/Src/dac81416.c **** 
-  76:Drivers/DAC81416/Src/dac81416.c ****   DAC81416_BuildFrame(rw, addr, data, tx);
- 190              		.loc 1 76 3 view .LVU40
- 191 0004 01AC     		add	r4, sp, #4
- 192 0006 2346     		mov	r3, r4
- 193 0008 00F08000 		and	r0, r0, #128
- 194              	.LVL21:
- 195              		.loc 1 76 3 is_stmt 0 view .LVU41
- 196 000c FFF7FEFF 		bl	DAC81416_BuildFrame
- 197              	.LVL22:
-  77:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_SPI_Transmit(tx, sizeof(tx));
- 198              		.loc 1 77 3 is_stmt 1 view .LVU42
- 199              		.loc 1 77 19 is_stmt 0 view .LVU43
- 200 0010 0321     		movs	r1, #3
- 201 0012 2046     		mov	r0, r4
- 202 0014 FFF7FEFF 		bl	DAC_SPI_Transmit
- 203              	.LVL23:
- 204              		.loc 1 77 17 discriminator 1 view .LVU44
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 6
+  61:Drivers/DAC81416/Src/dac81416.c ****   HAL_Delay(1U);
+  62:Drivers/DAC81416/Src/dac81416.c **** 
+  63:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_ConfigAllChannels0To5V();
+  64:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
+  65:Drivers/DAC81416/Src/dac81416.c ****   {
+  66:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
+  67:Drivers/DAC81416/Src/dac81416.c ****   }
+  68:Drivers/DAC81416/Src/dac81416.c **** 
+  69:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_PowerDownChannels(0x0000U);
+  70:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
+  71:Drivers/DAC81416/Src/dac81416.c **** }
+  72:Drivers/DAC81416/Src/dac81416.c **** 
+  73:Drivers/DAC81416/Src/dac81416.c **** HAL_StatusTypeDef DAC_WriteRegister(uint8_t cmd, uint8_t addr, uint16_t data)
+  74:Drivers/DAC81416/Src/dac81416.c **** {
+ 169              		.loc 1 74 1 is_stmt 1 view -0
+ 170              		.cfi_startproc
+ 171              		@ args = 0, pretend = 0, frame = 8
+ 172              		@ frame_needed = 0, uses_anonymous_args = 0
+ 173              		.loc 1 74 1 is_stmt 0 view .LVU33
+ 174 0000 00B5     		push	{lr}
+ 175              	.LCFI0:
+ 176              		.cfi_def_cfa_offset 4
+ 177              		.cfi_offset 14, -4
+ 178 0002 83B0     		sub	sp, sp, #12
+ 179              	.LCFI1:
+ 180              		.cfi_def_cfa_offset 16
+  75:Drivers/DAC81416/Src/dac81416.c ****   uint32_t tx;
+ 181              		.loc 1 75 3 is_stmt 1 view .LVU34
+  76:Drivers/DAC81416/Src/dac81416.c ****   uint8_t rw = (cmd & DAC81416_CMD_READ) ? DAC81416_CMD_READ : DAC81416_CMD_WRITE;
+ 182              		.loc 1 76 3 view .LVU35
+ 183              		.loc 1 76 11 is_stmt 0 view .LVU36
+ 184 0004 3F28     		cmp	r0, #63
+ 185 0006 0BD9     		bls	.L15
+ 186              		.loc 1 76 11 discriminator 1 view .LVU37
+ 187 0008 C020     		movs	r0, #192
+ 188              	.LVL22:
+ 189              	.L14:
+  77:Drivers/DAC81416/Src/dac81416.c **** 
+  78:Drivers/DAC81416/Src/dac81416.c ****   tx = DAC81416_BuildFrame(rw, addr, data);
+ 190              		.loc 1 78 3 is_stmt 1 view .LVU38
+ 191              		.loc 1 78 8 is_stmt 0 view .LVU39
+ 192 000a FFF7FEFF 		bl	DAC81416_BuildFrame
+ 193              	.LVL23:
+ 194              		.loc 1 78 6 discriminator 1 view .LVU40
+ 195 000e 0190     		str	r0, [sp, #4]
+  79:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_SPI_TransmitFrames24(&tx, 1U);
+ 196              		.loc 1 79 3 is_stmt 1 view .LVU41
+ 197              		.loc 1 79 19 is_stmt 0 view .LVU42
+ 198 0010 0121     		movs	r1, #1
+ 199 0012 01A8     		add	r0, sp, #4
+ 200 0014 FFF7FEFF 		bl	DAC_SPI_TransmitFrames24
+ 201              	.LVL24:
+ 202              		.loc 1 79 17 discriminator 1 view .LVU43
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccJjicA9.s 			page 6
 
 
- 205 0018 014B     		ldr	r3, .L15
- 206 001a 1870     		strb	r0, [r3]
-  78:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
- 207              		.loc 1 78 3 is_stmt 1 view .LVU45
-  79:Drivers/DAC81416/Src/dac81416.c **** }
- 208              		.loc 1 79 1 is_stmt 0 view .LVU46
- 209 001c 02B0     		add	sp, sp, #8
- 210              	.LCFI2:
- 211              		.cfi_def_cfa_offset 8
- 212              		@ sp needed
- 213 001e 10BD     		pop	{r4, pc}
- 214              	.L16:
- 215              		.align	2
- 216              	.L15:
- 217 0020 00000000 		.word	dacLastStatus
- 218              		.cfi_endproc
- 219              	.LFE150:
- 221              		.section	.text.DAC_ReadRegister,"ax",%progbits
- 222              		.align	1
- 223              		.global	DAC_ReadRegister
- 224              		.syntax unified
- 225              		.thumb
- 226              		.thumb_func
- 228              	DAC_ReadRegister:
- 229              	.LVL24:
- 230              	.LFB151:
-  80:Drivers/DAC81416/Src/dac81416.c **** 
-  81:Drivers/DAC81416/Src/dac81416.c **** uint16_t DAC_ReadRegister(uint8_t cmd, uint8_t addr)
-  82:Drivers/DAC81416/Src/dac81416.c **** {
- 231              		.loc 1 82 1 is_stmt 1 view -0
- 232              		.cfi_startproc
- 233              		@ args = 0, pretend = 0, frame = 8
- 234              		@ frame_needed = 0, uses_anonymous_args = 0
- 235              		.loc 1 82 1 is_stmt 0 view .LVU48
- 236 0000 10B5     		push	{r4, lr}
- 237              	.LCFI3:
- 238              		.cfi_def_cfa_offset 8
- 239              		.cfi_offset 4, -8
- 240              		.cfi_offset 14, -4
- 241 0002 82B0     		sub	sp, sp, #8
- 242              	.LCFI4:
- 243              		.cfi_def_cfa_offset 16
-  83:Drivers/DAC81416/Src/dac81416.c ****   uint8_t tx[3];
- 244              		.loc 1 83 3 is_stmt 1 view .LVU49
-  84:Drivers/DAC81416/Src/dac81416.c ****   uint8_t rx[3] = {0};
- 245              		.loc 1 84 3 view .LVU50
- 246              		.loc 1 84 11 is_stmt 0 view .LVU51
- 247 0004 0023     		movs	r3, #0
- 248 0006 ADF80030 		strh	r3, [sp]	@ movhi
- 249 000a 4FF00002 		mov	r2, #0	@ movhi
- 250 000e 8DF80220 		strb	r2, [sp, #2]
-  85:Drivers/DAC81416/Src/dac81416.c ****   uint8_t readCmd = (cmd & DAC81416_CMD_READ) ? cmd : DAC81416_CMD_READ;
- 251              		.loc 1 85 3 is_stmt 1 view .LVU52
- 252              		.loc 1 85 11 is_stmt 0 view .LVU53
- 253 0012 10F0800F 		tst	r0, #128
- 254 0016 00D1     		bne	.L18
- 255              		.loc 1 85 11 discriminator 2 view .LVU54
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 7
+ 203 0018 024B     		ldr	r3, .L17
+ 204 001a 1870     		strb	r0, [r3]
+  80:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
+ 205              		.loc 1 80 3 is_stmt 1 view .LVU44
+  81:Drivers/DAC81416/Src/dac81416.c **** }
+ 206              		.loc 1 81 1 is_stmt 0 view .LVU45
+ 207 001c 03B0     		add	sp, sp, #12
+ 208              	.LCFI2:
+ 209              		.cfi_remember_state
+ 210              		.cfi_def_cfa_offset 4
+ 211              		@ sp needed
+ 212 001e 00BD     		pop	{pc}
+ 213              	.LVL25:
+ 214              	.L15:
+ 215              	.LCFI3:
+ 216              		.cfi_restore_state
+  76:Drivers/DAC81416/Src/dac81416.c **** 
+ 217              		.loc 1 76 11 discriminator 2 view .LVU46
+ 218 0020 0020     		movs	r0, #0
+ 219              	.LVL26:
+  76:Drivers/DAC81416/Src/dac81416.c **** 
+ 220              		.loc 1 76 11 discriminator 2 view .LVU47
+ 221 0022 F2E7     		b	.L14
+ 222              	.L18:
+ 223              		.align	2
+ 224              	.L17:
+ 225 0024 00000000 		.word	dacLastStatus
+ 226              		.cfi_endproc
+ 227              	.LFE150:
+ 229              		.section	.text.DAC_ReadRegister,"ax",%progbits
+ 230              		.align	1
+ 231              		.global	DAC_ReadRegister
+ 232              		.syntax unified
+ 233              		.thumb
+ 234              		.thumb_func
+ 236              	DAC_ReadRegister:
+ 237              	.LVL27:
+ 238              	.LFB151:
+  82:Drivers/DAC81416/Src/dac81416.c **** 
+  83:Drivers/DAC81416/Src/dac81416.c **** uint16_t DAC_ReadRegister(uint8_t cmd, uint8_t addr)
+  84:Drivers/DAC81416/Src/dac81416.c **** {
+ 239              		.loc 1 84 1 is_stmt 1 view -0
+ 240              		.cfi_startproc
+ 241              		@ args = 0, pretend = 0, frame = 16
+ 242              		@ frame_needed = 0, uses_anonymous_args = 0
+ 243              		.loc 1 84 1 is_stmt 0 view .LVU49
+ 244 0000 00B5     		push	{lr}
+ 245              	.LCFI4:
+ 246              		.cfi_def_cfa_offset 4
+ 247              		.cfi_offset 14, -4
+ 248 0002 85B0     		sub	sp, sp, #20
+ 249              	.LCFI5:
+ 250              		.cfi_def_cfa_offset 24
+  85:Drivers/DAC81416/Src/dac81416.c ****   uint32_t tx[DAC81416_READ_TRANSACTION_FRAMES];
+ 251              		.loc 1 85 3 is_stmt 1 view .LVU50
+  86:Drivers/DAC81416/Src/dac81416.c ****   uint32_t rx[DAC81416_READ_TRANSACTION_FRAMES] = {0U, 0U};
+ 252              		.loc 1 86 3 view .LVU51
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccJjicA9.s 			page 7
 
 
- 256 0018 8020     		movs	r0, #128
- 257              	.LVL25:
- 258              	.L18:
-  86:Drivers/DAC81416/Src/dac81416.c **** 
-  87:Drivers/DAC81416/Src/dac81416.c ****   DAC81416_BuildFrame(readCmd, addr, 0x0000U, tx);
- 259              		.loc 1 87 3 is_stmt 1 view .LVU55
- 260 001a 01AC     		add	r4, sp, #4
- 261 001c 2346     		mov	r3, r4
- 262 001e 0022     		movs	r2, #0
- 263 0020 FFF7FEFF 		bl	DAC81416_BuildFrame
- 264              	.LVL26:
-  88:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_SPI_TransmitReceive(tx, rx, sizeof(tx));
- 265              		.loc 1 88 3 view .LVU56
- 266              		.loc 1 88 19 is_stmt 0 view .LVU57
- 267 0024 0322     		movs	r2, #3
- 268 0026 6946     		mov	r1, sp
- 269 0028 2046     		mov	r0, r4
- 270 002a FFF7FEFF 		bl	DAC_SPI_TransmitReceive
- 271              	.LVL27:
- 272              		.loc 1 88 17 discriminator 1 view .LVU58
- 273 002e 0E4B     		ldr	r3, .L25
- 274 0030 1870     		strb	r0, [r3]
-  89:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
- 275              		.loc 1 89 3 is_stmt 1 view .LVU59
- 276              		.loc 1 89 6 is_stmt 0 view .LVU60
- 277 0032 10B1     		cbz	r0, .L24
-  90:Drivers/DAC81416/Src/dac81416.c ****   {
-  91:Drivers/DAC81416/Src/dac81416.c ****     return 0U;
- 278              		.loc 1 91 12 view .LVU61
- 279 0034 0020     		movs	r0, #0
- 280              	.L19:
-  92:Drivers/DAC81416/Src/dac81416.c ****   }
-  93:Drivers/DAC81416/Src/dac81416.c **** 
-  94:Drivers/DAC81416/Src/dac81416.c ****   DAC81416_BuildFrame(DAC81416_CMD_WRITE, DAC81416_REG_NOP, 0x0000U, tx);
-  95:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_SPI_TransmitReceive(tx, rx, sizeof(tx));
-  96:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
-  97:Drivers/DAC81416/Src/dac81416.c ****   {
-  98:Drivers/DAC81416/Src/dac81416.c ****     return 0U;
-  99:Drivers/DAC81416/Src/dac81416.c ****   }
- 100:Drivers/DAC81416/Src/dac81416.c **** 
- 101:Drivers/DAC81416/Src/dac81416.c ****   return (uint16_t)(((uint16_t)rx[1] << 8) | rx[2]);
- 102:Drivers/DAC81416/Src/dac81416.c **** }
- 281              		.loc 1 102 1 view .LVU62
- 282 0036 02B0     		add	sp, sp, #8
- 283              	.LCFI5:
- 284              		.cfi_remember_state
- 285              		.cfi_def_cfa_offset 8
- 286              		@ sp needed
- 287 0038 10BD     		pop	{r4, pc}
- 288              	.L24:
- 289              	.LCFI6:
- 290              		.cfi_restore_state
-  94:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_SPI_TransmitReceive(tx, rx, sizeof(tx));
- 291              		.loc 1 94 3 is_stmt 1 view .LVU63
- 292 003a 2346     		mov	r3, r4
- 293 003c 0246     		mov	r2, r0
- 294 003e 0146     		mov	r1, r0
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 8
+ 253              		.loc 1 86 12 is_stmt 0 view .LVU52
+ 254 0004 0023     		movs	r3, #0
+ 255 0006 0093     		str	r3, [sp]
+ 256 0008 0193     		str	r3, [sp, #4]
+  87:Drivers/DAC81416/Src/dac81416.c ****   uint8_t readCmd = (cmd & DAC81416_CMD_READ) ? cmd : DAC81416_CMD_READ;
+ 257              		.loc 1 87 3 is_stmt 1 view .LVU53
+ 258              		.loc 1 87 11 is_stmt 0 view .LVU54
+ 259 000a 3F28     		cmp	r0, #63
+ 260 000c 00D8     		bhi	.L20
+ 261              		.loc 1 87 11 discriminator 2 view .LVU55
+ 262 000e C020     		movs	r0, #192
+ 263              	.LVL28:
+ 264              	.L20:
+  88:Drivers/DAC81416/Src/dac81416.c **** 
+  89:Drivers/DAC81416/Src/dac81416.c ****   tx[0] = DAC81416_BuildFrame(readCmd, addr, 0x0000U);
+ 265              		.loc 1 89 3 is_stmt 1 view .LVU56
+ 266              		.loc 1 89 11 is_stmt 0 view .LVU57
+ 267 0010 0022     		movs	r2, #0
+ 268 0012 FFF7FEFF 		bl	DAC81416_BuildFrame
+ 269              	.LVL29:
+ 270              		.loc 1 89 9 discriminator 1 view .LVU58
+ 271 0016 0290     		str	r0, [sp, #8]
+  90:Drivers/DAC81416/Src/dac81416.c ****   tx[1] = DAC81416_BuildFrame(DAC81416_CMD_WRITE, DAC81416_REG_NOP, 0x0000U);
+ 272              		.loc 1 90 3 is_stmt 1 view .LVU59
+ 273              		.loc 1 90 11 is_stmt 0 view .LVU60
+ 274 0018 0022     		movs	r2, #0
+ 275 001a 1146     		mov	r1, r2
+ 276 001c 1046     		mov	r0, r2
+ 277 001e FFF7FEFF 		bl	DAC81416_BuildFrame
+ 278              	.LVL30:
+ 279              		.loc 1 90 9 discriminator 1 view .LVU61
+ 280 0022 0390     		str	r0, [sp, #12]
+  91:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_SPI_TransmitReceiveFrames24(tx, rx, DAC81416_READ_TRANSACTION_FRAMES);
+ 281              		.loc 1 91 3 is_stmt 1 view .LVU62
+ 282              		.loc 1 91 19 is_stmt 0 view .LVU63
+ 283 0024 0222     		movs	r2, #2
+ 284 0026 6946     		mov	r1, sp
+ 285 0028 02A8     		add	r0, sp, #8
+ 286 002a FFF7FEFF 		bl	DAC_SPI_TransmitReceiveFrames24
+ 287              	.LVL31:
+ 288              		.loc 1 91 17 discriminator 1 view .LVU64
+ 289 002e 044B     		ldr	r3, .L25
+ 290 0030 1870     		strb	r0, [r3]
+  92:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
+ 291              		.loc 1 92 3 is_stmt 1 view .LVU65
+ 292              		.loc 1 92 6 is_stmt 0 view .LVU66
+ 293 0032 18B9     		cbnz	r0, .L23
+  93:Drivers/DAC81416/Src/dac81416.c ****   {
+  94:Drivers/DAC81416/Src/dac81416.c ****     return 0U;
+  95:Drivers/DAC81416/Src/dac81416.c ****   }
+  96:Drivers/DAC81416/Src/dac81416.c **** 
+  97:Drivers/DAC81416/Src/dac81416.c ****   return (uint16_t)(rx[1] & 0xFFFFU);
+ 294              		.loc 1 97 3 is_stmt 1 view .LVU67
+ 295              		.loc 1 97 10 is_stmt 0 view .LVU68
+ 296 0034 BDF80400 		ldrh	r0, [sp, #4]
+ 297              	.L21:
+  98:Drivers/DAC81416/Src/dac81416.c **** }
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccJjicA9.s 			page 8
 
 
- 295 0040 FFF7FEFF 		bl	DAC81416_BuildFrame
- 296              	.LVL28:
-  95:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
- 297              		.loc 1 95 3 view .LVU64
-  95:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
- 298              		.loc 1 95 19 is_stmt 0 view .LVU65
- 299 0044 0322     		movs	r2, #3
- 300 0046 6946     		mov	r1, sp
- 301 0048 2046     		mov	r0, r4
- 302 004a FFF7FEFF 		bl	DAC_SPI_TransmitReceive
- 303              	.LVL29:
-  95:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
- 304              		.loc 1 95 17 discriminator 1 view .LVU66
- 305 004e 064B     		ldr	r3, .L25
- 306 0050 1870     		strb	r0, [r3]
-  96:Drivers/DAC81416/Src/dac81416.c ****   {
- 307              		.loc 1 96 3 is_stmt 1 view .LVU67
-  96:Drivers/DAC81416/Src/dac81416.c ****   {
- 308              		.loc 1 96 6 is_stmt 0 view .LVU68
- 309 0052 30B9     		cbnz	r0, .L22
- 101:Drivers/DAC81416/Src/dac81416.c **** }
- 310              		.loc 1 101 3 is_stmt 1 view .LVU69
- 101:Drivers/DAC81416/Src/dac81416.c **** }
- 311              		.loc 1 101 34 is_stmt 0 view .LVU70
- 312 0054 9DF80130 		ldrb	r3, [sp, #1]	@ zero_extendqisi2
- 101:Drivers/DAC81416/Src/dac81416.c **** }
- 313              		.loc 1 101 48 view .LVU71
- 314 0058 9DF80200 		ldrb	r0, [sp, #2]	@ zero_extendqisi2
- 101:Drivers/DAC81416/Src/dac81416.c **** }
- 315              		.loc 1 101 10 view .LVU72
- 316 005c 40EA0320 		orr	r0, r0, r3, lsl #8
- 317 0060 E9E7     		b	.L19
- 318              	.L22:
-  98:Drivers/DAC81416/Src/dac81416.c ****   }
- 319              		.loc 1 98 12 view .LVU73
- 320 0062 0020     		movs	r0, #0
- 321 0064 E7E7     		b	.L19
- 322              	.L26:
- 323 0066 00BF     		.align	2
- 324              	.L25:
- 325 0068 00000000 		.word	dacLastStatus
- 326              		.cfi_endproc
- 327              	.LFE151:
- 329              		.section	.text.DAC_SoftwareReset,"ax",%progbits
- 330              		.align	1
- 331              		.global	DAC_SoftwareReset
- 332              		.syntax unified
- 333              		.thumb
- 334              		.thumb_func
- 336              	DAC_SoftwareReset:
- 337              	.LFB152:
- 103:Drivers/DAC81416/Src/dac81416.c **** 
- 104:Drivers/DAC81416/Src/dac81416.c **** HAL_StatusTypeDef DAC_SoftwareReset(void)
- 105:Drivers/DAC81416/Src/dac81416.c **** {
- 338              		.loc 1 105 1 is_stmt 1 view -0
- 339              		.cfi_startproc
- 340              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 9
+ 298              		.loc 1 98 1 view .LVU69
+ 299 0038 05B0     		add	sp, sp, #20
+ 300              	.LCFI6:
+ 301              		.cfi_remember_state
+ 302              		.cfi_def_cfa_offset 4
+ 303              		@ sp needed
+ 304 003a 00BD     		pop	{pc}
+ 305              	.L23:
+ 306              	.LCFI7:
+ 307              		.cfi_restore_state
+  94:Drivers/DAC81416/Src/dac81416.c ****   }
+ 308              		.loc 1 94 12 view .LVU70
+ 309 003c 0020     		movs	r0, #0
+ 310 003e FBE7     		b	.L21
+ 311              	.L26:
+ 312              		.align	2
+ 313              	.L25:
+ 314 0040 00000000 		.word	dacLastStatus
+ 315              		.cfi_endproc
+ 316              	.LFE151:
+ 318              		.section	.text.DAC_SoftwareReset,"ax",%progbits
+ 319              		.align	1
+ 320              		.global	DAC_SoftwareReset
+ 321              		.syntax unified
+ 322              		.thumb
+ 323              		.thumb_func
+ 325              	DAC_SoftwareReset:
+ 326              	.LFB152:
+  99:Drivers/DAC81416/Src/dac81416.c **** 
+ 100:Drivers/DAC81416/Src/dac81416.c **** HAL_StatusTypeDef DAC_SoftwareReset(void)
+ 101:Drivers/DAC81416/Src/dac81416.c **** {
+ 327              		.loc 1 101 1 is_stmt 1 view -0
+ 328              		.cfi_startproc
+ 329              		@ args = 0, pretend = 0, frame = 0
+ 330              		@ frame_needed = 0, uses_anonymous_args = 0
+ 331 0000 10B5     		push	{r4, lr}
+ 332              	.LCFI8:
+ 333              		.cfi_def_cfa_offset 8
+ 334              		.cfi_offset 4, -8
+ 335              		.cfi_offset 14, -4
+ 102:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_WriteRegister(DAC81416_CMD_WRITE,
+ 336              		.loc 1 102 3 view .LVU72
+ 337              		.loc 1 102 19 is_stmt 0 view .LVU73
+ 338 0002 41F21002 		movw	r2, #4112
+ 339 0006 0E21     		movs	r1, #14
+ 340 0008 0020     		movs	r0, #0
+ 341 000a FFF7FEFF 		bl	DAC_WriteRegister
+ 342              	.LVL32:
+ 343              		.loc 1 102 17 discriminator 1 view .LVU74
+ 344 000e 034C     		ldr	r4, .L29
+ 345 0010 2070     		strb	r0, [r4]
+ 103:Drivers/DAC81416/Src/dac81416.c ****                                     DAC81416_REG_TRIGGER,
+ 104:Drivers/DAC81416/Src/dac81416.c ****                                     DAC81416_TRIGGER_SOFT_RESET);
+ 105:Drivers/DAC81416/Src/dac81416.c ****   HAL_Delay(1U);
+ 346              		.loc 1 105 3 is_stmt 1 view .LVU75
+ 347 0012 0120     		movs	r0, #1
+ 348 0014 FFF7FEFF 		bl	HAL_Delay
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccJjicA9.s 			page 9
 
 
- 341              		@ frame_needed = 0, uses_anonymous_args = 0
- 342 0000 10B5     		push	{r4, lr}
- 343              	.LCFI7:
- 344              		.cfi_def_cfa_offset 8
- 345              		.cfi_offset 4, -8
- 346              		.cfi_offset 14, -4
- 106:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_WriteRegister(DAC81416_CMD_WRITE,
- 347              		.loc 1 106 3 view .LVU75
- 348              		.loc 1 106 19 is_stmt 0 view .LVU76
- 349 0002 41F21002 		movw	r2, #4112
- 350 0006 0E21     		movs	r1, #14
- 351 0008 0020     		movs	r0, #0
- 352 000a FFF7FEFF 		bl	DAC_WriteRegister
- 353              	.LVL30:
- 354              		.loc 1 106 17 discriminator 1 view .LVU77
- 355 000e 034C     		ldr	r4, .L29
- 356 0010 2070     		strb	r0, [r4]
- 107:Drivers/DAC81416/Src/dac81416.c ****                                     DAC81416_REG_TRIGGER,
- 108:Drivers/DAC81416/Src/dac81416.c ****                                     DAC81416_TRIGGER_SOFT_RESET);
- 109:Drivers/DAC81416/Src/dac81416.c ****   HAL_Delay(1U);
- 357              		.loc 1 109 3 is_stmt 1 view .LVU78
- 358 0012 0120     		movs	r0, #1
- 359 0014 FFF7FEFF 		bl	HAL_Delay
- 360              	.LVL31:
- 110:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
- 361              		.loc 1 110 3 view .LVU79
- 111:Drivers/DAC81416/Src/dac81416.c **** }
- 362              		.loc 1 111 1 is_stmt 0 view .LVU80
- 363 0018 2078     		ldrb	r0, [r4]	@ zero_extendqisi2
- 364 001a 10BD     		pop	{r4, pc}
- 365              	.L30:
- 366              		.align	2
- 367              	.L29:
- 368 001c 00000000 		.word	dacLastStatus
- 369              		.cfi_endproc
- 370              	.LFE152:
- 372              		.section	.text.DAC_WriteChannel,"ax",%progbits
- 373              		.align	1
- 374              		.global	DAC_WriteChannel
- 375              		.syntax unified
- 376              		.thumb
- 377              		.thumb_func
- 379              	DAC_WriteChannel:
- 380              	.LVL32:
- 381              	.LFB153:
- 112:Drivers/DAC81416/Src/dac81416.c **** 
- 113:Drivers/DAC81416/Src/dac81416.c **** HAL_StatusTypeDef DAC_WriteChannel(uint8_t channel, uint16_t value)
- 114:Drivers/DAC81416/Src/dac81416.c **** {
- 382              		.loc 1 114 1 is_stmt 1 view -0
- 383              		.cfi_startproc
- 384              		@ args = 0, pretend = 0, frame = 0
- 385              		@ frame_needed = 0, uses_anonymous_args = 0
- 386              		.loc 1 114 1 is_stmt 0 view .LVU82
- 387 0000 08B5     		push	{r3, lr}
- 388              	.LCFI8:
- 389              		.cfi_def_cfa_offset 8
- 390              		.cfi_offset 3, -8
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 10
+ 349              	.LVL33:
+ 106:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
+ 350              		.loc 1 106 3 view .LVU76
+ 107:Drivers/DAC81416/Src/dac81416.c **** }
+ 351              		.loc 1 107 1 is_stmt 0 view .LVU77
+ 352 0018 2078     		ldrb	r0, [r4]	@ zero_extendqisi2
+ 353 001a 10BD     		pop	{r4, pc}
+ 354              	.L30:
+ 355              		.align	2
+ 356              	.L29:
+ 357 001c 00000000 		.word	dacLastStatus
+ 358              		.cfi_endproc
+ 359              	.LFE152:
+ 361              		.section	.text.DAC_WriteChannel,"ax",%progbits
+ 362              		.align	1
+ 363              		.global	DAC_WriteChannel
+ 364              		.syntax unified
+ 365              		.thumb
+ 366              		.thumb_func
+ 368              	DAC_WriteChannel:
+ 369              	.LVL34:
+ 370              	.LFB153:
+ 108:Drivers/DAC81416/Src/dac81416.c **** 
+ 109:Drivers/DAC81416/Src/dac81416.c **** HAL_StatusTypeDef DAC_WriteChannel(uint8_t channel, uint16_t value)
+ 110:Drivers/DAC81416/Src/dac81416.c **** {
+ 371              		.loc 1 110 1 is_stmt 1 view -0
+ 372              		.cfi_startproc
+ 373              		@ args = 0, pretend = 0, frame = 0
+ 374              		@ frame_needed = 0, uses_anonymous_args = 0
+ 375              		.loc 1 110 1 is_stmt 0 view .LVU79
+ 376 0000 08B5     		push	{r3, lr}
+ 377              	.LCFI9:
+ 378              		.cfi_def_cfa_offset 8
+ 379              		.cfi_offset 3, -8
+ 380              		.cfi_offset 14, -4
+ 111:Drivers/DAC81416/Src/dac81416.c ****   if (channel >= DAC81416_CHANNEL_COUNT)
+ 381              		.loc 1 111 3 is_stmt 1 view .LVU80
+ 382              		.loc 1 111 6 is_stmt 0 view .LVU81
+ 383 0002 0F28     		cmp	r0, #15
+ 384 0004 03D9     		bls	.L32
+ 112:Drivers/DAC81416/Src/dac81416.c ****   {
+ 113:Drivers/DAC81416/Src/dac81416.c ****     dacLastStatus = HAL_ERROR;
+ 385              		.loc 1 113 5 is_stmt 1 view .LVU82
+ 386              		.loc 1 113 19 is_stmt 0 view .LVU83
+ 387 0006 0120     		movs	r0, #1
+ 388              	.LVL35:
+ 389              		.loc 1 113 19 view .LVU84
+ 390 0008 054B     		ldr	r3, .L35
+ 391 000a 1870     		strb	r0, [r3]
+ 114:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
+ 392              		.loc 1 114 5 is_stmt 1 view .LVU85
+ 393              	.LVL36:
+ 394              	.L33:
+ 115:Drivers/DAC81416/Src/dac81416.c ****   }
+ 116:Drivers/DAC81416/Src/dac81416.c **** 
+ 117:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_WriteRegister(DAC81416_CMD_WRITE,
+ 118:Drivers/DAC81416/Src/dac81416.c ****                                     (uint8_t)(DAC81416_REG_DAC0 + channel),
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccJjicA9.s 			page 10
 
 
- 391              		.cfi_offset 14, -4
- 115:Drivers/DAC81416/Src/dac81416.c ****   if (channel >= DAC81416_CHANNEL_COUNT)
- 392              		.loc 1 115 3 is_stmt 1 view .LVU83
- 393              		.loc 1 115 6 is_stmt 0 view .LVU84
- 394 0002 0F28     		cmp	r0, #15
- 395 0004 03D9     		bls	.L32
- 116:Drivers/DAC81416/Src/dac81416.c ****   {
- 117:Drivers/DAC81416/Src/dac81416.c ****     dacLastStatus = HAL_ERROR;
- 396              		.loc 1 117 5 is_stmt 1 view .LVU85
- 397              		.loc 1 117 19 is_stmt 0 view .LVU86
- 398 0006 0120     		movs	r0, #1
- 399              	.LVL33:
- 400              		.loc 1 117 19 view .LVU87
- 401 0008 054B     		ldr	r3, .L35
- 402 000a 1870     		strb	r0, [r3]
- 118:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
- 403              		.loc 1 118 5 is_stmt 1 view .LVU88
- 404              	.LVL34:
- 405              	.L33:
- 119:Drivers/DAC81416/Src/dac81416.c ****   }
- 120:Drivers/DAC81416/Src/dac81416.c **** 
- 121:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_WriteRegister(DAC81416_CMD_WRITE,
- 122:Drivers/DAC81416/Src/dac81416.c ****                                     (uint8_t)(DAC81416_REG_DAC0 + channel),
- 123:Drivers/DAC81416/Src/dac81416.c ****                                     value);
- 124:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
- 125:Drivers/DAC81416/Src/dac81416.c **** }
- 406              		.loc 1 125 1 is_stmt 0 view .LVU89
- 407 000c 08BD     		pop	{r3, pc}
- 408              	.LVL35:
- 409              	.L32:
- 121:Drivers/DAC81416/Src/dac81416.c ****                                     (uint8_t)(DAC81416_REG_DAC0 + channel),
- 410              		.loc 1 121 3 is_stmt 1 view .LVU90
- 122:Drivers/DAC81416/Src/dac81416.c ****                                     value);
- 411              		.loc 1 122 37 is_stmt 0 view .LVU91
- 412 000e 1030     		adds	r0, r0, #16
- 413              	.LVL36:
- 121:Drivers/DAC81416/Src/dac81416.c ****                                     (uint8_t)(DAC81416_REG_DAC0 + channel),
- 414              		.loc 1 121 19 view .LVU92
- 415 0010 0A46     		mov	r2, r1
- 416 0012 C1B2     		uxtb	r1, r0
- 417              	.LVL37:
- 121:Drivers/DAC81416/Src/dac81416.c ****                                     (uint8_t)(DAC81416_REG_DAC0 + channel),
- 418              		.loc 1 121 19 view .LVU93
- 419 0014 0020     		movs	r0, #0
- 420 0016 FFF7FEFF 		bl	DAC_WriteRegister
- 421              	.LVL38:
- 121:Drivers/DAC81416/Src/dac81416.c ****                                     (uint8_t)(DAC81416_REG_DAC0 + channel),
- 422              		.loc 1 121 17 discriminator 1 view .LVU94
- 423 001a 014B     		ldr	r3, .L35
- 424 001c 1870     		strb	r0, [r3]
- 124:Drivers/DAC81416/Src/dac81416.c **** }
- 425              		.loc 1 124 3 is_stmt 1 view .LVU95
- 124:Drivers/DAC81416/Src/dac81416.c **** }
- 426              		.loc 1 124 10 is_stmt 0 view .LVU96
- 427 001e F5E7     		b	.L33
- 428              	.L36:
- 429              		.align	2
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 11
+ 119:Drivers/DAC81416/Src/dac81416.c ****                                     value);
+ 120:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
+ 121:Drivers/DAC81416/Src/dac81416.c **** }
+ 395              		.loc 1 121 1 is_stmt 0 view .LVU86
+ 396 000c 08BD     		pop	{r3, pc}
+ 397              	.LVL37:
+ 398              	.L32:
+ 117:Drivers/DAC81416/Src/dac81416.c ****                                     (uint8_t)(DAC81416_REG_DAC0 + channel),
+ 399              		.loc 1 117 3 is_stmt 1 view .LVU87
+ 118:Drivers/DAC81416/Src/dac81416.c ****                                     value);
+ 400              		.loc 1 118 37 is_stmt 0 view .LVU88
+ 401 000e 1030     		adds	r0, r0, #16
+ 402              	.LVL38:
+ 117:Drivers/DAC81416/Src/dac81416.c ****                                     (uint8_t)(DAC81416_REG_DAC0 + channel),
+ 403              		.loc 1 117 19 view .LVU89
+ 404 0010 0A46     		mov	r2, r1
+ 405 0012 C1B2     		uxtb	r1, r0
+ 406              	.LVL39:
+ 117:Drivers/DAC81416/Src/dac81416.c ****                                     (uint8_t)(DAC81416_REG_DAC0 + channel),
+ 407              		.loc 1 117 19 view .LVU90
+ 408 0014 0020     		movs	r0, #0
+ 409 0016 FFF7FEFF 		bl	DAC_WriteRegister
+ 410              	.LVL40:
+ 117:Drivers/DAC81416/Src/dac81416.c ****                                     (uint8_t)(DAC81416_REG_DAC0 + channel),
+ 411              		.loc 1 117 17 discriminator 1 view .LVU91
+ 412 001a 014B     		ldr	r3, .L35
+ 413 001c 1870     		strb	r0, [r3]
+ 120:Drivers/DAC81416/Src/dac81416.c **** }
+ 414              		.loc 1 120 3 is_stmt 1 view .LVU92
+ 120:Drivers/DAC81416/Src/dac81416.c **** }
+ 415              		.loc 1 120 10 is_stmt 0 view .LVU93
+ 416 001e F5E7     		b	.L33
+ 417              	.L36:
+ 418              		.align	2
+ 419              	.L35:
+ 420 0020 00000000 		.word	dacLastStatus
+ 421              		.cfi_endproc
+ 422              	.LFE153:
+ 424              		.section	.text.DAC_WriteAllChannels,"ax",%progbits
+ 425              		.align	1
+ 426              		.global	DAC_WriteAllChannels
+ 427              		.syntax unified
+ 428              		.thumb
+ 429              		.thumb_func
+ 431              	DAC_WriteAllChannels:
+ 432              	.LVL41:
+ 433              	.LFB154:
+ 122:Drivers/DAC81416/Src/dac81416.c **** 
+ 123:Drivers/DAC81416/Src/dac81416.c **** HAL_StatusTypeDef DAC_WriteAllChannels(uint16_t *values)
+ 124:Drivers/DAC81416/Src/dac81416.c **** {
+ 434              		.loc 1 124 1 is_stmt 1 view -0
+ 435              		.cfi_startproc
+ 436              		@ args = 0, pretend = 0, frame = 0
+ 437              		@ frame_needed = 0, uses_anonymous_args = 0
+ 438              		.loc 1 124 1 is_stmt 0 view .LVU95
+ 439 0000 38B5     		push	{r3, r4, r5, lr}
+ 440              	.LCFI10:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccJjicA9.s 			page 11
 
 
- 430              	.L35:
- 431 0020 00000000 		.word	dacLastStatus
- 432              		.cfi_endproc
- 433              	.LFE153:
- 435              		.section	.text.DAC_WriteAllChannels,"ax",%progbits
- 436              		.align	1
- 437              		.global	DAC_WriteAllChannels
- 438              		.syntax unified
- 439              		.thumb
- 440              		.thumb_func
- 442              	DAC_WriteAllChannels:
- 443              	.LVL39:
- 444              	.LFB154:
+ 441              		.cfi_def_cfa_offset 16
+ 442              		.cfi_offset 3, -16
+ 443              		.cfi_offset 4, -12
+ 444              		.cfi_offset 5, -8
+ 445              		.cfi_offset 14, -4
+ 125:Drivers/DAC81416/Src/dac81416.c ****   HAL_StatusTypeDef status = HAL_OK;
+ 446              		.loc 1 125 3 is_stmt 1 view .LVU96
+ 447              	.LVL42:
  126:Drivers/DAC81416/Src/dac81416.c **** 
- 127:Drivers/DAC81416/Src/dac81416.c **** HAL_StatusTypeDef DAC_WriteAllChannels(uint16_t *values)
- 128:Drivers/DAC81416/Src/dac81416.c **** {
- 445              		.loc 1 128 1 is_stmt 1 view -0
- 446              		.cfi_startproc
- 447              		@ args = 0, pretend = 0, frame = 0
- 448              		@ frame_needed = 0, uses_anonymous_args = 0
- 449              		.loc 1 128 1 is_stmt 0 view .LVU98
- 450 0000 38B5     		push	{r3, r4, r5, lr}
- 451              	.LCFI9:
- 452              		.cfi_def_cfa_offset 16
- 453              		.cfi_offset 3, -16
- 454              		.cfi_offset 4, -12
- 455              		.cfi_offset 5, -8
- 456              		.cfi_offset 14, -4
- 129:Drivers/DAC81416/Src/dac81416.c ****   HAL_StatusTypeDef status = HAL_OK;
- 457              		.loc 1 129 3 is_stmt 1 view .LVU99
- 458              	.LVL40:
- 130:Drivers/DAC81416/Src/dac81416.c **** 
- 131:Drivers/DAC81416/Src/dac81416.c ****   if (values == NULL)
- 459              		.loc 1 131 3 view .LVU100
- 460              		.loc 1 131 6 is_stmt 0 view .LVU101
- 461 0002 68B1     		cbz	r0, .L44
- 462 0004 0546     		mov	r5, r0
- 463              	.LBB2:
- 132:Drivers/DAC81416/Src/dac81416.c ****   {
- 133:Drivers/DAC81416/Src/dac81416.c ****     dacLastStatus = HAL_ERROR;
- 134:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
- 135:Drivers/DAC81416/Src/dac81416.c ****   }
- 136:Drivers/DAC81416/Src/dac81416.c **** 
- 137:Drivers/DAC81416/Src/dac81416.c ****   for (uint8_t channel = 0U; channel < DAC81416_CHANNEL_COUNT; channel++)
- 464              		.loc 1 137 16 view .LVU102
- 465 0006 0024     		movs	r4, #0
- 466              	.LVL41:
- 467              	.L38:
- 468              		.loc 1 137 38 is_stmt 1 discriminator 1 view .LVU103
- 469 0008 0F2C     		cmp	r4, #15
- 470 000a 10D8     		bhi	.L45
- 138:Drivers/DAC81416/Src/dac81416.c ****   {
- 139:Drivers/DAC81416/Src/dac81416.c ****     status = DAC_WriteChannel(channel, values[channel]);
- 471              		.loc 1 139 5 view .LVU104
- 472              		.loc 1 139 14 is_stmt 0 view .LVU105
- 473 000c 35F81410 		ldrh	r1, [r5, r4, lsl #1]
- 474 0010 2046     		mov	r0, r4
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 12
+ 127:Drivers/DAC81416/Src/dac81416.c ****   if (values == NULL)
+ 448              		.loc 1 127 3 view .LVU97
+ 449              		.loc 1 127 6 is_stmt 0 view .LVU98
+ 450 0002 68B1     		cbz	r0, .L44
+ 451 0004 0546     		mov	r5, r0
+ 452              	.LBB2:
+ 128:Drivers/DAC81416/Src/dac81416.c ****   {
+ 129:Drivers/DAC81416/Src/dac81416.c ****     dacLastStatus = HAL_ERROR;
+ 130:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
+ 131:Drivers/DAC81416/Src/dac81416.c ****   }
+ 132:Drivers/DAC81416/Src/dac81416.c **** 
+ 133:Drivers/DAC81416/Src/dac81416.c ****   for (uint8_t channel = 0U; channel < DAC81416_CHANNEL_COUNT; channel++)
+ 453              		.loc 1 133 16 view .LVU99
+ 454 0006 0024     		movs	r4, #0
+ 455              	.LVL43:
+ 456              	.L38:
+ 457              		.loc 1 133 38 is_stmt 1 discriminator 1 view .LVU100
+ 458 0008 0F2C     		cmp	r4, #15
+ 459 000a 10D8     		bhi	.L45
+ 134:Drivers/DAC81416/Src/dac81416.c ****   {
+ 135:Drivers/DAC81416/Src/dac81416.c ****     status = DAC_WriteChannel(channel, values[channel]);
+ 460              		.loc 1 135 5 view .LVU101
+ 461              		.loc 1 135 14 is_stmt 0 view .LVU102
+ 462 000c 35F81410 		ldrh	r1, [r5, r4, lsl #1]
+ 463 0010 2046     		mov	r0, r4
+ 464 0012 FFF7FEFF 		bl	DAC_WriteChannel
+ 465              	.LVL44:
+ 136:Drivers/DAC81416/Src/dac81416.c ****     if (status != HAL_OK)
+ 466              		.loc 1 136 5 is_stmt 1 view .LVU103
+ 467              		.loc 1 136 8 is_stmt 0 view .LVU104
+ 468 0016 0346     		mov	r3, r0
+ 469 0018 30B9     		cbnz	r0, .L46
+ 133:Drivers/DAC81416/Src/dac81416.c ****   {
+ 470              		.loc 1 133 71 is_stmt 1 discriminator 2 view .LVU105
+ 471 001a 0134     		adds	r4, r4, #1
+ 472              	.LVL45:
+ 133:Drivers/DAC81416/Src/dac81416.c ****   {
+ 473              		.loc 1 133 71 is_stmt 0 discriminator 2 view .LVU106
+ 474 001c E4B2     		uxtb	r4, r4
+ 475              	.LVL46:
+ 133:Drivers/DAC81416/Src/dac81416.c ****   {
+ 476              		.loc 1 133 71 discriminator 2 view .LVU107
+ 477 001e F3E7     		b	.L38
+ 478              	.LVL47:
+ 479              	.L44:
+ 133:Drivers/DAC81416/Src/dac81416.c ****   {
+ 480              		.loc 1 133 71 discriminator 2 view .LVU108
+ 481              	.LBE2:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccJjicA9.s 			page 12
 
 
- 475 0012 FFF7FEFF 		bl	DAC_WriteChannel
- 476              	.LVL42:
- 140:Drivers/DAC81416/Src/dac81416.c ****     if (status != HAL_OK)
- 477              		.loc 1 140 5 is_stmt 1 view .LVU106
- 478              		.loc 1 140 8 is_stmt 0 view .LVU107
- 479 0016 0346     		mov	r3, r0
- 480 0018 30B9     		cbnz	r0, .L46
- 137:Drivers/DAC81416/Src/dac81416.c ****   {
- 481              		.loc 1 137 71 is_stmt 1 discriminator 2 view .LVU108
- 482 001a 0134     		adds	r4, r4, #1
- 483              	.LVL43:
- 137:Drivers/DAC81416/Src/dac81416.c ****   {
- 484              		.loc 1 137 71 is_stmt 0 discriminator 2 view .LVU109
- 485 001c E4B2     		uxtb	r4, r4
- 486              	.LVL44:
- 137:Drivers/DAC81416/Src/dac81416.c ****   {
- 487              		.loc 1 137 71 discriminator 2 view .LVU110
- 488 001e F3E7     		b	.L38
- 489              	.LVL45:
- 490              	.L44:
- 137:Drivers/DAC81416/Src/dac81416.c ****   {
- 491              		.loc 1 137 71 discriminator 2 view .LVU111
- 492              	.LBE2:
- 133:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
- 493              		.loc 1 133 5 is_stmt 1 view .LVU112
- 133:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
- 494              		.loc 1 133 19 is_stmt 0 view .LVU113
- 495 0020 0123     		movs	r3, #1
- 496 0022 064A     		ldr	r2, .L47
- 497 0024 1370     		strb	r3, [r2]
- 134:Drivers/DAC81416/Src/dac81416.c ****   }
- 498              		.loc 1 134 5 is_stmt 1 view .LVU114
- 134:Drivers/DAC81416/Src/dac81416.c ****   }
- 499              		.loc 1 134 12 is_stmt 0 view .LVU115
- 500 0026 07E0     		b	.L39
- 501              	.LVL46:
- 502              	.L46:
- 503              	.LBB3:
- 141:Drivers/DAC81416/Src/dac81416.c ****     {
- 142:Drivers/DAC81416/Src/dac81416.c ****       dacLastStatus = status;
- 504              		.loc 1 142 7 is_stmt 1 view .LVU116
- 505              		.loc 1 142 21 is_stmt 0 view .LVU117
- 506 0028 044A     		ldr	r2, .L47
- 507 002a 1070     		strb	r0, [r2]
- 143:Drivers/DAC81416/Src/dac81416.c ****       return status;
- 508              		.loc 1 143 7 is_stmt 1 view .LVU118
- 509              		.loc 1 143 14 is_stmt 0 view .LVU119
- 510 002c 04E0     		b	.L39
- 511              	.LVL47:
- 512              	.L45:
- 513              		.loc 1 143 14 view .LVU120
- 514              	.LBE3:
- 144:Drivers/DAC81416/Src/dac81416.c ****     }
- 145:Drivers/DAC81416/Src/dac81416.c ****   }
- 146:Drivers/DAC81416/Src/dac81416.c **** 
- 147:Drivers/DAC81416/Src/dac81416.c ****   DAC_LDAC_Update();
- 515              		.loc 1 147 3 is_stmt 1 view .LVU121
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 13
+ 129:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
+ 482              		.loc 1 129 5 is_stmt 1 view .LVU109
+ 129:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
+ 483              		.loc 1 129 19 is_stmt 0 view .LVU110
+ 484 0020 0123     		movs	r3, #1
+ 485 0022 064A     		ldr	r2, .L47
+ 486 0024 1370     		strb	r3, [r2]
+ 130:Drivers/DAC81416/Src/dac81416.c ****   }
+ 487              		.loc 1 130 5 is_stmt 1 view .LVU111
+ 130:Drivers/DAC81416/Src/dac81416.c ****   }
+ 488              		.loc 1 130 12 is_stmt 0 view .LVU112
+ 489 0026 07E0     		b	.L39
+ 490              	.LVL48:
+ 491              	.L46:
+ 492              	.LBB3:
+ 137:Drivers/DAC81416/Src/dac81416.c ****     {
+ 138:Drivers/DAC81416/Src/dac81416.c ****       dacLastStatus = status;
+ 493              		.loc 1 138 7 is_stmt 1 view .LVU113
+ 494              		.loc 1 138 21 is_stmt 0 view .LVU114
+ 495 0028 044A     		ldr	r2, .L47
+ 496 002a 1070     		strb	r0, [r2]
+ 139:Drivers/DAC81416/Src/dac81416.c ****       return status;
+ 497              		.loc 1 139 7 is_stmt 1 view .LVU115
+ 498              		.loc 1 139 14 is_stmt 0 view .LVU116
+ 499 002c 04E0     		b	.L39
+ 500              	.LVL49:
+ 501              	.L45:
+ 502              		.loc 1 139 14 view .LVU117
+ 503              	.LBE3:
+ 140:Drivers/DAC81416/Src/dac81416.c ****     }
+ 141:Drivers/DAC81416/Src/dac81416.c ****   }
+ 142:Drivers/DAC81416/Src/dac81416.c **** 
+ 143:Drivers/DAC81416/Src/dac81416.c ****   DAC_LDAC_Update();
+ 504              		.loc 1 143 3 is_stmt 1 view .LVU118
+ 505 002e FFF7FEFF 		bl	DAC_LDAC_Update
+ 506              	.LVL50:
+ 144:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = HAL_OK;
+ 507              		.loc 1 144 3 view .LVU119
+ 508              		.loc 1 144 17 is_stmt 0 view .LVU120
+ 509 0032 0023     		movs	r3, #0
+ 510 0034 014A     		ldr	r2, .L47
+ 511 0036 1370     		strb	r3, [r2]
+ 145:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
+ 512              		.loc 1 145 3 is_stmt 1 view .LVU121
+ 513              	.LVL51:
+ 514              	.L39:
+ 146:Drivers/DAC81416/Src/dac81416.c **** }
+ 515              		.loc 1 146 1 is_stmt 0 view .LVU122
+ 516 0038 1846     		mov	r0, r3
+ 517 003a 38BD     		pop	{r3, r4, r5, pc}
+ 518              	.L48:
+ 519              		.align	2
+ 520              	.L47:
+ 521 003c 00000000 		.word	dacLastStatus
+ 522              		.cfi_endproc
+ 523              	.LFE154:
+ 525              		.section	.text.DAC_EnableInternalRef,"ax",%progbits
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccJjicA9.s 			page 13
 
 
- 516 002e FFF7FEFF 		bl	DAC_LDAC_Update
- 517              	.LVL48:
- 148:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = HAL_OK;
- 518              		.loc 1 148 3 view .LVU122
- 519              		.loc 1 148 17 is_stmt 0 view .LVU123
- 520 0032 0023     		movs	r3, #0
- 521 0034 014A     		ldr	r2, .L47
- 522 0036 1370     		strb	r3, [r2]
- 149:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
- 523              		.loc 1 149 3 is_stmt 1 view .LVU124
- 524              	.LVL49:
- 525              	.L39:
- 150:Drivers/DAC81416/Src/dac81416.c **** }
- 526              		.loc 1 150 1 is_stmt 0 view .LVU125
- 527 0038 1846     		mov	r0, r3
- 528 003a 38BD     		pop	{r3, r4, r5, pc}
- 529              	.L48:
- 530              		.align	2
- 531              	.L47:
- 532 003c 00000000 		.word	dacLastStatus
- 533              		.cfi_endproc
- 534              	.LFE154:
- 536              		.section	.text.DAC_EnableInternalRef,"ax",%progbits
- 537              		.align	1
- 538              		.global	DAC_EnableInternalRef
- 539              		.syntax unified
- 540              		.thumb
- 541              		.thumb_func
- 543              	DAC_EnableInternalRef:
- 544              	.LVL50:
- 545              	.LFB155:
+ 526              		.align	1
+ 527              		.global	DAC_EnableInternalRef
+ 528              		.syntax unified
+ 529              		.thumb
+ 530              		.thumb_func
+ 532              	DAC_EnableInternalRef:
+ 533              	.LVL52:
+ 534              	.LFB155:
+ 147:Drivers/DAC81416/Src/dac81416.c **** 
+ 148:Drivers/DAC81416/Src/dac81416.c **** HAL_StatusTypeDef DAC_EnableInternalRef(uint8_t enable)
+ 149:Drivers/DAC81416/Src/dac81416.c **** {
+ 535              		.loc 1 149 1 is_stmt 1 view -0
+ 536              		.cfi_startproc
+ 537              		@ args = 0, pretend = 0, frame = 0
+ 538              		@ frame_needed = 0, uses_anonymous_args = 0
+ 539              		.loc 1 149 1 is_stmt 0 view .LVU124
+ 540 0000 10B5     		push	{r4, lr}
+ 541              	.LCFI11:
+ 542              		.cfi_def_cfa_offset 8
+ 543              		.cfi_offset 4, -8
+ 544              		.cfi_offset 14, -4
+ 545 0002 0446     		mov	r4, r0
+ 150:Drivers/DAC81416/Src/dac81416.c ****   uint16_t reg = DAC_ReadRegister(DAC81416_CMD_READ, DAC81416_REG_GENCONFIG);
+ 546              		.loc 1 150 3 is_stmt 1 view .LVU125
+ 547              		.loc 1 150 18 is_stmt 0 view .LVU126
+ 548 0004 0421     		movs	r1, #4
+ 549 0006 C020     		movs	r0, #192
+ 550              	.LVL53:
+ 551              		.loc 1 150 18 view .LVU127
+ 552 0008 FFF7FEFF 		bl	DAC_ReadRegister
+ 553              	.LVL54:
+ 554 000c 0246     		mov	r2, r0
+ 555              	.LVL55:
  151:Drivers/DAC81416/Src/dac81416.c **** 
- 152:Drivers/DAC81416/Src/dac81416.c **** HAL_StatusTypeDef DAC_EnableInternalRef(uint8_t enable)
- 153:Drivers/DAC81416/Src/dac81416.c **** {
- 546              		.loc 1 153 1 is_stmt 1 view -0
- 547              		.cfi_startproc
- 548              		@ args = 0, pretend = 0, frame = 0
- 549              		@ frame_needed = 0, uses_anonymous_args = 0
- 550              		.loc 1 153 1 is_stmt 0 view .LVU127
- 551 0000 10B5     		push	{r4, lr}
- 552              	.LCFI10:
- 553              		.cfi_def_cfa_offset 8
- 554              		.cfi_offset 4, -8
- 555              		.cfi_offset 14, -4
- 556 0002 0446     		mov	r4, r0
- 154:Drivers/DAC81416/Src/dac81416.c ****   uint16_t reg = DAC_ReadRegister(DAC81416_CMD_READ, DAC81416_REG_GENCONFIG);
- 557              		.loc 1 154 3 is_stmt 1 view .LVU128
- 558              		.loc 1 154 18 is_stmt 0 view .LVU129
- 559 0004 0421     		movs	r1, #4
- 560 0006 8020     		movs	r0, #128
- 561              	.LVL51:
- 562              		.loc 1 154 18 view .LVU130
- 563 0008 FFF7FEFF 		bl	DAC_ReadRegister
- 564              	.LVL52:
- 565 000c 0246     		mov	r2, r0
- 566              	.LVL53:
- 155:Drivers/DAC81416/Src/dac81416.c **** 
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 14
+ 152:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
+ 556              		.loc 1 152 3 is_stmt 1 view .LVU128
+ 557              		.loc 1 152 21 is_stmt 0 view .LVU129
+ 558 000e 094B     		ldr	r3, .L54
+ 559 0010 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 560              		.loc 1 152 6 view .LVU130
+ 561 0012 48B9     		cbnz	r0, .L50
+ 153:Drivers/DAC81416/Src/dac81416.c ****   {
+ 154:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
+ 155:Drivers/DAC81416/Src/dac81416.c ****   }
+ 156:Drivers/DAC81416/Src/dac81416.c **** 
+ 157:Drivers/DAC81416/Src/dac81416.c ****   if (enable != 0U)
+ 562              		.loc 1 157 3 is_stmt 1 view .LVU131
+ 563              		.loc 1 157 6 is_stmt 0 view .LVU132
+ 564 0014 4CB1     		cbz	r4, .L51
+ 158:Drivers/DAC81416/Src/dac81416.c ****   {
+ 159:Drivers/DAC81416/Src/dac81416.c ****     reg &= (uint16_t)~DAC81416_GENCONFIG_REF_PWDWN;
+ 565              		.loc 1 159 5 is_stmt 1 view .LVU133
+ 566              		.loc 1 159 9 is_stmt 0 view .LVU134
+ 567 0016 22F48042 		bic	r2, r2, #16384
+ 568              	.LVL56:
+ 569              		.loc 1 159 9 view .LVU135
+ 570 001a 92B2     		uxth	r2, r2
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccJjicA9.s 			page 14
 
 
- 156:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
- 567              		.loc 1 156 3 is_stmt 1 view .LVU131
- 568              		.loc 1 156 21 is_stmt 0 view .LVU132
- 569 000e 094B     		ldr	r3, .L54
- 570 0010 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
- 571              		.loc 1 156 6 view .LVU133
- 572 0012 48B9     		cbnz	r0, .L50
- 157:Drivers/DAC81416/Src/dac81416.c ****   {
- 158:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
- 159:Drivers/DAC81416/Src/dac81416.c ****   }
- 160:Drivers/DAC81416/Src/dac81416.c **** 
- 161:Drivers/DAC81416/Src/dac81416.c ****   if (enable != 0U)
- 573              		.loc 1 161 3 is_stmt 1 view .LVU134
- 574              		.loc 1 161 6 is_stmt 0 view .LVU135
- 575 0014 4CB1     		cbz	r4, .L51
+ 571              	.LVL57:
+ 572              	.L52:
+ 160:Drivers/DAC81416/Src/dac81416.c ****   }
+ 161:Drivers/DAC81416/Src/dac81416.c ****   else
  162:Drivers/DAC81416/Src/dac81416.c ****   {
- 163:Drivers/DAC81416/Src/dac81416.c ****     reg &= (uint16_t)~DAC81416_GENCONFIG_REF_PWDWN;
- 576              		.loc 1 163 5 is_stmt 1 view .LVU136
- 577              		.loc 1 163 9 is_stmt 0 view .LVU137
- 578 0016 22F48042 		bic	r2, r2, #16384
- 579              	.LVL54:
- 580              		.loc 1 163 9 view .LVU138
- 581 001a 92B2     		uxth	r2, r2
- 582              	.LVL55:
- 583              	.L52:
+ 163:Drivers/DAC81416/Src/dac81416.c ****     reg |= DAC81416_GENCONFIG_REF_PWDWN;
  164:Drivers/DAC81416/Src/dac81416.c ****   }
- 165:Drivers/DAC81416/Src/dac81416.c ****   else
- 166:Drivers/DAC81416/Src/dac81416.c ****   {
- 167:Drivers/DAC81416/Src/dac81416.c ****     reg |= DAC81416_GENCONFIG_REF_PWDWN;
- 168:Drivers/DAC81416/Src/dac81416.c ****   }
+ 165:Drivers/DAC81416/Src/dac81416.c **** 
+ 166:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_WriteRegister(DAC81416_CMD_WRITE, DAC81416_REG_GENCONFIG, reg);
+ 573              		.loc 1 166 3 is_stmt 1 view .LVU136
+ 574              		.loc 1 166 19 is_stmt 0 view .LVU137
+ 575 001c 0421     		movs	r1, #4
+ 576 001e 0020     		movs	r0, #0
+ 577 0020 FFF7FEFF 		bl	DAC_WriteRegister
+ 578              	.LVL58:
+ 579              		.loc 1 166 17 discriminator 1 view .LVU138
+ 580 0024 034B     		ldr	r3, .L54
+ 581 0026 1870     		strb	r0, [r3]
+ 167:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
+ 582              		.loc 1 167 3 is_stmt 1 view .LVU139
+ 583              	.LVL59:
+ 584              	.L50:
+ 168:Drivers/DAC81416/Src/dac81416.c **** }
+ 585              		.loc 1 168 1 is_stmt 0 view .LVU140
+ 586 0028 10BD     		pop	{r4, pc}
+ 587              	.LVL60:
+ 588              	.L51:
+ 163:Drivers/DAC81416/Src/dac81416.c ****   }
+ 589              		.loc 1 163 5 is_stmt 1 view .LVU141
+ 163:Drivers/DAC81416/Src/dac81416.c ****   }
+ 590              		.loc 1 163 9 is_stmt 0 view .LVU142
+ 591 002a 42F48042 		orr	r2, r2, #16384
+ 592              	.LVL61:
+ 163:Drivers/DAC81416/Src/dac81416.c ****   }
+ 593              		.loc 1 163 9 view .LVU143
+ 594 002e 92B2     		uxth	r2, r2
+ 595 0030 F4E7     		b	.L52
+ 596              	.L55:
+ 597 0032 00BF     		.align	2
+ 598              	.L54:
+ 599 0034 00000000 		.word	dacLastStatus
+ 600              		.cfi_endproc
+ 601              	.LFE155:
+ 603              		.section	.text.DAC_SetAllChannelsRange,"ax",%progbits
+ 604              		.align	1
+ 605              		.global	DAC_SetAllChannelsRange
+ 606              		.syntax unified
+ 607              		.thumb
+ 608              		.thumb_func
+ 610              	DAC_SetAllChannelsRange:
+ 611              	.LVL62:
+ 612              	.LFB156:
  169:Drivers/DAC81416/Src/dac81416.c **** 
- 170:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_WriteRegister(DAC81416_CMD_WRITE, DAC81416_REG_GENCONFIG, reg);
- 584              		.loc 1 170 3 is_stmt 1 view .LVU139
- 585              		.loc 1 170 19 is_stmt 0 view .LVU140
- 586 001c 0421     		movs	r1, #4
- 587 001e 0020     		movs	r0, #0
- 588 0020 FFF7FEFF 		bl	DAC_WriteRegister
- 589              	.LVL56:
- 590              		.loc 1 170 17 discriminator 1 view .LVU141
- 591 0024 034B     		ldr	r3, .L54
- 592 0026 1870     		strb	r0, [r3]
- 171:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
- 593              		.loc 1 171 3 is_stmt 1 view .LVU142
- 594              	.LVL57:
- 595              	.L50:
- 172:Drivers/DAC81416/Src/dac81416.c **** }
- 596              		.loc 1 172 1 is_stmt 0 view .LVU143
- 597 0028 10BD     		pop	{r4, pc}
- 598              	.LVL58:
- 599              	.L51:
- 167:Drivers/DAC81416/Src/dac81416.c ****   }
- 600              		.loc 1 167 5 is_stmt 1 view .LVU144
- 167:Drivers/DAC81416/Src/dac81416.c ****   }
- 601              		.loc 1 167 9 is_stmt 0 view .LVU145
- 602 002a 42F48042 		orr	r2, r2, #16384
- 603              	.LVL59:
- 167:Drivers/DAC81416/Src/dac81416.c ****   }
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 15
+ 170:Drivers/DAC81416/Src/dac81416.c **** HAL_StatusTypeDef DAC_SetAllChannelsRange(uint8_t range)
+ 171:Drivers/DAC81416/Src/dac81416.c **** {
+ 613              		.loc 1 171 1 is_stmt 1 view -0
+ 614              		.cfi_startproc
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccJjicA9.s 			page 15
 
 
- 604              		.loc 1 167 9 view .LVU146
- 605 002e 92B2     		uxth	r2, r2
- 606 0030 F4E7     		b	.L52
- 607              	.L55:
- 608 0032 00BF     		.align	2
- 609              	.L54:
- 610 0034 00000000 		.word	dacLastStatus
- 611              		.cfi_endproc
- 612              	.LFE155:
- 614              		.section	.text.DAC_SetAllChannelsRange,"ax",%progbits
- 615              		.align	1
- 616              		.global	DAC_SetAllChannelsRange
- 617              		.syntax unified
- 618              		.thumb
- 619              		.thumb_func
- 621              	DAC_SetAllChannelsRange:
- 622              	.LVL60:
- 623              	.LFB156:
+ 615              		@ args = 0, pretend = 0, frame = 0
+ 616              		@ frame_needed = 0, uses_anonymous_args = 0
+ 617              		.loc 1 171 1 is_stmt 0 view .LVU145
+ 618 0000 38B5     		push	{r3, r4, r5, lr}
+ 619              	.LCFI12:
+ 620              		.cfi_def_cfa_offset 16
+ 621              		.cfi_offset 3, -16
+ 622              		.cfi_offset 4, -12
+ 623              		.cfi_offset 5, -8
+ 624              		.cfi_offset 14, -4
+ 625 0002 0446     		mov	r4, r0
+ 172:Drivers/DAC81416/Src/dac81416.c ****   uint16_t rangeValue;
+ 626              		.loc 1 172 3 is_stmt 1 view .LVU146
  173:Drivers/DAC81416/Src/dac81416.c **** 
- 174:Drivers/DAC81416/Src/dac81416.c **** HAL_StatusTypeDef DAC_SetAllChannelsRange(uint8_t range)
- 175:Drivers/DAC81416/Src/dac81416.c **** {
- 624              		.loc 1 175 1 is_stmt 1 view -0
- 625              		.cfi_startproc
- 626              		@ args = 0, pretend = 0, frame = 0
- 627              		@ frame_needed = 0, uses_anonymous_args = 0
- 628              		.loc 1 175 1 is_stmt 0 view .LVU148
- 629 0000 38B5     		push	{r3, r4, r5, lr}
- 630              	.LCFI11:
- 631              		.cfi_def_cfa_offset 16
- 632              		.cfi_offset 3, -16
- 633              		.cfi_offset 4, -12
- 634              		.cfi_offset 5, -8
- 635              		.cfi_offset 14, -4
- 636 0002 0446     		mov	r4, r0
- 176:Drivers/DAC81416/Src/dac81416.c ****   uint16_t rangeValue;
- 637              		.loc 1 176 3 is_stmt 1 view .LVU149
- 177:Drivers/DAC81416/Src/dac81416.c **** 
- 178:Drivers/DAC81416/Src/dac81416.c ****   if (DAC81416_IsValidRange(range) == 0U)
- 638              		.loc 1 178 3 view .LVU150
- 639              		.loc 1 178 7 is_stmt 0 view .LVU151
- 640 0004 FFF7FEFF 		bl	DAC81416_IsValidRange
- 641              	.LVL61:
- 642              		.loc 1 178 6 discriminator 1 view .LVU152
- 643 0008 98B1     		cbz	r0, .L62
- 179:Drivers/DAC81416/Src/dac81416.c ****   {
- 180:Drivers/DAC81416/Src/dac81416.c ****     dacLastStatus = HAL_ERROR;
- 181:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
- 182:Drivers/DAC81416/Src/dac81416.c ****   }
- 183:Drivers/DAC81416/Src/dac81416.c **** 
- 184:Drivers/DAC81416/Src/dac81416.c ****   rangeValue = DAC81416_BuildRangeRegister(range);
- 644              		.loc 1 184 3 is_stmt 1 view .LVU153
- 645              		.loc 1 184 16 is_stmt 0 view .LVU154
- 646 000a 2046     		mov	r0, r4
- 647 000c FFF7FEFF 		bl	DAC81416_BuildRangeRegister
- 648              	.LVL62:
- 649 0010 0546     		mov	r5, r0
- 650              	.LVL63:
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 16
+ 174:Drivers/DAC81416/Src/dac81416.c ****   if (DAC81416_IsValidRange(range) == 0U)
+ 627              		.loc 1 174 3 view .LVU147
+ 628              		.loc 1 174 7 is_stmt 0 view .LVU148
+ 629 0004 FFF7FEFF 		bl	DAC81416_IsValidRange
+ 630              	.LVL63:
+ 631              		.loc 1 174 6 discriminator 1 view .LVU149
+ 632 0008 98B1     		cbz	r0, .L62
+ 175:Drivers/DAC81416/Src/dac81416.c ****   {
+ 176:Drivers/DAC81416/Src/dac81416.c ****     dacLastStatus = HAL_ERROR;
+ 177:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
+ 178:Drivers/DAC81416/Src/dac81416.c ****   }
+ 179:Drivers/DAC81416/Src/dac81416.c **** 
+ 180:Drivers/DAC81416/Src/dac81416.c ****   rangeValue = DAC81416_BuildRangeRegister(range);
+ 633              		.loc 1 180 3 is_stmt 1 view .LVU150
+ 634              		.loc 1 180 16 is_stmt 0 view .LVU151
+ 635 000a 2046     		mov	r0, r4
+ 636 000c FFF7FEFF 		bl	DAC81416_BuildRangeRegister
+ 637              	.LVL64:
+ 638 0010 0546     		mov	r5, r0
+ 639              	.LVL65:
+ 181:Drivers/DAC81416/Src/dac81416.c **** 
+ 182:Drivers/DAC81416/Src/dac81416.c ****   for (uint8_t index = 0U; index < 4U; index++)
+ 640              		.loc 1 182 3 is_stmt 1 view .LVU152
+ 641              	.LBB4:
+ 642              		.loc 1 182 8 view .LVU153
+ 643              		.loc 1 182 16 is_stmt 0 view .LVU154
+ 644 0012 0024     		movs	r4, #0
+ 645              	.LVL66:
+ 646              	.L59:
+ 647              		.loc 1 182 34 is_stmt 1 discriminator 1 view .LVU155
+ 648 0014 032C     		cmp	r4, #3
+ 649 0016 10D8     		bhi	.L63
+ 183:Drivers/DAC81416/Src/dac81416.c ****   {
+ 184:Drivers/DAC81416/Src/dac81416.c ****     dacLastStatus = DAC_WriteRegister(DAC81416_CMD_WRITE,
+ 650              		.loc 1 184 5 view .LVU156
+ 185:Drivers/DAC81416/Src/dac81416.c ****                                       (uint8_t)(DAC81416_REG_DACRANGE0 + index),
+ 651              		.loc 1 185 39 is_stmt 0 view .LVU157
+ 652 0018 04F10A01 		add	r1, r4, #10
+ 184:Drivers/DAC81416/Src/dac81416.c ****                                       (uint8_t)(DAC81416_REG_DACRANGE0 + index),
+ 653              		.loc 1 184 21 view .LVU158
+ 654 001c 2A46     		mov	r2, r5
+ 655 001e C9B2     		uxtb	r1, r1
+ 656 0020 0020     		movs	r0, #0
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccJjicA9.s 			page 16
 
 
- 185:Drivers/DAC81416/Src/dac81416.c **** 
- 186:Drivers/DAC81416/Src/dac81416.c ****   for (uint8_t index = 0U; index < 4U; index++)
- 651              		.loc 1 186 3 is_stmt 1 view .LVU155
- 652              	.LBB4:
- 653              		.loc 1 186 8 view .LVU156
- 654              		.loc 1 186 16 is_stmt 0 view .LVU157
- 655 0012 0024     		movs	r4, #0
- 656              	.LVL64:
- 657              	.L59:
- 658              		.loc 1 186 34 is_stmt 1 discriminator 1 view .LVU158
- 659 0014 032C     		cmp	r4, #3
- 660 0016 10D8     		bhi	.L63
- 187:Drivers/DAC81416/Src/dac81416.c ****   {
- 188:Drivers/DAC81416/Src/dac81416.c ****     dacLastStatus = DAC_WriteRegister(DAC81416_CMD_WRITE,
- 661              		.loc 1 188 5 view .LVU159
- 189:Drivers/DAC81416/Src/dac81416.c ****                                       (uint8_t)(DAC81416_REG_DACRANGE0 + index),
- 662              		.loc 1 189 39 is_stmt 0 view .LVU160
- 663 0018 04F10A01 		add	r1, r4, #10
- 188:Drivers/DAC81416/Src/dac81416.c ****                                       (uint8_t)(DAC81416_REG_DACRANGE0 + index),
- 664              		.loc 1 188 21 view .LVU161
- 665 001c 2A46     		mov	r2, r5
- 666 001e C9B2     		uxtb	r1, r1
- 667 0020 0020     		movs	r0, #0
- 668 0022 FFF7FEFF 		bl	DAC_WriteRegister
- 669              	.LVL65:
- 188:Drivers/DAC81416/Src/dac81416.c ****                                       (uint8_t)(DAC81416_REG_DACRANGE0 + index),
- 670              		.loc 1 188 19 discriminator 1 view .LVU162
- 671 0026 064B     		ldr	r3, .L64
- 672 0028 1870     		strb	r0, [r3]
- 190:Drivers/DAC81416/Src/dac81416.c ****                                       rangeValue);
- 191:Drivers/DAC81416/Src/dac81416.c ****     if (dacLastStatus != HAL_OK)
- 673              		.loc 1 191 5 is_stmt 1 view .LVU163
- 674              		.loc 1 191 8 is_stmt 0 view .LVU164
- 675 002a 40B9     		cbnz	r0, .L58
- 186:Drivers/DAC81416/Src/dac81416.c ****   {
- 676              		.loc 1 186 45 is_stmt 1 discriminator 2 view .LVU165
- 677 002c 0134     		adds	r4, r4, #1
- 678              	.LVL66:
- 186:Drivers/DAC81416/Src/dac81416.c ****   {
- 679              		.loc 1 186 45 is_stmt 0 discriminator 2 view .LVU166
- 680 002e E4B2     		uxtb	r4, r4
- 681              	.LVL67:
- 186:Drivers/DAC81416/Src/dac81416.c ****   {
- 682              		.loc 1 186 45 discriminator 2 view .LVU167
- 683 0030 F0E7     		b	.L59
- 684              	.LVL68:
- 685              	.L62:
- 186:Drivers/DAC81416/Src/dac81416.c ****   {
- 686              		.loc 1 186 45 discriminator 2 view .LVU168
- 687              	.LBE4:
- 180:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
- 688              		.loc 1 180 5 is_stmt 1 view .LVU169
- 180:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
- 689              		.loc 1 180 19 is_stmt 0 view .LVU170
- 690 0032 0120     		movs	r0, #1
- 691 0034 024B     		ldr	r3, .L64
- 692 0036 1870     		strb	r0, [r3]
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 17
+ 657 0022 FFF7FEFF 		bl	DAC_WriteRegister
+ 658              	.LVL67:
+ 184:Drivers/DAC81416/Src/dac81416.c ****                                       (uint8_t)(DAC81416_REG_DACRANGE0 + index),
+ 659              		.loc 1 184 19 discriminator 1 view .LVU159
+ 660 0026 064B     		ldr	r3, .L64
+ 661 0028 1870     		strb	r0, [r3]
+ 186:Drivers/DAC81416/Src/dac81416.c ****                                       rangeValue);
+ 187:Drivers/DAC81416/Src/dac81416.c ****     if (dacLastStatus != HAL_OK)
+ 662              		.loc 1 187 5 is_stmt 1 view .LVU160
+ 663              		.loc 1 187 8 is_stmt 0 view .LVU161
+ 664 002a 40B9     		cbnz	r0, .L58
+ 182:Drivers/DAC81416/Src/dac81416.c ****   {
+ 665              		.loc 1 182 45 is_stmt 1 discriminator 2 view .LVU162
+ 666 002c 0134     		adds	r4, r4, #1
+ 667              	.LVL68:
+ 182:Drivers/DAC81416/Src/dac81416.c ****   {
+ 668              		.loc 1 182 45 is_stmt 0 discriminator 2 view .LVU163
+ 669 002e E4B2     		uxtb	r4, r4
+ 670              	.LVL69:
+ 182:Drivers/DAC81416/Src/dac81416.c ****   {
+ 671              		.loc 1 182 45 discriminator 2 view .LVU164
+ 672 0030 F0E7     		b	.L59
+ 673              	.LVL70:
+ 674              	.L62:
+ 182:Drivers/DAC81416/Src/dac81416.c ****   {
+ 675              		.loc 1 182 45 discriminator 2 view .LVU165
+ 676              	.LBE4:
+ 176:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
+ 677              		.loc 1 176 5 is_stmt 1 view .LVU166
+ 176:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
+ 678              		.loc 1 176 19 is_stmt 0 view .LVU167
+ 679 0032 0120     		movs	r0, #1
+ 680 0034 024B     		ldr	r3, .L64
+ 681 0036 1870     		strb	r0, [r3]
+ 177:Drivers/DAC81416/Src/dac81416.c ****   }
+ 682              		.loc 1 177 5 is_stmt 1 view .LVU168
+ 177:Drivers/DAC81416/Src/dac81416.c ****   }
+ 683              		.loc 1 177 12 is_stmt 0 view .LVU169
+ 684 0038 01E0     		b	.L58
+ 685              	.LVL71:
+ 686              	.L63:
+ 188:Drivers/DAC81416/Src/dac81416.c ****     {
+ 189:Drivers/DAC81416/Src/dac81416.c ****       return dacLastStatus;
+ 190:Drivers/DAC81416/Src/dac81416.c ****     }
+ 191:Drivers/DAC81416/Src/dac81416.c ****   }
+ 192:Drivers/DAC81416/Src/dac81416.c **** 
+ 193:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
+ 687              		.loc 1 193 3 is_stmt 1 view .LVU170
+ 688              		.loc 1 193 10 is_stmt 0 view .LVU171
+ 689 003a 014B     		ldr	r3, .L64
+ 690 003c 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 691              	.LVL72:
+ 692              	.L58:
+ 194:Drivers/DAC81416/Src/dac81416.c **** }
+ 693              		.loc 1 194 1 view .LVU172
+ 694 003e 38BD     		pop	{r3, r4, r5, pc}
+ 695              	.L65:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccJjicA9.s 			page 17
 
 
- 181:Drivers/DAC81416/Src/dac81416.c ****   }
- 693              		.loc 1 181 5 is_stmt 1 view .LVU171
- 181:Drivers/DAC81416/Src/dac81416.c ****   }
- 694              		.loc 1 181 12 is_stmt 0 view .LVU172
- 695 0038 01E0     		b	.L58
- 696              	.LVL69:
- 697              	.L63:
- 192:Drivers/DAC81416/Src/dac81416.c ****     {
- 193:Drivers/DAC81416/Src/dac81416.c ****       return dacLastStatus;
- 194:Drivers/DAC81416/Src/dac81416.c ****     }
- 195:Drivers/DAC81416/Src/dac81416.c ****   }
- 196:Drivers/DAC81416/Src/dac81416.c **** 
- 197:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
- 698              		.loc 1 197 3 is_stmt 1 view .LVU173
- 699              		.loc 1 197 10 is_stmt 0 view .LVU174
- 700 003a 014B     		ldr	r3, .L64
- 701 003c 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
- 702              	.LVL70:
- 703              	.L58:
- 198:Drivers/DAC81416/Src/dac81416.c **** }
- 704              		.loc 1 198 1 view .LVU175
- 705 003e 38BD     		pop	{r3, r4, r5, pc}
- 706              	.L65:
- 707              		.align	2
- 708              	.L64:
- 709 0040 00000000 		.word	dacLastStatus
- 710              		.cfi_endproc
- 711              	.LFE156:
- 713              		.section	.text.DAC_ConfigAllChannels0To5V,"ax",%progbits
- 714              		.align	1
- 715              		.global	DAC_ConfigAllChannels0To5V
- 716              		.syntax unified
- 717              		.thumb
- 718              		.thumb_func
- 720              	DAC_ConfigAllChannels0To5V:
- 721              	.LFB157:
- 199:Drivers/DAC81416/Src/dac81416.c **** 
- 200:Drivers/DAC81416/Src/dac81416.c **** HAL_StatusTypeDef DAC_ConfigAllChannels0To5V(void)
- 201:Drivers/DAC81416/Src/dac81416.c **** {
- 722              		.loc 1 201 1 is_stmt 1 view -0
- 723              		.cfi_startproc
- 724              		@ args = 0, pretend = 0, frame = 0
- 725              		@ frame_needed = 0, uses_anonymous_args = 0
- 726 0000 08B5     		push	{r3, lr}
- 727              	.LCFI12:
- 728              		.cfi_def_cfa_offset 8
- 729              		.cfi_offset 3, -8
- 730              		.cfi_offset 14, -4
- 202:Drivers/DAC81416/Src/dac81416.c ****   return DAC_SetAllChannelsRange(DAC81416_RANGE_0V_TO_5V);
- 731              		.loc 1 202 3 view .LVU177
- 732              		.loc 1 202 10 is_stmt 0 view .LVU178
- 733 0002 0020     		movs	r0, #0
- 734 0004 FFF7FEFF 		bl	DAC_SetAllChannelsRange
- 735              	.LVL71:
- 203:Drivers/DAC81416/Src/dac81416.c **** }
- 736              		.loc 1 203 1 view .LVU179
- 737 0008 08BD     		pop	{r3, pc}
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 18
+ 696              		.align	2
+ 697              	.L64:
+ 698 0040 00000000 		.word	dacLastStatus
+ 699              		.cfi_endproc
+ 700              	.LFE156:
+ 702              		.section	.text.DAC_ConfigAllChannels0To5V,"ax",%progbits
+ 703              		.align	1
+ 704              		.global	DAC_ConfigAllChannels0To5V
+ 705              		.syntax unified
+ 706              		.thumb
+ 707              		.thumb_func
+ 709              	DAC_ConfigAllChannels0To5V:
+ 710              	.LFB157:
+ 195:Drivers/DAC81416/Src/dac81416.c **** 
+ 196:Drivers/DAC81416/Src/dac81416.c **** HAL_StatusTypeDef DAC_ConfigAllChannels0To5V(void)
+ 197:Drivers/DAC81416/Src/dac81416.c **** {
+ 711              		.loc 1 197 1 is_stmt 1 view -0
+ 712              		.cfi_startproc
+ 713              		@ args = 0, pretend = 0, frame = 0
+ 714              		@ frame_needed = 0, uses_anonymous_args = 0
+ 715 0000 08B5     		push	{r3, lr}
+ 716              	.LCFI13:
+ 717              		.cfi_def_cfa_offset 8
+ 718              		.cfi_offset 3, -8
+ 719              		.cfi_offset 14, -4
+ 198:Drivers/DAC81416/Src/dac81416.c ****   return DAC_SetAllChannelsRange(DAC81416_RANGE_0V_TO_5V);
+ 720              		.loc 1 198 3 view .LVU174
+ 721              		.loc 1 198 10 is_stmt 0 view .LVU175
+ 722 0002 0020     		movs	r0, #0
+ 723 0004 FFF7FEFF 		bl	DAC_SetAllChannelsRange
+ 724              	.LVL73:
+ 199:Drivers/DAC81416/Src/dac81416.c **** }
+ 725              		.loc 1 199 1 view .LVU176
+ 726 0008 08BD     		pop	{r3, pc}
+ 727              		.cfi_endproc
+ 728              	.LFE157:
+ 730              		.section	.text.DAC_PowerDownChannels,"ax",%progbits
+ 731              		.align	1
+ 732              		.global	DAC_PowerDownChannels
+ 733              		.syntax unified
+ 734              		.thumb
+ 735              		.thumb_func
+ 737              	DAC_PowerDownChannels:
+ 738              	.LVL74:
+ 739              	.LFB158:
+ 200:Drivers/DAC81416/Src/dac81416.c **** 
+ 201:Drivers/DAC81416/Src/dac81416.c **** HAL_StatusTypeDef DAC_PowerDownChannels(uint16_t powerDownMask)
+ 202:Drivers/DAC81416/Src/dac81416.c **** {
+ 740              		.loc 1 202 1 is_stmt 1 view -0
+ 741              		.cfi_startproc
+ 742              		@ args = 0, pretend = 0, frame = 0
+ 743              		@ frame_needed = 0, uses_anonymous_args = 0
+ 744              		.loc 1 202 1 is_stmt 0 view .LVU178
+ 745 0000 08B5     		push	{r3, lr}
+ 746              	.LCFI14:
+ 747              		.cfi_def_cfa_offset 8
+ 748              		.cfi_offset 3, -8
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccJjicA9.s 			page 18
 
 
- 738              		.cfi_endproc
- 739              	.LFE157:
- 741              		.section	.text.DAC_PowerDownChannels,"ax",%progbits
- 742              		.align	1
- 743              		.global	DAC_PowerDownChannels
- 744              		.syntax unified
- 745              		.thumb
- 746              		.thumb_func
- 748              	DAC_PowerDownChannels:
- 749              	.LVL72:
- 750              	.LFB158:
- 204:Drivers/DAC81416/Src/dac81416.c **** 
- 205:Drivers/DAC81416/Src/dac81416.c **** HAL_StatusTypeDef DAC_PowerDownChannels(uint16_t powerDownMask)
- 206:Drivers/DAC81416/Src/dac81416.c **** {
- 751              		.loc 1 206 1 is_stmt 1 view -0
- 752              		.cfi_startproc
- 753              		@ args = 0, pretend = 0, frame = 0
- 754              		@ frame_needed = 0, uses_anonymous_args = 0
- 755              		.loc 1 206 1 is_stmt 0 view .LVU181
- 756 0000 08B5     		push	{r3, lr}
- 757              	.LCFI13:
- 758              		.cfi_def_cfa_offset 8
- 759              		.cfi_offset 3, -8
- 760              		.cfi_offset 14, -4
- 761 0002 0246     		mov	r2, r0
- 207:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_WriteRegister(DAC81416_CMD_WRITE,
- 762              		.loc 1 207 3 is_stmt 1 view .LVU182
- 763              		.loc 1 207 19 is_stmt 0 view .LVU183
- 764 0004 0921     		movs	r1, #9
- 765 0006 0020     		movs	r0, #0
- 766              	.LVL73:
- 767              		.loc 1 207 19 view .LVU184
- 768 0008 FFF7FEFF 		bl	DAC_WriteRegister
- 769              	.LVL74:
- 770              		.loc 1 207 17 discriminator 1 view .LVU185
- 771 000c 014B     		ldr	r3, .L70
- 772 000e 1870     		strb	r0, [r3]
- 208:Drivers/DAC81416/Src/dac81416.c ****                                     DAC81416_REG_DACPWDWN,
- 209:Drivers/DAC81416/Src/dac81416.c ****                                     powerDownMask);
- 210:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
- 773              		.loc 1 210 3 is_stmt 1 view .LVU186
- 211:Drivers/DAC81416/Src/dac81416.c **** }
- 774              		.loc 1 211 1 is_stmt 0 view .LVU187
- 775 0010 08BD     		pop	{r3, pc}
- 776              	.L71:
- 777 0012 00BF     		.align	2
- 778              	.L70:
- 779 0014 00000000 		.word	dacLastStatus
- 780              		.cfi_endproc
- 781              	.LFE158:
- 783              		.section	.text.DAC81416_Init,"ax",%progbits
- 784              		.align	1
- 785              		.global	DAC81416_Init
- 786              		.syntax unified
- 787              		.thumb
- 788              		.thumb_func
- 790              	DAC81416_Init:
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 19
+ 749              		.cfi_offset 14, -4
+ 750 0002 0246     		mov	r2, r0
+ 203:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_WriteRegister(DAC81416_CMD_WRITE,
+ 751              		.loc 1 203 3 is_stmt 1 view .LVU179
+ 752              		.loc 1 203 19 is_stmt 0 view .LVU180
+ 753 0004 0921     		movs	r1, #9
+ 754 0006 0020     		movs	r0, #0
+ 755              	.LVL75:
+ 756              		.loc 1 203 19 view .LVU181
+ 757 0008 FFF7FEFF 		bl	DAC_WriteRegister
+ 758              	.LVL76:
+ 759              		.loc 1 203 17 discriminator 1 view .LVU182
+ 760 000c 014B     		ldr	r3, .L70
+ 761 000e 1870     		strb	r0, [r3]
+ 204:Drivers/DAC81416/Src/dac81416.c ****                                     DAC81416_REG_DACPWDWN,
+ 205:Drivers/DAC81416/Src/dac81416.c ****                                     powerDownMask);
+ 206:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
+ 762              		.loc 1 206 3 is_stmt 1 view .LVU183
+ 207:Drivers/DAC81416/Src/dac81416.c **** }
+ 763              		.loc 1 207 1 is_stmt 0 view .LVU184
+ 764 0010 08BD     		pop	{r3, pc}
+ 765              	.L71:
+ 766 0012 00BF     		.align	2
+ 767              	.L70:
+ 768 0014 00000000 		.word	dacLastStatus
+ 769              		.cfi_endproc
+ 770              	.LFE158:
+ 772              		.section	.text.DAC81416_Init,"ax",%progbits
+ 773              		.align	1
+ 774              		.global	DAC81416_Init
+ 775              		.syntax unified
+ 776              		.thumb
+ 777              		.thumb_func
+ 779              	DAC81416_Init:
+ 780              	.LFB149:
+  43:Drivers/DAC81416/Src/dac81416.c ****   BSP_DAC81416_Init();
+ 781              		.loc 1 43 1 is_stmt 1 view -0
+ 782              		.cfi_startproc
+ 783              		@ args = 0, pretend = 0, frame = 0
+ 784              		@ frame_needed = 0, uses_anonymous_args = 0
+ 785 0000 08B5     		push	{r3, lr}
+ 786              	.LCFI15:
+ 787              		.cfi_def_cfa_offset 8
+ 788              		.cfi_offset 3, -8
+ 789              		.cfi_offset 14, -4
+  44:Drivers/DAC81416/Src/dac81416.c ****   DAC_ResetHardware();
+ 790              		.loc 1 44 3 view .LVU186
+ 791 0002 FFF7FEFF 		bl	BSP_DAC81416_Init
+ 792              	.LVL77:
+  45:Drivers/DAC81416/Src/dac81416.c **** 
+ 793              		.loc 1 45 3 view .LVU187
+ 794 0006 FFF7FEFF 		bl	DAC_ResetHardware
+ 795              	.LVL78:
+  47:Drivers/DAC81416/Src/dac81416.c ****                                     DAC81416_REG_SPICONFIG,
+ 796              		.loc 1 47 3 view .LVU188
+  47:Drivers/DAC81416/Src/dac81416.c ****                                     DAC81416_REG_SPICONFIG,
+ 797              		.loc 1 47 19 is_stmt 0 view .LVU189
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccJjicA9.s 			page 19
 
 
- 791              	.LFB149:
-  41:Drivers/DAC81416/Src/dac81416.c ****   BSP_DAC81416_Init();
- 792              		.loc 1 41 1 is_stmt 1 view -0
- 793              		.cfi_startproc
- 794              		@ args = 0, pretend = 0, frame = 0
- 795              		@ frame_needed = 0, uses_anonymous_args = 0
- 796 0000 08B5     		push	{r3, lr}
- 797              	.LCFI14:
- 798              		.cfi_def_cfa_offset 8
- 799              		.cfi_offset 3, -8
- 800              		.cfi_offset 14, -4
-  42:Drivers/DAC81416/Src/dac81416.c ****   DAC_ResetHardware();
- 801              		.loc 1 42 3 view .LVU189
- 802 0002 FFF7FEFF 		bl	BSP_DAC81416_Init
- 803              	.LVL75:
-  43:Drivers/DAC81416/Src/dac81416.c **** 
- 804              		.loc 1 43 3 view .LVU190
- 805 0006 FFF7FEFF 		bl	DAC_ResetHardware
- 806              	.LVL76:
-  45:Drivers/DAC81416/Src/dac81416.c ****                                     DAC81416_REG_SPICONFIG,
- 807              		.loc 1 45 3 view .LVU191
-  45:Drivers/DAC81416/Src/dac81416.c ****                                     DAC81416_REG_SPICONFIG,
- 808              		.loc 1 45 19 is_stmt 0 view .LVU192
- 809 000a 40F68422 		movw	r2, #2692
- 810 000e 0321     		movs	r1, #3
- 811 0010 0020     		movs	r0, #0
- 812 0012 FFF7FEFF 		bl	DAC_WriteRegister
- 813              	.LVL77:
-  45:Drivers/DAC81416/Src/dac81416.c ****                                     DAC81416_REG_SPICONFIG,
- 814              		.loc 1 45 17 discriminator 1 view .LVU193
- 815 0016 0C4B     		ldr	r3, .L76
- 816 0018 1870     		strb	r0, [r3]
-  48:Drivers/DAC81416/Src/dac81416.c ****   {
- 817              		.loc 1 48 3 is_stmt 1 view .LVU194
-  48:Drivers/DAC81416/Src/dac81416.c ****   {
- 818              		.loc 1 48 6 is_stmt 0 view .LVU195
- 819 001a 00B1     		cbz	r0, .L75
- 820              	.L73:
-  69:Drivers/DAC81416/Src/dac81416.c **** 
- 821              		.loc 1 69 1 view .LVU196
- 822 001c 08BD     		pop	{r3, pc}
- 823              	.L75:
-  53:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
- 824              		.loc 1 53 3 is_stmt 1 view .LVU197
-  53:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
- 825              		.loc 1 53 19 is_stmt 0 view .LVU198
- 826 001e 0120     		movs	r0, #1
- 827 0020 FFF7FEFF 		bl	DAC_EnableInternalRef
- 828              	.LVL78:
-  53:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
- 829              		.loc 1 53 17 discriminator 1 view .LVU199
- 830 0024 084B     		ldr	r3, .L76
- 831 0026 1870     		strb	r0, [r3]
-  54:Drivers/DAC81416/Src/dac81416.c ****   {
- 832              		.loc 1 54 3 is_stmt 1 view .LVU200
-  54:Drivers/DAC81416/Src/dac81416.c ****   {
- 833              		.loc 1 54 6 is_stmt 0 view .LVU201
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 20
+ 798 000a 40F68422 		movw	r2, #2692
+ 799 000e 0321     		movs	r1, #3
+ 800 0010 0020     		movs	r0, #0
+ 801 0012 FFF7FEFF 		bl	DAC_WriteRegister
+ 802              	.LVL79:
+  47:Drivers/DAC81416/Src/dac81416.c ****                                     DAC81416_REG_SPICONFIG,
+ 803              		.loc 1 47 17 discriminator 1 view .LVU190
+ 804 0016 0C4B     		ldr	r3, .L76
+ 805 0018 1870     		strb	r0, [r3]
+  50:Drivers/DAC81416/Src/dac81416.c ****   {
+ 806              		.loc 1 50 3 is_stmt 1 view .LVU191
+  50:Drivers/DAC81416/Src/dac81416.c ****   {
+ 807              		.loc 1 50 6 is_stmt 0 view .LVU192
+ 808 001a 00B1     		cbz	r0, .L75
+ 809              	.L73:
+  71:Drivers/DAC81416/Src/dac81416.c **** 
+ 810              		.loc 1 71 1 view .LVU193
+ 811 001c 08BD     		pop	{r3, pc}
+ 812              	.L75:
+  55:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
+ 813              		.loc 1 55 3 is_stmt 1 view .LVU194
+  55:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
+ 814              		.loc 1 55 19 is_stmt 0 view .LVU195
+ 815 001e 0120     		movs	r0, #1
+ 816 0020 FFF7FEFF 		bl	DAC_EnableInternalRef
+ 817              	.LVL80:
+  55:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
+ 818              		.loc 1 55 17 discriminator 1 view .LVU196
+ 819 0024 084B     		ldr	r3, .L76
+ 820 0026 1870     		strb	r0, [r3]
+  56:Drivers/DAC81416/Src/dac81416.c ****   {
+ 821              		.loc 1 56 3 is_stmt 1 view .LVU197
+  56:Drivers/DAC81416/Src/dac81416.c ****   {
+ 822              		.loc 1 56 6 is_stmt 0 view .LVU198
+ 823 0028 0028     		cmp	r0, #0
+ 824 002a F7D1     		bne	.L73
+  61:Drivers/DAC81416/Src/dac81416.c **** 
+ 825              		.loc 1 61 3 is_stmt 1 view .LVU199
+ 826 002c 0120     		movs	r0, #1
+ 827 002e FFF7FEFF 		bl	HAL_Delay
+ 828              	.LVL81:
+  63:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
+ 829              		.loc 1 63 3 view .LVU200
+  63:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
+ 830              		.loc 1 63 19 is_stmt 0 view .LVU201
+ 831 0032 FFF7FEFF 		bl	DAC_ConfigAllChannels0To5V
+ 832              	.LVL82:
+  63:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
+ 833              		.loc 1 63 17 discriminator 1 view .LVU202
+ 834 0036 044B     		ldr	r3, .L76
+ 835 0038 1870     		strb	r0, [r3]
+  64:Drivers/DAC81416/Src/dac81416.c ****   {
+ 836              		.loc 1 64 3 is_stmt 1 view .LVU203
+  64:Drivers/DAC81416/Src/dac81416.c ****   {
+ 837              		.loc 1 64 6 is_stmt 0 view .LVU204
+ 838 003a 0028     		cmp	r0, #0
+ 839 003c EED1     		bne	.L73
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccJjicA9.s 			page 20
 
 
- 834 0028 0028     		cmp	r0, #0
- 835 002a F7D1     		bne	.L73
-  59:Drivers/DAC81416/Src/dac81416.c **** 
- 836              		.loc 1 59 3 is_stmt 1 view .LVU202
- 837 002c 0120     		movs	r0, #1
- 838 002e FFF7FEFF 		bl	HAL_Delay
- 839              	.LVL79:
-  61:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
- 840              		.loc 1 61 3 view .LVU203
-  61:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
- 841              		.loc 1 61 19 is_stmt 0 view .LVU204
- 842 0032 FFF7FEFF 		bl	DAC_ConfigAllChannels0To5V
- 843              	.LVL80:
-  61:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
- 844              		.loc 1 61 17 discriminator 1 view .LVU205
- 845 0036 044B     		ldr	r3, .L76
- 846 0038 1870     		strb	r0, [r3]
-  62:Drivers/DAC81416/Src/dac81416.c ****   {
- 847              		.loc 1 62 3 is_stmt 1 view .LVU206
-  62:Drivers/DAC81416/Src/dac81416.c ****   {
- 848              		.loc 1 62 6 is_stmt 0 view .LVU207
- 849 003a 0028     		cmp	r0, #0
- 850 003c EED1     		bne	.L73
-  67:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
- 851              		.loc 1 67 3 is_stmt 1 view .LVU208
-  67:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
- 852              		.loc 1 67 19 is_stmt 0 view .LVU209
- 853 003e FFF7FEFF 		bl	DAC_PowerDownChannels
- 854              	.LVL81:
-  67:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
- 855              		.loc 1 67 17 discriminator 1 view .LVU210
- 856 0042 014B     		ldr	r3, .L76
- 857 0044 1870     		strb	r0, [r3]
-  68:Drivers/DAC81416/Src/dac81416.c **** }
- 858              		.loc 1 68 3 is_stmt 1 view .LVU211
-  68:Drivers/DAC81416/Src/dac81416.c **** }
- 859              		.loc 1 68 10 is_stmt 0 view .LVU212
- 860 0046 E9E7     		b	.L73
- 861              	.L77:
- 862              		.align	2
- 863              	.L76:
- 864 0048 00000000 		.word	dacLastStatus
- 865              		.cfi_endproc
- 866              	.LFE149:
- 868              		.section	.text.DAC_TriggerLDAC,"ax",%progbits
- 869              		.align	1
- 870              		.global	DAC_TriggerLDAC
- 871              		.syntax unified
- 872              		.thumb
- 873              		.thumb_func
- 875              	DAC_TriggerLDAC:
- 876              	.LFB159:
- 212:Drivers/DAC81416/Src/dac81416.c **** 
- 213:Drivers/DAC81416/Src/dac81416.c **** HAL_StatusTypeDef DAC_TriggerLDAC(void)
- 214:Drivers/DAC81416/Src/dac81416.c **** {
- 877              		.loc 1 214 1 is_stmt 1 view -0
- 878              		.cfi_startproc
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 21
+  69:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
+ 840              		.loc 1 69 3 is_stmt 1 view .LVU205
+  69:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
+ 841              		.loc 1 69 19 is_stmt 0 view .LVU206
+ 842 003e FFF7FEFF 		bl	DAC_PowerDownChannels
+ 843              	.LVL83:
+  69:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
+ 844              		.loc 1 69 17 discriminator 1 view .LVU207
+ 845 0042 014B     		ldr	r3, .L76
+ 846 0044 1870     		strb	r0, [r3]
+  70:Drivers/DAC81416/Src/dac81416.c **** }
+ 847              		.loc 1 70 3 is_stmt 1 view .LVU208
+  70:Drivers/DAC81416/Src/dac81416.c **** }
+ 848              		.loc 1 70 10 is_stmt 0 view .LVU209
+ 849 0046 E9E7     		b	.L73
+ 850              	.L77:
+ 851              		.align	2
+ 852              	.L76:
+ 853 0048 00000000 		.word	dacLastStatus
+ 854              		.cfi_endproc
+ 855              	.LFE149:
+ 857              		.section	.text.DAC_TriggerLDAC,"ax",%progbits
+ 858              		.align	1
+ 859              		.global	DAC_TriggerLDAC
+ 860              		.syntax unified
+ 861              		.thumb
+ 862              		.thumb_func
+ 864              	DAC_TriggerLDAC:
+ 865              	.LFB159:
+ 208:Drivers/DAC81416/Src/dac81416.c **** 
+ 209:Drivers/DAC81416/Src/dac81416.c **** HAL_StatusTypeDef DAC_TriggerLDAC(void)
+ 210:Drivers/DAC81416/Src/dac81416.c **** {
+ 866              		.loc 1 210 1 is_stmt 1 view -0
+ 867              		.cfi_startproc
+ 868              		@ args = 0, pretend = 0, frame = 0
+ 869              		@ frame_needed = 0, uses_anonymous_args = 0
+ 870 0000 08B5     		push	{r3, lr}
+ 871              	.LCFI16:
+ 872              		.cfi_def_cfa_offset 8
+ 873              		.cfi_offset 3, -8
+ 874              		.cfi_offset 14, -4
+ 211:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_WriteRegister(DAC81416_CMD_WRITE,
+ 875              		.loc 1 211 3 view .LVU211
+ 876              		.loc 1 211 19 is_stmt 0 view .LVU212
+ 877 0002 1022     		movs	r2, #16
+ 878 0004 0E21     		movs	r1, #14
+ 879 0006 0020     		movs	r0, #0
+ 880 0008 FFF7FEFF 		bl	DAC_WriteRegister
+ 881              	.LVL84:
+ 882              		.loc 1 211 17 discriminator 1 view .LVU213
+ 883 000c 014B     		ldr	r3, .L80
+ 884 000e 1870     		strb	r0, [r3]
+ 212:Drivers/DAC81416/Src/dac81416.c ****                                     DAC81416_REG_TRIGGER,
+ 213:Drivers/DAC81416/Src/dac81416.c ****                                     DAC81416_TRIGGER_LDAC);
+ 214:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
+ 885              		.loc 1 214 3 is_stmt 1 view .LVU214
+ 215:Drivers/DAC81416/Src/dac81416.c **** }
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccJjicA9.s 			page 21
 
 
- 879              		@ args = 0, pretend = 0, frame = 0
- 880              		@ frame_needed = 0, uses_anonymous_args = 0
- 881 0000 08B5     		push	{r3, lr}
- 882              	.LCFI15:
- 883              		.cfi_def_cfa_offset 8
- 884              		.cfi_offset 3, -8
- 885              		.cfi_offset 14, -4
- 215:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_WriteRegister(DAC81416_CMD_WRITE,
- 886              		.loc 1 215 3 view .LVU214
- 887              		.loc 1 215 19 is_stmt 0 view .LVU215
- 888 0002 1022     		movs	r2, #16
- 889 0004 0E21     		movs	r1, #14
- 890 0006 0020     		movs	r0, #0
- 891 0008 FFF7FEFF 		bl	DAC_WriteRegister
- 892              	.LVL82:
- 893              		.loc 1 215 17 discriminator 1 view .LVU216
- 894 000c 014B     		ldr	r3, .L80
- 895 000e 1870     		strb	r0, [r3]
- 216:Drivers/DAC81416/Src/dac81416.c ****                                     DAC81416_REG_TRIGGER,
- 217:Drivers/DAC81416/Src/dac81416.c ****                                     DAC81416_TRIGGER_LDAC);
- 218:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
- 896              		.loc 1 218 3 is_stmt 1 view .LVU217
- 219:Drivers/DAC81416/Src/dac81416.c **** }
- 897              		.loc 1 219 1 is_stmt 0 view .LVU218
- 898 0010 08BD     		pop	{r3, pc}
- 899              	.L81:
- 900 0012 00BF     		.align	2
- 901              	.L80:
- 902 0014 00000000 		.word	dacLastStatus
- 903              		.cfi_endproc
- 904              	.LFE159:
- 906              		.section	.text.DAC_GetLastStatus,"ax",%progbits
- 907              		.align	1
- 908              		.global	DAC_GetLastStatus
- 909              		.syntax unified
- 910              		.thumb
- 911              		.thumb_func
- 913              	DAC_GetLastStatus:
- 914              	.LFB160:
- 220:Drivers/DAC81416/Src/dac81416.c **** 
- 221:Drivers/DAC81416/Src/dac81416.c **** HAL_StatusTypeDef DAC_GetLastStatus(void)
- 222:Drivers/DAC81416/Src/dac81416.c **** {
- 915              		.loc 1 222 1 is_stmt 1 view -0
- 916              		.cfi_startproc
- 917              		@ args = 0, pretend = 0, frame = 0
- 918              		@ frame_needed = 0, uses_anonymous_args = 0
- 919              		@ link register save eliminated.
- 223:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
- 920              		.loc 1 223 3 view .LVU220
- 224:Drivers/DAC81416/Src/dac81416.c **** }
- 921              		.loc 1 224 1 is_stmt 0 view .LVU221
- 922 0000 014B     		ldr	r3, .L83
- 923 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
- 924 0004 7047     		bx	lr
- 925              	.L84:
- 926 0006 00BF     		.align	2
- 927              	.L83:
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 22
-
-
- 928 0008 00000000 		.word	dacLastStatus
- 929              		.cfi_endproc
- 930              	.LFE160:
- 932              		.section	.bss.dacLastStatus,"aw",%nobits
- 935              	dacLastStatus:
- 936 0000 00       		.space	1
- 937              		.text
- 938              	.Letext0:
- 939              		.file 2 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
- 940              		.file 3 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
- 941              		.file 4 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
- 942              		.file 5 "BSP/Inc/bsp_dac81416.h"
- 943              		.file 6 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h"
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s 			page 23
+ 886              		.loc 1 215 1 is_stmt 0 view .LVU215
+ 887 0010 08BD     		pop	{r3, pc}
+ 888              	.L81:
+ 889 0012 00BF     		.align	2
+ 890              	.L80:
+ 891 0014 00000000 		.word	dacLastStatus
+ 892              		.cfi_endproc
+ 893              	.LFE159:
+ 895              		.section	.text.DAC_GetLastStatus,"ax",%progbits
+ 896              		.align	1
+ 897              		.global	DAC_GetLastStatus
+ 898              		.syntax unified
+ 899              		.thumb
+ 900              		.thumb_func
+ 902              	DAC_GetLastStatus:
+ 903              	.LFB160:
+ 216:Drivers/DAC81416/Src/dac81416.c **** 
+ 217:Drivers/DAC81416/Src/dac81416.c **** HAL_StatusTypeDef DAC_GetLastStatus(void)
+ 218:Drivers/DAC81416/Src/dac81416.c **** {
+ 904              		.loc 1 218 1 is_stmt 1 view -0
+ 905              		.cfi_startproc
+ 906              		@ args = 0, pretend = 0, frame = 0
+ 907              		@ frame_needed = 0, uses_anonymous_args = 0
+ 908              		@ link register save eliminated.
+ 219:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
+ 909              		.loc 1 219 3 view .LVU217
+ 220:Drivers/DAC81416/Src/dac81416.c **** }
+ 910              		.loc 1 220 1 is_stmt 0 view .LVU218
+ 911 0000 014B     		ldr	r3, .L83
+ 912 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 913 0004 7047     		bx	lr
+ 914              	.L84:
+ 915 0006 00BF     		.align	2
+ 916              	.L83:
+ 917 0008 00000000 		.word	dacLastStatus
+ 918              		.cfi_endproc
+ 919              	.LFE160:
+ 921              		.section	.bss.dacLastStatus,"aw",%nobits
+ 924              	dacLastStatus:
+ 925 0000 00       		.space	1
+ 926              		.text
+ 927              	.Letext0:
+ 928              		.file 2 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 929              		.file 3 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 930              		.file 4 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
+ 931              		.file 5 "BSP/Inc/bsp_dac81416.h"
+ 932              		.file 6 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h"
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccJjicA9.s 			page 22
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 dac81416.c
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:20     .text.DAC81416_IsValidRange:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:25     .text.DAC81416_IsValidRange:00000000 DAC81416_IsValidRange
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:98     .text.DAC81416_BuildRangeRegister:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:103    .text.DAC81416_BuildRangeRegister:00000000 DAC81416_BuildRangeRegister
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:127    .text.DAC81416_BuildFrame:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:132    .text.DAC81416_BuildFrame:00000000 DAC81416_BuildFrame
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:165    .text.DAC_WriteRegister:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:171    .text.DAC_WriteRegister:00000000 DAC_WriteRegister
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:217    .text.DAC_WriteRegister:00000020 $d
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:935    .bss.dacLastStatus:00000000 dacLastStatus
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:222    .text.DAC_ReadRegister:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:228    .text.DAC_ReadRegister:00000000 DAC_ReadRegister
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:325    .text.DAC_ReadRegister:00000068 $d
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:330    .text.DAC_SoftwareReset:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:336    .text.DAC_SoftwareReset:00000000 DAC_SoftwareReset
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:368    .text.DAC_SoftwareReset:0000001c $d
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:373    .text.DAC_WriteChannel:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:379    .text.DAC_WriteChannel:00000000 DAC_WriteChannel
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:431    .text.DAC_WriteChannel:00000020 $d
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:436    .text.DAC_WriteAllChannels:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:442    .text.DAC_WriteAllChannels:00000000 DAC_WriteAllChannels
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:532    .text.DAC_WriteAllChannels:0000003c $d
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:537    .text.DAC_EnableInternalRef:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:543    .text.DAC_EnableInternalRef:00000000 DAC_EnableInternalRef
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:610    .text.DAC_EnableInternalRef:00000034 $d
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:615    .text.DAC_SetAllChannelsRange:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:621    .text.DAC_SetAllChannelsRange:00000000 DAC_SetAllChannelsRange
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:709    .text.DAC_SetAllChannelsRange:00000040 $d
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:714    .text.DAC_ConfigAllChannels0To5V:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:720    .text.DAC_ConfigAllChannels0To5V:00000000 DAC_ConfigAllChannels0To5V
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:742    .text.DAC_PowerDownChannels:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:748    .text.DAC_PowerDownChannels:00000000 DAC_PowerDownChannels
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:779    .text.DAC_PowerDownChannels:00000014 $d
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:784    .text.DAC81416_Init:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:790    .text.DAC81416_Init:00000000 DAC81416_Init
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:864    .text.DAC81416_Init:00000048 $d
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:869    .text.DAC_TriggerLDAC:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:875    .text.DAC_TriggerLDAC:00000000 DAC_TriggerLDAC
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:902    .text.DAC_TriggerLDAC:00000014 $d
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:907    .text.DAC_GetLastStatus:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:913    .text.DAC_GetLastStatus:00000000 DAC_GetLastStatus
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:928    .text.DAC_GetLastStatus:00000008 $d
-C:\Users\hh\AppData\Local\Temp\ccYeYO4h.s:936    .bss.dacLastStatus:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:20     .text.DAC81416_IsValidRange:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:25     .text.DAC81416_IsValidRange:00000000 DAC81416_IsValidRange
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:98     .text.DAC81416_BuildRangeRegister:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:103    .text.DAC81416_BuildRangeRegister:00000000 DAC81416_BuildRangeRegister
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:127    .text.DAC81416_BuildFrame:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:132    .text.DAC81416_BuildFrame:00000000 DAC81416_BuildFrame
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:160    .text.DAC_WriteRegister:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:166    .text.DAC_WriteRegister:00000000 DAC_WriteRegister
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:225    .text.DAC_WriteRegister:00000024 $d
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:924    .bss.dacLastStatus:00000000 dacLastStatus
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:230    .text.DAC_ReadRegister:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:236    .text.DAC_ReadRegister:00000000 DAC_ReadRegister
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:314    .text.DAC_ReadRegister:00000040 $d
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:319    .text.DAC_SoftwareReset:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:325    .text.DAC_SoftwareReset:00000000 DAC_SoftwareReset
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:357    .text.DAC_SoftwareReset:0000001c $d
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:362    .text.DAC_WriteChannel:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:368    .text.DAC_WriteChannel:00000000 DAC_WriteChannel
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:420    .text.DAC_WriteChannel:00000020 $d
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:425    .text.DAC_WriteAllChannels:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:431    .text.DAC_WriteAllChannels:00000000 DAC_WriteAllChannels
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:521    .text.DAC_WriteAllChannels:0000003c $d
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:526    .text.DAC_EnableInternalRef:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:532    .text.DAC_EnableInternalRef:00000000 DAC_EnableInternalRef
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:599    .text.DAC_EnableInternalRef:00000034 $d
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:604    .text.DAC_SetAllChannelsRange:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:610    .text.DAC_SetAllChannelsRange:00000000 DAC_SetAllChannelsRange
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:698    .text.DAC_SetAllChannelsRange:00000040 $d
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:703    .text.DAC_ConfigAllChannels0To5V:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:709    .text.DAC_ConfigAllChannels0To5V:00000000 DAC_ConfigAllChannels0To5V
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:731    .text.DAC_PowerDownChannels:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:737    .text.DAC_PowerDownChannels:00000000 DAC_PowerDownChannels
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:768    .text.DAC_PowerDownChannels:00000014 $d
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:773    .text.DAC81416_Init:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:779    .text.DAC81416_Init:00000000 DAC81416_Init
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:853    .text.DAC81416_Init:00000048 $d
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:858    .text.DAC_TriggerLDAC:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:864    .text.DAC_TriggerLDAC:00000000 DAC_TriggerLDAC
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:891    .text.DAC_TriggerLDAC:00000014 $d
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:896    .text.DAC_GetLastStatus:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:902    .text.DAC_GetLastStatus:00000000 DAC_GetLastStatus
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:917    .text.DAC_GetLastStatus:00000008 $d
+C:\Users\hh\AppData\Local\Temp\ccJjicA9.s:925    .bss.dacLastStatus:00000000 $d
 
 UNDEFINED SYMBOLS
-DAC_SPI_Transmit
-DAC_SPI_TransmitReceive
+DAC_SPI_TransmitFrames24
+DAC_SPI_TransmitReceiveFrames24
 HAL_Delay
 DAC_LDAC_Update
 BSP_DAC81416_Init

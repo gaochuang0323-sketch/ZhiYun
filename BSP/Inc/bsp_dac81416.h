@@ -20,6 +20,14 @@ uint32_t BSP_DAC81416_GetTimeout(void);
 HAL_StatusTypeDef DAC_SPI_Transmit(uint8_t *txData, uint16_t size);
 HAL_StatusTypeDef DAC_SPI_TransmitReceive(uint8_t *txData, uint8_t *rxData, uint16_t size);
 
+/* CS is held low for all frames in the call. With SPI_DATASIZE_24BIT,
+ * frameCount=2 produces the 48 SCLK transaction required by DAC81416 reads.
+ */
+HAL_StatusTypeDef DAC_SPI_TransmitFrames24(const uint32_t *txFrames, uint16_t frameCount);
+HAL_StatusTypeDef DAC_SPI_TransmitReceiveFrames24(const uint32_t *txFrames,
+                                                  uint32_t *rxFrames,
+                                                  uint16_t frameCount);
+
 void DAC_SetResetPin(GPIO_PinState state);
 void DAC_ResetHardware(void);
 void DAC_SetLDACPin(GPIO_PinState state);
