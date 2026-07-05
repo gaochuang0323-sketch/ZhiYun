@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
   28:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****         configured by software in several modes:
   29:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****         (++) Input mode
   30:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****         (++) Analog mode
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 2
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 2
 
 
   31:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****         (++) Output mode
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
   85:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****         HAL_GPIO_WritePin()/HAL_GPIO_TogglePin().
   86:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c **** 
   87:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****    (#) To lock pin configuration until next reset use HAL_GPIO_LockPin().
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 3
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 3
 
 
   88:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c **** 
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  142:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c **** 
  143:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c **** /** @defgroup GPIO_Exported_Functions_Group1 Initialization and de-initialization functions
  144:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****  *  @brief    Initialization and Configuration functions
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 4
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 4
 
 
  145:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****  *
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  178:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****   /* Check the parameters */
  179:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****   assert_param(IS_GPIO_ALL_INSTANCE(GPIOx));
   50              		.loc 1 179 3 view .LVU7
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 5
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 5
 
 
  180:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****   assert_param(IS_GPIO_PIN(GPIO_Init->Pin));
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  202:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****         GPIOx->OSPEEDR = temp;
   82              		.loc 1 202 9 is_stmt 1 view .LVU24
   83              		.loc 1 202 24 is_stmt 0 view .LVU25
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 6
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 6
 
 
   84 0020 8460     		str	r4, [r0, #8]
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  225:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****       if ((GPIO_Init->Mode & GPIO_MODE) == MODE_AF)
  226:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****       {
  227:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****         /* Check the Alternate function parameters */
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 7
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 7
 
 
  228:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****         assert_param(IS_GPIO_AF_INSTANCE(GPIOx));
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  248:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****         /* Enable SYSCFG Clock */
  249:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****         __HAL_RCC_SYSCFG_CLK_ENABLE();
  250:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c **** 
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 8
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 8
 
 
  251:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****         temp = SYSCFG->EXTICR[position >> 2U];
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  190              		.loc 1 263 21 is_stmt 0 view .LVU71
  191 009e 4FF0B044 		mov	r4, #1476395008
  192 00a2 2560     		str	r5, [r4]
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 9
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 9
 
 
  264:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c **** 
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  278:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****         }
  279:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****         EXTI_CurrentCPU->EMR1 = temp;
  233              		.loc 1 279 9 is_stmt 1 view .LVU90
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 10
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 10
 
 
  234              		.loc 1 279 31 is_stmt 0 view .LVU91
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  272 00f8 32FA03F4 		lsrs	r4, r2, r3
  273 00fc 00F09780 		beq	.L25
  187:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c **** 
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 11
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 11
 
 
  274              		.loc 1 187 5 is_stmt 1 view .LVU108
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  311              		.loc 1 219 34 view .LVU125
  312 0130 4FF0030C 		mov	ip, #3
  313 0134 0CFA04FC 		lsl	ip, ip, r4
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 12
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 12
 
 
  219:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****       temp |= ((GPIO_Init->Pull) << (position * 2U));
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  351              		.loc 1 241 33 is_stmt 0 view .LVU142
  352 0166 4D68     		ldr	r5, [r1, #4]
  353 0168 05F0030C 		and	ip, r5, #3
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 13
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 13
 
 
  241:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****       GPIOx->MODER = temp;
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  392 01a0 244C     		ldr	r4, .L30
  393 01a2 54F82550 		ldr	r5, [r4, r5, lsl #2]
  394              	.LVL43:
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 14
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 14
 
 
  252:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****         temp |= (GPIO_GET_INDEX(GPIOx) << (4U * (position & 0x03U)));
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  435              		.loc 1 253 18 discriminator 13 view .LVU172
  436 01f0 04F58064 		add	r4, r4, #1024
  437 01f4 A042     		cmp	r0, r4
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 15
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 15
 
 
  438 01f6 16D0     		beq	.L21
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  481 022c 22E7     		b	.L8
  482              	.LVL45:
  483              	.L25:
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 16
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 16
 
 
  293:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****   }
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  315:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c **** 
  316:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****   /* Check the parameters */
  317:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****   assert_param(IS_GPIO_ALL_INSTANCE(GPIOx));
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 17
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 17
 
 
  518              		.loc 1 317 3 view .LVU191
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  335:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****         EXTI_CurrentCPU->IMR1 &= ~(iocurrent);
  336:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****         EXTI_CurrentCPU->EMR1 &= ~(iocurrent);
  337:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c **** 
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 18
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 18
 
 
  338:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****         /* Clear Rising Falling edge configuration */
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  587              		.loc 1 357 7 is_stmt 1 view .LVU216
  588              		.loc 1 357 12 is_stmt 0 view .LVU217
  589 0054 4468     		ldr	r4, [r0, #4]
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 19
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 19
 
 
  590              		.loc 1 357 22 view .LVU218
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  629              	.LVL56:
  331:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****       if (tmp == (GPIO_GET_INDEX(GPIOx) << (4U * (position & 0x03U))))
  630              		.loc 1 331 7 is_stmt 1 view .LVU234
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 20
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 20
 
 
  331:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****       if (tmp == (GPIO_GET_INDEX(GPIOx) << (4U * (position & 0x03U))))
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  672 00ca A842     		cmp	r0, r5
  673 00cc 15D0     		beq	.L45
  332:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****       {
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 21
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 21
 
 
  674              		.loc 1 332 19 discriminator 15 view .LVU248
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  335:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****         EXTI_CurrentCPU->EMR1 &= ~(iocurrent);
  718              		.loc 1 335 9 is_stmt 1 view .LVU259
  335:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****         EXTI_CurrentCPU->EMR1 &= ~(iocurrent);
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 22
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 22
 
 
  719              		.loc 1 335 24 is_stmt 0 view .LVU260
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  364:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****   }
  365:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c **** }
  758              		.loc 1 365 1 view .LVU276
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 23
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 23
 
 
  759 0142 F0BD     		pop	{r4, r5, r6, r7, pc}
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  789              		.loc 1 391 1 is_stmt 1 view -0
  790              		.cfi_startproc
  791              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 24
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 24
 
 
  792              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  412:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****   *         accesses. In this way, there is no risk of an IRQ occurring between
  413:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****   *         the read and the modify access.
  414:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****   *
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 25
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 25
 
 
  415:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****   * @param  GPIOx: where x can be (A..K) to select the GPIO peripheral.
@@ -1498,7 +1498,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  859              		.thumb_func
  861              	HAL_GPIO_TogglePin:
  862              	.LVL68:
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 26
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 26
 
 
  863              	.LFB150:
@@ -1558,7 +1558,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  899              	.LFB151:
  459:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c **** 
  460:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c **** /**
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 27
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 27
 
 
  461:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****   * @brief  Locks GPIO Pins configuration registers.
@@ -1618,7 +1618,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  928              		.loc 1 486 15 is_stmt 0 view .LVU324
  929 0014 019B     		ldr	r3, [sp, #4]
  930 0016 C361     		str	r3, [r0, #28]
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 28
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 28
 
 
  487:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c ****   /* Read LCKK register. This read is mandatory to complete key lock sequence*/
@@ -1678,7 +1678,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  972              	HAL_GPIO_EXTI_Callback:
  973              	.LVL75:
  974              	.LFB153:
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 29
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 29
 
 
  500:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c **** 
@@ -1738,7 +1738,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  993              	HAL_GPIO_EXTI_IRQHandler:
  994              	.LVL76:
  995              	.LFB152:
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 30
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 30
 
 
  507:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_gpio.c **** #if defined(DUAL_CORE) && defined(CORE_CM4)
@@ -1790,28 +1790,28 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 1
  1034              		.file 4 "Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h"
  1035              		.file 5 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
  1036              		.file 6 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h"
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s 			page 31
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s 			page 31
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32h7xx_hal_gpio.c
-C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s:20     .text.HAL_GPIO_Init:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s:26     .text.HAL_GPIO_Init:00000000 HAL_GPIO_Init
-C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s:493    .text.HAL_GPIO_Init:00000234 $d
-C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s:500    .text.HAL_GPIO_DeInit:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s:506    .text.HAL_GPIO_DeInit:00000000 HAL_GPIO_DeInit
-C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s:774    .text.HAL_GPIO_DeInit:00000148 $d
-C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s:780    .text.HAL_GPIO_ReadPin:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s:786    .text.HAL_GPIO_ReadPin:00000000 HAL_GPIO_ReadPin
-C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s:819    .text.HAL_GPIO_WritePin:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s:825    .text.HAL_GPIO_WritePin:00000000 HAL_GPIO_WritePin
-C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s:855    .text.HAL_GPIO_TogglePin:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s:861    .text.HAL_GPIO_TogglePin:00000000 HAL_GPIO_TogglePin
-C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s:891    .text.HAL_GPIO_LockPin:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s:897    .text.HAL_GPIO_LockPin:00000000 HAL_GPIO_LockPin
-C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s:966    .text.HAL_GPIO_EXTI_Callback:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s:972    .text.HAL_GPIO_EXTI_Callback:00000000 HAL_GPIO_EXTI_Callback
-C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s:987    .text.HAL_GPIO_EXTI_IRQHandler:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccLvD2FZ.s:993    .text.HAL_GPIO_EXTI_IRQHandler:00000000 HAL_GPIO_EXTI_IRQHandler
+C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s:20     .text.HAL_GPIO_Init:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s:26     .text.HAL_GPIO_Init:00000000 HAL_GPIO_Init
+C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s:493    .text.HAL_GPIO_Init:00000234 $d
+C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s:500    .text.HAL_GPIO_DeInit:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s:506    .text.HAL_GPIO_DeInit:00000000 HAL_GPIO_DeInit
+C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s:774    .text.HAL_GPIO_DeInit:00000148 $d
+C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s:780    .text.HAL_GPIO_ReadPin:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s:786    .text.HAL_GPIO_ReadPin:00000000 HAL_GPIO_ReadPin
+C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s:819    .text.HAL_GPIO_WritePin:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s:825    .text.HAL_GPIO_WritePin:00000000 HAL_GPIO_WritePin
+C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s:855    .text.HAL_GPIO_TogglePin:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s:861    .text.HAL_GPIO_TogglePin:00000000 HAL_GPIO_TogglePin
+C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s:891    .text.HAL_GPIO_LockPin:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s:897    .text.HAL_GPIO_LockPin:00000000 HAL_GPIO_LockPin
+C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s:966    .text.HAL_GPIO_EXTI_Callback:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s:972    .text.HAL_GPIO_EXTI_Callback:00000000 HAL_GPIO_EXTI_Callback
+C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s:987    .text.HAL_GPIO_EXTI_IRQHandler:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cc9b6Vph.s:993    .text.HAL_GPIO_EXTI_IRQHandler:00000000 HAL_GPIO_EXTI_IRQHandler
 
 NO UNDEFINED SYMBOLS
