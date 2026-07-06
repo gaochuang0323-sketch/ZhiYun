@@ -1,0 +1,1626 @@
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"slipif.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "Middlewares/Third_Party/LwIP/src/netif/slipif.c"
+  19              		.section	.rodata.slipif_rxbyte.str1.4,"aMS",%progbits,1
+  20              		.align	2
+  21              	.LC0:
+  22 0000 4D696464 		.ascii	"Middlewares/Third_Party/LwIP/src/netif/slipif.c\000"
+  22      6C657761 
+  22      7265732F 
+  22      54686972 
+  22      645F5061 
+  23              		.align	2
+  24              	.LC1:
+  25 0030 6E657469 		.ascii	"netif != NULL\000"
+  25      6620213D 
+  25      204E554C 
+  25      4C00
+  26 003e 0000     		.align	2
+  27              	.LC2:
+  28 0040 41737365 		.ascii	"Assertion \"%s\" failed at line %d in %s\012\000"
+  28      7274696F 
+  28      6E202225 
+  28      73222066 
+  28      61696C65 
+  29              		.align	2
+  30              	.LC3:
+  31 0068 6E657469 		.ascii	"netif->state != NULL\000"
+  31      662D3E73 
+  31      74617465 
+  31      20213D20 
+  31      4E554C4C 
+  32              		.section	.text.slipif_rxbyte,"ax",%progbits
+  33              		.align	1
+  34              		.syntax unified
+  35              		.thumb
+  36              		.thumb_func
+  38              	slipif_rxbyte:
+  39              	.LVL0:
+  40              	.LFB174:
+   1:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** /**
+   2:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @file
+   3:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * SLIP Interface
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 2
+
+
+   4:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+   5:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  */
+   6:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+   7:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** /*
+   8:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * Copyright (c) 2001-2004 Swedish Institute of Computer Science.
+   9:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * All rights reserved.
+  10:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+  11:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * Redistribution and use in source and binary forms, with or without
+  12:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * modification, are permitted provided that the following conditions
+  13:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * are met:
+  14:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * 1. Redistributions of source code must retain the above copyright
+  15:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *    notice, this list of conditions and the following disclaimer.
+  16:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * 2. Redistributions in binary form must reproduce the above copyright
+  17:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *    notice, this list of conditions and the following disclaimer in the
+  18:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *    documentation and/or other materials provided with the distribution.
+  19:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * 3. Neither the name of the Institute nor the names of its contributors
+  20:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *    may be used to endorse or promote products derived from this software
+  21:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *    without specific prior written permission.
+  22:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+  23:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * THIS SOFTWARE IS PROVIDED BY THE INSTITUTE AND CONTRIBUTORS ``AS IS'' AND
+  24:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  25:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  26:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * ARE DISCLAIMED.  IN NO EVENT SHALL THE INSTITUTE OR CONTRIBUTORS BE LIABLE
+  27:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+  28:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+  29:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+  30:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+  31:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+  32:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+  33:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * SUCH DAMAGE.
+  34:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+  35:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * This file is built upon the file: src/arch/rtxc/netif/sioslip.c
+  36:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+  37:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * Author: Magnus Ivarsson <magnus.ivarsson(at)volvo.com>
+  38:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *         Simon Goldschmidt
+  39:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  */
+  40:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+  41:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+  42:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** /**
+  43:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @defgroup slipif SLIP
+  44:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @ingroup netifs
+  45:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+  46:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * This is an arch independent SLIP netif. The specific serial hooks must be
+  47:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * provided by another file. They are sio_open, sio_read/sio_tryread and sio_send
+  48:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+  49:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * Usage: This netif can be used in three ways:
+  50:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *        1. For NO_SYS==0, an RX thread can be used which blocks on sio_read()
+  51:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *           until data is received.
+  52:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *        2. In your main loop, call slipif_poll() to check for new RX bytes,
+  53:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *           completed packets are fed into netif->input().
+  54:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *        3. Call slipif_received_byte[s]() from your serial RX ISR and
+  55:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *           slipif_process_rxqueue() from your main loop. ISR level decodes
+  56:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *           packets and puts completed packets on a queue which is fed into
+  57:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *           the stack from the main loop (needs SYS_LIGHTWEIGHT_PROT for
+  58:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *           pbuf_alloc to work on ISR level!).
+  59:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+  60:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  */
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 3
+
+
+  61:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+  62:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #include "netif/slipif.h"
+  63:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #include "lwip/opt.h"
+  64:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+  65:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #include "lwip/def.h"
+  66:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #include "lwip/pbuf.h"
+  67:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #include "lwip/stats.h"
+  68:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #include "lwip/snmp.h"
+  69:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #include "lwip/sys.h"
+  70:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #include "lwip/sio.h"
+  71:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+  72:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #define SLIP_END     0xC0 /* 0300: start and end of every packet */
+  73:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #define SLIP_ESC     0xDB /* 0333: escape start (one byte escaped data follows) */
+  74:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #define SLIP_ESC_END 0xDC /* 0334: following escape: original byte is 0xC0 (END) */
+  75:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #define SLIP_ESC_ESC 0xDD /* 0335: following escape: original byte is 0xDB (ESC) */
+  76:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+  77:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** /** Maximum packet size that is received by this netif */
+  78:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #ifndef SLIP_MAX_SIZE
+  79:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #define SLIP_MAX_SIZE 1500
+  80:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #endif
+  81:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+  82:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** /** Define this to the interface speed for SNMP
+  83:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * (sio_fd is the sio_fd_t returned by sio_open).
+  84:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * The default value of zero means 'unknown'.
+  85:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  */
+  86:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #ifndef SLIP_SIO_SPEED
+  87:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #define SLIP_SIO_SPEED(sio_fd) 0
+  88:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #endif
+  89:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+  90:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** enum slipif_recv_state {
+  91:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   SLIP_RECV_NORMAL,
+  92:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   SLIP_RECV_ESCAPE
+  93:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** };
+  94:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+  95:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** struct slipif_priv {
+  96:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   sio_fd_t sd;
+  97:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   /* q is the whole pbuf chain for a packet, p is the current pbuf in the chain */
+  98:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   struct pbuf *p, *q;
+  99:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   u8_t state;
+ 100:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   u16_t i, recved;
+ 101:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #if SLIP_RX_FROM_ISR
+ 102:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   struct pbuf *rxpackets;
+ 103:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #endif
+ 104:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** };
+ 105:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 106:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** /**
+ 107:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * Send a pbuf doing the necessary SLIP encapsulation
+ 108:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+ 109:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * Uses the serial layer's sio_send()
+ 110:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+ 111:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @param netif the lwip network interface structure for this slipif
+ 112:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @param p the pbuf chain packet to send
+ 113:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @return always returns ERR_OK since the serial layer does not provide return values
+ 114:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  */
+ 115:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** static err_t
+ 116:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** slipif_output(struct netif *netif, struct pbuf *p)
+ 117:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** {
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 4
+
+
+ 118:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   struct slipif_priv *priv;
+ 119:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   struct pbuf *q;
+ 120:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   u16_t i;
+ 121:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   u8_t c;
+ 122:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 123:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("netif != NULL", (netif != NULL));
+ 124:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("netif->state != NULL", (netif->state != NULL));
+ 125:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("p != NULL", (p != NULL));
+ 126:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 127:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_DEBUGF(SLIP_DEBUG, ("slipif_output: sending %"U16_F" bytes\n", p->tot_len));
+ 128:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   priv = (struct slipif_priv *)netif->state;
+ 129:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 130:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   /* Send pbuf out on the serial I/O device. */
+ 131:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   /* Start with packet delimiter. */
+ 132:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   sio_send(SLIP_END, priv->sd);
+ 133:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 134:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   for (q = p; q != NULL; q = q->next) {
+ 135:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     for (i = 0; i < q->len; i++) {
+ 136:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       c = ((u8_t *)q->payload)[i];
+ 137:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       switch (c) {
+ 138:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****         case SLIP_END:
+ 139:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           /* need to escape this byte (0xC0 -> 0xDB, 0xDC) */
+ 140:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           sio_send(SLIP_ESC, priv->sd);
+ 141:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           sio_send(SLIP_ESC_END, priv->sd);
+ 142:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           break;
+ 143:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****         case SLIP_ESC:
+ 144:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           /* need to escape this byte (0xDB -> 0xDB, 0xDD) */
+ 145:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           sio_send(SLIP_ESC, priv->sd);
+ 146:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           sio_send(SLIP_ESC_ESC, priv->sd);
+ 147:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           break;
+ 148:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****         default:
+ 149:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           /* normal byte - no need for escaping */
+ 150:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           sio_send(c, priv->sd);
+ 151:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           break;
+ 152:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       }
+ 153:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     }
+ 154:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   }
+ 155:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   /* End with packet delimiter. */
+ 156:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   sio_send(SLIP_END, priv->sd);
+ 157:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   return ERR_OK;
+ 158:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** }
+ 159:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 160:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #if LWIP_IPV4
+ 161:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** /**
+ 162:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * Send a pbuf doing the necessary SLIP encapsulation
+ 163:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+ 164:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * Uses the serial layer's sio_send()
+ 165:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+ 166:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @param netif the lwip network interface structure for this slipif
+ 167:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @param p the pbuf chain packet to send
+ 168:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @param ipaddr the ip address to send the packet to (not used for slipif)
+ 169:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @return always returns ERR_OK since the serial layer does not provide return values
+ 170:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  */
+ 171:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** static err_t
+ 172:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** slipif_output_v4(struct netif *netif, struct pbuf *p, const ip4_addr_t *ipaddr)
+ 173:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** {
+ 174:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_UNUSED_ARG(ipaddr);
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 5
+
+
+ 175:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   return slipif_output(netif, p);
+ 176:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** }
+ 177:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #endif /* LWIP_IPV4 */
+ 178:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 179:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #if LWIP_IPV6
+ 180:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** /**
+ 181:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * Send a pbuf doing the necessary SLIP encapsulation
+ 182:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+ 183:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * Uses the serial layer's sio_send()
+ 184:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+ 185:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @param netif the lwip network interface structure for this slipif
+ 186:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @param p the pbuf chain packet to send
+ 187:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @param ipaddr the ip address to send the packet to (not used for slipif)
+ 188:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @return always returns ERR_OK since the serial layer does not provide return values
+ 189:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  */
+ 190:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** static err_t
+ 191:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** slipif_output_v6(struct netif *netif, struct pbuf *p, const ip6_addr_t *ipaddr)
+ 192:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** {
+ 193:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_UNUSED_ARG(ipaddr);
+ 194:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   return slipif_output(netif, p);
+ 195:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** }
+ 196:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #endif /* LWIP_IPV6 */
+ 197:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 198:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** /**
+ 199:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * Handle the incoming SLIP stream character by character
+ 200:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+ 201:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @param netif the lwip network interface structure for this slipif
+ 202:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @param c received character (multiple calls to this function will
+ 203:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *        return a complete packet, NULL is returned before - used for polling)
+ 204:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @return The IP packet when SLIP_END is received
+ 205:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  */
+ 206:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** static struct pbuf *
+ 207:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** slipif_rxbyte(struct netif *netif, u8_t c)
+ 208:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** {
+  41              		.loc 1 208 1 view -0
+  42              		.cfi_startproc
+  43              		@ args = 0, pretend = 0, frame = 0
+  44              		@ frame_needed = 0, uses_anonymous_args = 0
+  45              		.loc 1 208 1 is_stmt 0 view .LVU1
+  46 0000 38B5     		push	{r3, r4, r5, lr}
+  47              	.LCFI0:
+  48              		.cfi_def_cfa_offset 16
+  49              		.cfi_offset 3, -16
+  50              		.cfi_offset 4, -12
+  51              		.cfi_offset 5, -8
+  52              		.cfi_offset 14, -4
+  53 0002 0D46     		mov	r5, r1
+ 209:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   struct slipif_priv *priv;
+  54              		.loc 1 209 3 is_stmt 1 view .LVU2
+ 210:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   struct pbuf *t;
+  55              		.loc 1 210 3 view .LVU3
+ 211:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 212:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("netif != NULL", (netif != NULL));
+  56              		.loc 1 212 3 view .LVU4
+  57              		.loc 1 212 3 view .LVU5
+  58 0004 0446     		mov	r4, r0
+  59 0006 68B1     		cbz	r0, .L19
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 6
+
+
+  60              	.LVL1:
+  61              	.L2:
+  62              		.loc 1 212 3 view .LVU6
+  63              		.loc 1 212 3 view .LVU7
+ 213:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("netif->state != NULL", (netif->state != NULL));
+  64              		.loc 1 213 3 view .LVU8
+  65              		.loc 1 213 3 view .LVU9
+  66 0008 236A     		ldr	r3, [r4, #32]
+  67 000a 93B1     		cbz	r3, .L20
+  68              	.L3:
+  69              		.loc 1 213 3 view .LVU10
+  70              		.loc 1 213 3 view .LVU11
+ 214:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 215:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   priv = (struct slipif_priv *)netif->state;
+  71              		.loc 1 215 3 view .LVU12
+  72              		.loc 1 215 8 is_stmt 0 view .LVU13
+  73 000c 246A     		ldr	r4, [r4, #32]
+  74              	.LVL2:
+ 216:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 217:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   switch (priv->state) {
+  75              		.loc 1 217 3 is_stmt 1 view .LVU14
+  76              		.loc 1 217 15 is_stmt 0 view .LVU15
+  77 000e 237B     		ldrb	r3, [r4, #12]	@ zero_extendqisi2
+  78              		.loc 1 217 3 view .LVU16
+  79 0010 B3B1     		cbz	r3, .L4
+  80 0012 012B     		cmp	r3, #1
+  81 0014 2ED1     		bne	.L6
+ 218:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     case SLIP_RECV_NORMAL:
+ 219:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       switch (c) {
+ 220:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****         case SLIP_END:
+ 221:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           if (priv->recved > 0) {
+ 222:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****             /* Received whole packet. */
+ 223:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****             /* Trim the pbuf to the size of the received packet. */
+ 224:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****             pbuf_realloc(priv->q, priv->recved);
+ 225:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 226:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****             LINK_STATS_INC(link.recv);
+ 227:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 228:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****             LWIP_DEBUGF(SLIP_DEBUG, ("slipif: Got packet (%"U16_F" bytes)\n", priv->recved));
+ 229:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****             t = priv->q;
+ 230:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****             priv->p = priv->q = NULL;
+ 231:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****             priv->i = priv->recved = 0;
+ 232:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****             return t;
+ 233:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           }
+ 234:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           return NULL;
+ 235:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****         case SLIP_ESC:
+ 236:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           priv->state = SLIP_RECV_ESCAPE;
+ 237:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           return NULL;
+ 238:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****         default:
+ 239:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           break;
+ 240:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       } /* end switch (c) */
+ 241:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       break;
+ 242:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     case SLIP_RECV_ESCAPE:
+ 243:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       /* un-escape END or ESC bytes, leave other bytes
+ 244:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****          (although that would be a protocol error) */
+ 245:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       switch (c) {
+  82              		.loc 1 245 7 is_stmt 1 view .LVU17
+  83 0016 DC2D     		cmp	r5, #220
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 7
+
+
+  84 0018 28D0     		beq	.L15
+  85 001a DD2D     		cmp	r5, #221
+  86 001c 28D1     		bne	.L10
+ 246:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****         case SLIP_ESC_END:
+ 247:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           c = SLIP_END;
+ 248:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           break;
+ 249:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****         case SLIP_ESC_ESC:
+ 250:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           c = SLIP_ESC;
+  87              		.loc 1 250 13 is_stmt 0 view .LVU18
+  88 001e DB23     		movs	r3, #219
+  89 0020 1D46     		mov	r5, r3
+  90              	.LVL3:
+  91              		.loc 1 250 13 view .LVU19
+  92 0022 25E0     		b	.L10
+  93              	.LVL4:
+  94              	.L19:
+ 212:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("netif->state != NULL", (netif->state != NULL));
+  95              		.loc 1 212 3 is_stmt 1 discriminator 1 view .LVU20
+ 212:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("netif->state != NULL", (netif->state != NULL));
+  96              		.loc 1 212 3 discriminator 1 view .LVU21
+  97 0024 304B     		ldr	r3, .L23
+  98 0026 D422     		movs	r2, #212
+  99 0028 3049     		ldr	r1, .L23+4
+ 100              	.LVL5:
+ 212:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("netif->state != NULL", (netif->state != NULL));
+ 101              		.loc 1 212 3 is_stmt 0 discriminator 1 view .LVU22
+ 102 002a 3148     		ldr	r0, .L23+8
+ 103              	.LVL6:
+ 212:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("netif->state != NULL", (netif->state != NULL));
+ 104              		.loc 1 212 3 discriminator 1 view .LVU23
+ 105 002c FFF7FEFF 		bl	printf
+ 106              	.LVL7:
+ 107 0030 EAE7     		b	.L2
+ 108              	.L20:
+ 213:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 109              		.loc 1 213 3 is_stmt 1 discriminator 1 view .LVU24
+ 213:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 110              		.loc 1 213 3 discriminator 1 view .LVU25
+ 111 0032 2D4B     		ldr	r3, .L23
+ 112 0034 D522     		movs	r2, #213
+ 113 0036 2F49     		ldr	r1, .L23+12
+ 114 0038 2D48     		ldr	r0, .L23+8
+ 115 003a FFF7FEFF 		bl	printf
+ 116              	.LVL8:
+ 117 003e E5E7     		b	.L3
+ 118              	.LVL9:
+ 119              	.L4:
+ 219:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****         case SLIP_END:
+ 120              		.loc 1 219 7 view .LVU26
+ 121 0040 C02D     		cmp	r5, #192
+ 122 0042 05D0     		beq	.L7
+ 123 0044 DB2D     		cmp	r5, #219
+ 124 0046 15D1     		bne	.L6
+ 236:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           return NULL;
+ 125              		.loc 1 236 11 view .LVU27
+ 236:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           return NULL;
+ 126              		.loc 1 236 23 is_stmt 0 view .LVU28
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 8
+
+
+ 127 0048 0123     		movs	r3, #1
+ 128 004a 2373     		strb	r3, [r4, #12]
+ 237:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****         default:
+ 129              		.loc 1 237 11 is_stmt 1 view .LVU29
+ 237:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****         default:
+ 130              		.loc 1 237 18 is_stmt 0 view .LVU30
+ 131 004c 0020     		movs	r0, #0
+ 132 004e 48E0     		b	.L1
+ 133              	.L7:
+ 221:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****             /* Received whole packet. */
+ 134              		.loc 1 221 11 is_stmt 1 view .LVU31
+ 221:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****             /* Received whole packet. */
+ 135              		.loc 1 221 19 is_stmt 0 view .LVU32
+ 136 0050 218A     		ldrh	r1, [r4, #16]
+ 221:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****             /* Received whole packet. */
+ 137              		.loc 1 221 14 view .LVU33
+ 138 0052 09B9     		cbnz	r1, .L21
+ 234:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****         case SLIP_ESC:
+ 139              		.loc 1 234 18 view .LVU34
+ 140 0054 0846     		mov	r0, r1
+ 141 0056 44E0     		b	.L1
+ 142              	.L21:
+ 224:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 143              		.loc 1 224 13 is_stmt 1 view .LVU35
+ 144 0058 A068     		ldr	r0, [r4, #8]
+ 145 005a FFF7FEFF 		bl	pbuf_realloc
+ 146              	.LVL10:
+ 226:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 147              		.loc 1 226 38 view .LVU36
+ 228:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****             t = priv->q;
+ 148              		.loc 1 228 93 view .LVU37
+ 229:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****             priv->p = priv->q = NULL;
+ 149              		.loc 1 229 13 view .LVU38
+ 229:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****             priv->p = priv->q = NULL;
+ 150              		.loc 1 229 15 is_stmt 0 view .LVU39
+ 151 005e A068     		ldr	r0, [r4, #8]
+ 152              	.LVL11:
+ 230:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****             priv->i = priv->recved = 0;
+ 153              		.loc 1 230 13 is_stmt 1 view .LVU40
+ 230:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****             priv->i = priv->recved = 0;
+ 154              		.loc 1 230 31 is_stmt 0 view .LVU41
+ 155 0060 0023     		movs	r3, #0
+ 156 0062 A360     		str	r3, [r4, #8]
+ 230:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****             priv->i = priv->recved = 0;
+ 157              		.loc 1 230 21 view .LVU42
+ 158 0064 6360     		str	r3, [r4, #4]
+ 231:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****             return t;
+ 159              		.loc 1 231 13 is_stmt 1 view .LVU43
+ 231:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****             return t;
+ 160              		.loc 1 231 36 is_stmt 0 view .LVU44
+ 161 0066 2382     		strh	r3, [r4, #16]	@ movhi
+ 231:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****             return t;
+ 162              		.loc 1 231 21 view .LVU45
+ 163 0068 E381     		strh	r3, [r4, #14]	@ movhi
+ 232:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           }
+ 164              		.loc 1 232 13 is_stmt 1 view .LVU46
+ 232:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           }
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 9
+
+
+ 165              		.loc 1 232 20 is_stmt 0 view .LVU47
+ 166 006a 3AE0     		b	.L1
+ 167              	.LVL12:
+ 168              	.L15:
+ 247:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           break;
+ 169              		.loc 1 247 13 view .LVU48
+ 170 006c C023     		movs	r3, #192
+ 171 006e 1D46     		mov	r5, r3
+ 172              	.LVL13:
+ 173              	.L10:
+ 251:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           break;
+ 252:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****         default:
+ 253:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           break;
+ 254:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       }
+ 255:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       priv->state = SLIP_RECV_NORMAL;
+ 174              		.loc 1 255 7 is_stmt 1 view .LVU49
+ 175              		.loc 1 255 19 is_stmt 0 view .LVU50
+ 176 0070 0023     		movs	r3, #0
+ 177 0072 2373     		strb	r3, [r4, #12]
+ 256:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       break;
+ 178              		.loc 1 256 7 is_stmt 1 view .LVU51
+ 179              	.LVL14:
+ 180              	.L6:
+ 257:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     default:
+ 258:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       break;
+ 259:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   } /* end switch (priv->state) */
+ 260:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 261:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   /* byte received, packet not yet completely received */
+ 262:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   if (priv->p == NULL) {
+ 181              		.loc 1 262 3 view .LVU52
+ 182              		.loc 1 262 11 is_stmt 0 view .LVU53
+ 183 0074 6368     		ldr	r3, [r4, #4]
+ 184              		.loc 1 262 6 view .LVU54
+ 185 0076 F3B1     		cbz	r3, .L22
+ 186              	.L11:
+ 263:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     /* allocate a new pbuf */
+ 264:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     LWIP_DEBUGF(SLIP_DEBUG, ("slipif_input: alloc\n"));
+ 265:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     priv->p = pbuf_alloc(PBUF_LINK, (PBUF_POOL_BUFSIZE - PBUF_LINK_HLEN - PBUF_LINK_ENCAPSULATION_H
+ 266:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 267:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     if (priv->p == NULL) {
+ 268:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       LINK_STATS_INC(link.drop);
+ 269:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       LWIP_DEBUGF(SLIP_DEBUG, ("slipif_input: no new pbuf! (DROP)\n"));
+ 270:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       /* don't process any further since we got no pbuf to receive to */
+ 271:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       return NULL;
+ 272:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     }
+ 273:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 274:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     if (priv->q != NULL) {
+ 275:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       /* 'chain' the pbuf to the existing chain */
+ 276:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       pbuf_cat(priv->q, priv->p);
+ 277:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     } else {
+ 278:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       /* p is the first pbuf in the chain */
+ 279:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       priv->q = priv->p;
+ 280:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     }
+ 281:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   }
+ 282:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 283:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   /* this automatically drops bytes if > SLIP_MAX_SIZE */
+ 284:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   if ((priv->p != NULL) && (priv->recved <= SLIP_MAX_SIZE)) {
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 10
+
+
+ 187              		.loc 1 284 3 is_stmt 1 view .LVU55
+ 188              		.loc 1 284 12 is_stmt 0 view .LVU56
+ 189 0078 6068     		ldr	r0, [r4, #4]
+ 190              		.loc 1 284 6 view .LVU57
+ 191 007a 0028     		cmp	r0, #0
+ 192 007c 31D0     		beq	.L1
+ 193              		.loc 1 284 33 discriminator 1 view .LVU58
+ 194 007e 228A     		ldrh	r2, [r4, #16]
+ 195              		.loc 1 284 25 discriminator 1 view .LVU59
+ 196 0080 40F2DC53 		movw	r3, #1500
+ 197 0084 9A42     		cmp	r2, r3
+ 198 0086 2BD8     		bhi	.L16
+ 285:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     ((u8_t *)priv->p->payload)[priv->i] = c;
+ 199              		.loc 1 285 5 is_stmt 1 view .LVU60
+ 200              		.loc 1 285 21 is_stmt 0 view .LVU61
+ 201 0088 4268     		ldr	r2, [r0, #4]
+ 202              		.loc 1 285 36 view .LVU62
+ 203 008a E389     		ldrh	r3, [r4, #14]
+ 204              		.loc 1 285 41 view .LVU63
+ 205 008c D554     		strb	r5, [r2, r3]
+ 286:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     priv->recved++;
+ 206              		.loc 1 286 5 is_stmt 1 view .LVU64
+ 207              		.loc 1 286 9 is_stmt 0 view .LVU65
+ 208 008e 238A     		ldrh	r3, [r4, #16]
+ 209              		.loc 1 286 17 view .LVU66
+ 210 0090 0133     		adds	r3, r3, #1
+ 211 0092 2382     		strh	r3, [r4, #16]	@ movhi
+ 287:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     priv->i++;
+ 212              		.loc 1 287 5 is_stmt 1 view .LVU67
+ 213              		.loc 1 287 9 is_stmt 0 view .LVU68
+ 214 0094 E389     		ldrh	r3, [r4, #14]
+ 215              		.loc 1 287 12 view .LVU69
+ 216 0096 0133     		adds	r3, r3, #1
+ 217 0098 9BB2     		uxth	r3, r3
+ 218 009a E381     		strh	r3, [r4, #14]	@ movhi
+ 288:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     if (priv->i >= priv->p->len) {
+ 219              		.loc 1 288 5 is_stmt 1 view .LVU70
+ 220              		.loc 1 288 24 is_stmt 0 view .LVU71
+ 221 009c 6268     		ldr	r2, [r4, #4]
+ 222              		.loc 1 288 27 view .LVU72
+ 223 009e 5189     		ldrh	r1, [r2, #10]
+ 224              		.loc 1 288 8 view .LVU73
+ 225 00a0 8B42     		cmp	r3, r1
+ 226 00a2 1FD3     		bcc	.L17
+ 289:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       /* on to the next pbuf */
+ 290:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       priv->i = 0;
+ 227              		.loc 1 290 7 is_stmt 1 view .LVU74
+ 228              		.loc 1 290 15 is_stmt 0 view .LVU75
+ 229 00a4 0023     		movs	r3, #0
+ 230 00a6 E381     		strh	r3, [r4, #14]	@ movhi
+ 291:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       if (priv->p->next != NULL && priv->p->next->len > 0) {
+ 231              		.loc 1 291 7 is_stmt 1 view .LVU76
+ 232              		.loc 1 291 18 is_stmt 0 view .LVU77
+ 233 00a8 1368     		ldr	r3, [r2]
+ 234              		.loc 1 291 10 view .LVU78
+ 235 00aa B3B1     		cbz	r3, .L13
+ 236              		.loc 1 291 49 discriminator 1 view .LVU79
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 11
+
+
+ 237 00ac 5A89     		ldrh	r2, [r3, #10]
+ 238              		.loc 1 291 33 discriminator 1 view .LVU80
+ 239 00ae A2B1     		cbz	r2, .L13
+ 292:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****         /* p is a chain, on to the next in the chain */
+ 293:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****         priv->p = priv->p->next;
+ 240              		.loc 1 293 9 is_stmt 1 view .LVU81
+ 241              		.loc 1 293 17 is_stmt 0 view .LVU82
+ 242 00b0 6360     		str	r3, [r4, #4]
+ 294:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       } else {
+ 295:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****         /* p is a single pbuf, set it to NULL so next time a new
+ 296:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****          * pbuf is allocated */
+ 297:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****         priv->p = NULL;
+ 298:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       }
+ 299:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     }
+ 300:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   }
+ 301:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   return NULL;
+ 243              		.loc 1 301 10 view .LVU83
+ 244 00b2 0020     		movs	r0, #0
+ 293:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       } else {
+ 245              		.loc 1 293 17 view .LVU84
+ 246 00b4 15E0     		b	.L1
+ 247              	.L22:
+ 264:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     priv->p = pbuf_alloc(PBUF_LINK, (PBUF_POOL_BUFSIZE - PBUF_LINK_HLEN - PBUF_LINK_ENCAPSULATION_H
+ 248              		.loc 1 264 55 is_stmt 1 view .LVU85
+ 265:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 249              		.loc 1 265 5 view .LVU86
+ 265:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 250              		.loc 1 265 15 is_stmt 0 view .LVU87
+ 251 00b6 4FF4C172 		mov	r2, #386
+ 252 00ba 40F24221 		movw	r1, #578
+ 253 00be 0E20     		movs	r0, #14
+ 254 00c0 FFF7FEFF 		bl	pbuf_alloc
+ 255              	.LVL15:
+ 265:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 256              		.loc 1 265 13 discriminator 1 view .LVU88
+ 257 00c4 6060     		str	r0, [r4, #4]
+ 267:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       LINK_STATS_INC(link.drop);
+ 258              		.loc 1 267 5 is_stmt 1 view .LVU89
+ 267:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       LINK_STATS_INC(link.drop);
+ 259              		.loc 1 267 8 is_stmt 0 view .LVU90
+ 260 00c6 60B1     		cbz	r0, .L1
+ 274:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       /* 'chain' the pbuf to the existing chain */
+ 261              		.loc 1 274 5 is_stmt 1 view .LVU91
+ 274:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       /* 'chain' the pbuf to the existing chain */
+ 262              		.loc 1 274 13 is_stmt 0 view .LVU92
+ 263 00c8 A368     		ldr	r3, [r4, #8]
+ 274:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       /* 'chain' the pbuf to the existing chain */
+ 264              		.loc 1 274 8 view .LVU93
+ 265 00ca 23B1     		cbz	r3, .L12
+ 276:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     } else {
+ 266              		.loc 1 276 7 is_stmt 1 view .LVU94
+ 267 00cc 0146     		mov	r1, r0
+ 268 00ce 1846     		mov	r0, r3
+ 269 00d0 FFF7FEFF 		bl	pbuf_cat
+ 270              	.LVL16:
+ 271 00d4 D0E7     		b	.L11
+ 272              	.L12:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 12
+
+
+ 279:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     }
+ 273              		.loc 1 279 7 view .LVU95
+ 279:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     }
+ 274              		.loc 1 279 15 is_stmt 0 view .LVU96
+ 275 00d6 A060     		str	r0, [r4, #8]
+ 276 00d8 CEE7     		b	.L11
+ 277              	.L13:
+ 297:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       }
+ 278              		.loc 1 297 9 is_stmt 1 view .LVU97
+ 297:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       }
+ 279              		.loc 1 297 17 is_stmt 0 view .LVU98
+ 280 00da 0020     		movs	r0, #0
+ 281 00dc 6060     		str	r0, [r4, #4]
+ 282 00de 00E0     		b	.L1
+ 283              	.L16:
+ 284              		.loc 1 301 10 view .LVU99
+ 285 00e0 0020     		movs	r0, #0
+ 286              	.LVL17:
+ 287              	.L1:
+ 302:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** }
+ 288              		.loc 1 302 1 view .LVU100
+ 289 00e2 38BD     		pop	{r3, r4, r5, pc}
+ 290              	.LVL18:
+ 291              	.L17:
+ 301:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** }
+ 292              		.loc 1 301 10 view .LVU101
+ 293 00e4 0020     		movs	r0, #0
+ 294 00e6 FCE7     		b	.L1
+ 295              	.L24:
+ 296              		.align	2
+ 297              	.L23:
+ 298 00e8 00000000 		.word	.LC0
+ 299 00ec 30000000 		.word	.LC1
+ 300 00f0 40000000 		.word	.LC2
+ 301 00f4 68000000 		.word	.LC3
+ 302              		.cfi_endproc
+ 303              	.LFE174:
+ 305              		.section	.text.slipif_rxbyte_input,"ax",%progbits
+ 306              		.align	1
+ 307              		.syntax unified
+ 308              		.thumb
+ 309              		.thumb_func
+ 311              	slipif_rxbyte_input:
+ 312              	.LVL19:
+ 313              	.LFB175:
+ 303:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 304:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** /** Like slipif_rxbyte, but passes completed packets to netif->input
+ 305:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+ 306:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @param netif The lwip network interface structure for this slipif
+ 307:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @param c received character
+ 308:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  */
+ 309:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** static void
+ 310:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** slipif_rxbyte_input(struct netif *netif, u8_t c)
+ 311:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** {
+ 314              		.loc 1 311 1 is_stmt 1 view -0
+ 315              		.cfi_startproc
+ 316              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 13
+
+
+ 317              		@ frame_needed = 0, uses_anonymous_args = 0
+ 318              		.loc 1 311 1 is_stmt 0 view .LVU103
+ 319 0000 38B5     		push	{r3, r4, r5, lr}
+ 320              	.LCFI1:
+ 321              		.cfi_def_cfa_offset 16
+ 322              		.cfi_offset 3, -16
+ 323              		.cfi_offset 4, -12
+ 324              		.cfi_offset 5, -8
+ 325              		.cfi_offset 14, -4
+ 326 0002 0446     		mov	r4, r0
+ 312:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   struct pbuf *p;
+ 327              		.loc 1 312 3 is_stmt 1 view .LVU104
+ 313:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   p = slipif_rxbyte(netif, c);
+ 328              		.loc 1 313 3 view .LVU105
+ 329              		.loc 1 313 7 is_stmt 0 view .LVU106
+ 330 0004 FFF7FEFF 		bl	slipif_rxbyte
+ 331              	.LVL20:
+ 314:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   if (p != NULL) {
+ 332              		.loc 1 314 3 is_stmt 1 view .LVU107
+ 333              		.loc 1 314 6 is_stmt 0 view .LVU108
+ 334 0008 20B1     		cbz	r0, .L25
+ 335 000a 0546     		mov	r5, r0
+ 315:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     if (netif->input(p, netif) != ERR_OK) {
+ 336              		.loc 1 315 5 is_stmt 1 view .LVU109
+ 337              		.loc 1 315 14 is_stmt 0 view .LVU110
+ 338 000c 2146     		mov	r1, r4
+ 339 000e 2369     		ldr	r3, [r4, #16]
+ 340              		.loc 1 315 9 view .LVU111
+ 341 0010 9847     		blx	r3
+ 342              	.LVL21:
+ 343              		.loc 1 315 8 discriminator 1 view .LVU112
+ 344 0012 00B9     		cbnz	r0, .L28
+ 345              	.LVL22:
+ 346              	.L25:
+ 316:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       pbuf_free(p);
+ 317:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     }
+ 318:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   }
+ 319:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** }
+ 347              		.loc 1 319 1 view .LVU113
+ 348 0014 38BD     		pop	{r3, r4, r5, pc}
+ 349              	.LVL23:
+ 350              	.L28:
+ 316:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       pbuf_free(p);
+ 351              		.loc 1 316 7 is_stmt 1 view .LVU114
+ 352 0016 2846     		mov	r0, r5
+ 353 0018 FFF7FEFF 		bl	pbuf_free
+ 354              	.LVL24:
+ 355              		.loc 1 319 1 is_stmt 0 view .LVU115
+ 356 001c FAE7     		b	.L25
+ 357              		.cfi_endproc
+ 358              	.LFE175:
+ 360              		.section	.text.slipif_loop_thread,"ax",%progbits
+ 361              		.align	1
+ 362              		.syntax unified
+ 363              		.thumb
+ 364              		.thumb_func
+ 366              	slipif_loop_thread:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 14
+
+
+ 367              	.LVL25:
+ 368              	.LFB176:
+ 320:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 321:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #if SLIP_USE_RX_THREAD
+ 322:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** /**
+ 323:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * The SLIP input thread.
+ 324:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+ 325:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * Feed the IP layer with incoming packets
+ 326:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+ 327:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @param nf the lwip network interface structure for this slipif
+ 328:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  */
+ 329:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** static void
+ 330:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** slipif_loop_thread(void *nf)
+ 331:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** {
+ 369              		.loc 1 331 1 is_stmt 1 view -0
+ 370              		.cfi_startproc
+ 371              		@ args = 0, pretend = 0, frame = 8
+ 372              		@ frame_needed = 0, uses_anonymous_args = 0
+ 373              		.loc 1 331 1 is_stmt 0 view .LVU117
+ 374 0000 30B5     		push	{r4, r5, lr}
+ 375              	.LCFI2:
+ 376              		.cfi_def_cfa_offset 12
+ 377              		.cfi_offset 4, -12
+ 378              		.cfi_offset 5, -8
+ 379              		.cfi_offset 14, -4
+ 380 0002 83B0     		sub	sp, sp, #12
+ 381              	.LCFI3:
+ 382              		.cfi_def_cfa_offset 24
+ 383 0004 0546     		mov	r5, r0
+ 332:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   u8_t c;
+ 384              		.loc 1 332 3 is_stmt 1 view .LVU118
+ 333:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   struct netif *netif = (struct netif *)nf;
+ 385              		.loc 1 333 3 view .LVU119
+ 386              	.LVL26:
+ 334:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   struct slipif_priv *priv = (struct slipif_priv *)netif->state;
+ 387              		.loc 1 334 3 view .LVU120
+ 388              		.loc 1 334 23 is_stmt 0 view .LVU121
+ 389 0006 046A     		ldr	r4, [r0, #32]
+ 390              	.LVL27:
+ 391              	.L30:
+ 335:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 336:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   while (1) {
+ 392              		.loc 1 336 3 is_stmt 1 view .LVU122
+ 337:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     if (sio_read(priv->sd, &c, 1) > 0) {
+ 393              		.loc 1 337 5 view .LVU123
+ 394              		.loc 1 337 9 is_stmt 0 view .LVU124
+ 395 0008 0122     		movs	r2, #1
+ 396 000a 0DF10701 		add	r1, sp, #7
+ 397 000e 2068     		ldr	r0, [r4]
+ 398 0010 FFF7FEFF 		bl	sio_read
+ 399              	.LVL28:
+ 400              		.loc 1 337 8 discriminator 1 view .LVU125
+ 401 0014 0028     		cmp	r0, #0
+ 402 0016 F7D0     		beq	.L30
+ 338:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       slipif_rxbyte_input(netif, c);
+ 403              		.loc 1 338 7 is_stmt 1 view .LVU126
+ 404 0018 9DF80710 		ldrb	r1, [sp, #7]	@ zero_extendqisi2
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 15
+
+
+ 405 001c 2846     		mov	r0, r5
+ 406 001e FFF7FEFF 		bl	slipif_rxbyte_input
+ 407              	.LVL29:
+ 408 0022 F1E7     		b	.L30
+ 409              		.cfi_endproc
+ 410              	.LFE176:
+ 412              		.section	.rodata.slipif_output.str1.4,"aMS",%progbits,1
+ 413              		.align	2
+ 414              	.LC4:
+ 415 0000 7020213D 		.ascii	"p != NULL\000"
+ 415      204E554C 
+ 415      4C00
+ 416              		.section	.text.slipif_output,"ax",%progbits
+ 417              		.align	1
+ 418              		.syntax unified
+ 419              		.thumb
+ 420              		.thumb_func
+ 422              	slipif_output:
+ 423              	.LVL30:
+ 424              	.LFB172:
+ 117:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   struct slipif_priv *priv;
+ 425              		.loc 1 117 1 view -0
+ 426              		.cfi_startproc
+ 427              		@ args = 0, pretend = 0, frame = 0
+ 428              		@ frame_needed = 0, uses_anonymous_args = 0
+ 117:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   struct slipif_priv *priv;
+ 429              		.loc 1 117 1 is_stmt 0 view .LVU128
+ 430 0000 70B5     		push	{r4, r5, r6, lr}
+ 431              	.LCFI4:
+ 432              		.cfi_def_cfa_offset 16
+ 433              		.cfi_offset 4, -16
+ 434              		.cfi_offset 5, -12
+ 435              		.cfi_offset 6, -8
+ 436              		.cfi_offset 14, -4
+ 437 0002 0D46     		mov	r5, r1
+ 118:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   struct pbuf *q;
+ 438              		.loc 1 118 3 is_stmt 1 view .LVU129
+ 119:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   u16_t i;
+ 439              		.loc 1 119 3 view .LVU130
+ 120:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   u8_t c;
+ 440              		.loc 1 120 3 view .LVU131
+ 121:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 441              		.loc 1 121 3 view .LVU132
+ 123:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("netif->state != NULL", (netif->state != NULL));
+ 442              		.loc 1 123 3 view .LVU133
+ 123:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("netif->state != NULL", (netif->state != NULL));
+ 443              		.loc 1 123 3 view .LVU134
+ 444 0004 0446     		mov	r4, r0
+ 445 0006 40B1     		cbz	r0, .L47
+ 446              	.LVL31:
+ 447              	.L34:
+ 123:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("netif->state != NULL", (netif->state != NULL));
+ 448              		.loc 1 123 3 view .LVU135
+ 123:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("netif->state != NULL", (netif->state != NULL));
+ 449              		.loc 1 123 3 view .LVU136
+ 124:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("p != NULL", (p != NULL));
+ 450              		.loc 1 124 3 view .LVU137
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 16
+
+
+ 124:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("p != NULL", (p != NULL));
+ 451              		.loc 1 124 3 view .LVU138
+ 452 0008 236A     		ldr	r3, [r4, #32]
+ 453 000a 6BB1     		cbz	r3, .L48
+ 454              	.L35:
+ 124:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("p != NULL", (p != NULL));
+ 455              		.loc 1 124 3 view .LVU139
+ 124:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("p != NULL", (p != NULL));
+ 456              		.loc 1 124 3 view .LVU140
+ 125:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 457              		.loc 1 125 3 view .LVU141
+ 125:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 458              		.loc 1 125 3 view .LVU142
+ 459 000c 9DB1     		cbz	r5, .L49
+ 460              	.L36:
+ 125:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 461              		.loc 1 125 3 view .LVU143
+ 125:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 462              		.loc 1 125 3 view .LVU144
+ 127:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   priv = (struct slipif_priv *)netif->state;
+ 463              		.loc 1 127 83 view .LVU145
+ 128:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 464              		.loc 1 128 3 view .LVU146
+ 128:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 465              		.loc 1 128 8 is_stmt 0 view .LVU147
+ 466 000e 266A     		ldr	r6, [r4, #32]
+ 467              	.LVL32:
+ 132:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 468              		.loc 1 132 3 is_stmt 1 view .LVU148
+ 469 0010 3168     		ldr	r1, [r6]
+ 470 0012 C020     		movs	r0, #192
+ 471 0014 FFF7FEFF 		bl	sio_send
+ 472              	.LVL33:
+ 134:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     for (i = 0; i < q->len; i++) {
+ 473              		.loc 1 134 3 view .LVU149
+ 134:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     for (i = 0; i < q->len; i++) {
+ 474              		.loc 1 134 3 is_stmt 0 view .LVU150
+ 475 0018 35E0     		b	.L37
+ 476              	.LVL34:
+ 477              	.L47:
+ 123:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("netif->state != NULL", (netif->state != NULL));
+ 478              		.loc 1 123 3 is_stmt 1 discriminator 1 view .LVU151
+ 123:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("netif->state != NULL", (netif->state != NULL));
+ 479              		.loc 1 123 3 discriminator 1 view .LVU152
+ 480 001a 1F4B     		ldr	r3, .L52
+ 481 001c 7B22     		movs	r2, #123
+ 482 001e 1F49     		ldr	r1, .L52+4
+ 483              	.LVL35:
+ 123:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("netif->state != NULL", (netif->state != NULL));
+ 484              		.loc 1 123 3 is_stmt 0 discriminator 1 view .LVU153
+ 485 0020 1F48     		ldr	r0, .L52+8
+ 486              	.LVL36:
+ 123:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("netif->state != NULL", (netif->state != NULL));
+ 487              		.loc 1 123 3 discriminator 1 view .LVU154
+ 488 0022 FFF7FEFF 		bl	printf
+ 489              	.LVL37:
+ 490 0026 EFE7     		b	.L34
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 17
+
+
+ 491              	.L48:
+ 124:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("p != NULL", (p != NULL));
+ 492              		.loc 1 124 3 is_stmt 1 discriminator 1 view .LVU155
+ 124:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("p != NULL", (p != NULL));
+ 493              		.loc 1 124 3 discriminator 1 view .LVU156
+ 494 0028 1B4B     		ldr	r3, .L52
+ 495 002a 7C22     		movs	r2, #124
+ 496 002c 1D49     		ldr	r1, .L52+12
+ 497 002e 1C48     		ldr	r0, .L52+8
+ 498 0030 FFF7FEFF 		bl	printf
+ 499              	.LVL38:
+ 500 0034 EAE7     		b	.L35
+ 501              	.L49:
+ 125:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 502              		.loc 1 125 3 discriminator 1 view .LVU157
+ 125:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 503              		.loc 1 125 3 discriminator 1 view .LVU158
+ 504 0036 184B     		ldr	r3, .L52
+ 505 0038 7D22     		movs	r2, #125
+ 506 003a 1B49     		ldr	r1, .L52+16
+ 507 003c 1848     		ldr	r0, .L52+8
+ 508 003e FFF7FEFF 		bl	printf
+ 509              	.LVL39:
+ 510 0042 E4E7     		b	.L36
+ 511              	.LVL40:
+ 512              	.L38:
+ 140:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           sio_send(SLIP_ESC_END, priv->sd);
+ 513              		.loc 1 140 11 view .LVU159
+ 514 0044 3168     		ldr	r1, [r6]
+ 515 0046 DB20     		movs	r0, #219
+ 516              	.LVL41:
+ 140:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           sio_send(SLIP_ESC_END, priv->sd);
+ 517              		.loc 1 140 11 is_stmt 0 view .LVU160
+ 518 0048 FFF7FEFF 		bl	sio_send
+ 519              	.LVL42:
+ 141:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           break;
+ 520              		.loc 1 141 11 is_stmt 1 view .LVU161
+ 521 004c 3168     		ldr	r1, [r6]
+ 522 004e DC20     		movs	r0, #220
+ 523 0050 FFF7FEFF 		bl	sio_send
+ 524              	.LVL43:
+ 142:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****         case SLIP_ESC:
+ 525              		.loc 1 142 11 view .LVU162
+ 526              	.L41:
+ 135:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       c = ((u8_t *)q->payload)[i];
+ 527              		.loc 1 135 30 discriminator 2 view .LVU163
+ 528 0054 0134     		adds	r4, r4, #1
+ 529              	.LVL44:
+ 135:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       c = ((u8_t *)q->payload)[i];
+ 530              		.loc 1 135 30 is_stmt 0 discriminator 2 view .LVU164
+ 531 0056 A4B2     		uxth	r4, r4
+ 532              	.LVL45:
+ 533              	.L43:
+ 135:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       c = ((u8_t *)q->payload)[i];
+ 534              		.loc 1 135 19 is_stmt 1 discriminator 1 view .LVU165
+ 135:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       c = ((u8_t *)q->payload)[i];
+ 535              		.loc 1 135 22 is_stmt 0 discriminator 1 view .LVU166
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 18
+
+
+ 536 0058 6B89     		ldrh	r3, [r5, #10]
+ 135:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       c = ((u8_t *)q->payload)[i];
+ 537              		.loc 1 135 19 discriminator 1 view .LVU167
+ 538 005a A342     		cmp	r3, r4
+ 539 005c 12D9     		bls	.L50
+ 136:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       switch (c) {
+ 540              		.loc 1 136 7 is_stmt 1 view .LVU168
+ 136:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       switch (c) {
+ 541              		.loc 1 136 21 is_stmt 0 view .LVU169
+ 542 005e 6B68     		ldr	r3, [r5, #4]
+ 136:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       switch (c) {
+ 543              		.loc 1 136 9 view .LVU170
+ 544 0060 185D     		ldrb	r0, [r3, r4]	@ zero_extendqisi2
+ 545              	.LVL46:
+ 137:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****         case SLIP_END:
+ 546              		.loc 1 137 7 is_stmt 1 view .LVU171
+ 547 0062 C028     		cmp	r0, #192
+ 548 0064 EED0     		beq	.L38
+ 549 0066 DB28     		cmp	r0, #219
+ 550 0068 03D0     		beq	.L39
+ 150:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           break;
+ 551              		.loc 1 150 11 view .LVU172
+ 552 006a 3168     		ldr	r1, [r6]
+ 553 006c FFF7FEFF 		bl	sio_send
+ 554              	.LVL47:
+ 151:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       }
+ 555              		.loc 1 151 11 view .LVU173
+ 556 0070 F0E7     		b	.L41
+ 557              	.LVL48:
+ 558              	.L39:
+ 145:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           sio_send(SLIP_ESC_ESC, priv->sd);
+ 559              		.loc 1 145 11 view .LVU174
+ 560 0072 3168     		ldr	r1, [r6]
+ 561 0074 DB20     		movs	r0, #219
+ 562              	.LVL49:
+ 145:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           sio_send(SLIP_ESC_ESC, priv->sd);
+ 563              		.loc 1 145 11 is_stmt 0 view .LVU175
+ 564 0076 FFF7FEFF 		bl	sio_send
+ 565              	.LVL50:
+ 146:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****           break;
+ 566              		.loc 1 146 11 is_stmt 1 view .LVU176
+ 567 007a 3168     		ldr	r1, [r6]
+ 568 007c DD20     		movs	r0, #221
+ 569 007e FFF7FEFF 		bl	sio_send
+ 570              	.LVL51:
+ 147:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****         default:
+ 571              		.loc 1 147 11 view .LVU177
+ 572 0082 E7E7     		b	.L41
+ 573              	.LVL52:
+ 574              	.L50:
+ 134:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     for (i = 0; i < q->len; i++) {
+ 575              		.loc 1 134 28 discriminator 2 view .LVU178
+ 576 0084 2D68     		ldr	r5, [r5]
+ 577              	.LVL53:
+ 578              	.L37:
+ 134:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     for (i = 0; i < q->len; i++) {
+ 579              		.loc 1 134 17 discriminator 1 view .LVU179
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 19
+
+
+ 580 0086 0DB1     		cbz	r5, .L51
+ 135:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****       c = ((u8_t *)q->payload)[i];
+ 581              		.loc 1 135 12 is_stmt 0 view .LVU180
+ 582 0088 0024     		movs	r4, #0
+ 583 008a E5E7     		b	.L43
+ 584              	.L51:
+ 156:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   return ERR_OK;
+ 585              		.loc 1 156 3 is_stmt 1 view .LVU181
+ 586 008c 3168     		ldr	r1, [r6]
+ 587 008e C020     		movs	r0, #192
+ 588 0090 FFF7FEFF 		bl	sio_send
+ 589              	.LVL54:
+ 157:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** }
+ 590              		.loc 1 157 3 view .LVU182
+ 158:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 591              		.loc 1 158 1 is_stmt 0 view .LVU183
+ 592 0094 2846     		mov	r0, r5
+ 593 0096 70BD     		pop	{r4, r5, r6, pc}
+ 594              	.LVL55:
+ 595              	.L53:
+ 158:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 596              		.loc 1 158 1 view .LVU184
+ 597              		.align	2
+ 598              	.L52:
+ 599 0098 00000000 		.word	.LC0
+ 600 009c 30000000 		.word	.LC1
+ 601 00a0 40000000 		.word	.LC2
+ 602 00a4 68000000 		.word	.LC3
+ 603 00a8 00000000 		.word	.LC4
+ 604              		.cfi_endproc
+ 605              	.LFE172:
+ 607              		.section	.text.slipif_output_v4,"ax",%progbits
+ 608              		.align	1
+ 609              		.syntax unified
+ 610              		.thumb
+ 611              		.thumb_func
+ 613              	slipif_output_v4:
+ 614              	.LVL56:
+ 615              	.LFB173:
+ 173:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_UNUSED_ARG(ipaddr);
+ 616              		.loc 1 173 1 is_stmt 1 view -0
+ 617              		.cfi_startproc
+ 618              		@ args = 0, pretend = 0, frame = 0
+ 619              		@ frame_needed = 0, uses_anonymous_args = 0
+ 173:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_UNUSED_ARG(ipaddr);
+ 620              		.loc 1 173 1 is_stmt 0 view .LVU186
+ 621 0000 08B5     		push	{r3, lr}
+ 622              	.LCFI5:
+ 623              		.cfi_def_cfa_offset 8
+ 624              		.cfi_offset 3, -8
+ 625              		.cfi_offset 14, -4
+ 174:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   return slipif_output(netif, p);
+ 626              		.loc 1 174 3 is_stmt 1 view .LVU187
+ 175:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** }
+ 627              		.loc 1 175 3 view .LVU188
+ 175:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** }
+ 628              		.loc 1 175 10 is_stmt 0 view .LVU189
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 20
+
+
+ 629 0002 FFF7FEFF 		bl	slipif_output
+ 630              	.LVL57:
+ 176:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #endif /* LWIP_IPV4 */
+ 631              		.loc 1 176 1 view .LVU190
+ 632 0006 08BD     		pop	{r3, pc}
+ 633              		.cfi_endproc
+ 634              	.LFE173:
+ 636              		.section	.rodata.slipif_init.str1.4,"aMS",%progbits,1
+ 637              		.align	2
+ 638              	.LC5:
+ 639 0000 736C6970 		.ascii	"slipif needs an input callback\000"
+ 639      6966206E 
+ 639      65656473 
+ 639      20616E20 
+ 639      696E7075 
+ 640 001f 00       		.align	2
+ 641              	.LC6:
+ 642 0020 736C6970 		.ascii	"slipif_loop\000"
+ 642      69665F6C 
+ 642      6F6F7000 
+ 643              		.section	.text.slipif_init,"ax",%progbits
+ 644              		.align	1
+ 645              		.global	slipif_init
+ 646              		.syntax unified
+ 647              		.thumb
+ 648              		.thumb_func
+ 650              	slipif_init:
+ 651              	.LVL58:
+ 652              	.LFB177:
+ 339:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     }
+ 340:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   }
+ 341:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** }
+ 342:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #endif /* SLIP_USE_RX_THREAD */
+ 343:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 344:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** /**
+ 345:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @ingroup slipif
+ 346:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * SLIP netif initialization
+ 347:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+ 348:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * Call the arch specific sio_open and remember
+ 349:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * the opened device in the state field of the netif.
+ 350:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+ 351:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @param netif the lwip network interface structure for this slipif
+ 352:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @return ERR_OK if serial line could be opened,
+ 353:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *         ERR_MEM if no memory could be allocated,
+ 354:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *         ERR_IF is serial line couldn't be opened
+ 355:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+ 356:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @note If netif->state is interpreted as an u8_t serial port number.
+ 357:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+ 358:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  */
+ 359:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** err_t
+ 360:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** slipif_init(struct netif *netif)
+ 361:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** {
+ 653              		.loc 1 361 1 is_stmt 1 view -0
+ 654              		.cfi_startproc
+ 655              		@ args = 0, pretend = 0, frame = 0
+ 656              		@ frame_needed = 0, uses_anonymous_args = 0
+ 657              		.loc 1 361 1 is_stmt 0 view .LVU192
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 21
+
+
+ 658 0000 70B5     		push	{r4, r5, r6, lr}
+ 659              	.LCFI6:
+ 660              		.cfi_def_cfa_offset 16
+ 661              		.cfi_offset 4, -16
+ 662              		.cfi_offset 5, -12
+ 663              		.cfi_offset 6, -8
+ 664              		.cfi_offset 14, -4
+ 665 0002 82B0     		sub	sp, sp, #8
+ 666              	.LCFI7:
+ 667              		.cfi_def_cfa_offset 24
+ 668 0004 0446     		mov	r4, r0
+ 362:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   struct slipif_priv *priv;
+ 669              		.loc 1 362 3 is_stmt 1 view .LVU193
+ 363:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   u8_t sio_num;
+ 670              		.loc 1 363 3 view .LVU194
+ 364:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 365:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("slipif needs an input callback", netif->input != NULL);
+ 671              		.loc 1 365 3 view .LVU195
+ 672              		.loc 1 365 3 view .LVU196
+ 673 0006 0369     		ldr	r3, [r0, #16]
+ 674 0008 53B3     		cbz	r3, .L62
+ 675              	.LVL59:
+ 676              	.L57:
+ 677              		.loc 1 365 3 view .LVU197
+ 678              		.loc 1 365 3 view .LVU198
+ 366:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 367:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   /* netif->state contains serial port number */
+ 368:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   sio_num = LWIP_PTR_NUMERIC_CAST(u8_t, netif->state);
+ 679              		.loc 1 368 3 view .LVU199
+ 680              		.loc 1 368 11 is_stmt 0 view .LVU200
+ 681 000a 94F82050 		ldrb	r5, [r4, #32]	@ zero_extendqisi2
+ 682              	.LVL60:
+ 369:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 370:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_DEBUGF(SLIP_DEBUG, ("slipif_init: netif->num=%"U16_F"\n", (u16_t)sio_num));
+ 683              		.loc 1 370 82 is_stmt 1 view .LVU201
+ 371:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 372:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   /* Allocate private data */
+ 373:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   priv = (struct slipif_priv *)mem_malloc(sizeof(struct slipif_priv));
+ 684              		.loc 1 373 3 view .LVU202
+ 685              		.loc 1 373 32 is_stmt 0 view .LVU203
+ 686 000e 1420     		movs	r0, #20
+ 687 0010 FFF7FEFF 		bl	mem_malloc
+ 688              	.LVL61:
+ 374:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   if (!priv) {
+ 689              		.loc 1 374 3 is_stmt 1 view .LVU204
+ 690              		.loc 1 374 6 is_stmt 0 view .LVU205
+ 691 0014 0646     		mov	r6, r0
+ 692 0016 0028     		cmp	r0, #0
+ 693 0018 30D0     		beq	.L60
+ 375:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     return ERR_MEM;
+ 376:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   }
+ 377:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 378:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   netif->name[0] = 's';
+ 694              		.loc 1 378 3 is_stmt 1 view .LVU206
+ 695              		.loc 1 378 18 is_stmt 0 view .LVU207
+ 696 001a 7323     		movs	r3, #115
+ 697 001c 84F82E30 		strb	r3, [r4, #46]
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 22
+
+
+ 379:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   netif->name[1] = 'l';
+ 698              		.loc 1 379 3 is_stmt 1 view .LVU208
+ 699              		.loc 1 379 18 is_stmt 0 view .LVU209
+ 700 0020 6C23     		movs	r3, #108
+ 701 0022 84F82F30 		strb	r3, [r4, #47]
+ 380:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #if LWIP_IPV4
+ 381:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   netif->output = slipif_output_v4;
+ 702              		.loc 1 381 3 is_stmt 1 view .LVU210
+ 703              		.loc 1 381 17 is_stmt 0 view .LVU211
+ 704 0026 174B     		ldr	r3, .L64
+ 705 0028 6361     		str	r3, [r4, #20]
+ 382:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #endif /* LWIP_IPV4 */
+ 383:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #if LWIP_IPV6
+ 384:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   netif->output_ip6 = slipif_output_v6;
+ 385:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #endif /* LWIP_IPV6 */
+ 386:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   netif->mtu = SLIP_MAX_SIZE;
+ 706              		.loc 1 386 3 is_stmt 1 view .LVU212
+ 707              		.loc 1 386 14 is_stmt 0 view .LVU213
+ 708 002a 40F2DC53 		movw	r3, #1500
+ 709 002e A384     		strh	r3, [r4, #36]	@ movhi
+ 387:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 388:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   /* Try to open the serial port. */
+ 389:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   priv->sd = sio_open(sio_num);
+ 710              		.loc 1 389 3 is_stmt 1 view .LVU214
+ 711              		.loc 1 389 14 is_stmt 0 view .LVU215
+ 712 0030 2846     		mov	r0, r5
+ 713              	.LVL62:
+ 714              		.loc 1 389 14 view .LVU216
+ 715 0032 FFF7FEFF 		bl	sio_open
+ 716              	.LVL63:
+ 717              		.loc 1 389 12 discriminator 1 view .LVU217
+ 718 0036 3060     		str	r0, [r6]
+ 390:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   if (!priv->sd) {
+ 719              		.loc 1 390 3 is_stmt 1 view .LVU218
+ 720              		.loc 1 390 6 is_stmt 0 view .LVU219
+ 721 0038 D0B1     		cbz	r0, .L63
+ 391:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     /* Opening the serial port failed. */
+ 392:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     mem_free(priv);
+ 393:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     return ERR_IF;
+ 394:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   }
+ 395:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 396:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   /* Initialize private data */
+ 397:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   priv->p = NULL;
+ 722              		.loc 1 397 3 is_stmt 1 view .LVU220
+ 723              		.loc 1 397 11 is_stmt 0 view .LVU221
+ 724 003a 0025     		movs	r5, #0
+ 725              	.LVL64:
+ 726              		.loc 1 397 11 view .LVU222
+ 727 003c 7560     		str	r5, [r6, #4]
+ 398:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   priv->q = NULL;
+ 728              		.loc 1 398 3 is_stmt 1 view .LVU223
+ 729              		.loc 1 398 11 is_stmt 0 view .LVU224
+ 730 003e B560     		str	r5, [r6, #8]
+ 399:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   priv->state = SLIP_RECV_NORMAL;
+ 731              		.loc 1 399 3 is_stmt 1 view .LVU225
+ 732              		.loc 1 399 15 is_stmt 0 view .LVU226
+ 733 0040 3573     		strb	r5, [r6, #12]
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 23
+
+
+ 400:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   priv->i = 0;
+ 734              		.loc 1 400 3 is_stmt 1 view .LVU227
+ 735              		.loc 1 400 11 is_stmt 0 view .LVU228
+ 736 0042 F581     		strh	r5, [r6, #14]	@ movhi
+ 401:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   priv->recved = 0;
+ 737              		.loc 1 401 3 is_stmt 1 view .LVU229
+ 738              		.loc 1 401 16 is_stmt 0 view .LVU230
+ 739 0044 3582     		strh	r5, [r6, #16]	@ movhi
+ 402:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #if SLIP_RX_FROM_ISR
+ 403:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   priv->rxpackets = NULL;
+ 404:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #endif
+ 405:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 406:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   netif->state = priv;
+ 740              		.loc 1 406 3 is_stmt 1 view .LVU231
+ 741              		.loc 1 406 16 is_stmt 0 view .LVU232
+ 742 0046 2662     		str	r6, [r4, #32]
+ 407:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 408:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   /* initialize the snmp variables and counters inside the struct netif */
+ 409:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   MIB2_INIT_NETIF(netif, snmp_ifType_slip, SLIP_SIO_SPEED(priv->sd));
+ 743              		.loc 1 409 69 is_stmt 1 view .LVU233
+ 410:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 411:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #if SLIP_USE_RX_THREAD
+ 412:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   /* Create a thread to poll the serial line. */
+ 413:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   sys_thread_new(SLIPIF_THREAD_NAME, slipif_loop_thread, netif,
+ 744              		.loc 1 413 3 view .LVU234
+ 745 0048 0323     		movs	r3, #3
+ 746 004a 0093     		str	r3, [sp]
+ 747 004c 4FF48063 		mov	r3, #1024
+ 748 0050 2246     		mov	r2, r4
+ 749 0052 0D49     		ldr	r1, .L64+4
+ 750 0054 0D48     		ldr	r0, .L64+8
+ 751 0056 FFF7FEFF 		bl	sys_thread_new
+ 752              	.LVL65:
+ 414:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****                  SLIPIF_THREAD_STACKSIZE, SLIPIF_THREAD_PRIO);
+ 415:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** #endif /* SLIP_USE_RX_THREAD */
+ 416:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   return ERR_OK;
+ 753              		.loc 1 416 3 view .LVU235
+ 754              		.loc 1 416 10 is_stmt 0 view .LVU236
+ 755 005a 2846     		mov	r0, r5
+ 756              	.L58:
+ 417:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** }
+ 757              		.loc 1 417 1 view .LVU237
+ 758 005c 02B0     		add	sp, sp, #8
+ 759              	.LCFI8:
+ 760              		.cfi_remember_state
+ 761              		.cfi_def_cfa_offset 16
+ 762              		@ sp needed
+ 763 005e 70BD     		pop	{r4, r5, r6, pc}
+ 764              	.LVL66:
+ 765              	.L62:
+ 766              	.LCFI9:
+ 767              		.cfi_restore_state
+ 365:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 768              		.loc 1 365 3 is_stmt 1 discriminator 1 view .LVU238
+ 365:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 769              		.loc 1 365 3 discriminator 1 view .LVU239
+ 770 0060 0B4B     		ldr	r3, .L64+12
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 24
+
+
+ 771 0062 40F26D12 		movw	r2, #365
+ 772 0066 0B49     		ldr	r1, .L64+16
+ 773 0068 0B48     		ldr	r0, .L64+20
+ 774              	.LVL67:
+ 365:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 775              		.loc 1 365 3 is_stmt 0 discriminator 1 view .LVU240
+ 776 006a FFF7FEFF 		bl	printf
+ 777              	.LVL68:
+ 778 006e CCE7     		b	.L57
+ 779              	.LVL69:
+ 780              	.L63:
+ 392:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     return ERR_IF;
+ 781              		.loc 1 392 5 is_stmt 1 view .LVU241
+ 782 0070 3046     		mov	r0, r6
+ 783 0072 FFF7FEFF 		bl	mem_free
+ 784              	.LVL70:
+ 393:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   }
+ 785              		.loc 1 393 5 view .LVU242
+ 393:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   }
+ 786              		.loc 1 393 12 is_stmt 0 view .LVU243
+ 787 0076 6FF00B00 		mvn	r0, #11
+ 788 007a EFE7     		b	.L58
+ 789              	.LVL71:
+ 790              	.L60:
+ 375:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   }
+ 791              		.loc 1 375 12 view .LVU244
+ 792 007c 4FF0FF30 		mov	r0, #-1
+ 793              	.LVL72:
+ 375:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   }
+ 794              		.loc 1 375 12 view .LVU245
+ 795 0080 ECE7     		b	.L58
+ 796              	.L65:
+ 797 0082 00BF     		.align	2
+ 798              	.L64:
+ 799 0084 00000000 		.word	slipif_output_v4
+ 800 0088 00000000 		.word	slipif_loop_thread
+ 801 008c 20000000 		.word	.LC6
+ 802 0090 00000000 		.word	.LC0
+ 803 0094 00000000 		.word	.LC5
+ 804 0098 40000000 		.word	.LC2
+ 805              		.cfi_endproc
+ 806              	.LFE177:
+ 808              		.section	.text.slipif_poll,"ax",%progbits
+ 809              		.align	1
+ 810              		.global	slipif_poll
+ 811              		.syntax unified
+ 812              		.thumb
+ 813              		.thumb_func
+ 815              	slipif_poll:
+ 816              	.LVL73:
+ 817              	.LFB178:
+ 418:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 419:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** /**
+ 420:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @ingroup slipif
+ 421:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * Polls the serial device and feeds the IP layer with incoming packets.
+ 422:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  *
+ 423:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  * @param netif The lwip network interface structure for this slipif
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 25
+
+
+ 424:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****  */
+ 425:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** void
+ 426:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** slipif_poll(struct netif *netif)
+ 427:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** {
+ 818              		.loc 1 427 1 is_stmt 1 view -0
+ 819              		.cfi_startproc
+ 820              		@ args = 0, pretend = 0, frame = 8
+ 821              		@ frame_needed = 0, uses_anonymous_args = 0
+ 822              		.loc 1 427 1 is_stmt 0 view .LVU247
+ 823 0000 30B5     		push	{r4, r5, lr}
+ 824              	.LCFI10:
+ 825              		.cfi_def_cfa_offset 12
+ 826              		.cfi_offset 4, -12
+ 827              		.cfi_offset 5, -8
+ 828              		.cfi_offset 14, -4
+ 829 0002 83B0     		sub	sp, sp, #12
+ 830              	.LCFI11:
+ 831              		.cfi_def_cfa_offset 24
+ 428:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   u8_t c;
+ 832              		.loc 1 428 3 is_stmt 1 view .LVU248
+ 429:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   struct slipif_priv *priv;
+ 833              		.loc 1 429 3 view .LVU249
+ 430:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 431:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("netif != NULL", (netif != NULL));
+ 834              		.loc 1 431 3 view .LVU250
+ 835              		.loc 1 431 3 view .LVU251
+ 836 0004 0446     		mov	r4, r0
+ 837 0006 18B1     		cbz	r0, .L72
+ 838              	.LVL74:
+ 839              	.L67:
+ 840              		.loc 1 431 3 view .LVU252
+ 841              		.loc 1 431 3 view .LVU253
+ 432:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("netif->state != NULL", (netif->state != NULL));
+ 842              		.loc 1 432 3 view .LVU254
+ 843              		.loc 1 432 3 view .LVU255
+ 844 0008 236A     		ldr	r3, [r4, #32]
+ 845 000a 4BB1     		cbz	r3, .L73
+ 846              	.L68:
+ 847              		.loc 1 432 3 view .LVU256
+ 848              		.loc 1 432 3 view .LVU257
+ 433:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 434:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   priv = (struct slipif_priv *)netif->state;
+ 849              		.loc 1 434 3 view .LVU258
+ 850              		.loc 1 434 8 is_stmt 0 view .LVU259
+ 851 000c 256A     		ldr	r5, [r4, #32]
+ 852              	.LVL75:
+ 435:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 436:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   while (sio_tryread(priv->sd, &c, 1) > 0) {
+ 853              		.loc 1 436 3 is_stmt 1 view .LVU260
+ 854              		.loc 1 436 9 is_stmt 0 view .LVU261
+ 855 000e 14E0     		b	.L69
+ 856              	.LVL76:
+ 857              	.L72:
+ 431:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("netif->state != NULL", (netif->state != NULL));
+ 858              		.loc 1 431 3 is_stmt 1 discriminator 1 view .LVU262
+ 431:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("netif->state != NULL", (netif->state != NULL));
+ 859              		.loc 1 431 3 discriminator 1 view .LVU263
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 26
+
+
+ 860 0010 0F4B     		ldr	r3, .L74
+ 861 0012 40F2AF12 		movw	r2, #431
+ 862 0016 0F49     		ldr	r1, .L74+4
+ 863 0018 0F48     		ldr	r0, .L74+8
+ 864              	.LVL77:
+ 431:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   LWIP_ASSERT("netif->state != NULL", (netif->state != NULL));
+ 865              		.loc 1 431 3 is_stmt 0 discriminator 1 view .LVU264
+ 866 001a FFF7FEFF 		bl	printf
+ 867              	.LVL78:
+ 868 001e F3E7     		b	.L67
+ 869              	.L73:
+ 432:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 870              		.loc 1 432 3 is_stmt 1 discriminator 1 view .LVU265
+ 432:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** 
+ 871              		.loc 1 432 3 discriminator 1 view .LVU266
+ 872 0020 0B4B     		ldr	r3, .L74
+ 873 0022 4FF4D872 		mov	r2, #432
+ 874 0026 0D49     		ldr	r1, .L74+12
+ 875 0028 0B48     		ldr	r0, .L74+8
+ 876 002a FFF7FEFF 		bl	printf
+ 877              	.LVL79:
+ 878 002e EDE7     		b	.L68
+ 879              	.LVL80:
+ 880              	.L70:
+ 437:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     slipif_rxbyte_input(netif, c);
+ 881              		.loc 1 437 5 view .LVU267
+ 882 0030 9DF80710 		ldrb	r1, [sp, #7]	@ zero_extendqisi2
+ 883 0034 2046     		mov	r0, r4
+ 884 0036 FFF7FEFF 		bl	slipif_rxbyte_input
+ 885              	.LVL81:
+ 886              	.L69:
+ 436:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     slipif_rxbyte_input(netif, c);
+ 887              		.loc 1 436 39 view .LVU268
+ 436:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     slipif_rxbyte_input(netif, c);
+ 888              		.loc 1 436 10 is_stmt 0 view .LVU269
+ 889 003a 0122     		movs	r2, #1
+ 890 003c 0DF10701 		add	r1, sp, #7
+ 891 0040 2868     		ldr	r0, [r5]
+ 892 0042 FFF7FEFF 		bl	sio_tryread
+ 893              	.LVL82:
+ 436:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****     slipif_rxbyte_input(netif, c);
+ 894              		.loc 1 436 39 discriminator 1 view .LVU270
+ 895 0046 0028     		cmp	r0, #0
+ 896 0048 F2D1     		bne	.L70
+ 438:Middlewares/Third_Party/LwIP/src/netif/slipif.c ****   }
+ 439:Middlewares/Third_Party/LwIP/src/netif/slipif.c **** }
+ 897              		.loc 1 439 1 view .LVU271
+ 898 004a 03B0     		add	sp, sp, #12
+ 899              	.LCFI12:
+ 900              		.cfi_def_cfa_offset 12
+ 901              		@ sp needed
+ 902 004c 30BD     		pop	{r4, r5, pc}
+ 903              	.LVL83:
+ 904              	.L75:
+ 905              		.loc 1 439 1 view .LVU272
+ 906 004e 00BF     		.align	2
+ 907              	.L74:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 27
+
+
+ 908 0050 00000000 		.word	.LC0
+ 909 0054 30000000 		.word	.LC1
+ 910 0058 40000000 		.word	.LC2
+ 911 005c 68000000 		.word	.LC3
+ 912              		.cfi_endproc
+ 913              	.LFE178:
+ 915              		.text
+ 916              	.Letext0:
+ 917              		.file 2 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 918              		.file 3 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 919              		.file 4 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/lib/g
+ 920              		.file 5 "Middlewares/Third_Party/LwIP/src/include/lwip/arch.h"
+ 921              		.file 6 "Middlewares/Third_Party/LwIP/src/include/lwip/err.h"
+ 922              		.file 7 "Middlewares/Third_Party/LwIP/src/include/lwip/ip4_addr.h"
+ 923              		.file 8 "Middlewares/Third_Party/LwIP/src/include/lwip/ip_addr.h"
+ 924              		.file 9 "Middlewares/Third_Party/LwIP/src/include/lwip/pbuf.h"
+ 925              		.file 10 "Middlewares/Third_Party/LwIP/src/include/lwip/mem.h"
+ 926              		.file 11 "Middlewares/Third_Party/LwIP/src/include/lwip/netif.h"
+ 927              		.file 12 "Drivers/CMSIS/RTOS2/Include/cmsis_os2.h"
+ 928              		.file 13 "Middlewares/Third_Party/LwIP/system/arch/sys_arch.h"
+ 929              		.file 14 "Middlewares/Third_Party/LwIP/src/include/lwip/sys.h"
+ 930              		.file 15 "Middlewares/Third_Party/LwIP/src/include/lwip/sio.h"
+ 931              		.file 16 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccblgtNa.s 			page 28
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 slipif.c
+C:\Users\hh\AppData\Local\Temp\ccblgtNa.s:20     .rodata.slipif_rxbyte.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccblgtNa.s:33     .text.slipif_rxbyte:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccblgtNa.s:38     .text.slipif_rxbyte:00000000 slipif_rxbyte
+C:\Users\hh\AppData\Local\Temp\ccblgtNa.s:298    .text.slipif_rxbyte:000000e8 $d
+C:\Users\hh\AppData\Local\Temp\ccblgtNa.s:306    .text.slipif_rxbyte_input:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccblgtNa.s:311    .text.slipif_rxbyte_input:00000000 slipif_rxbyte_input
+C:\Users\hh\AppData\Local\Temp\ccblgtNa.s:361    .text.slipif_loop_thread:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccblgtNa.s:366    .text.slipif_loop_thread:00000000 slipif_loop_thread
+C:\Users\hh\AppData\Local\Temp\ccblgtNa.s:413    .rodata.slipif_output.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccblgtNa.s:417    .text.slipif_output:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccblgtNa.s:422    .text.slipif_output:00000000 slipif_output
+C:\Users\hh\AppData\Local\Temp\ccblgtNa.s:599    .text.slipif_output:00000098 $d
+C:\Users\hh\AppData\Local\Temp\ccblgtNa.s:608    .text.slipif_output_v4:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccblgtNa.s:613    .text.slipif_output_v4:00000000 slipif_output_v4
+C:\Users\hh\AppData\Local\Temp\ccblgtNa.s:637    .rodata.slipif_init.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccblgtNa.s:644    .text.slipif_init:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccblgtNa.s:650    .text.slipif_init:00000000 slipif_init
+C:\Users\hh\AppData\Local\Temp\ccblgtNa.s:799    .text.slipif_init:00000084 $d
+C:\Users\hh\AppData\Local\Temp\ccblgtNa.s:809    .text.slipif_poll:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccblgtNa.s:815    .text.slipif_poll:00000000 slipif_poll
+C:\Users\hh\AppData\Local\Temp\ccblgtNa.s:908    .text.slipif_poll:00000050 $d
+
+UNDEFINED SYMBOLS
+printf
+pbuf_realloc
+pbuf_alloc
+pbuf_cat
+pbuf_free
+sio_read
+sio_send
+mem_malloc
+sio_open
+sys_thread_new
+mem_free
+sio_tryread

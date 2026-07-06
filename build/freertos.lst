@@ -1,0 +1,535 @@
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"freertos.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "Core/Src/freertos.c"
+  19              		.section	.rodata.StartDefaultTask.str1.4,"aMS",%progbits,1
+  20              		.align	2
+  21              	.LC0:
+  22 0000 5B72746F 		.ascii	"[rtos] defaultTask started\015\000"
+  22      735D2064 
+  22      65666175 
+  22      6C745461 
+  22      736B2073 
+  23              		.align	2
+  24              	.LC1:
+  25 001c 5B72746F 		.ascii	"[rtos] voltage simulator process failed\015\000"
+  25      735D2076 
+  25      6F6C7461 
+  25      67652073 
+  25      696D756C 
+  26 0045 000000   		.align	2
+  27              	.LC2:
+  28 0048 5B72746F 		.ascii	"[rtos] waveform generator process failed\015\000"
+  28      735D2077 
+  28      61766566 
+  28      6F726D20 
+  28      67656E65 
+  29 0072 0000     		.align	2
+  30              	.LC3:
+  31 0074 5B72746F 		.ascii	"[rtos] heartbeat=%lu tick=%lu\015\012\000"
+  31      735D2068 
+  31      65617274 
+  31      62656174 
+  31      3D256C75 
+  32              		.section	.text.StartDefaultTask,"ax",%progbits
+  33              		.align	1
+  34              		.global	StartDefaultTask
+  35              		.syntax unified
+  36              		.thumb
+  37              		.thumb_func
+  39              	StartDefaultTask:
+  40              	.LVL0:
+  41              	.LFB154:
+   1:Core/Src/freertos.c **** /* USER CODE BEGIN Header */
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 2
+
+
+   2:Core/Src/freertos.c **** /**
+   3:Core/Src/freertos.c ****   ******************************************************************************
+   4:Core/Src/freertos.c ****   * File Name          : freertos.c
+   5:Core/Src/freertos.c ****   * Description        : Code for freertos applications
+   6:Core/Src/freertos.c ****   ******************************************************************************
+   7:Core/Src/freertos.c ****   * @attention
+   8:Core/Src/freertos.c ****   *
+   9:Core/Src/freertos.c ****   * Copyright (c) 2026 STMicroelectronics.
+  10:Core/Src/freertos.c ****   * All rights reserved.
+  11:Core/Src/freertos.c ****   *
+  12:Core/Src/freertos.c ****   * This software is licensed under terms that can be found in the LICENSE file
+  13:Core/Src/freertos.c ****   * in the root directory of this software component.
+  14:Core/Src/freertos.c ****   * If no LICENSE file comes with this software, it is provided AS-IS.
+  15:Core/Src/freertos.c ****   *
+  16:Core/Src/freertos.c ****   ******************************************************************************
+  17:Core/Src/freertos.c ****   */
+  18:Core/Src/freertos.c **** /* USER CODE END Header */
+  19:Core/Src/freertos.c **** 
+  20:Core/Src/freertos.c **** /* Includes ------------------------------------------------------------------*/
+  21:Core/Src/freertos.c **** #include "FreeRTOS.h"
+  22:Core/Src/freertos.c **** #include "task.h"
+  23:Core/Src/freertos.c **** #include "main.h"
+  24:Core/Src/freertos.c **** #include "FreeRTOS.h"
+  25:Core/Src/freertos.c **** #include "cmsis_os2.h"
+  26:Core/Src/freertos.c **** 
+  27:Core/Src/freertos.c **** /* Private includes ----------------------------------------------------------*/
+  28:Core/Src/freertos.c **** /* USER CODE BEGIN Includes */
+  29:Core/Src/freertos.c **** #include <stdio.h>
+  30:Core/Src/freertos.c **** 
+  31:Core/Src/freertos.c **** #include "bsp_can.h"
+  32:Core/Src/freertos.c **** #include "dac_safety.h"
+  33:Core/Src/freertos.c **** #include "fault_console.h"
+  34:Core/Src/freertos.c **** #include "tcp_json_server.h"
+  35:Core/Src/freertos.c **** #include "voltage_sim.h"
+  36:Core/Src/freertos.c **** #include "waveform_gen.h"
+  37:Core/Src/freertos.c **** 
+  38:Core/Src/freertos.c **** /* USER CODE END Includes */
+  39:Core/Src/freertos.c **** 
+  40:Core/Src/freertos.c **** /* Private typedef -----------------------------------------------------------*/
+  41:Core/Src/freertos.c **** /* USER CODE BEGIN PTD */
+  42:Core/Src/freertos.c **** 
+  43:Core/Src/freertos.c **** /* USER CODE END PTD */
+  44:Core/Src/freertos.c **** 
+  45:Core/Src/freertos.c **** /* Private define ------------------------------------------------------------*/
+  46:Core/Src/freertos.c **** /* USER CODE BEGIN PD */
+  47:Core/Src/freertos.c **** 
+  48:Core/Src/freertos.c **** /* USER CODE END PD */
+  49:Core/Src/freertos.c **** 
+  50:Core/Src/freertos.c **** /* Private macro -------------------------------------------------------------*/
+  51:Core/Src/freertos.c **** /* USER CODE BEGIN PM */
+  52:Core/Src/freertos.c **** 
+  53:Core/Src/freertos.c **** /* USER CODE END PM */
+  54:Core/Src/freertos.c **** 
+  55:Core/Src/freertos.c **** /* Private variables ---------------------------------------------------------*/
+  56:Core/Src/freertos.c **** /* USER CODE BEGIN Variables */
+  57:Core/Src/freertos.c **** 
+  58:Core/Src/freertos.c **** /* USER CODE END Variables */
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 3
+
+
+  59:Core/Src/freertos.c **** /* Definitions for defaultTask */
+  60:Core/Src/freertos.c **** osThreadId_t defaultTaskHandle;
+  61:Core/Src/freertos.c **** const osThreadAttr_t defaultTask_attributes = {
+  62:Core/Src/freertos.c ****   .name = "defaultTask",
+  63:Core/Src/freertos.c ****   .stack_size = 1024 * 4,
+  64:Core/Src/freertos.c ****   .priority = (osPriority_t) osPriorityNormal,
+  65:Core/Src/freertos.c **** };
+  66:Core/Src/freertos.c **** 
+  67:Core/Src/freertos.c **** /* Private function prototypes -----------------------------------------------*/
+  68:Core/Src/freertos.c **** /* USER CODE BEGIN FunctionPrototypes */
+  69:Core/Src/freertos.c **** 
+  70:Core/Src/freertos.c **** /* USER CODE END FunctionPrototypes */
+  71:Core/Src/freertos.c **** 
+  72:Core/Src/freertos.c **** void StartDefaultTask(void *argument);
+  73:Core/Src/freertos.c **** 
+  74:Core/Src/freertos.c **** extern void MX_LWIP_Init(void);
+  75:Core/Src/freertos.c **** void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
+  76:Core/Src/freertos.c **** 
+  77:Core/Src/freertos.c **** /**
+  78:Core/Src/freertos.c ****   * @brief  FreeRTOS initialization
+  79:Core/Src/freertos.c ****   * @param  None
+  80:Core/Src/freertos.c ****   * @retval None
+  81:Core/Src/freertos.c ****   */
+  82:Core/Src/freertos.c **** void MX_FREERTOS_Init(void) {
+  83:Core/Src/freertos.c ****   /* USER CODE BEGIN Init */
+  84:Core/Src/freertos.c **** 
+  85:Core/Src/freertos.c ****   /* USER CODE END Init */
+  86:Core/Src/freertos.c **** 
+  87:Core/Src/freertos.c **** /* USER CODE BEGIN RTOS_MUTEX */
+  88:Core/Src/freertos.c ****   /* Create printf mutex for thread-safe serial output */
+  89:Core/Src/freertos.c ****   extern osMutexId_t printfMutex;
+  90:Core/Src/freertos.c ****   if (printfMutex == NULL)
+  91:Core/Src/freertos.c ****   {
+  92:Core/Src/freertos.c ****     printfMutex = osMutexNew(NULL);
+  93:Core/Src/freertos.c ****   }
+  94:Core/Src/freertos.c ****   /* USER CODE END RTOS_MUTEX */
+  95:Core/Src/freertos.c **** 
+  96:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_SEMAPHORES */
+  97:Core/Src/freertos.c ****   /* add semaphores, ... */
+  98:Core/Src/freertos.c ****   /* USER CODE END RTOS_SEMAPHORES */
+  99:Core/Src/freertos.c **** 
+ 100:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_TIMERS */
+ 101:Core/Src/freertos.c ****   /* start timers, add new ones, ... */
+ 102:Core/Src/freertos.c ****   /* USER CODE END RTOS_TIMERS */
+ 103:Core/Src/freertos.c **** 
+ 104:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_QUEUES */
+ 105:Core/Src/freertos.c ****   /* add queues, ... */
+ 106:Core/Src/freertos.c ****   /* USER CODE END RTOS_QUEUES */
+ 107:Core/Src/freertos.c **** 
+ 108:Core/Src/freertos.c ****   /* Create the thread(s) */
+ 109:Core/Src/freertos.c ****   /* creation of defaultTask */
+ 110:Core/Src/freertos.c ****   defaultTaskHandle = osThreadNew(StartDefaultTask, NULL, &defaultTask_attributes);
+ 111:Core/Src/freertos.c **** 
+ 112:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_THREADS */
+ 113:Core/Src/freertos.c ****   /* add threads, ... */
+ 114:Core/Src/freertos.c ****   /* USER CODE END RTOS_THREADS */
+ 115:Core/Src/freertos.c **** 
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 4
+
+
+ 116:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_EVENTS */
+ 117:Core/Src/freertos.c ****   /* add events, ... */
+ 118:Core/Src/freertos.c ****   /* USER CODE END RTOS_EVENTS */
+ 119:Core/Src/freertos.c **** 
+ 120:Core/Src/freertos.c **** }
+ 121:Core/Src/freertos.c **** 
+ 122:Core/Src/freertos.c **** /* USER CODE BEGIN Header_StartDefaultTask */
+ 123:Core/Src/freertos.c **** /**
+ 124:Core/Src/freertos.c ****   * @brief  Function implementing the defaultTask thread.
+ 125:Core/Src/freertos.c ****   * @param  argument: Not used
+ 126:Core/Src/freertos.c ****   * @retval None
+ 127:Core/Src/freertos.c ****   */
+ 128:Core/Src/freertos.c **** /* USER CODE END Header_StartDefaultTask */
+ 129:Core/Src/freertos.c **** void StartDefaultTask(void *argument)
+ 130:Core/Src/freertos.c **** {
+  42              		.loc 1 130 1 view -0
+  43              		.cfi_startproc
+  44              		@ args = 0, pretend = 0, frame = 0
+  45              		@ frame_needed = 0, uses_anonymous_args = 0
+  46              		.loc 1 130 1 is_stmt 0 view .LVU1
+  47 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  48              	.LCFI0:
+  49              		.cfi_def_cfa_offset 24
+  50              		.cfi_offset 3, -24
+  51              		.cfi_offset 4, -20
+  52              		.cfi_offset 5, -16
+  53              		.cfi_offset 6, -12
+  54              		.cfi_offset 7, -8
+  55              		.cfi_offset 14, -4
+ 131:Core/Src/freertos.c ****   /* init code for LWIP */
+ 132:Core/Src/freertos.c ****   MX_LWIP_Init();
+  56              		.loc 1 132 3 is_stmt 1 view .LVU2
+  57 0002 FFF7FEFF 		bl	MX_LWIP_Init
+  58              	.LVL1:
+ 133:Core/Src/freertos.c ****   /* USER CODE BEGIN StartDefaultTask */
+ 134:Core/Src/freertos.c ****   uint32_t heartbeat = 0;
+  59              		.loc 1 134 3 view .LVU3
+ 135:Core/Src/freertos.c ****   uint32_t lastHeartbeatTick = 0;
+  60              		.loc 1 135 3 view .LVU4
+ 136:Core/Src/freertos.c **** 
+ 137:Core/Src/freertos.c ****   printf("[rtos] defaultTask started\r\n");
+  61              		.loc 1 137 3 view .LVU5
+  62 0006 1D48     		ldr	r0, .L8
+  63 0008 FFF7FEFF 		bl	puts
+  64              	.LVL2:
+ 138:Core/Src/freertos.c ****   TcpJsonServer_Start();
+  65              		.loc 1 138 3 view .LVU6
+  66 000c FFF7FEFF 		bl	TcpJsonServer_Start
+  67              	.LVL3:
+ 135:Core/Src/freertos.c ****   uint32_t lastHeartbeatTick = 0;
+  68              		.loc 1 135 12 is_stmt 0 view .LVU7
+  69 0010 0026     		movs	r6, #0
+ 134:Core/Src/freertos.c ****   uint32_t lastHeartbeatTick = 0;
+  70              		.loc 1 134 12 view .LVU8
+  71 0012 3546     		mov	r5, r6
+  72 0014 22E0     		b	.L5
+  73              	.LVL4:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 5
+
+
+  74              	.L2:
+  75              	.LBB2:
+ 139:Core/Src/freertos.c **** 
+ 140:Core/Src/freertos.c ****   /* Infinite loop */
+ 141:Core/Src/freertos.c ****   for(;;)
+ 142:Core/Src/freertos.c ****   {
+ 143:Core/Src/freertos.c ****     uint32_t now = HAL_GetTick();
+ 144:Core/Src/freertos.c **** 
+ 145:Core/Src/freertos.c ****     if (VoltageSim_Process(now) != HAL_OK)
+ 146:Core/Src/freertos.c ****     {
+ 147:Core/Src/freertos.c ****       printf("[rtos] voltage simulator process failed\r\n");
+ 148:Core/Src/freertos.c ****     }
+ 149:Core/Src/freertos.c ****     if (WaveformGen_Process(now) != HAL_OK)
+  76              		.loc 1 149 5 is_stmt 1 view .LVU9
+  77              		.loc 1 149 9 is_stmt 0 view .LVU10
+  78 0016 2046     		mov	r0, r4
+  79 0018 FFF7FEFF 		bl	WaveformGen_Process
+  80              	.LVL5:
+  81              		.loc 1 149 8 discriminator 1 view .LVU11
+  82 001c 48BB     		cbnz	r0, .L7
+  83              	.L3:
+ 150:Core/Src/freertos.c ****     {
+ 151:Core/Src/freertos.c ****       printf("[rtos] waveform generator process failed\r\n");
+ 152:Core/Src/freertos.c ****     }
+ 153:Core/Src/freertos.c ****     DacSafety_Process(now);
+  84              		.loc 1 153 5 is_stmt 1 view .LVU12
+  85 001e 2046     		mov	r0, r4
+  86 0020 FFF7FEFF 		bl	DacSafety_Process
+  87              	.LVL6:
+ 154:Core/Src/freertos.c ****     FaultConsole_Process();
+  88              		.loc 1 154 5 view .LVU13
+  89 0024 FFF7FEFF 		bl	FaultConsole_Process
+  90              	.LVL7:
+ 155:Core/Src/freertos.c ****     BspCan_Process();
+  91              		.loc 1 155 5 view .LVU14
+  92 0028 FFF7FEFF 		bl	BspCan_Process
+  93              	.LVL8:
+ 156:Core/Src/freertos.c **** 
+ 157:Core/Src/freertos.c ****     if ((now - lastHeartbeatTick) >= 1000U)
+  94              		.loc 1 157 5 view .LVU15
+  95              		.loc 1 157 14 is_stmt 0 view .LVU16
+  96 002c A31B     		subs	r3, r4, r6
+  97              		.loc 1 157 8 view .LVU17
+  98 002e B3F57A7F 		cmp	r3, #1000
+  99 0032 10D3     		bcc	.L4
+ 158:Core/Src/freertos.c ****     {
+ 159:Core/Src/freertos.c ****       lastHeartbeatTick = now;
+ 100              		.loc 1 159 7 is_stmt 1 view .LVU18
+ 101              	.LVL9:
+ 160:Core/Src/freertos.c ****       HAL_GPIO_TogglePin(LED_YL_GPIO_Port, LED_YL_Pin);
+ 102              		.loc 1 160 7 view .LVU19
+ 103 0034 124E     		ldr	r6, .L8+4
+ 104 0036 0121     		movs	r1, #1
+ 105 0038 3046     		mov	r0, r6
+ 106 003a FFF7FEFF 		bl	HAL_GPIO_TogglePin
+ 107              	.LVL10:
+ 161:Core/Src/freertos.c ****       HAL_GPIO_TogglePin(LED_RY_GPIO_Port, LED_RY_Pin);
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 6
+
+
+ 108              		.loc 1 161 7 view .LVU20
+ 109 003e 0221     		movs	r1, #2
+ 110 0040 3046     		mov	r0, r6
+ 111 0042 FFF7FEFF 		bl	HAL_GPIO_TogglePin
+ 112              	.LVL11:
+ 162:Core/Src/freertos.c ****       printf("[rtos] heartbeat=%lu tick=%lu\r\n",
+ 113              		.loc 1 162 7 view .LVU21
+ 114 0046 6F1C     		adds	r7, r5, #1
+ 115              	.LVL12:
+ 116              		.loc 1 162 7 is_stmt 0 view .LVU22
+ 117 0048 2246     		mov	r2, r4
+ 118 004a 2946     		mov	r1, r5
+ 119 004c 0D48     		ldr	r0, .L8+8
+ 120 004e FFF7FEFF 		bl	printf
+ 121              	.LVL13:
+ 159:Core/Src/freertos.c ****       HAL_GPIO_TogglePin(LED_YL_GPIO_Port, LED_YL_Pin);
+ 122              		.loc 1 159 25 view .LVU23
+ 123 0052 2646     		mov	r6, r4
+ 124              		.loc 1 162 7 view .LVU24
+ 125 0054 3D46     		mov	r5, r7
+ 126              	.LVL14:
+ 127              	.L4:
+ 163:Core/Src/freertos.c ****              (unsigned long)heartbeat++,
+ 164:Core/Src/freertos.c ****              (unsigned long)now);
+ 165:Core/Src/freertos.c ****     }
+ 166:Core/Src/freertos.c **** 
+ 167:Core/Src/freertos.c ****     osDelay(1);
+ 128              		.loc 1 167 5 is_stmt 1 view .LVU25
+ 129 0056 0120     		movs	r0, #1
+ 130 0058 FFF7FEFF 		bl	osDelay
+ 131              	.LVL15:
+ 132              	.LBE2:
+ 141:Core/Src/freertos.c ****   {
+ 133              		.loc 1 141 3 view .LVU26
+ 134              	.L5:
+ 141:Core/Src/freertos.c ****   {
+ 135              		.loc 1 141 3 view .LVU27
+ 136              	.LBB3:
+ 143:Core/Src/freertos.c **** 
+ 137              		.loc 1 143 5 view .LVU28
+ 143:Core/Src/freertos.c **** 
+ 138              		.loc 1 143 20 is_stmt 0 view .LVU29
+ 139 005c FFF7FEFF 		bl	HAL_GetTick
+ 140              	.LVL16:
+ 141 0060 0446     		mov	r4, r0
+ 142              	.LVL17:
+ 145:Core/Src/freertos.c ****     {
+ 143              		.loc 1 145 5 is_stmt 1 view .LVU30
+ 145:Core/Src/freertos.c ****     {
+ 144              		.loc 1 145 9 is_stmt 0 view .LVU31
+ 145 0062 FFF7FEFF 		bl	VoltageSim_Process
+ 146              	.LVL18:
+ 145:Core/Src/freertos.c ****     {
+ 147              		.loc 1 145 8 discriminator 1 view .LVU32
+ 148 0066 0028     		cmp	r0, #0
+ 149 0068 D5D0     		beq	.L2
+ 147:Core/Src/freertos.c ****     }
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 7
+
+
+ 150              		.loc 1 147 7 is_stmt 1 view .LVU33
+ 151 006a 0748     		ldr	r0, .L8+12
+ 152 006c FFF7FEFF 		bl	puts
+ 153              	.LVL19:
+ 154 0070 D1E7     		b	.L2
+ 155              	.L7:
+ 151:Core/Src/freertos.c ****     }
+ 156              		.loc 1 151 7 view .LVU34
+ 157 0072 0648     		ldr	r0, .L8+16
+ 158 0074 FFF7FEFF 		bl	puts
+ 159              	.LVL20:
+ 160 0078 D1E7     		b	.L3
+ 161              	.L9:
+ 162 007a 00BF     		.align	2
+ 163              	.L8:
+ 164 007c 00000000 		.word	.LC0
+ 165 0080 00100258 		.word	1476530176
+ 166 0084 74000000 		.word	.LC3
+ 167 0088 1C000000 		.word	.LC1
+ 168 008c 48000000 		.word	.LC2
+ 169              	.LBE3:
+ 170              		.cfi_endproc
+ 171              	.LFE154:
+ 173              		.section	.text.MX_FREERTOS_Init,"ax",%progbits
+ 174              		.align	1
+ 175              		.global	MX_FREERTOS_Init
+ 176              		.syntax unified
+ 177              		.thumb
+ 178              		.thumb_func
+ 180              	MX_FREERTOS_Init:
+ 181              	.LFB153:
+  82:Core/Src/freertos.c ****   /* USER CODE BEGIN Init */
+ 182              		.loc 1 82 29 view -0
+ 183              		.cfi_startproc
+ 184              		@ args = 0, pretend = 0, frame = 0
+ 185              		@ frame_needed = 0, uses_anonymous_args = 0
+ 186 0000 08B5     		push	{r3, lr}
+ 187              	.LCFI1:
+ 188              		.cfi_def_cfa_offset 8
+ 189              		.cfi_offset 3, -8
+ 190              		.cfi_offset 14, -4
+  89:Core/Src/freertos.c ****   if (printfMutex == NULL)
+ 191              		.loc 1 89 3 view .LVU36
+  90:Core/Src/freertos.c ****   {
+ 192              		.loc 1 90 3 view .LVU37
+  90:Core/Src/freertos.c ****   {
+ 193              		.loc 1 90 19 is_stmt 0 view .LVU38
+ 194 0002 084B     		ldr	r3, .L14
+ 195 0004 1B68     		ldr	r3, [r3]
+  90:Core/Src/freertos.c ****   {
+ 196              		.loc 1 90 6 view .LVU39
+ 197 0006 3BB1     		cbz	r3, .L13
+ 198              	.L11:
+ 110:Core/Src/freertos.c **** 
+ 199              		.loc 1 110 3 is_stmt 1 view .LVU40
+ 110:Core/Src/freertos.c **** 
+ 200              		.loc 1 110 23 is_stmt 0 view .LVU41
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 8
+
+
+ 201 0008 074A     		ldr	r2, .L14+4
+ 202 000a 0021     		movs	r1, #0
+ 203 000c 0748     		ldr	r0, .L14+8
+ 204 000e FFF7FEFF 		bl	osThreadNew
+ 205              	.LVL21:
+ 110:Core/Src/freertos.c **** 
+ 206              		.loc 1 110 21 discriminator 1 view .LVU42
+ 207 0012 074B     		ldr	r3, .L14+12
+ 208 0014 1860     		str	r0, [r3]
+ 120:Core/Src/freertos.c **** 
+ 209              		.loc 1 120 1 view .LVU43
+ 210 0016 08BD     		pop	{r3, pc}
+ 211              	.L13:
+  92:Core/Src/freertos.c ****   }
+ 212              		.loc 1 92 5 is_stmt 1 view .LVU44
+  92:Core/Src/freertos.c ****   }
+ 213              		.loc 1 92 19 is_stmt 0 view .LVU45
+ 214 0018 1846     		mov	r0, r3
+ 215 001a FFF7FEFF 		bl	osMutexNew
+ 216              	.LVL22:
+  92:Core/Src/freertos.c ****   }
+ 217              		.loc 1 92 17 discriminator 1 view .LVU46
+ 218 001e 014B     		ldr	r3, .L14
+ 219 0020 1860     		str	r0, [r3]
+ 220 0022 F1E7     		b	.L11
+ 221              	.L15:
+ 222              		.align	2
+ 223              	.L14:
+ 224 0024 00000000 		.word	printfMutex
+ 225 0028 00000000 		.word	defaultTask_attributes
+ 226 002c 00000000 		.word	StartDefaultTask
+ 227 0030 00000000 		.word	defaultTaskHandle
+ 228              		.cfi_endproc
+ 229              	.LFE153:
+ 231              		.global	defaultTask_attributes
+ 232              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 233              		.align	2
+ 234              	.LC4:
+ 235 0000 64656661 		.ascii	"defaultTask\000"
+ 235      756C7454 
+ 235      61736B00 
+ 236              		.section	.rodata.defaultTask_attributes,"a"
+ 237              		.align	2
+ 240              	defaultTask_attributes:
+ 241 0000 00000000 		.word	.LC4
+ 242 0004 00000000 		.space	16
+ 242      00000000 
+ 242      00000000 
+ 242      00000000 
+ 243 0014 00100000 		.word	4096
+ 244 0018 18000000 		.word	24
+ 245 001c 00000000 		.space	8
+ 245      00000000 
+ 246              		.global	defaultTaskHandle
+ 247              		.section	.bss.defaultTaskHandle,"aw",%nobits
+ 248              		.align	2
+ 251              	defaultTaskHandle:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 9
+
+
+ 252 0000 00000000 		.space	4
+ 253              		.text
+ 254              	.Letext0:
+ 255              		.file 2 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 256              		.file 3 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 257              		.file 4 "Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h"
+ 258              		.file 5 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
+ 259              		.file 6 "Drivers/CMSIS/RTOS2/Include/cmsis_os2.h"
+ 260              		.file 7 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 261              		.file 8 "BSP/Inc/bsp_can.h"
+ 262              		.file 9 "App/Inc/fault_console.h"
+ 263              		.file 10 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h"
+ 264              		.file 11 "App/Inc/dac_safety.h"
+ 265              		.file 12 "App/Inc/waveform_gen.h"
+ 266              		.file 13 "App/Inc/voltage_sim.h"
+ 267              		.file 14 "App/Inc/tcp_json_server.h"
+ 268              		.file 15 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h"
+ 269              		.file 16 "<built-in>"
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 freertos.c
+C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:20     .rodata.StartDefaultTask.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:33     .text.StartDefaultTask:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:39     .text.StartDefaultTask:00000000 StartDefaultTask
+C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:164    .text.StartDefaultTask:0000007c $d
+C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:174    .text.MX_FREERTOS_Init:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:180    .text.MX_FREERTOS_Init:00000000 MX_FREERTOS_Init
+C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:224    .text.MX_FREERTOS_Init:00000024 $d
+C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:240    .rodata.defaultTask_attributes:00000000 defaultTask_attributes
+C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:251    .bss.defaultTaskHandle:00000000 defaultTaskHandle
+C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:233    .rodata.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:237    .rodata.defaultTask_attributes:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:248    .bss.defaultTaskHandle:00000000 $d
+
+UNDEFINED SYMBOLS
+MX_LWIP_Init
+puts
+TcpJsonServer_Start
+WaveformGen_Process
+DacSafety_Process
+FaultConsole_Process
+BspCan_Process
+HAL_GPIO_TogglePin
+printf
+osDelay
+HAL_GetTick
+VoltageSim_Process
+osThreadNew
+osMutexNew
+printfMutex

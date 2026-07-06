@@ -1,0 +1,1570 @@
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"bsp_dac81416.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "BSP/Src/bsp_dac81416.c"
+  19              		.section	.text.DAC_SPI_EnsureMutex,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	DAC_SPI_EnsureMutex:
+  26              	.LFB146:
+   1:BSP/Src/bsp_dac81416.c **** #include "bsp_dac81416.h"
+   2:BSP/Src/bsp_dac81416.c **** 
+   3:BSP/Src/bsp_dac81416.c **** #include <stddef.h>
+   4:BSP/Src/bsp_dac81416.c **** 
+   5:BSP/Src/bsp_dac81416.c **** #include "cmsis_os2.h"
+   6:BSP/Src/bsp_dac81416.c **** 
+   7:BSP/Src/bsp_dac81416.c **** static osMutexId_t dacSpiMutex;
+   8:BSP/Src/bsp_dac81416.c **** static uint32_t dacSpiTimeoutMs = DAC_SPI_DEFAULT_TIMEOUT_MS;
+   9:BSP/Src/bsp_dac81416.c **** 
+  10:BSP/Src/bsp_dac81416.c **** static void DAC_SPI_EnsureMutex(void)
+  11:BSP/Src/bsp_dac81416.c **** {
+  27              		.loc 1 11 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  12:BSP/Src/bsp_dac81416.c ****   if (dacSpiMutex == NULL)
+  31              		.loc 1 12 3 view .LVU1
+  32              		.loc 1 12 19 is_stmt 0 view .LVU2
+  33 0000 0B4B     		ldr	r3, .L10
+  34 0002 1B68     		ldr	r3, [r3]
+  35              		.loc 1 12 6 view .LVU3
+  36 0004 03B1     		cbz	r3, .L8
+  37 0006 7047     		bx	lr
+  38              	.L8:
+  11:BSP/Src/bsp_dac81416.c ****   if (dacSpiMutex == NULL)
+  39              		.loc 1 11 1 view .LVU4
+  40 0008 10B5     		push	{r4, lr}
+  41              	.LCFI0:
+  42              		.cfi_def_cfa_offset 8
+  43              		.cfi_offset 4, -8
+  44              		.cfi_offset 14, -4
+  45              	.LBB5:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 2
+
+
+  13:BSP/Src/bsp_dac81416.c ****   {
+  14:BSP/Src/bsp_dac81416.c ****     int32_t lockState = osKernelLock();
+  46              		.loc 1 14 5 is_stmt 1 view .LVU5
+  47              		.loc 1 14 25 is_stmt 0 view .LVU6
+  48 000a FFF7FEFF 		bl	osKernelLock
+  49              	.LVL0:
+  50 000e 0446     		mov	r4, r0
+  51              	.LVL1:
+  15:BSP/Src/bsp_dac81416.c **** 
+  16:BSP/Src/bsp_dac81416.c ****     if (dacSpiMutex == NULL)
+  52              		.loc 1 16 5 is_stmt 1 view .LVU7
+  53              		.loc 1 16 21 is_stmt 0 view .LVU8
+  54 0010 074B     		ldr	r3, .L10
+  55 0012 1B68     		ldr	r3, [r3]
+  56              		.loc 1 16 8 view .LVU9
+  57 0014 1BB1     		cbz	r3, .L9
+  58              	.LVL2:
+  59              	.L3:
+  17:BSP/Src/bsp_dac81416.c ****     {
+  18:BSP/Src/bsp_dac81416.c ****       dacSpiMutex = osMutexNew(NULL);
+  19:BSP/Src/bsp_dac81416.c ****       __DSB();  /* Ensure mutex object is fully committed to memory */
+  20:BSP/Src/bsp_dac81416.c ****     }
+  21:BSP/Src/bsp_dac81416.c **** 
+  22:BSP/Src/bsp_dac81416.c ****     (void)osKernelRestoreLock(lockState);
+  60              		.loc 1 22 5 is_stmt 1 view .LVU10
+  61              		.loc 1 22 11 is_stmt 0 view .LVU11
+  62 0016 2046     		mov	r0, r4
+  63 0018 FFF7FEFF 		bl	osKernelRestoreLock
+  64              	.LVL3:
+  65              	.LBE5:
+  23:BSP/Src/bsp_dac81416.c ****   }
+  24:BSP/Src/bsp_dac81416.c **** }
+  66              		.loc 1 24 1 view .LVU12
+  67 001c 10BD     		pop	{r4, pc}
+  68              	.LVL4:
+  69              	.L9:
+  70              	.LBB8:
+  18:BSP/Src/bsp_dac81416.c ****       __DSB();  /* Ensure mutex object is fully committed to memory */
+  71              		.loc 1 18 7 is_stmt 1 view .LVU13
+  18:BSP/Src/bsp_dac81416.c ****       __DSB();  /* Ensure mutex object is fully committed to memory */
+  72              		.loc 1 18 21 is_stmt 0 view .LVU14
+  73 001e 1846     		mov	r0, r3
+  74              	.LVL5:
+  18:BSP/Src/bsp_dac81416.c ****       __DSB();  /* Ensure mutex object is fully committed to memory */
+  75              		.loc 1 18 21 view .LVU15
+  76 0020 FFF7FEFF 		bl	osMutexNew
+  77              	.LVL6:
+  18:BSP/Src/bsp_dac81416.c ****       __DSB();  /* Ensure mutex object is fully committed to memory */
+  78              		.loc 1 18 19 discriminator 1 view .LVU16
+  79 0024 024B     		ldr	r3, .L10
+  80 0026 1860     		str	r0, [r3]
+  19:BSP/Src/bsp_dac81416.c ****     }
+  81              		.loc 1 19 7 is_stmt 1 view .LVU17
+  82              	.LBB6:
+  83              	.LBI6:
+  84              		.file 2 "Drivers/CMSIS/Include/cmsis_gcc.h"
+   1:Drivers/CMSIS/Include/cmsis_gcc.h **** /**************************************************************************//**
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 3
+
+
+   2:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
+   3:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @brief    CMSIS compiler GCC header file
+   4:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @version  V5.4.1
+   5:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @date     27. May 2021
+   6:Drivers/CMSIS/Include/cmsis_gcc.h ****  ******************************************************************************/
+   7:Drivers/CMSIS/Include/cmsis_gcc.h **** /*
+   8:Drivers/CMSIS/Include/cmsis_gcc.h ****  * Copyright (c) 2009-2021 Arm Limited. All rights reserved.
+   9:Drivers/CMSIS/Include/cmsis_gcc.h ****  *
+  10:Drivers/CMSIS/Include/cmsis_gcc.h ****  * SPDX-License-Identifier: Apache-2.0
+  11:Drivers/CMSIS/Include/cmsis_gcc.h ****  *
+  12:Drivers/CMSIS/Include/cmsis_gcc.h ****  * Licensed under the Apache License, Version 2.0 (the License); you may
+  13:Drivers/CMSIS/Include/cmsis_gcc.h ****  * not use this file except in compliance with the License.
+  14:Drivers/CMSIS/Include/cmsis_gcc.h ****  * You may obtain a copy of the License at
+  15:Drivers/CMSIS/Include/cmsis_gcc.h ****  *
+  16:Drivers/CMSIS/Include/cmsis_gcc.h ****  * www.apache.org/licenses/LICENSE-2.0
+  17:Drivers/CMSIS/Include/cmsis_gcc.h ****  *
+  18:Drivers/CMSIS/Include/cmsis_gcc.h ****  * Unless required by applicable law or agreed to in writing, software
+  19:Drivers/CMSIS/Include/cmsis_gcc.h ****  * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+  20:Drivers/CMSIS/Include/cmsis_gcc.h ****  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  21:Drivers/CMSIS/Include/cmsis_gcc.h ****  * See the License for the specific language governing permissions and
+  22:Drivers/CMSIS/Include/cmsis_gcc.h ****  * limitations under the License.
+  23:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+  24:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  25:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __CMSIS_GCC_H
+  26:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_H
+  27:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  28:Drivers/CMSIS/Include/cmsis_gcc.h **** /* ignore some GCC warnings */
+  29:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic push
+  30:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wsign-conversion"
+  31:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wconversion"
+  32:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wunused-parameter"
+  33:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  34:Drivers/CMSIS/Include/cmsis_gcc.h **** /* Fallback for __has_builtin */
+  35:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __has_builtin
+  36:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __has_builtin(x) (0)
+  37:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  38:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+  39:Drivers/CMSIS/Include/cmsis_gcc.h **** /* CMSIS compiler specific defines */
+  40:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __ASM
+  41:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __ASM                                  __asm
+  42:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  43:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __INLINE
+  44:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __INLINE                               inline
+  45:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  46:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __STATIC_INLINE
+  47:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __STATIC_INLINE                        static inline
+  48:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  49:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __STATIC_FORCEINLINE
+  50:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __STATIC_FORCEINLINE                   __attribute__((always_inline)) static inline
+  51:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  52:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __NO_RETURN
+  53:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __NO_RETURN                            __attribute__((__noreturn__))
+  54:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  55:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __USED
+  56:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __USED                                 __attribute__((used))
+  57:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  58:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __WEAK
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 4
+
+
+  59:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __WEAK                                 __attribute__((weak))
+  60:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  61:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __PACKED
+  62:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __PACKED                               __attribute__((packed, aligned(1)))
+  63:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  64:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __PACKED_STRUCT
+  65:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __PACKED_STRUCT                        struct __attribute__((packed, aligned(1)))
+  66:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  67:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __PACKED_UNION
+  68:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __PACKED_UNION                         union __attribute__((packed, aligned(1)))
+  69:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  70:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT32        /* deprecated */
+  71:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+  72:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+  73:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+  74:Drivers/CMSIS/Include/cmsis_gcc.h ****   struct __attribute__((packed)) T_UINT32 { uint32_t v; };
+  75:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+  76:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32(x)                  (((struct T_UINT32 *)(x))->v)
+  77:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  78:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT16_WRITE
+  79:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+  80:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+  81:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+  82:Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT16_WRITE { uint16_t v; };
+  83:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+  84:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT16_WRITE(addr, val)    (void)((((struct T_UINT16_WRITE *)(void *)(addr))-
+  85:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  86:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT16_READ
+  87:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+  88:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+  89:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+  90:Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT16_READ { uint16_t v; };
+  91:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+  92:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT16_READ(addr)          (((const struct T_UINT16_READ *)(const void *)(add
+  93:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+  94:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT32_WRITE
+  95:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+  96:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+  97:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+  98:Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT32_WRITE { uint32_t v; };
+  99:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+ 100:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32_WRITE(addr, val)    (void)((((struct T_UINT32_WRITE *)(void *)(addr))-
+ 101:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 102:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __UNALIGNED_UINT32_READ
+ 103:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic push
+ 104:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wpacked"
+ 105:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
+ 106:Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT32_READ { uint32_t v; };
+ 107:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
+ 108:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT32_READ(addr)          (((const struct T_UINT32_READ *)(const void *)(add
+ 109:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 110:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __ALIGNED
+ 111:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __ALIGNED(x)                           __attribute__((aligned(x)))
+ 112:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 113:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __RESTRICT
+ 114:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __RESTRICT                             __restrict
+ 115:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 5
+
+
+ 116:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __COMPILER_BARRIER
+ 117:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __COMPILER_BARRIER()                   __ASM volatile("":::"memory")
+ 118:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 119:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 120:Drivers/CMSIS/Include/cmsis_gcc.h **** /* #########################  Startup and Lowlevel Init  ######################## */
+ 121:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 122:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __PROGRAM_START
+ 123:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 124:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 125:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Initializes data and bss sections
+ 126:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details This default implementations initialized all data and additional bss
+ 127:Drivers/CMSIS/Include/cmsis_gcc.h ****            sections relying on .copy.table and .zero.table specified properly
+ 128:Drivers/CMSIS/Include/cmsis_gcc.h ****            in the used linker script.
+ 129:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 130:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 131:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE __NO_RETURN void __cmsis_start(void)
+ 132:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 133:Drivers/CMSIS/Include/cmsis_gcc.h ****   extern void _start(void) __NO_RETURN;
+ 134:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 135:Drivers/CMSIS/Include/cmsis_gcc.h ****   typedef struct {
+ 136:Drivers/CMSIS/Include/cmsis_gcc.h ****     uint32_t const* src;
+ 137:Drivers/CMSIS/Include/cmsis_gcc.h ****     uint32_t* dest;
+ 138:Drivers/CMSIS/Include/cmsis_gcc.h ****     uint32_t  wlen;
+ 139:Drivers/CMSIS/Include/cmsis_gcc.h ****   } __copy_table_t;
+ 140:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 141:Drivers/CMSIS/Include/cmsis_gcc.h ****   typedef struct {
+ 142:Drivers/CMSIS/Include/cmsis_gcc.h ****     uint32_t* dest;
+ 143:Drivers/CMSIS/Include/cmsis_gcc.h ****     uint32_t  wlen;
+ 144:Drivers/CMSIS/Include/cmsis_gcc.h ****   } __zero_table_t;
+ 145:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 146:Drivers/CMSIS/Include/cmsis_gcc.h ****   extern const __copy_table_t __copy_table_start__;
+ 147:Drivers/CMSIS/Include/cmsis_gcc.h ****   extern const __copy_table_t __copy_table_end__;
+ 148:Drivers/CMSIS/Include/cmsis_gcc.h ****   extern const __zero_table_t __zero_table_start__;
+ 149:Drivers/CMSIS/Include/cmsis_gcc.h ****   extern const __zero_table_t __zero_table_end__;
+ 150:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 151:Drivers/CMSIS/Include/cmsis_gcc.h ****   for (__copy_table_t const* pTable = &__copy_table_start__; pTable < &__copy_table_end__; ++pTable
+ 152:Drivers/CMSIS/Include/cmsis_gcc.h ****     for(uint32_t i=0u; i<pTable->wlen; ++i) {
+ 153:Drivers/CMSIS/Include/cmsis_gcc.h ****       pTable->dest[i] = pTable->src[i];
+ 154:Drivers/CMSIS/Include/cmsis_gcc.h ****     }
+ 155:Drivers/CMSIS/Include/cmsis_gcc.h ****   }
+ 156:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 157:Drivers/CMSIS/Include/cmsis_gcc.h ****   for (__zero_table_t const* pTable = &__zero_table_start__; pTable < &__zero_table_end__; ++pTable
+ 158:Drivers/CMSIS/Include/cmsis_gcc.h ****     for(uint32_t i=0u; i<pTable->wlen; ++i) {
+ 159:Drivers/CMSIS/Include/cmsis_gcc.h ****       pTable->dest[i] = 0u;
+ 160:Drivers/CMSIS/Include/cmsis_gcc.h ****     }
+ 161:Drivers/CMSIS/Include/cmsis_gcc.h ****   }
+ 162:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 163:Drivers/CMSIS/Include/cmsis_gcc.h ****   _start();
+ 164:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 165:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 166:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __PROGRAM_START           __cmsis_start
+ 167:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 168:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 169:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __INITIAL_SP
+ 170:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __INITIAL_SP              __StackTop
+ 171:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 172:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 6
+
+
+ 173:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __STACK_LIMIT
+ 174:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __STACK_LIMIT             __StackLimit
+ 175:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 176:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 177:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __VECTOR_TABLE
+ 178:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __VECTOR_TABLE            __Vectors
+ 179:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 180:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 181:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __VECTOR_TABLE_ATTRIBUTE
+ 182:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __VECTOR_TABLE_ATTRIBUTE  __attribute__((used, section(".vectors")))
+ 183:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 184:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 185:Drivers/CMSIS/Include/cmsis_gcc.h **** #if defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3U)
+ 186:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __STACK_SEAL
+ 187:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __STACK_SEAL              __StackSeal
+ 188:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 189:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 190:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __TZ_STACK_SEAL_SIZE
+ 191:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __TZ_STACK_SEAL_SIZE      8U
+ 192:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 193:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 194:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __TZ_STACK_SEAL_VALUE
+ 195:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __TZ_STACK_SEAL_VALUE     0xFEF5EDA5FEF5EDA5ULL
+ 196:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 197:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 198:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 199:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __TZ_set_STACKSEAL_S (uint32_t* stackTop) {
+ 200:Drivers/CMSIS/Include/cmsis_gcc.h ****   *((uint64_t *)stackTop) = __TZ_STACK_SEAL_VALUE;
+ 201:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 202:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 203:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 204:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 205:Drivers/CMSIS/Include/cmsis_gcc.h **** /* ##########################  Core Instruction Access  ######################### */
+ 206:Drivers/CMSIS/Include/cmsis_gcc.h **** /** \defgroup CMSIS_Core_InstructionInterface CMSIS Core Instruction Interface
+ 207:Drivers/CMSIS/Include/cmsis_gcc.h ****   Access to dedicated instructions
+ 208:Drivers/CMSIS/Include/cmsis_gcc.h ****   @{
+ 209:Drivers/CMSIS/Include/cmsis_gcc.h **** */
+ 210:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 211:Drivers/CMSIS/Include/cmsis_gcc.h **** /* Define macros for porting to both thumb1 and thumb2.
+ 212:Drivers/CMSIS/Include/cmsis_gcc.h ****  * For thumb1, use low register (r0-r7), specified by constraint "l"
+ 213:Drivers/CMSIS/Include/cmsis_gcc.h ****  * Otherwise, use general registers, specified by constraint "r" */
+ 214:Drivers/CMSIS/Include/cmsis_gcc.h **** #if defined (__thumb__) && !defined (__thumb2__)
+ 215:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_OUT_REG(r) "=l" (r)
+ 216:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_RW_REG(r) "+l" (r)
+ 217:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_USE_REG(r) "l" (r)
+ 218:Drivers/CMSIS/Include/cmsis_gcc.h **** #else
+ 219:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_OUT_REG(r) "=r" (r)
+ 220:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_RW_REG(r) "+r" (r)
+ 221:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __CMSIS_GCC_USE_REG(r) "r" (r)
+ 222:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
+ 223:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 224:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 225:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   No Operation
+ 226:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details No Operation does nothing. This instruction can be used for code alignment purposes.
+ 227:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 228:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __NOP()                             __ASM volatile ("nop")
+ 229:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 7
+
+
+ 230:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 231:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Wait For Interrupt
+ 232:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Wait For Interrupt is a hint instruction that suspends execution until one of a number o
+ 233:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 234:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __WFI()                             __ASM volatile ("wfi":::"memory")
+ 235:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 236:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 237:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 238:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Wait For Event
+ 239:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Wait For Event is a hint instruction that permits the processor to enter
+ 240:Drivers/CMSIS/Include/cmsis_gcc.h ****            a low-power state until one of a number of events occurs.
+ 241:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 242:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __WFE()                             __ASM volatile ("wfe":::"memory")
+ 243:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 244:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 245:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 246:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Send Event
+ 247:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Send Event is a hint instruction. It causes an event to be signaled to the CPU.
+ 248:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 249:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __SEV()                             __ASM volatile ("sev")
+ 250:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 251:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 252:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 253:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Instruction Synchronization Barrier
+ 254:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Instruction Synchronization Barrier flushes the pipeline in the processor,
+ 255:Drivers/CMSIS/Include/cmsis_gcc.h ****            so that all instructions following the ISB are fetched from cache or memory,
+ 256:Drivers/CMSIS/Include/cmsis_gcc.h ****            after the instruction has been completed.
+ 257:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 258:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __ISB(void)
+ 259:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 260:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("isb 0xF":::"memory");
+ 261:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+ 262:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 263:Drivers/CMSIS/Include/cmsis_gcc.h **** 
+ 264:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
+ 265:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Data Synchronization Barrier
+ 266:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Acts as a special kind of Data Memory Barrier.
+ 267:Drivers/CMSIS/Include/cmsis_gcc.h ****            It completes when all explicit memory accesses before this instruction complete.
+ 268:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
+ 269:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __DSB(void)
+  85              		.loc 2 269 27 view .LVU18
+  86              	.LBB7:
+ 270:Drivers/CMSIS/Include/cmsis_gcc.h **** {
+ 271:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("dsb 0xF":::"memory");
+  87              		.loc 2 271 3 view .LVU19
+  88              		.syntax unified
+  89              	@ 271 "Drivers/CMSIS/Include/cmsis_gcc.h" 1
+  90 0028 BFF34F8F 		dsb 0xF
+  91              	@ 0 "" 2
+ 272:Drivers/CMSIS/Include/cmsis_gcc.h **** }
+  92              		.loc 2 272 1 is_stmt 0 view .LVU20
+  93              		.thumb
+  94              		.syntax unified
+  95 002c F3E7     		b	.L3
+  96              	.L11:
+  97 002e 00BF     		.align	2
+  98              	.L10:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 8
+
+
+  99 0030 00000000 		.word	dacSpiMutex
+ 100              	.LBE7:
+ 101              	.LBE6:
+ 102              	.LBE8:
+ 103              		.cfi_endproc
+ 104              	.LFE146:
+ 106              		.section	.text.DAC_SPI_Lock,"ax",%progbits
+ 107              		.align	1
+ 108              		.syntax unified
+ 109              		.thumb
+ 110              		.thumb_func
+ 112              	DAC_SPI_Lock:
+ 113              	.LFB147:
+  25:BSP/Src/bsp_dac81416.c **** 
+  26:BSP/Src/bsp_dac81416.c **** static HAL_StatusTypeDef DAC_SPI_Lock(void)
+  27:BSP/Src/bsp_dac81416.c **** {
+ 114              		.loc 1 27 1 is_stmt 1 view -0
+ 115              		.cfi_startproc
+ 116              		@ args = 0, pretend = 0, frame = 0
+ 117              		@ frame_needed = 0, uses_anonymous_args = 0
+ 118 0000 08B5     		push	{r3, lr}
+ 119              	.LCFI1:
+ 120              		.cfi_def_cfa_offset 8
+ 121              		.cfi_offset 3, -8
+ 122              		.cfi_offset 14, -4
+  28:BSP/Src/bsp_dac81416.c ****   if (osKernelGetState() == osKernelRunning)
+ 123              		.loc 1 28 3 view .LVU22
+ 124              		.loc 1 28 7 is_stmt 0 view .LVU23
+ 125 0002 FFF7FEFF 		bl	osKernelGetState
+ 126              	.LVL7:
+ 127              		.loc 1 28 6 discriminator 1 view .LVU24
+ 128 0006 0228     		cmp	r0, #2
+ 129 0008 01D0     		beq	.L18
+  29:BSP/Src/bsp_dac81416.c ****   {
+  30:BSP/Src/bsp_dac81416.c ****     DAC_SPI_EnsureMutex();
+  31:BSP/Src/bsp_dac81416.c **** 
+  32:BSP/Src/bsp_dac81416.c ****     if ((dacSpiMutex != NULL) && (osMutexAcquire(dacSpiMutex, dacSpiTimeoutMs) == osOK))
+  33:BSP/Src/bsp_dac81416.c ****     {
+  34:BSP/Src/bsp_dac81416.c ****       return HAL_OK;
+  35:BSP/Src/bsp_dac81416.c ****     }
+  36:BSP/Src/bsp_dac81416.c **** 
+  37:BSP/Src/bsp_dac81416.c ****     return HAL_TIMEOUT;
+  38:BSP/Src/bsp_dac81416.c ****   }
+  39:BSP/Src/bsp_dac81416.c **** 
+  40:BSP/Src/bsp_dac81416.c ****   return HAL_OK;
+ 130              		.loc 1 40 10 view .LVU25
+ 131 000a 0020     		movs	r0, #0
+ 132              	.L13:
+  41:BSP/Src/bsp_dac81416.c **** }
+ 133              		.loc 1 41 1 view .LVU26
+ 134 000c 08BD     		pop	{r3, pc}
+ 135              	.L18:
+  30:BSP/Src/bsp_dac81416.c **** 
+ 136              		.loc 1 30 5 is_stmt 1 view .LVU27
+ 137 000e FFF7FEFF 		bl	DAC_SPI_EnsureMutex
+ 138              	.LVL8:
+  32:BSP/Src/bsp_dac81416.c ****     {
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 9
+
+
+ 139              		.loc 1 32 5 view .LVU28
+  32:BSP/Src/bsp_dac81416.c ****     {
+ 140              		.loc 1 32 22 is_stmt 0 view .LVU29
+ 141 0012 054B     		ldr	r3, .L19
+ 142 0014 1868     		ldr	r0, [r3]
+  32:BSP/Src/bsp_dac81416.c ****     {
+ 143              		.loc 1 32 8 view .LVU30
+ 144 0016 28B1     		cbz	r0, .L14
+  32:BSP/Src/bsp_dac81416.c ****     {
+ 145              		.loc 1 32 35 discriminator 1 view .LVU31
+ 146 0018 044B     		ldr	r3, .L19+4
+ 147 001a 1968     		ldr	r1, [r3]
+ 148 001c FFF7FEFF 		bl	osMutexAcquire
+ 149              	.LVL9:
+  32:BSP/Src/bsp_dac81416.c ****     {
+ 150              		.loc 1 32 31 discriminator 2 view .LVU32
+ 151 0020 0028     		cmp	r0, #0
+ 152 0022 F3D0     		beq	.L13
+ 153              	.L14:
+  37:BSP/Src/bsp_dac81416.c ****   }
+ 154              		.loc 1 37 5 is_stmt 1 view .LVU33
+  37:BSP/Src/bsp_dac81416.c ****   }
+ 155              		.loc 1 37 12 is_stmt 0 view .LVU34
+ 156 0024 0320     		movs	r0, #3
+ 157 0026 F1E7     		b	.L13
+ 158              	.L20:
+ 159              		.align	2
+ 160              	.L19:
+ 161 0028 00000000 		.word	dacSpiMutex
+ 162 002c 00000000 		.word	dacSpiTimeoutMs
+ 163              		.cfi_endproc
+ 164              	.LFE147:
+ 166              		.section	.text.DAC_SPI_Unlock,"ax",%progbits
+ 167              		.align	1
+ 168              		.syntax unified
+ 169              		.thumb
+ 170              		.thumb_func
+ 172              	DAC_SPI_Unlock:
+ 173              	.LFB148:
+  42:BSP/Src/bsp_dac81416.c **** 
+  43:BSP/Src/bsp_dac81416.c **** static void DAC_SPI_Unlock(void)
+  44:BSP/Src/bsp_dac81416.c **** {
+ 174              		.loc 1 44 1 is_stmt 1 view -0
+ 175              		.cfi_startproc
+ 176              		@ args = 0, pretend = 0, frame = 0
+ 177              		@ frame_needed = 0, uses_anonymous_args = 0
+ 178 0000 08B5     		push	{r3, lr}
+ 179              	.LCFI2:
+ 180              		.cfi_def_cfa_offset 8
+ 181              		.cfi_offset 3, -8
+ 182              		.cfi_offset 14, -4
+  45:BSP/Src/bsp_dac81416.c ****   if ((osKernelGetState() == osKernelRunning) && (dacSpiMutex != NULL))
+ 183              		.loc 1 45 3 view .LVU36
+ 184              		.loc 1 45 8 is_stmt 0 view .LVU37
+ 185 0002 FFF7FEFF 		bl	osKernelGetState
+ 186              	.LVL10:
+ 187              		.loc 1 45 6 discriminator 1 view .LVU38
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 10
+
+
+ 188 0006 0228     		cmp	r0, #2
+ 189 0008 00D0     		beq	.L24
+ 190              	.L21:
+  46:BSP/Src/bsp_dac81416.c ****   {
+  47:BSP/Src/bsp_dac81416.c ****     (void)osMutexRelease(dacSpiMutex);
+  48:BSP/Src/bsp_dac81416.c ****   }
+  49:BSP/Src/bsp_dac81416.c **** }
+ 191              		.loc 1 49 1 view .LVU39
+ 192 000a 08BD     		pop	{r3, pc}
+ 193              	.L24:
+  45:BSP/Src/bsp_dac81416.c ****   if ((osKernelGetState() == osKernelRunning) && (dacSpiMutex != NULL))
+ 194              		.loc 1 45 63 discriminator 2 view .LVU40
+ 195 000c 034B     		ldr	r3, .L25
+ 196 000e 1868     		ldr	r0, [r3]
+  45:BSP/Src/bsp_dac81416.c ****   if ((osKernelGetState() == osKernelRunning) && (dacSpiMutex != NULL))
+ 197              		.loc 1 45 47 discriminator 2 view .LVU41
+ 198 0010 0028     		cmp	r0, #0
+ 199 0012 FAD0     		beq	.L21
+  47:BSP/Src/bsp_dac81416.c ****   }
+ 200              		.loc 1 47 5 is_stmt 1 view .LVU42
+  47:BSP/Src/bsp_dac81416.c ****   }
+ 201              		.loc 1 47 11 is_stmt 0 view .LVU43
+ 202 0014 FFF7FEFF 		bl	osMutexRelease
+ 203              	.LVL11:
+ 204              		.loc 1 49 1 view .LVU44
+ 205 0018 F7E7     		b	.L21
+ 206              	.L26:
+ 207 001a 00BF     		.align	2
+ 208              	.L25:
+ 209 001c 00000000 		.word	dacSpiMutex
+ 210              		.cfi_endproc
+ 211              	.LFE148:
+ 213              		.section	.text.BSP_DAC81416_SetTimeout,"ax",%progbits
+ 214              		.align	1
+ 215              		.global	BSP_DAC81416_SetTimeout
+ 216              		.syntax unified
+ 217              		.thumb
+ 218              		.thumb_func
+ 220              	BSP_DAC81416_SetTimeout:
+ 221              	.LVL12:
+ 222              	.LFB150:
+  50:BSP/Src/bsp_dac81416.c **** 
+  51:BSP/Src/bsp_dac81416.c **** void BSP_DAC81416_Init(void)
+  52:BSP/Src/bsp_dac81416.c **** {
+  53:BSP/Src/bsp_dac81416.c ****   DAC_CS_HIGH();
+  54:BSP/Src/bsp_dac81416.c ****   DAC_SetResetPin(GPIO_PIN_SET);
+  55:BSP/Src/bsp_dac81416.c ****   DAC_SetLDACPin(GPIO_PIN_SET);
+  56:BSP/Src/bsp_dac81416.c **** }
+  57:BSP/Src/bsp_dac81416.c **** 
+  58:BSP/Src/bsp_dac81416.c **** void BSP_DAC81416_SetTimeout(uint32_t timeoutMs)
+  59:BSP/Src/bsp_dac81416.c **** {
+ 223              		.loc 1 59 1 is_stmt 1 view -0
+ 224              		.cfi_startproc
+ 225              		@ args = 0, pretend = 0, frame = 0
+ 226              		@ frame_needed = 0, uses_anonymous_args = 0
+ 227              		@ link register save eliminated.
+  60:BSP/Src/bsp_dac81416.c ****   dacSpiTimeoutMs = timeoutMs;
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 11
+
+
+ 228              		.loc 1 60 3 view .LVU46
+ 229              		.loc 1 60 19 is_stmt 0 view .LVU47
+ 230 0000 014B     		ldr	r3, .L28
+ 231 0002 1860     		str	r0, [r3]
+  61:BSP/Src/bsp_dac81416.c **** }
+ 232              		.loc 1 61 1 view .LVU48
+ 233 0004 7047     		bx	lr
+ 234              	.L29:
+ 235 0006 00BF     		.align	2
+ 236              	.L28:
+ 237 0008 00000000 		.word	dacSpiTimeoutMs
+ 238              		.cfi_endproc
+ 239              	.LFE150:
+ 241              		.section	.text.BSP_DAC81416_GetTimeout,"ax",%progbits
+ 242              		.align	1
+ 243              		.global	BSP_DAC81416_GetTimeout
+ 244              		.syntax unified
+ 245              		.thumb
+ 246              		.thumb_func
+ 248              	BSP_DAC81416_GetTimeout:
+ 249              	.LFB151:
+  62:BSP/Src/bsp_dac81416.c **** 
+  63:BSP/Src/bsp_dac81416.c **** uint32_t BSP_DAC81416_GetTimeout(void)
+  64:BSP/Src/bsp_dac81416.c **** {
+ 250              		.loc 1 64 1 is_stmt 1 view -0
+ 251              		.cfi_startproc
+ 252              		@ args = 0, pretend = 0, frame = 0
+ 253              		@ frame_needed = 0, uses_anonymous_args = 0
+ 254              		@ link register save eliminated.
+  65:BSP/Src/bsp_dac81416.c ****   return dacSpiTimeoutMs;
+ 255              		.loc 1 65 3 view .LVU50
+  66:BSP/Src/bsp_dac81416.c **** }
+ 256              		.loc 1 66 1 is_stmt 0 view .LVU51
+ 257 0000 014B     		ldr	r3, .L31
+ 258 0002 1868     		ldr	r0, [r3]
+ 259 0004 7047     		bx	lr
+ 260              	.L32:
+ 261 0006 00BF     		.align	2
+ 262              	.L31:
+ 263 0008 00000000 		.word	dacSpiTimeoutMs
+ 264              		.cfi_endproc
+ 265              	.LFE151:
+ 267              		.section	.text.DAC_SPI_TransmitFrames24,"ax",%progbits
+ 268              		.align	1
+ 269              		.global	DAC_SPI_TransmitFrames24
+ 270              		.syntax unified
+ 271              		.thumb
+ 272              		.thumb_func
+ 274              	DAC_SPI_TransmitFrames24:
+ 275              	.LVL13:
+ 276              	.LFB154:
+  67:BSP/Src/bsp_dac81416.c **** 
+  68:BSP/Src/bsp_dac81416.c **** HAL_StatusTypeDef DAC_SPI_Transmit(uint8_t *txData, uint16_t size)
+  69:BSP/Src/bsp_dac81416.c **** {
+  70:BSP/Src/bsp_dac81416.c ****   uint32_t frame;
+  71:BSP/Src/bsp_dac81416.c **** 
+  72:BSP/Src/bsp_dac81416.c ****   if ((txData == NULL) || (size != 3U))
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 12
+
+
+  73:BSP/Src/bsp_dac81416.c ****   {
+  74:BSP/Src/bsp_dac81416.c ****     return HAL_ERROR;
+  75:BSP/Src/bsp_dac81416.c ****   }
+  76:BSP/Src/bsp_dac81416.c **** 
+  77:BSP/Src/bsp_dac81416.c ****   frame = ((uint32_t)txData[0] << 16) |
+  78:BSP/Src/bsp_dac81416.c ****           ((uint32_t)txData[1] << 8) |
+  79:BSP/Src/bsp_dac81416.c ****           (uint32_t)txData[2];
+  80:BSP/Src/bsp_dac81416.c **** 
+  81:BSP/Src/bsp_dac81416.c ****   return DAC_SPI_TransmitFrames24(&frame, 1U);
+  82:BSP/Src/bsp_dac81416.c **** }
+  83:BSP/Src/bsp_dac81416.c **** 
+  84:BSP/Src/bsp_dac81416.c **** HAL_StatusTypeDef DAC_SPI_TransmitReceive(uint8_t *txData, uint8_t *rxData, uint16_t size)
+  85:BSP/Src/bsp_dac81416.c **** {
+  86:BSP/Src/bsp_dac81416.c ****   HAL_StatusTypeDef status;
+  87:BSP/Src/bsp_dac81416.c ****   uint32_t txFrame;
+  88:BSP/Src/bsp_dac81416.c ****   uint32_t rxFrame = 0U;
+  89:BSP/Src/bsp_dac81416.c **** 
+  90:BSP/Src/bsp_dac81416.c ****   if ((txData == NULL) || (rxData == NULL) || (size != 3U))
+  91:BSP/Src/bsp_dac81416.c ****   {
+  92:BSP/Src/bsp_dac81416.c ****     return HAL_ERROR;
+  93:BSP/Src/bsp_dac81416.c ****   }
+  94:BSP/Src/bsp_dac81416.c **** 
+  95:BSP/Src/bsp_dac81416.c ****   txFrame = ((uint32_t)txData[0] << 16) |
+  96:BSP/Src/bsp_dac81416.c ****             ((uint32_t)txData[1] << 8) |
+  97:BSP/Src/bsp_dac81416.c ****             (uint32_t)txData[2];
+  98:BSP/Src/bsp_dac81416.c **** 
+  99:BSP/Src/bsp_dac81416.c ****   status = DAC_SPI_TransmitReceiveFrames24(&txFrame, &rxFrame, 1U);
+ 100:BSP/Src/bsp_dac81416.c ****   if (status == HAL_OK)
+ 101:BSP/Src/bsp_dac81416.c ****   {
+ 102:BSP/Src/bsp_dac81416.c ****     rxData[0] = (uint8_t)(rxFrame >> 16);
+ 103:BSP/Src/bsp_dac81416.c ****     rxData[1] = (uint8_t)(rxFrame >> 8);
+ 104:BSP/Src/bsp_dac81416.c ****     rxData[2] = (uint8_t)rxFrame;
+ 105:BSP/Src/bsp_dac81416.c ****   }
+ 106:BSP/Src/bsp_dac81416.c **** 
+ 107:BSP/Src/bsp_dac81416.c ****   return status;
+ 108:BSP/Src/bsp_dac81416.c **** }
+ 109:BSP/Src/bsp_dac81416.c **** 
+ 110:BSP/Src/bsp_dac81416.c **** HAL_StatusTypeDef DAC_SPI_TransmitFrames24(const uint32_t *txFrames, uint16_t frameCount)
+ 111:BSP/Src/bsp_dac81416.c **** {
+ 277              		.loc 1 111 1 is_stmt 1 view -0
+ 278              		.cfi_startproc
+ 279              		@ args = 0, pretend = 0, frame = 0
+ 280              		@ frame_needed = 0, uses_anonymous_args = 0
+ 281              		.loc 1 111 1 is_stmt 0 view .LVU53
+ 282 0000 70B5     		push	{r4, r5, r6, lr}
+ 283              	.LCFI3:
+ 284              		.cfi_def_cfa_offset 16
+ 285              		.cfi_offset 4, -16
+ 286              		.cfi_offset 5, -12
+ 287              		.cfi_offset 6, -8
+ 288              		.cfi_offset 14, -4
+ 112:BSP/Src/bsp_dac81416.c ****   HAL_StatusTypeDef status;
+ 289              		.loc 1 112 3 is_stmt 1 view .LVU54
+ 113:BSP/Src/bsp_dac81416.c **** 
+ 114:BSP/Src/bsp_dac81416.c ****   if ((txFrames == NULL) || (frameCount == 0U))
+ 290              		.loc 1 114 3 view .LVU55
+ 291              		.loc 1 114 6 is_stmt 0 view .LVU56
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 13
+
+
+ 292 0002 0029     		cmp	r1, #0
+ 293 0004 18BF     		it	ne
+ 294 0006 0028     		cmpne	r0, #0
+ 295 0008 03D1     		bne	.L37
+ 115:BSP/Src/bsp_dac81416.c ****   {
+ 116:BSP/Src/bsp_dac81416.c ****     return HAL_ERROR;
+ 296              		.loc 1 116 12 view .LVU57
+ 297 000a 0123     		movs	r3, #1
+ 298 000c 1E46     		mov	r6, r3
+ 299              	.LVL14:
+ 300              	.L34:
+ 117:BSP/Src/bsp_dac81416.c ****   }
+ 118:BSP/Src/bsp_dac81416.c **** 
+ 119:BSP/Src/bsp_dac81416.c ****   status = DAC_SPI_Lock();
+ 120:BSP/Src/bsp_dac81416.c ****   if (status != HAL_OK)
+ 121:BSP/Src/bsp_dac81416.c ****   {
+ 122:BSP/Src/bsp_dac81416.c ****     return status;
+ 123:BSP/Src/bsp_dac81416.c ****   }
+ 124:BSP/Src/bsp_dac81416.c **** 
+ 125:BSP/Src/bsp_dac81416.c ****   DAC_CS_LOW();
+ 126:BSP/Src/bsp_dac81416.c ****   status = HAL_SPI_Transmit(&hspi1, (const uint8_t *)txFrames, frameCount, dacSpiTimeoutMs);
+ 127:BSP/Src/bsp_dac81416.c ****   DAC_CS_HIGH();
+ 128:BSP/Src/bsp_dac81416.c ****   DAC_SPI_Unlock();
+ 129:BSP/Src/bsp_dac81416.c **** 
+ 130:BSP/Src/bsp_dac81416.c ****   return status;
+ 131:BSP/Src/bsp_dac81416.c **** }
+ 301              		.loc 1 131 1 view .LVU58
+ 302 000e 3046     		mov	r0, r6
+ 303 0010 70BD     		pop	{r4, r5, r6, pc}
+ 304              	.LVL15:
+ 305              	.L37:
+ 306              		.loc 1 131 1 view .LVU59
+ 307 0012 0546     		mov	r5, r0
+ 308 0014 0C46     		mov	r4, r1
+ 119:BSP/Src/bsp_dac81416.c ****   if (status != HAL_OK)
+ 309              		.loc 1 119 3 is_stmt 1 view .LVU60
+ 119:BSP/Src/bsp_dac81416.c ****   if (status != HAL_OK)
+ 310              		.loc 1 119 12 is_stmt 0 view .LVU61
+ 311 0016 FFF7FEFF 		bl	DAC_SPI_Lock
+ 312              	.LVL16:
+ 120:BSP/Src/bsp_dac81416.c ****   {
+ 313              		.loc 1 120 3 is_stmt 1 view .LVU62
+ 120:BSP/Src/bsp_dac81416.c ****   {
+ 314              		.loc 1 120 6 is_stmt 0 view .LVU63
+ 315 001a 0646     		mov	r6, r0
+ 316 001c 0028     		cmp	r0, #0
+ 317 001e F6D1     		bne	.L34
+ 125:BSP/Src/bsp_dac81416.c ****   status = HAL_SPI_Transmit(&hspi1, (const uint8_t *)txFrames, frameCount, dacSpiTimeoutMs);
+ 318              		.loc 1 125 3 is_stmt 1 view .LVU64
+ 319 0020 0246     		mov	r2, r0
+ 320 0022 1021     		movs	r1, #16
+ 321 0024 0948     		ldr	r0, .L38
+ 322              	.LVL17:
+ 125:BSP/Src/bsp_dac81416.c ****   status = HAL_SPI_Transmit(&hspi1, (const uint8_t *)txFrames, frameCount, dacSpiTimeoutMs);
+ 323              		.loc 1 125 3 is_stmt 0 view .LVU65
+ 324 0026 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 325              	.LVL18:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 14
+
+
+ 126:BSP/Src/bsp_dac81416.c ****   DAC_CS_HIGH();
+ 326              		.loc 1 126 3 is_stmt 1 view .LVU66
+ 126:BSP/Src/bsp_dac81416.c ****   DAC_CS_HIGH();
+ 327              		.loc 1 126 12 is_stmt 0 view .LVU67
+ 328 002a 094B     		ldr	r3, .L38+4
+ 329 002c 1B68     		ldr	r3, [r3]
+ 330 002e 2246     		mov	r2, r4
+ 331 0030 2946     		mov	r1, r5
+ 332 0032 0848     		ldr	r0, .L38+8
+ 333 0034 FFF7FEFF 		bl	HAL_SPI_Transmit
+ 334              	.LVL19:
+ 335 0038 0646     		mov	r6, r0
+ 336              	.LVL20:
+ 127:BSP/Src/bsp_dac81416.c ****   DAC_SPI_Unlock();
+ 337              		.loc 1 127 3 is_stmt 1 view .LVU68
+ 338 003a 0122     		movs	r2, #1
+ 339 003c 1021     		movs	r1, #16
+ 340 003e 0348     		ldr	r0, .L38
+ 341 0040 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 342              	.LVL21:
+ 128:BSP/Src/bsp_dac81416.c **** 
+ 343              		.loc 1 128 3 view .LVU69
+ 344 0044 FFF7FEFF 		bl	DAC_SPI_Unlock
+ 345              	.LVL22:
+ 130:BSP/Src/bsp_dac81416.c **** }
+ 346              		.loc 1 130 3 view .LVU70
+ 130:BSP/Src/bsp_dac81416.c **** }
+ 347              		.loc 1 130 10 is_stmt 0 view .LVU71
+ 348 0048 E1E7     		b	.L34
+ 349              	.L39:
+ 350 004a 00BF     		.align	2
+ 351              	.L38:
+ 352 004c 00000258 		.word	1476526080
+ 353 0050 00000000 		.word	dacSpiTimeoutMs
+ 354 0054 00000000 		.word	hspi1
+ 355              		.cfi_endproc
+ 356              	.LFE154:
+ 358              		.section	.text.DAC_SPI_Transmit,"ax",%progbits
+ 359              		.align	1
+ 360              		.global	DAC_SPI_Transmit
+ 361              		.syntax unified
+ 362              		.thumb
+ 363              		.thumb_func
+ 365              	DAC_SPI_Transmit:
+ 366              	.LVL23:
+ 367              	.LFB152:
+  69:BSP/Src/bsp_dac81416.c ****   uint32_t frame;
+ 368              		.loc 1 69 1 is_stmt 1 view -0
+ 369              		.cfi_startproc
+ 370              		@ args = 0, pretend = 0, frame = 8
+ 371              		@ frame_needed = 0, uses_anonymous_args = 0
+  70:BSP/Src/bsp_dac81416.c **** 
+ 372              		.loc 1 70 3 view .LVU73
+  72:BSP/Src/bsp_dac81416.c ****   {
+ 373              		.loc 1 72 3 view .LVU74
+  72:BSP/Src/bsp_dac81416.c ****   {
+ 374              		.loc 1 72 33 is_stmt 0 view .LVU75
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 15
+
+
+ 375 0000 0339     		subs	r1, r1, #3
+ 376              	.LVL24:
+  72:BSP/Src/bsp_dac81416.c ****   {
+ 377              		.loc 1 72 33 view .LVU76
+ 378 0002 18BF     		it	ne
+ 379 0004 0121     		movne	r1, #1
+ 380              	.LVL25:
+  72:BSP/Src/bsp_dac81416.c ****   {
+ 381              		.loc 1 72 24 view .LVU77
+ 382 0006 0028     		cmp	r0, #0
+ 383 0008 08BF     		it	eq
+ 384 000a 41F00101 		orreq	r1, r1, #1
+  72:BSP/Src/bsp_dac81416.c ****   {
+ 385              		.loc 1 72 6 view .LVU78
+ 386 000e 09B1     		cbz	r1, .L47
+  74:BSP/Src/bsp_dac81416.c ****   }
+ 387              		.loc 1 74 12 view .LVU79
+ 388 0010 0120     		movs	r0, #1
+ 389              	.LVL26:
+  82:BSP/Src/bsp_dac81416.c **** 
+ 390              		.loc 1 82 1 view .LVU80
+ 391 0012 7047     		bx	lr
+ 392              	.LVL27:
+ 393              	.L47:
+  69:BSP/Src/bsp_dac81416.c ****   uint32_t frame;
+ 394              		.loc 1 69 1 view .LVU81
+ 395 0014 00B5     		push	{lr}
+ 396              	.LCFI4:
+ 397              		.cfi_def_cfa_offset 4
+ 398              		.cfi_offset 14, -4
+ 399 0016 83B0     		sub	sp, sp, #12
+ 400              	.LCFI5:
+ 401              		.cfi_def_cfa_offset 16
+  77:BSP/Src/bsp_dac81416.c ****           ((uint32_t)txData[1] << 8) |
+ 402              		.loc 1 77 3 is_stmt 1 view .LVU82
+  77:BSP/Src/bsp_dac81416.c ****           ((uint32_t)txData[1] << 8) |
+ 403              		.loc 1 77 28 is_stmt 0 view .LVU83
+ 404 0018 0178     		ldrb	r1, [r0]	@ zero_extendqisi2
+  78:BSP/Src/bsp_dac81416.c ****           (uint32_t)txData[2];
+ 405              		.loc 1 78 28 view .LVU84
+ 406 001a 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+  78:BSP/Src/bsp_dac81416.c ****           (uint32_t)txData[2];
+ 407              		.loc 1 78 32 view .LVU85
+ 408 001c 1B02     		lsls	r3, r3, #8
+  77:BSP/Src/bsp_dac81416.c ****           ((uint32_t)txData[1] << 8) |
+ 409              		.loc 1 77 39 view .LVU86
+ 410 001e 43EA0143 		orr	r3, r3, r1, lsl #16
+  79:BSP/Src/bsp_dac81416.c **** 
+ 411              		.loc 1 79 27 view .LVU87
+ 412 0022 8278     		ldrb	r2, [r0, #2]	@ zero_extendqisi2
+  78:BSP/Src/bsp_dac81416.c ****           (uint32_t)txData[2];
+ 413              		.loc 1 78 38 view .LVU88
+ 414 0024 1343     		orrs	r3, r3, r2
+  77:BSP/Src/bsp_dac81416.c ****           ((uint32_t)txData[1] << 8) |
+ 415              		.loc 1 77 9 view .LVU89
+ 416 0026 0193     		str	r3, [sp, #4]
+  81:BSP/Src/bsp_dac81416.c **** }
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 16
+
+
+ 417              		.loc 1 81 3 is_stmt 1 view .LVU90
+  81:BSP/Src/bsp_dac81416.c **** }
+ 418              		.loc 1 81 10 is_stmt 0 view .LVU91
+ 419 0028 0121     		movs	r1, #1
+ 420 002a 01A8     		add	r0, sp, #4
+ 421              	.LVL28:
+  81:BSP/Src/bsp_dac81416.c **** }
+ 422              		.loc 1 81 10 view .LVU92
+ 423 002c FFF7FEFF 		bl	DAC_SPI_TransmitFrames24
+ 424              	.LVL29:
+  82:BSP/Src/bsp_dac81416.c **** 
+ 425              		.loc 1 82 1 view .LVU93
+ 426 0030 03B0     		add	sp, sp, #12
+ 427              	.LCFI6:
+ 428              		.cfi_def_cfa_offset 4
+ 429              		@ sp needed
+ 430 0032 00BD     		pop	{pc}
+ 431              		.cfi_endproc
+ 432              	.LFE152:
+ 434              		.section	.text.DAC_SPI_TransmitReceiveFrames24,"ax",%progbits
+ 435              		.align	1
+ 436              		.global	DAC_SPI_TransmitReceiveFrames24
+ 437              		.syntax unified
+ 438              		.thumb
+ 439              		.thumb_func
+ 441              	DAC_SPI_TransmitReceiveFrames24:
+ 442              	.LVL30:
+ 443              	.LFB155:
+ 132:BSP/Src/bsp_dac81416.c **** 
+ 133:BSP/Src/bsp_dac81416.c **** HAL_StatusTypeDef DAC_SPI_TransmitReceiveFrames24(const uint32_t *txFrames,
+ 134:BSP/Src/bsp_dac81416.c ****                                                   uint32_t *rxFrames,
+ 135:BSP/Src/bsp_dac81416.c ****                                                   uint16_t frameCount)
+ 136:BSP/Src/bsp_dac81416.c **** {
+ 444              		.loc 1 136 1 is_stmt 1 view -0
+ 445              		.cfi_startproc
+ 446              		@ args = 0, pretend = 0, frame = 0
+ 447              		@ frame_needed = 0, uses_anonymous_args = 0
+ 448              		.loc 1 136 1 is_stmt 0 view .LVU95
+ 449 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 450              	.LCFI7:
+ 451              		.cfi_def_cfa_offset 20
+ 452              		.cfi_offset 4, -20
+ 453              		.cfi_offset 5, -16
+ 454              		.cfi_offset 6, -12
+ 455              		.cfi_offset 7, -8
+ 456              		.cfi_offset 14, -4
+ 457 0002 83B0     		sub	sp, sp, #12
+ 458              	.LCFI8:
+ 459              		.cfi_def_cfa_offset 32
+ 137:BSP/Src/bsp_dac81416.c ****   HAL_StatusTypeDef status;
+ 460              		.loc 1 137 3 is_stmt 1 view .LVU96
+ 138:BSP/Src/bsp_dac81416.c **** 
+ 139:BSP/Src/bsp_dac81416.c ****   if ((txFrames == NULL) || (rxFrames == NULL) || (frameCount == 0U))
+ 461              		.loc 1 139 3 view .LVU97
+ 462              		.loc 1 139 6 is_stmt 0 view .LVU98
+ 463 0004 0029     		cmp	r1, #0
+ 464 0006 18BF     		it	ne
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 17
+
+
+ 465 0008 0028     		cmpne	r0, #0
+ 466 000a 21D0     		beq	.L50
+ 467 000c 1446     		mov	r4, r2
+ 468 000e 0646     		mov	r6, r0
+ 469 0010 0D46     		mov	r5, r1
+ 470              		.loc 1 139 48 discriminator 1 view .LVU99
+ 471 0012 12B9     		cbnz	r2, .L53
+ 140:BSP/Src/bsp_dac81416.c ****   {
+ 141:BSP/Src/bsp_dac81416.c ****     return HAL_ERROR;
+ 472              		.loc 1 141 12 view .LVU100
+ 473 0014 0123     		movs	r3, #1
+ 474 0016 1F46     		mov	r7, r3
+ 475 0018 1CE0     		b	.L49
+ 476              	.L53:
+ 142:BSP/Src/bsp_dac81416.c ****   }
+ 143:BSP/Src/bsp_dac81416.c **** 
+ 144:BSP/Src/bsp_dac81416.c ****   status = DAC_SPI_Lock();
+ 477              		.loc 1 144 3 is_stmt 1 view .LVU101
+ 478              		.loc 1 144 12 is_stmt 0 view .LVU102
+ 479 001a FFF7FEFF 		bl	DAC_SPI_Lock
+ 480              	.LVL31:
+ 145:BSP/Src/bsp_dac81416.c ****   if (status != HAL_OK)
+ 481              		.loc 1 145 3 is_stmt 1 view .LVU103
+ 482              		.loc 1 145 6 is_stmt 0 view .LVU104
+ 483 001e 0746     		mov	r7, r0
+ 484 0020 C0B9     		cbnz	r0, .L49
+ 146:BSP/Src/bsp_dac81416.c ****   {
+ 147:BSP/Src/bsp_dac81416.c ****     return status;
+ 148:BSP/Src/bsp_dac81416.c ****   }
+ 149:BSP/Src/bsp_dac81416.c **** 
+ 150:BSP/Src/bsp_dac81416.c ****   DAC_CS_LOW();
+ 485              		.loc 1 150 3 is_stmt 1 view .LVU105
+ 486 0022 0246     		mov	r2, r0
+ 487 0024 1021     		movs	r1, #16
+ 488 0026 0D48     		ldr	r0, .L54
+ 489              	.LVL32:
+ 490              		.loc 1 150 3 is_stmt 0 view .LVU106
+ 491 0028 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 492              	.LVL33:
+ 151:BSP/Src/bsp_dac81416.c ****   status = HAL_SPI_TransmitReceive(&hspi1,
+ 493              		.loc 1 151 3 is_stmt 1 view .LVU107
+ 494              		.loc 1 151 12 is_stmt 0 view .LVU108
+ 495 002c 0C4B     		ldr	r3, .L54+4
+ 496 002e 1B68     		ldr	r3, [r3]
+ 497 0030 0093     		str	r3, [sp]
+ 498 0032 2346     		mov	r3, r4
+ 499 0034 2A46     		mov	r2, r5
+ 500 0036 3146     		mov	r1, r6
+ 501 0038 0A48     		ldr	r0, .L54+8
+ 502 003a FFF7FEFF 		bl	HAL_SPI_TransmitReceive
+ 503              	.LVL34:
+ 504 003e 0746     		mov	r7, r0
+ 505              	.LVL35:
+ 152:BSP/Src/bsp_dac81416.c ****                                    (const uint8_t *)txFrames,
+ 153:BSP/Src/bsp_dac81416.c ****                                    (uint8_t *)rxFrames,
+ 154:BSP/Src/bsp_dac81416.c ****                                    frameCount,
+ 155:BSP/Src/bsp_dac81416.c ****                                    dacSpiTimeoutMs);
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 18
+
+
+ 156:BSP/Src/bsp_dac81416.c ****   DAC_CS_HIGH();
+ 506              		.loc 1 156 3 is_stmt 1 view .LVU109
+ 507 0040 0122     		movs	r2, #1
+ 508 0042 1021     		movs	r1, #16
+ 509 0044 0548     		ldr	r0, .L54
+ 510 0046 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 511              	.LVL36:
+ 157:BSP/Src/bsp_dac81416.c ****   DAC_SPI_Unlock();
+ 512              		.loc 1 157 3 view .LVU110
+ 513 004a FFF7FEFF 		bl	DAC_SPI_Unlock
+ 514              	.LVL37:
+ 158:BSP/Src/bsp_dac81416.c **** 
+ 159:BSP/Src/bsp_dac81416.c ****   return status;
+ 515              		.loc 1 159 3 view .LVU111
+ 516              		.loc 1 159 10 is_stmt 0 view .LVU112
+ 517 004e 01E0     		b	.L49
+ 518              	.LVL38:
+ 519              	.L50:
+ 141:BSP/Src/bsp_dac81416.c ****   }
+ 520              		.loc 1 141 12 view .LVU113
+ 521 0050 0123     		movs	r3, #1
+ 522 0052 1F46     		mov	r7, r3
+ 523              	.LVL39:
+ 524              	.L49:
+ 160:BSP/Src/bsp_dac81416.c **** }
+ 525              		.loc 1 160 1 view .LVU114
+ 526 0054 3846     		mov	r0, r7
+ 527 0056 03B0     		add	sp, sp, #12
+ 528              	.LCFI9:
+ 529              		.cfi_def_cfa_offset 20
+ 530              		@ sp needed
+ 531 0058 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 532              	.L55:
+ 533 005a 00BF     		.align	2
+ 534              	.L54:
+ 535 005c 00000258 		.word	1476526080
+ 536 0060 00000000 		.word	dacSpiTimeoutMs
+ 537 0064 00000000 		.word	hspi1
+ 538              		.cfi_endproc
+ 539              	.LFE155:
+ 541              		.section	.text.DAC_SPI_TransmitReceive,"ax",%progbits
+ 542              		.align	1
+ 543              		.global	DAC_SPI_TransmitReceive
+ 544              		.syntax unified
+ 545              		.thumb
+ 546              		.thumb_func
+ 548              	DAC_SPI_TransmitReceive:
+ 549              	.LVL40:
+ 550              	.LFB153:
+  85:BSP/Src/bsp_dac81416.c ****   HAL_StatusTypeDef status;
+ 551              		.loc 1 85 1 is_stmt 1 view -0
+ 552              		.cfi_startproc
+ 553              		@ args = 0, pretend = 0, frame = 8
+ 554              		@ frame_needed = 0, uses_anonymous_args = 0
+  85:BSP/Src/bsp_dac81416.c ****   HAL_StatusTypeDef status;
+ 555              		.loc 1 85 1 is_stmt 0 view .LVU116
+ 556 0000 10B5     		push	{r4, lr}
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 19
+
+
+ 557              	.LCFI10:
+ 558              		.cfi_def_cfa_offset 8
+ 559              		.cfi_offset 4, -8
+ 560              		.cfi_offset 14, -4
+ 561 0002 82B0     		sub	sp, sp, #8
+ 562              	.LCFI11:
+ 563              		.cfi_def_cfa_offset 16
+  86:BSP/Src/bsp_dac81416.c ****   uint32_t txFrame;
+ 564              		.loc 1 86 3 is_stmt 1 view .LVU117
+  87:BSP/Src/bsp_dac81416.c ****   uint32_t rxFrame = 0U;
+ 565              		.loc 1 87 3 view .LVU118
+  88:BSP/Src/bsp_dac81416.c **** 
+ 566              		.loc 1 88 3 view .LVU119
+  88:BSP/Src/bsp_dac81416.c **** 
+ 567              		.loc 1 88 12 is_stmt 0 view .LVU120
+ 568 0004 0023     		movs	r3, #0
+ 569 0006 0093     		str	r3, [sp]
+  90:BSP/Src/bsp_dac81416.c ****   {
+ 570              		.loc 1 90 3 is_stmt 1 view .LVU121
+  90:BSP/Src/bsp_dac81416.c ****   {
+ 571              		.loc 1 90 6 is_stmt 0 view .LVU122
+ 572 0008 9942     		cmp	r1, r3
+ 573 000a 18BF     		it	ne
+ 574 000c 9842     		cmpne	r0, r3
+ 575 000e 1DD0     		beq	.L58
+ 576 0010 0C46     		mov	r4, r1
+  90:BSP/Src/bsp_dac81416.c ****   {
+ 577              		.loc 1 90 44 discriminator 1 view .LVU123
+ 578 0012 032A     		cmp	r2, #3
+ 579 0014 02D0     		beq	.L61
+  92:BSP/Src/bsp_dac81416.c ****   }
+ 580              		.loc 1 92 12 view .LVU124
+ 581 0016 0120     		movs	r0, #1
+ 582              	.LVL41:
+ 583              	.L57:
+ 108:BSP/Src/bsp_dac81416.c **** 
+ 584              		.loc 1 108 1 view .LVU125
+ 585 0018 02B0     		add	sp, sp, #8
+ 586              	.LCFI12:
+ 587              		.cfi_remember_state
+ 588              		.cfi_def_cfa_offset 8
+ 589              		@ sp needed
+ 590 001a 10BD     		pop	{r4, pc}
+ 591              	.LVL42:
+ 592              	.L61:
+ 593              	.LCFI13:
+ 594              		.cfi_restore_state
+  95:BSP/Src/bsp_dac81416.c ****             ((uint32_t)txData[1] << 8) |
+ 595              		.loc 1 95 3 is_stmt 1 view .LVU126
+  95:BSP/Src/bsp_dac81416.c ****             ((uint32_t)txData[1] << 8) |
+ 596              		.loc 1 95 30 is_stmt 0 view .LVU127
+ 597 001c 0278     		ldrb	r2, [r0]	@ zero_extendqisi2
+ 598              	.LVL43:
+  96:BSP/Src/bsp_dac81416.c ****             (uint32_t)txData[2];
+ 599              		.loc 1 96 30 view .LVU128
+ 600 001e 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
+  96:BSP/Src/bsp_dac81416.c ****             (uint32_t)txData[2];
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 20
+
+
+ 601              		.loc 1 96 34 view .LVU129
+ 602 0020 1B02     		lsls	r3, r3, #8
+  95:BSP/Src/bsp_dac81416.c ****             ((uint32_t)txData[1] << 8) |
+ 603              		.loc 1 95 41 view .LVU130
+ 604 0022 43EA0243 		orr	r3, r3, r2, lsl #16
+  97:BSP/Src/bsp_dac81416.c **** 
+ 605              		.loc 1 97 29 view .LVU131
+ 606 0026 8278     		ldrb	r2, [r0, #2]	@ zero_extendqisi2
+  96:BSP/Src/bsp_dac81416.c ****             (uint32_t)txData[2];
+ 607              		.loc 1 96 40 view .LVU132
+ 608 0028 1343     		orrs	r3, r3, r2
+  95:BSP/Src/bsp_dac81416.c ****             ((uint32_t)txData[1] << 8) |
+ 609              		.loc 1 95 11 view .LVU133
+ 610 002a 0193     		str	r3, [sp, #4]
+  99:BSP/Src/bsp_dac81416.c ****   if (status == HAL_OK)
+ 611              		.loc 1 99 3 is_stmt 1 view .LVU134
+  99:BSP/Src/bsp_dac81416.c ****   if (status == HAL_OK)
+ 612              		.loc 1 99 12 is_stmt 0 view .LVU135
+ 613 002c 0122     		movs	r2, #1
+ 614 002e 6946     		mov	r1, sp
+ 615              	.LVL44:
+  99:BSP/Src/bsp_dac81416.c ****   if (status == HAL_OK)
+ 616              		.loc 1 99 12 view .LVU136
+ 617 0030 01A8     		add	r0, sp, #4
+ 618              	.LVL45:
+  99:BSP/Src/bsp_dac81416.c ****   if (status == HAL_OK)
+ 619              		.loc 1 99 12 view .LVU137
+ 620 0032 FFF7FEFF 		bl	DAC_SPI_TransmitReceiveFrames24
+ 621              	.LVL46:
+ 100:BSP/Src/bsp_dac81416.c ****   {
+ 622              		.loc 1 100 3 is_stmt 1 view .LVU138
+ 100:BSP/Src/bsp_dac81416.c ****   {
+ 623              		.loc 1 100 6 is_stmt 0 view .LVU139
+ 624 0036 0028     		cmp	r0, #0
+ 625 0038 EED1     		bne	.L57
+ 102:BSP/Src/bsp_dac81416.c ****     rxData[1] = (uint8_t)(rxFrame >> 8);
+ 626              		.loc 1 102 5 is_stmt 1 view .LVU140
+ 102:BSP/Src/bsp_dac81416.c ****     rxData[1] = (uint8_t)(rxFrame >> 8);
+ 627              		.loc 1 102 35 is_stmt 0 view .LVU141
+ 628 003a 009B     		ldr	r3, [sp]
+ 102:BSP/Src/bsp_dac81416.c ****     rxData[1] = (uint8_t)(rxFrame >> 8);
+ 629              		.loc 1 102 17 view .LVU142
+ 630 003c C3F30742 		ubfx	r2, r3, #16, #8
+ 102:BSP/Src/bsp_dac81416.c ****     rxData[1] = (uint8_t)(rxFrame >> 8);
+ 631              		.loc 1 102 15 view .LVU143
+ 632 0040 2270     		strb	r2, [r4]
+ 103:BSP/Src/bsp_dac81416.c ****     rxData[2] = (uint8_t)rxFrame;
+ 633              		.loc 1 103 5 is_stmt 1 view .LVU144
+ 103:BSP/Src/bsp_dac81416.c ****     rxData[2] = (uint8_t)rxFrame;
+ 634              		.loc 1 103 17 is_stmt 0 view .LVU145
+ 635 0042 C3F30722 		ubfx	r2, r3, #8, #8
+ 103:BSP/Src/bsp_dac81416.c ****     rxData[2] = (uint8_t)rxFrame;
+ 636              		.loc 1 103 15 view .LVU146
+ 637 0046 6270     		strb	r2, [r4, #1]
+ 104:BSP/Src/bsp_dac81416.c ****   }
+ 638              		.loc 1 104 5 is_stmt 1 view .LVU147
+ 104:BSP/Src/bsp_dac81416.c ****   }
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 21
+
+
+ 639              		.loc 1 104 15 is_stmt 0 view .LVU148
+ 640 0048 A370     		strb	r3, [r4, #2]
+ 641 004a E5E7     		b	.L57
+ 642              	.LVL47:
+ 643              	.L58:
+  92:BSP/Src/bsp_dac81416.c ****   }
+ 644              		.loc 1 92 12 view .LVU149
+ 645 004c 0120     		movs	r0, #1
+ 646              	.LVL48:
+  92:BSP/Src/bsp_dac81416.c ****   }
+ 647              		.loc 1 92 12 view .LVU150
+ 648 004e E3E7     		b	.L57
+ 649              		.cfi_endproc
+ 650              	.LFE153:
+ 652              		.section	.text.DAC_SetResetPin,"ax",%progbits
+ 653              		.align	1
+ 654              		.global	DAC_SetResetPin
+ 655              		.syntax unified
+ 656              		.thumb
+ 657              		.thumb_func
+ 659              	DAC_SetResetPin:
+ 660              	.LVL49:
+ 661              	.LFB156:
+ 161:BSP/Src/bsp_dac81416.c **** 
+ 162:BSP/Src/bsp_dac81416.c **** void DAC_SetResetPin(GPIO_PinState state)
+ 163:BSP/Src/bsp_dac81416.c **** {
+ 662              		.loc 1 163 1 is_stmt 1 view -0
+ 663              		.cfi_startproc
+ 664              		@ args = 0, pretend = 0, frame = 0
+ 665              		@ frame_needed = 0, uses_anonymous_args = 0
+ 666              		.loc 1 163 1 is_stmt 0 view .LVU152
+ 667 0000 08B5     		push	{r3, lr}
+ 668              	.LCFI14:
+ 669              		.cfi_def_cfa_offset 8
+ 670              		.cfi_offset 3, -8
+ 671              		.cfi_offset 14, -4
+ 672 0002 0246     		mov	r2, r0
+ 164:BSP/Src/bsp_dac81416.c ****   HAL_GPIO_WritePin(DAC_RESET_GPIO_Port, DAC_RESET_Pin, state);
+ 673              		.loc 1 164 3 is_stmt 1 view .LVU153
+ 674 0004 0821     		movs	r1, #8
+ 675 0006 0248     		ldr	r0, .L64
+ 676              	.LVL50:
+ 677              		.loc 1 164 3 is_stmt 0 view .LVU154
+ 678 0008 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 679              	.LVL51:
+ 165:BSP/Src/bsp_dac81416.c **** }
+ 680              		.loc 1 165 1 view .LVU155
+ 681 000c 08BD     		pop	{r3, pc}
+ 682              	.L65:
+ 683 000e 00BF     		.align	2
+ 684              	.L64:
+ 685 0010 000C0258 		.word	1476529152
+ 686              		.cfi_endproc
+ 687              	.LFE156:
+ 689              		.section	.text.DAC_ResetHardware,"ax",%progbits
+ 690              		.align	1
+ 691              		.global	DAC_ResetHardware
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 22
+
+
+ 692              		.syntax unified
+ 693              		.thumb
+ 694              		.thumb_func
+ 696              	DAC_ResetHardware:
+ 697              	.LFB157:
+ 166:BSP/Src/bsp_dac81416.c **** 
+ 167:BSP/Src/bsp_dac81416.c **** void DAC_ResetHardware(void)
+ 168:BSP/Src/bsp_dac81416.c **** {
+ 698              		.loc 1 168 1 is_stmt 1 view -0
+ 699              		.cfi_startproc
+ 700              		@ args = 0, pretend = 0, frame = 0
+ 701              		@ frame_needed = 0, uses_anonymous_args = 0
+ 702 0000 08B5     		push	{r3, lr}
+ 703              	.LCFI15:
+ 704              		.cfi_def_cfa_offset 8
+ 705              		.cfi_offset 3, -8
+ 706              		.cfi_offset 14, -4
+ 169:BSP/Src/bsp_dac81416.c ****   DAC_SetResetPin(GPIO_PIN_RESET);
+ 707              		.loc 1 169 3 view .LVU157
+ 708 0002 0020     		movs	r0, #0
+ 709 0004 FFF7FEFF 		bl	DAC_SetResetPin
+ 710              	.LVL52:
+ 170:BSP/Src/bsp_dac81416.c ****   HAL_Delay(10U);
+ 711              		.loc 1 170 3 view .LVU158
+ 712 0008 0A20     		movs	r0, #10
+ 713 000a FFF7FEFF 		bl	HAL_Delay
+ 714              	.LVL53:
+ 171:BSP/Src/bsp_dac81416.c ****   DAC_SetResetPin(GPIO_PIN_SET);
+ 715              		.loc 1 171 3 view .LVU159
+ 716 000e 0120     		movs	r0, #1
+ 717 0010 FFF7FEFF 		bl	DAC_SetResetPin
+ 718              	.LVL54:
+ 172:BSP/Src/bsp_dac81416.c ****   HAL_Delay(10U);
+ 719              		.loc 1 172 3 view .LVU160
+ 720 0014 0A20     		movs	r0, #10
+ 721 0016 FFF7FEFF 		bl	HAL_Delay
+ 722              	.LVL55:
+ 173:BSP/Src/bsp_dac81416.c **** }
+ 723              		.loc 1 173 1 is_stmt 0 view .LVU161
+ 724 001a 08BD     		pop	{r3, pc}
+ 725              		.cfi_endproc
+ 726              	.LFE157:
+ 728              		.section	.text.DAC_SetLDACPin,"ax",%progbits
+ 729              		.align	1
+ 730              		.global	DAC_SetLDACPin
+ 731              		.syntax unified
+ 732              		.thumb
+ 733              		.thumb_func
+ 735              	DAC_SetLDACPin:
+ 736              	.LVL56:
+ 737              	.LFB158:
+ 174:BSP/Src/bsp_dac81416.c **** 
+ 175:BSP/Src/bsp_dac81416.c **** void DAC_SetLDACPin(GPIO_PinState state)
+ 176:BSP/Src/bsp_dac81416.c **** {
+ 738              		.loc 1 176 1 is_stmt 1 view -0
+ 739              		.cfi_startproc
+ 740              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 23
+
+
+ 741              		@ frame_needed = 0, uses_anonymous_args = 0
+ 742              		.loc 1 176 1 is_stmt 0 view .LVU163
+ 743 0000 08B5     		push	{r3, lr}
+ 744              	.LCFI16:
+ 745              		.cfi_def_cfa_offset 8
+ 746              		.cfi_offset 3, -8
+ 747              		.cfi_offset 14, -4
+ 748 0002 0246     		mov	r2, r0
+ 177:BSP/Src/bsp_dac81416.c ****   HAL_GPIO_WritePin(DAC_nLDAC_GPIO_Port, DAC_nLDAC_Pin, state);
+ 749              		.loc 1 177 3 is_stmt 1 view .LVU164
+ 750 0004 4021     		movs	r1, #64
+ 751 0006 0248     		ldr	r0, .L70
+ 752              	.LVL57:
+ 753              		.loc 1 177 3 is_stmt 0 view .LVU165
+ 754 0008 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 755              	.LVL58:
+ 178:BSP/Src/bsp_dac81416.c **** }
+ 756              		.loc 1 178 1 view .LVU166
+ 757 000c 08BD     		pop	{r3, pc}
+ 758              	.L71:
+ 759 000e 00BF     		.align	2
+ 760              	.L70:
+ 761 0010 000C0258 		.word	1476529152
+ 762              		.cfi_endproc
+ 763              	.LFE158:
+ 765              		.section	.text.BSP_DAC81416_Init,"ax",%progbits
+ 766              		.align	1
+ 767              		.global	BSP_DAC81416_Init
+ 768              		.syntax unified
+ 769              		.thumb
+ 770              		.thumb_func
+ 772              	BSP_DAC81416_Init:
+ 773              	.LFB149:
+  52:BSP/Src/bsp_dac81416.c ****   DAC_CS_HIGH();
+ 774              		.loc 1 52 1 is_stmt 1 view -0
+ 775              		.cfi_startproc
+ 776              		@ args = 0, pretend = 0, frame = 0
+ 777              		@ frame_needed = 0, uses_anonymous_args = 0
+ 778 0000 08B5     		push	{r3, lr}
+ 779              	.LCFI17:
+ 780              		.cfi_def_cfa_offset 8
+ 781              		.cfi_offset 3, -8
+ 782              		.cfi_offset 14, -4
+  53:BSP/Src/bsp_dac81416.c ****   DAC_SetResetPin(GPIO_PIN_SET);
+ 783              		.loc 1 53 3 view .LVU168
+ 784 0002 0122     		movs	r2, #1
+ 785 0004 1021     		movs	r1, #16
+ 786 0006 0548     		ldr	r0, .L74
+ 787 0008 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 788              	.LVL59:
+  54:BSP/Src/bsp_dac81416.c ****   DAC_SetLDACPin(GPIO_PIN_SET);
+ 789              		.loc 1 54 3 view .LVU169
+ 790 000c 0120     		movs	r0, #1
+ 791 000e FFF7FEFF 		bl	DAC_SetResetPin
+ 792              	.LVL60:
+  55:BSP/Src/bsp_dac81416.c **** }
+ 793              		.loc 1 55 3 view .LVU170
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 24
+
+
+ 794 0012 0120     		movs	r0, #1
+ 795 0014 FFF7FEFF 		bl	DAC_SetLDACPin
+ 796              	.LVL61:
+  56:BSP/Src/bsp_dac81416.c **** 
+ 797              		.loc 1 56 1 is_stmt 0 view .LVU171
+ 798 0018 08BD     		pop	{r3, pc}
+ 799              	.L75:
+ 800 001a 00BF     		.align	2
+ 801              	.L74:
+ 802 001c 00000258 		.word	1476526080
+ 803              		.cfi_endproc
+ 804              	.LFE149:
+ 806              		.section	.text.DAC_LDAC_Update,"ax",%progbits
+ 807              		.align	1
+ 808              		.global	DAC_LDAC_Update
+ 809              		.syntax unified
+ 810              		.thumb
+ 811              		.thumb_func
+ 813              	DAC_LDAC_Update:
+ 814              	.LFB159:
+ 179:BSP/Src/bsp_dac81416.c **** 
+ 180:BSP/Src/bsp_dac81416.c **** void DAC_LDAC_Update(void)
+ 181:BSP/Src/bsp_dac81416.c **** {
+ 815              		.loc 1 181 1 is_stmt 1 view -0
+ 816              		.cfi_startproc
+ 817              		@ args = 0, pretend = 0, frame = 0
+ 818              		@ frame_needed = 0, uses_anonymous_args = 0
+ 819 0000 08B5     		push	{r3, lr}
+ 820              	.LCFI18:
+ 821              		.cfi_def_cfa_offset 8
+ 822              		.cfi_offset 3, -8
+ 823              		.cfi_offset 14, -4
+ 182:BSP/Src/bsp_dac81416.c ****   DAC_SetLDACPin(GPIO_PIN_RESET);
+ 824              		.loc 1 182 3 view .LVU173
+ 825 0002 0020     		movs	r0, #0
+ 826 0004 FFF7FEFF 		bl	DAC_SetLDACPin
+ 827              	.LVL62:
+ 183:BSP/Src/bsp_dac81416.c ****   HAL_Delay(1U);
+ 828              		.loc 1 183 3 view .LVU174
+ 829 0008 0120     		movs	r0, #1
+ 830 000a FFF7FEFF 		bl	HAL_Delay
+ 831              	.LVL63:
+ 184:BSP/Src/bsp_dac81416.c ****   DAC_SetLDACPin(GPIO_PIN_SET);
+ 832              		.loc 1 184 3 view .LVU175
+ 833 000e 0120     		movs	r0, #1
+ 834 0010 FFF7FEFF 		bl	DAC_SetLDACPin
+ 835              	.LVL64:
+ 185:BSP/Src/bsp_dac81416.c **** }
+ 836              		.loc 1 185 1 is_stmt 0 view .LVU176
+ 837 0014 08BD     		pop	{r3, pc}
+ 838              		.cfi_endproc
+ 839              	.LFE159:
+ 841              		.section	.text.DAC_ReadAlarmPin,"ax",%progbits
+ 842              		.align	1
+ 843              		.global	DAC_ReadAlarmPin
+ 844              		.syntax unified
+ 845              		.thumb
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 25
+
+
+ 846              		.thumb_func
+ 848              	DAC_ReadAlarmPin:
+ 849              	.LFB160:
+ 186:BSP/Src/bsp_dac81416.c **** 
+ 187:BSP/Src/bsp_dac81416.c **** uint8_t DAC_ReadAlarmPin(void)
+ 188:BSP/Src/bsp_dac81416.c **** {
+ 850              		.loc 1 188 1 is_stmt 1 view -0
+ 851              		.cfi_startproc
+ 852              		@ args = 0, pretend = 0, frame = 0
+ 853              		@ frame_needed = 0, uses_anonymous_args = 0
+ 854 0000 08B5     		push	{r3, lr}
+ 855              	.LCFI19:
+ 856              		.cfi_def_cfa_offset 8
+ 857              		.cfi_offset 3, -8
+ 858              		.cfi_offset 14, -4
+ 189:BSP/Src/bsp_dac81416.c ****   return (HAL_GPIO_ReadPin(DAC_ALMOUT_GPIO_Port, DAC_ALMOUT_Pin) == GPIO_PIN_SET) ? 1U : 0U;
+ 859              		.loc 1 189 3 view .LVU178
+ 860              		.loc 1 189 11 is_stmt 0 view .LVU179
+ 861 0002 0421     		movs	r1, #4
+ 862 0004 0348     		ldr	r0, .L82
+ 863 0006 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 864              	.LVL65:
+ 865              		.loc 1 189 88 discriminator 1 view .LVU180
+ 866 000a 0128     		cmp	r0, #1
+ 867 000c 00D0     		beq	.L79
+ 868              		.loc 1 189 88 discriminator 3 view .LVU181
+ 869 000e 0020     		movs	r0, #0
+ 870              	.L79:
+ 190:BSP/Src/bsp_dac81416.c **** }
+ 871              		.loc 1 190 1 view .LVU182
+ 872 0010 08BD     		pop	{r3, pc}
+ 873              	.L83:
+ 874 0012 00BF     		.align	2
+ 875              	.L82:
+ 876 0014 000C0258 		.word	1476529152
+ 877              		.cfi_endproc
+ 878              	.LFE160:
+ 880              		.section	.data.dacSpiTimeoutMs,"aw"
+ 881              		.align	2
+ 884              	dacSpiTimeoutMs:
+ 885 0000 64000000 		.word	100
+ 886              		.section	.bss.dacSpiMutex,"aw",%nobits
+ 887              		.align	2
+ 890              	dacSpiMutex:
+ 891 0000 00000000 		.space	4
+ 892              		.text
+ 893              	.Letext0:
+ 894              		.file 3 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 895              		.file 4 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 896              		.file 5 "Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h"
+ 897              		.file 6 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
+ 898              		.file 7 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_gpio.h"
+ 899              		.file 8 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h"
+ 900              		.file 9 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi.h"
+ 901              		.file 10 "Drivers/CMSIS/RTOS2/Include/cmsis_os2.h"
+ 902              		.file 11 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h"
+ 903              		.file 12 "Core/Inc/spi.h"
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 26
+
+
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 27
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 bsp_dac81416.c
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:20     .text.DAC_SPI_EnsureMutex:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:25     .text.DAC_SPI_EnsureMutex:00000000 DAC_SPI_EnsureMutex
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:99     .text.DAC_SPI_EnsureMutex:00000030 $d
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:890    .bss.dacSpiMutex:00000000 dacSpiMutex
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:107    .text.DAC_SPI_Lock:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:112    .text.DAC_SPI_Lock:00000000 DAC_SPI_Lock
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:161    .text.DAC_SPI_Lock:00000028 $d
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:884    .data.dacSpiTimeoutMs:00000000 dacSpiTimeoutMs
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:167    .text.DAC_SPI_Unlock:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:172    .text.DAC_SPI_Unlock:00000000 DAC_SPI_Unlock
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:209    .text.DAC_SPI_Unlock:0000001c $d
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:214    .text.BSP_DAC81416_SetTimeout:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:220    .text.BSP_DAC81416_SetTimeout:00000000 BSP_DAC81416_SetTimeout
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:237    .text.BSP_DAC81416_SetTimeout:00000008 $d
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:242    .text.BSP_DAC81416_GetTimeout:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:248    .text.BSP_DAC81416_GetTimeout:00000000 BSP_DAC81416_GetTimeout
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:263    .text.BSP_DAC81416_GetTimeout:00000008 $d
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:268    .text.DAC_SPI_TransmitFrames24:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:274    .text.DAC_SPI_TransmitFrames24:00000000 DAC_SPI_TransmitFrames24
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:352    .text.DAC_SPI_TransmitFrames24:0000004c $d
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:359    .text.DAC_SPI_Transmit:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:365    .text.DAC_SPI_Transmit:00000000 DAC_SPI_Transmit
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:435    .text.DAC_SPI_TransmitReceiveFrames24:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:441    .text.DAC_SPI_TransmitReceiveFrames24:00000000 DAC_SPI_TransmitReceiveFrames24
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:535    .text.DAC_SPI_TransmitReceiveFrames24:0000005c $d
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:542    .text.DAC_SPI_TransmitReceive:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:548    .text.DAC_SPI_TransmitReceive:00000000 DAC_SPI_TransmitReceive
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:653    .text.DAC_SetResetPin:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:659    .text.DAC_SetResetPin:00000000 DAC_SetResetPin
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:685    .text.DAC_SetResetPin:00000010 $d
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:690    .text.DAC_ResetHardware:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:696    .text.DAC_ResetHardware:00000000 DAC_ResetHardware
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:729    .text.DAC_SetLDACPin:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:735    .text.DAC_SetLDACPin:00000000 DAC_SetLDACPin
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:761    .text.DAC_SetLDACPin:00000010 $d
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:766    .text.BSP_DAC81416_Init:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:772    .text.BSP_DAC81416_Init:00000000 BSP_DAC81416_Init
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:802    .text.BSP_DAC81416_Init:0000001c $d
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:807    .text.DAC_LDAC_Update:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:813    .text.DAC_LDAC_Update:00000000 DAC_LDAC_Update
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:842    .text.DAC_ReadAlarmPin:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:848    .text.DAC_ReadAlarmPin:00000000 DAC_ReadAlarmPin
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:876    .text.DAC_ReadAlarmPin:00000014 $d
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:881    .data.dacSpiTimeoutMs:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:887    .bss.dacSpiMutex:00000000 $d
+
+UNDEFINED SYMBOLS
+osKernelLock
+osKernelRestoreLock
+osMutexNew
+osKernelGetState
+osMutexAcquire
+osMutexRelease
+HAL_GPIO_WritePin
+HAL_SPI_Transmit
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 28
+
+
+hspi1
+HAL_SPI_TransmitReceive
+HAL_Delay
+HAL_GPIO_ReadPin

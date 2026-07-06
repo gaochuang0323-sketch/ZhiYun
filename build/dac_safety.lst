@@ -1,0 +1,706 @@
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.arch armv7e-m
+   3              		.fpu fpv5-d16
+   4              		.eabi_attribute 28, 1
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 1
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.file	"dac_safety.c"
+  15              		.text
+  16              	.Ltext0:
+  17              		.cfi_sections	.debug_frame
+  18              		.file 1 "App/Src/dac_safety.c"
+  19              		.section	.text.DacSafety_IsValidSafeVoltage,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	DacSafety_IsValidSafeVoltage:
+  26              	.LVL0:
+  27              	.LFB149:
+   1:App/Src/dac_safety.c **** #include "dac_safety.h"
+   2:App/Src/dac_safety.c **** 
+   3:App/Src/dac_safety.c **** #include <stdio.h>
+   4:App/Src/dac_safety.c **** 
+   5:App/Src/dac_safety.c **** #include "bsp_dac81416.h"
+   6:App/Src/dac_safety.c **** #include "waveform_gen.h"
+   7:App/Src/dac_safety.c **** 
+   8:App/Src/dac_safety.c **** #define DAC_SAFETY_ALARM_POLL_MS 50U
+   9:App/Src/dac_safety.c **** 
+  10:App/Src/dac_safety.c **** static DacSafety_Status safetyStatus;
+  11:App/Src/dac_safety.c **** static uint32_t lastAlarmPollMs;
+  12:App/Src/dac_safety.c **** 
+  13:App/Src/dac_safety.c **** static uint8_t DacSafety_IsValidSafeVoltage(uint16_t millivolts)
+  14:App/Src/dac_safety.c **** {
+  28              		.loc 1 14 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  15:App/Src/dac_safety.c ****   return ((millivolts >= VOLTAGE_SIM_MIN_MV) && (millivolts <= VOLTAGE_SIM_MAX_MV)) ? 1U : 0U;
+  33              		.loc 1 15 3 view .LVU1
+  34              		.loc 1 15 46 is_stmt 0 view .LVU2
+  35 0000 A0F5FA70 		sub	r0, r0, #500
+  36              	.LVL1:
+  37              		.loc 1 15 46 view .LVU3
+  38 0004 80B2     		uxth	r0, r0
+  39              	.LVL2:
+  40              		.loc 1 15 90 view .LVU4
+  41 0006 41F29413 		movw	r3, #4500
+  42 000a 9842     		cmp	r0, r3
+  43 000c 01D8     		bhi	.L3
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s 			page 2
+
+
+  44              		.loc 1 15 90 discriminator 1 view .LVU5
+  45 000e 0120     		movs	r0, #1
+  46 0010 7047     		bx	lr
+  47              	.L3:
+  48              		.loc 1 15 90 discriminator 2 view .LVU6
+  49 0012 0020     		movs	r0, #0
+  16:App/Src/dac_safety.c **** }
+  50              		.loc 1 16 1 view .LVU7
+  51 0014 7047     		bx	lr
+  52              		.cfi_endproc
+  53              	.LFE149:
+  55              		.section	.text.DacSafety_Init,"ax",%progbits
+  56              		.align	1
+  57              		.global	DacSafety_Init
+  58              		.syntax unified
+  59              		.thumb
+  60              		.thumb_func
+  62              	DacSafety_Init:
+  63              	.LVL3:
+  64              	.LFB150:
+  17:App/Src/dac_safety.c **** 
+  18:App/Src/dac_safety.c **** void DacSafety_Init(uint16_t safeMillivolts)
+  19:App/Src/dac_safety.c **** {
+  65              		.loc 1 19 1 is_stmt 1 view -0
+  66              		.cfi_startproc
+  67              		@ args = 0, pretend = 0, frame = 0
+  68              		@ frame_needed = 0, uses_anonymous_args = 0
+  69              		.loc 1 19 1 is_stmt 0 view .LVU9
+  70 0000 38B5     		push	{r3, r4, r5, lr}
+  71              	.LCFI0:
+  72              		.cfi_def_cfa_offset 16
+  73              		.cfi_offset 3, -16
+  74              		.cfi_offset 4, -12
+  75              		.cfi_offset 5, -8
+  76              		.cfi_offset 14, -4
+  77 0002 0546     		mov	r5, r0
+  20:App/Src/dac_safety.c ****   if (DacSafety_IsValidSafeVoltage(safeMillivolts) == 0U)
+  78              		.loc 1 20 3 is_stmt 1 view .LVU10
+  79              		.loc 1 20 7 is_stmt 0 view .LVU11
+  80 0004 FFF7FEFF 		bl	DacSafety_IsValidSafeVoltage
+  81              	.LVL4:
+  82              		.loc 1 20 6 discriminator 1 view .LVU12
+  83 0008 10B9     		cbnz	r0, .L5
+  21:App/Src/dac_safety.c ****   {
+  22:App/Src/dac_safety.c ****     safeMillivolts = DAC_SAFETY_DEFAULT_SAFE_MV;
+  84              		.loc 1 22 20 view .LVU13
+  85 000a 4FF44863 		mov	r3, #3200
+  86 000e 1D46     		mov	r5, r3
+  87              	.LVL5:
+  88              	.L5:
+  23:App/Src/dac_safety.c ****   }
+  24:App/Src/dac_safety.c **** 
+  25:App/Src/dac_safety.c ****   safetyStatus.safeMillivolts = safeMillivolts;
+  89              		.loc 1 25 3 is_stmt 1 view .LVU14
+  90              		.loc 1 25 31 is_stmt 0 view .LVU15
+  91 0010 054C     		ldr	r4, .L10
+  92 0012 A581     		strh	r5, [r4, #12]	@ movhi
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s 			page 3
+
+
+  26:App/Src/dac_safety.c ****   safetyStatus.alarmPinState = DAC_ReadAlarmPin();
+  93              		.loc 1 26 3 is_stmt 1 view .LVU16
+  94              		.loc 1 26 32 is_stmt 0 view .LVU17
+  95 0014 FFF7FEFF 		bl	DAC_ReadAlarmPin
+  96              	.LVL6:
+  97              		.loc 1 26 30 discriminator 1 view .LVU18
+  98 0018 6070     		strb	r0, [r4, #1]
+  27:App/Src/dac_safety.c ****   safetyStatus.alarmActive = (safetyStatus.alarmPinState == 0U) ? 1U : 0U;
+  99              		.loc 1 27 3 is_stmt 1 view .LVU19
+ 100              		.loc 1 27 28 is_stmt 0 view .LVU20
+ 101 001a 18B9     		cbnz	r0, .L8
+ 102              		.loc 1 27 28 discriminator 1 view .LVU21
+ 103 001c 0122     		movs	r2, #1
+ 104              	.L6:
+ 105              		.loc 1 27 28 discriminator 4 view .LVU22
+ 106 001e 024B     		ldr	r3, .L10
+ 107 0020 9A70     		strb	r2, [r3, #2]
+  28:App/Src/dac_safety.c **** }
+ 108              		.loc 1 28 1 view .LVU23
+ 109 0022 38BD     		pop	{r3, r4, r5, pc}
+ 110              	.LVL7:
+ 111              	.L8:
+  27:App/Src/dac_safety.c ****   safetyStatus.alarmActive = (safetyStatus.alarmPinState == 0U) ? 1U : 0U;
+ 112              		.loc 1 27 28 discriminator 2 view .LVU24
+ 113 0024 0022     		movs	r2, #0
+ 114 0026 FAE7     		b	.L6
+ 115              	.L11:
+ 116              		.align	2
+ 117              	.L10:
+ 118 0028 00000000 		.word	safetyStatus
+ 119              		.cfi_endproc
+ 120              	.LFE150:
+ 122              		.section	.rodata.DacSafety_EmergencyStop.str1.4,"aMS",%progbits,1
+ 123              		.align	2
+ 124              	.LC0:
+ 125 0000 5B736166 		.ascii	"[safe] emergency stop output update failed\015\000"
+ 125      655D2065 
+ 125      6D657267 
+ 125      656E6379 
+ 125      2073746F 
+ 126              		.align	2
+ 127              	.LC1:
+ 128 002c 5B736166 		.ascii	"[safe] emergency stop active, output=%umV\015\012\000"
+ 128      655D2065 
+ 128      6D657267 
+ 128      656E6379 
+ 128      2073746F 
+ 129              		.section	.text.DacSafety_EmergencyStop,"ax",%progbits
+ 130              		.align	1
+ 131              		.global	DacSafety_EmergencyStop
+ 132              		.syntax unified
+ 133              		.thumb
+ 134              		.thumb_func
+ 136              	DacSafety_EmergencyStop:
+ 137              	.LVL8:
+ 138              	.LFB152:
+  29:App/Src/dac_safety.c **** 
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s 			page 4
+
+
+  30:App/Src/dac_safety.c **** void DacSafety_Process(uint32_t nowMs)
+  31:App/Src/dac_safety.c **** {
+  32:App/Src/dac_safety.c ****   uint8_t alarmPin;
+  33:App/Src/dac_safety.c ****   uint8_t alarmActive;
+  34:App/Src/dac_safety.c **** 
+  35:App/Src/dac_safety.c ****   if ((nowMs - lastAlarmPollMs) < DAC_SAFETY_ALARM_POLL_MS)
+  36:App/Src/dac_safety.c ****   {
+  37:App/Src/dac_safety.c ****     return;
+  38:App/Src/dac_safety.c ****   }
+  39:App/Src/dac_safety.c ****   lastAlarmPollMs = nowMs;
+  40:App/Src/dac_safety.c **** 
+  41:App/Src/dac_safety.c ****   alarmPin = DAC_ReadAlarmPin();
+  42:App/Src/dac_safety.c ****   alarmActive = (alarmPin == 0U) ? 1U : 0U;
+  43:App/Src/dac_safety.c ****   safetyStatus.alarmPinState = alarmPin;
+  44:App/Src/dac_safety.c ****   safetyStatus.alarmActive = alarmActive;
+  45:App/Src/dac_safety.c **** 
+  46:App/Src/dac_safety.c ****   if ((alarmActive != 0U) && (safetyStatus.alarmLatched == 0U))
+  47:App/Src/dac_safety.c ****   {
+  48:App/Src/dac_safety.c ****     safetyStatus.alarmLatched = 1U;
+  49:App/Src/dac_safety.c ****     safetyStatus.alarmCount++;
+  50:App/Src/dac_safety.c ****     safetyStatus.lastAlarmTick = nowMs;
+  51:App/Src/dac_safety.c ****     printf("[safe] DAC alarm asserted, entering emergency stop\r\n");
+  52:App/Src/dac_safety.c ****     (void)DacSafety_EmergencyStop(safetyStatus.safeMillivolts);
+  53:App/Src/dac_safety.c ****   }
+  54:App/Src/dac_safety.c **** }
+  55:App/Src/dac_safety.c **** 
+  56:App/Src/dac_safety.c **** HAL_StatusTypeDef DacSafety_EmergencyStop(uint16_t safeMillivolts)
+  57:App/Src/dac_safety.c **** {
+ 139              		.loc 1 57 1 is_stmt 1 view -0
+ 140              		.cfi_startproc
+ 141              		@ args = 0, pretend = 0, frame = 0
+ 142              		@ frame_needed = 0, uses_anonymous_args = 0
+ 143              		.loc 1 57 1 is_stmt 0 view .LVU26
+ 144 0000 38B5     		push	{r3, r4, r5, lr}
+ 145              	.LCFI1:
+ 146              		.cfi_def_cfa_offset 16
+ 147              		.cfi_offset 3, -16
+ 148              		.cfi_offset 4, -12
+ 149              		.cfi_offset 5, -8
+ 150              		.cfi_offset 14, -4
+ 151 0002 0446     		mov	r4, r0
+ 152 0004 0546     		mov	r5, r0
+  58:App/Src/dac_safety.c ****   HAL_StatusTypeDef status;
+ 153              		.loc 1 58 3 is_stmt 1 view .LVU27
+  59:App/Src/dac_safety.c **** 
+  60:App/Src/dac_safety.c ****   if (DacSafety_IsValidSafeVoltage(safeMillivolts) == 0U)
+ 154              		.loc 1 60 3 view .LVU28
+ 155              		.loc 1 60 7 is_stmt 0 view .LVU29
+ 156 0006 FFF7FEFF 		bl	DacSafety_IsValidSafeVoltage
+ 157              	.LVL9:
+ 158              		.loc 1 60 6 discriminator 1 view .LVU30
+ 159 000a 18B9     		cbnz	r0, .L17
+  61:App/Src/dac_safety.c ****   {
+  62:App/Src/dac_safety.c ****     return HAL_ERROR;
+ 160              		.loc 1 62 12 view .LVU31
+ 161 000c 0123     		movs	r3, #1
+ 162 000e 1C46     		mov	r4, r3
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s 			page 5
+
+
+ 163              	.LVL10:
+ 164              	.L13:
+  63:App/Src/dac_safety.c ****   }
+  64:App/Src/dac_safety.c **** 
+  65:App/Src/dac_safety.c ****   safetyStatus.safeMillivolts = safeMillivolts;
+  66:App/Src/dac_safety.c ****   safetyStatus.emergencyActive = 1U;
+  67:App/Src/dac_safety.c **** 
+  68:App/Src/dac_safety.c ****   WaveformGen_Stop();
+  69:App/Src/dac_safety.c ****   (void)VoltageSim_ClearAllFaults();
+  70:App/Src/dac_safety.c ****   status = VoltageSim_SetAllCellsVoltageMv(safeMillivolts);
+  71:App/Src/dac_safety.c ****   if (status != HAL_OK)
+  72:App/Src/dac_safety.c ****   {
+  73:App/Src/dac_safety.c ****     printf("[safe] emergency stop output update failed\r\n");
+  74:App/Src/dac_safety.c ****     return status;
+  75:App/Src/dac_safety.c ****   }
+  76:App/Src/dac_safety.c **** 
+  77:App/Src/dac_safety.c ****   printf("[safe] emergency stop active, output=%umV\r\n", safeMillivolts);
+  78:App/Src/dac_safety.c ****   return HAL_OK;
+  79:App/Src/dac_safety.c **** }
+ 165              		.loc 1 79 1 view .LVU32
+ 166 0010 2046     		mov	r0, r4
+ 167 0012 38BD     		pop	{r3, r4, r5, pc}
+ 168              	.LVL11:
+ 169              	.L17:
+  65:App/Src/dac_safety.c ****   safetyStatus.emergencyActive = 1U;
+ 170              		.loc 1 65 3 is_stmt 1 view .LVU33
+  65:App/Src/dac_safety.c ****   safetyStatus.emergencyActive = 1U;
+ 171              		.loc 1 65 31 is_stmt 0 view .LVU34
+ 172 0014 0A4B     		ldr	r3, .L19
+ 173 0016 9C81     		strh	r4, [r3, #12]	@ movhi
+  66:App/Src/dac_safety.c **** 
+ 174              		.loc 1 66 3 is_stmt 1 view .LVU35
+  66:App/Src/dac_safety.c **** 
+ 175              		.loc 1 66 32 is_stmt 0 view .LVU36
+ 176 0018 0122     		movs	r2, #1
+ 177 001a 1A70     		strb	r2, [r3]
+  68:App/Src/dac_safety.c ****   (void)VoltageSim_ClearAllFaults();
+ 178              		.loc 1 68 3 is_stmt 1 view .LVU37
+ 179 001c FFF7FEFF 		bl	WaveformGen_Stop
+ 180              	.LVL12:
+  69:App/Src/dac_safety.c ****   status = VoltageSim_SetAllCellsVoltageMv(safeMillivolts);
+ 181              		.loc 1 69 3 view .LVU38
+  69:App/Src/dac_safety.c ****   status = VoltageSim_SetAllCellsVoltageMv(safeMillivolts);
+ 182              		.loc 1 69 9 is_stmt 0 view .LVU39
+ 183 0020 FFF7FEFF 		bl	VoltageSim_ClearAllFaults
+ 184              	.LVL13:
+  70:App/Src/dac_safety.c ****   if (status != HAL_OK)
+ 185              		.loc 1 70 3 is_stmt 1 view .LVU40
+  70:App/Src/dac_safety.c ****   if (status != HAL_OK)
+ 186              		.loc 1 70 12 is_stmt 0 view .LVU41
+ 187 0024 2046     		mov	r0, r4
+ 188 0026 FFF7FEFF 		bl	VoltageSim_SetAllCellsVoltageMv
+ 189              	.LVL14:
+  71:App/Src/dac_safety.c ****   {
+ 190              		.loc 1 71 3 is_stmt 1 view .LVU42
+  71:App/Src/dac_safety.c ****   {
+ 191              		.loc 1 71 6 is_stmt 0 view .LVU43
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s 			page 6
+
+
+ 192 002a 0446     		mov	r4, r0
+ 193 002c 20B9     		cbnz	r0, .L18
+  77:App/Src/dac_safety.c ****   return HAL_OK;
+ 194              		.loc 1 77 3 is_stmt 1 view .LVU44
+ 195 002e 2946     		mov	r1, r5
+ 196 0030 0448     		ldr	r0, .L19+4
+ 197              	.LVL15:
+  77:App/Src/dac_safety.c ****   return HAL_OK;
+ 198              		.loc 1 77 3 is_stmt 0 view .LVU45
+ 199 0032 FFF7FEFF 		bl	printf
+ 200              	.LVL16:
+  78:App/Src/dac_safety.c **** }
+ 201              		.loc 1 78 3 is_stmt 1 view .LVU46
+  78:App/Src/dac_safety.c **** }
+ 202              		.loc 1 78 10 is_stmt 0 view .LVU47
+ 203 0036 EBE7     		b	.L13
+ 204              	.LVL17:
+ 205              	.L18:
+  73:App/Src/dac_safety.c ****     return status;
+ 206              		.loc 1 73 5 is_stmt 1 view .LVU48
+ 207 0038 0348     		ldr	r0, .L19+8
+ 208              	.LVL18:
+  73:App/Src/dac_safety.c ****     return status;
+ 209              		.loc 1 73 5 is_stmt 0 view .LVU49
+ 210 003a FFF7FEFF 		bl	puts
+ 211              	.LVL19:
+  74:App/Src/dac_safety.c ****   }
+ 212              		.loc 1 74 5 is_stmt 1 view .LVU50
+  74:App/Src/dac_safety.c ****   }
+ 213              		.loc 1 74 12 is_stmt 0 view .LVU51
+ 214 003e E7E7     		b	.L13
+ 215              	.L20:
+ 216              		.align	2
+ 217              	.L19:
+ 218 0040 00000000 		.word	safetyStatus
+ 219 0044 2C000000 		.word	.LC1
+ 220 0048 00000000 		.word	.LC0
+ 221              		.cfi_endproc
+ 222              	.LFE152:
+ 224              		.section	.rodata.DacSafety_Process.str1.4,"aMS",%progbits,1
+ 225              		.align	2
+ 226              	.LC2:
+ 227 0000 5B736166 		.ascii	"[safe] DAC alarm asserted, entering emergency stop\015"
+ 227      655D2044 
+ 227      41432061 
+ 227      6C61726D 
+ 227      20617373 
+ 228 0033 00       		.ascii	"\000"
+ 229              		.section	.text.DacSafety_Process,"ax",%progbits
+ 230              		.align	1
+ 231              		.global	DacSafety_Process
+ 232              		.syntax unified
+ 233              		.thumb
+ 234              		.thumb_func
+ 236              	DacSafety_Process:
+ 237              	.LVL20:
+ 238              	.LFB151:
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s 			page 7
+
+
+  31:App/Src/dac_safety.c ****   uint8_t alarmPin;
+ 239              		.loc 1 31 1 is_stmt 1 view -0
+ 240              		.cfi_startproc
+ 241              		@ args = 0, pretend = 0, frame = 0
+ 242              		@ frame_needed = 0, uses_anonymous_args = 0
+  31:App/Src/dac_safety.c ****   uint8_t alarmPin;
+ 243              		.loc 1 31 1 is_stmt 0 view .LVU53
+ 244 0000 38B5     		push	{r3, r4, r5, lr}
+ 245              	.LCFI2:
+ 246              		.cfi_def_cfa_offset 16
+ 247              		.cfi_offset 3, -16
+ 248              		.cfi_offset 4, -12
+ 249              		.cfi_offset 5, -8
+ 250              		.cfi_offset 14, -4
+  32:App/Src/dac_safety.c ****   uint8_t alarmActive;
+ 251              		.loc 1 32 3 is_stmt 1 view .LVU54
+  33:App/Src/dac_safety.c **** 
+ 252              		.loc 1 33 3 view .LVU55
+  35:App/Src/dac_safety.c ****   {
+ 253              		.loc 1 35 3 view .LVU56
+  35:App/Src/dac_safety.c ****   {
+ 254              		.loc 1 35 14 is_stmt 0 view .LVU57
+ 255 0002 134B     		ldr	r3, .L27
+ 256 0004 1B68     		ldr	r3, [r3]
+ 257 0006 C31A     		subs	r3, r0, r3
+  35:App/Src/dac_safety.c ****   {
+ 258              		.loc 1 35 6 view .LVU58
+ 259 0008 312B     		cmp	r3, #49
+ 260 000a 00D8     		bhi	.L26
+ 261              	.LVL21:
+ 262              	.L21:
+  54:App/Src/dac_safety.c **** 
+ 263              		.loc 1 54 1 view .LVU59
+ 264 000c 38BD     		pop	{r3, r4, r5, pc}
+ 265              	.LVL22:
+ 266              	.L26:
+  54:App/Src/dac_safety.c **** 
+ 267              		.loc 1 54 1 view .LVU60
+ 268 000e 0546     		mov	r5, r0
+  39:App/Src/dac_safety.c **** 
+ 269              		.loc 1 39 3 is_stmt 1 view .LVU61
+  39:App/Src/dac_safety.c **** 
+ 270              		.loc 1 39 19 is_stmt 0 view .LVU62
+ 271 0010 0F4B     		ldr	r3, .L27
+ 272 0012 1860     		str	r0, [r3]
+  41:App/Src/dac_safety.c ****   alarmActive = (alarmPin == 0U) ? 1U : 0U;
+ 273              		.loc 1 41 3 is_stmt 1 view .LVU63
+  41:App/Src/dac_safety.c ****   alarmActive = (alarmPin == 0U) ? 1U : 0U;
+ 274              		.loc 1 41 14 is_stmt 0 view .LVU64
+ 275 0014 FFF7FEFF 		bl	DAC_ReadAlarmPin
+ 276              	.LVL23:
+  42:App/Src/dac_safety.c ****   safetyStatus.alarmPinState = alarmPin;
+ 277              		.loc 1 42 3 is_stmt 1 view .LVU65
+  42:App/Src/dac_safety.c ****   safetyStatus.alarmPinState = alarmPin;
+ 278              		.loc 1 42 15 is_stmt 0 view .LVU66
+ 279 0018 0146     		mov	r1, r0
+ 280 001a B0B9     		cbnz	r0, .L24
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s 			page 8
+
+
+  42:App/Src/dac_safety.c ****   safetyStatus.alarmPinState = alarmPin;
+ 281              		.loc 1 42 15 discriminator 1 view .LVU67
+ 282 001c 0123     		movs	r3, #1
+ 283              	.L23:
+ 284              	.LVL24:
+  43:App/Src/dac_safety.c ****   safetyStatus.alarmActive = alarmActive;
+ 285              		.loc 1 43 3 is_stmt 1 view .LVU68
+  43:App/Src/dac_safety.c ****   safetyStatus.alarmActive = alarmActive;
+ 286              		.loc 1 43 30 is_stmt 0 view .LVU69
+ 287 001e 0D4A     		ldr	r2, .L27+4
+ 288 0020 5170     		strb	r1, [r2, #1]
+  44:App/Src/dac_safety.c **** 
+ 289              		.loc 1 44 3 is_stmt 1 view .LVU70
+  44:App/Src/dac_safety.c **** 
+ 290              		.loc 1 44 28 is_stmt 0 view .LVU71
+ 291 0022 9370     		strb	r3, [r2, #2]
+  46:App/Src/dac_safety.c ****   {
+ 292              		.loc 1 46 3 is_stmt 1 view .LVU72
+  46:App/Src/dac_safety.c ****   {
+ 293              		.loc 1 46 6 is_stmt 0 view .LVU73
+ 294 0024 002B     		cmp	r3, #0
+ 295 0026 F1D0     		beq	.L21
+  46:App/Src/dac_safety.c ****   {
+ 296              		.loc 1 46 43 discriminator 1 view .LVU74
+ 297 0028 D378     		ldrb	r3, [r2, #3]	@ zero_extendqisi2
+ 298              	.LVL25:
+  46:App/Src/dac_safety.c ****   {
+ 299              		.loc 1 46 27 discriminator 1 view .LVU75
+ 300 002a 002B     		cmp	r3, #0
+ 301 002c EED1     		bne	.L21
+  48:App/Src/dac_safety.c ****     safetyStatus.alarmCount++;
+ 302              		.loc 1 48 5 is_stmt 1 view .LVU76
+  48:App/Src/dac_safety.c ****     safetyStatus.alarmCount++;
+ 303              		.loc 1 48 31 is_stmt 0 view .LVU77
+ 304 002e 0123     		movs	r3, #1
+ 305 0030 D370     		strb	r3, [r2, #3]
+  49:App/Src/dac_safety.c ****     safetyStatus.lastAlarmTick = nowMs;
+ 306              		.loc 1 49 5 is_stmt 1 view .LVU78
+  49:App/Src/dac_safety.c ****     safetyStatus.lastAlarmTick = nowMs;
+ 307              		.loc 1 49 17 is_stmt 0 view .LVU79
+ 308 0032 5368     		ldr	r3, [r2, #4]
+  49:App/Src/dac_safety.c ****     safetyStatus.lastAlarmTick = nowMs;
+ 309              		.loc 1 49 28 view .LVU80
+ 310 0034 0133     		adds	r3, r3, #1
+ 311 0036 5360     		str	r3, [r2, #4]
+  50:App/Src/dac_safety.c ****     printf("[safe] DAC alarm asserted, entering emergency stop\r\n");
+ 312              		.loc 1 50 5 is_stmt 1 view .LVU81
+  50:App/Src/dac_safety.c ****     printf("[safe] DAC alarm asserted, entering emergency stop\r\n");
+ 313              		.loc 1 50 32 is_stmt 0 view .LVU82
+ 314 0038 1446     		mov	r4, r2
+ 315 003a 9560     		str	r5, [r2, #8]
+  51:App/Src/dac_safety.c ****     (void)DacSafety_EmergencyStop(safetyStatus.safeMillivolts);
+ 316              		.loc 1 51 5 is_stmt 1 view .LVU83
+ 317 003c 0648     		ldr	r0, .L27+8
+ 318              	.LVL26:
+  51:App/Src/dac_safety.c ****     (void)DacSafety_EmergencyStop(safetyStatus.safeMillivolts);
+ 319              		.loc 1 51 5 is_stmt 0 view .LVU84
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s 			page 9
+
+
+ 320 003e FFF7FEFF 		bl	puts
+ 321              	.LVL27:
+  52:App/Src/dac_safety.c ****   }
+ 322              		.loc 1 52 5 is_stmt 1 view .LVU85
+  52:App/Src/dac_safety.c ****   }
+ 323              		.loc 1 52 11 is_stmt 0 view .LVU86
+ 324 0042 A089     		ldrh	r0, [r4, #12]
+ 325 0044 FFF7FEFF 		bl	DacSafety_EmergencyStop
+ 326              	.LVL28:
+ 327 0048 E0E7     		b	.L21
+ 328              	.LVL29:
+ 329              	.L24:
+  42:App/Src/dac_safety.c ****   safetyStatus.alarmPinState = alarmPin;
+ 330              		.loc 1 42 15 discriminator 2 view .LVU87
+ 331 004a 0023     		movs	r3, #0
+ 332 004c E7E7     		b	.L23
+ 333              	.L28:
+ 334 004e 00BF     		.align	2
+ 335              	.L27:
+ 336 0050 00000000 		.word	lastAlarmPollMs
+ 337 0054 00000000 		.word	safetyStatus
+ 338 0058 00000000 		.word	.LC2
+ 339              		.cfi_endproc
+ 340              	.LFE151:
+ 342              		.section	.rodata.DacSafety_Release.str1.4,"aMS",%progbits,1
+ 343              		.align	2
+ 344              	.LC3:
+ 345 0000 5B736166 		.ascii	"[safe] emergency stop released\015\000"
+ 345      655D2065 
+ 345      6D657267 
+ 345      656E6379 
+ 345      2073746F 
+ 346              		.section	.text.DacSafety_Release,"ax",%progbits
+ 347              		.align	1
+ 348              		.global	DacSafety_Release
+ 349              		.syntax unified
+ 350              		.thumb
+ 351              		.thumb_func
+ 353              	DacSafety_Release:
+ 354              	.LFB153:
+  80:App/Src/dac_safety.c **** 
+  81:App/Src/dac_safety.c **** void DacSafety_Release(void)
+  82:App/Src/dac_safety.c **** {
+ 355              		.loc 1 82 1 is_stmt 1 view -0
+ 356              		.cfi_startproc
+ 357              		@ args = 0, pretend = 0, frame = 0
+ 358              		@ frame_needed = 0, uses_anonymous_args = 0
+ 359 0000 08B5     		push	{r3, lr}
+ 360              	.LCFI3:
+ 361              		.cfi_def_cfa_offset 8
+ 362              		.cfi_offset 3, -8
+ 363              		.cfi_offset 14, -4
+  83:App/Src/dac_safety.c ****   safetyStatus.emergencyActive = 0U;
+ 364              		.loc 1 83 3 view .LVU89
+ 365              		.loc 1 83 32 is_stmt 0 view .LVU90
+ 366 0002 044B     		ldr	r3, .L31
+ 367 0004 0022     		movs	r2, #0
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s 			page 10
+
+
+ 368 0006 1A70     		strb	r2, [r3]
+  84:App/Src/dac_safety.c ****   safetyStatus.alarmLatched = 0U;
+ 369              		.loc 1 84 3 is_stmt 1 view .LVU91
+ 370              		.loc 1 84 29 is_stmt 0 view .LVU92
+ 371 0008 DA70     		strb	r2, [r3, #3]
+  85:App/Src/dac_safety.c ****   printf("[safe] emergency stop released\r\n");
+ 372              		.loc 1 85 3 is_stmt 1 view .LVU93
+ 373 000a 0348     		ldr	r0, .L31+4
+ 374 000c FFF7FEFF 		bl	puts
+ 375              	.LVL30:
+  86:App/Src/dac_safety.c **** }
+ 376              		.loc 1 86 1 is_stmt 0 view .LVU94
+ 377 0010 08BD     		pop	{r3, pc}
+ 378              	.L32:
+ 379 0012 00BF     		.align	2
+ 380              	.L31:
+ 381 0014 00000000 		.word	safetyStatus
+ 382 0018 00000000 		.word	.LC3
+ 383              		.cfi_endproc
+ 384              	.LFE153:
+ 386              		.section	.text.DacSafety_IsOutputAllowed,"ax",%progbits
+ 387              		.align	1
+ 388              		.global	DacSafety_IsOutputAllowed
+ 389              		.syntax unified
+ 390              		.thumb
+ 391              		.thumb_func
+ 393              	DacSafety_IsOutputAllowed:
+ 394              	.LFB154:
+  87:App/Src/dac_safety.c **** 
+  88:App/Src/dac_safety.c **** uint8_t DacSafety_IsOutputAllowed(void)
+  89:App/Src/dac_safety.c **** {
+ 395              		.loc 1 89 1 is_stmt 1 view -0
+ 396              		.cfi_startproc
+ 397              		@ args = 0, pretend = 0, frame = 0
+ 398              		@ frame_needed = 0, uses_anonymous_args = 0
+ 399              		@ link register save eliminated.
+  90:App/Src/dac_safety.c ****   return (safetyStatus.emergencyActive == 0U) ? 1U : 0U;
+ 400              		.loc 1 90 3 view .LVU96
+ 401              		.loc 1 90 23 is_stmt 0 view .LVU97
+ 402 0000 034B     		ldr	r3, .L36
+ 403 0002 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 404              		.loc 1 90 52 view .LVU98
+ 405 0004 0BB9     		cbnz	r3, .L35
+ 406              		.loc 1 90 52 discriminator 1 view .LVU99
+ 407 0006 0120     		movs	r0, #1
+ 408 0008 7047     		bx	lr
+ 409              	.L35:
+ 410              		.loc 1 90 52 discriminator 2 view .LVU100
+ 411 000a 0020     		movs	r0, #0
+  91:App/Src/dac_safety.c **** }
+ 412              		.loc 1 91 1 view .LVU101
+ 413 000c 7047     		bx	lr
+ 414              	.L37:
+ 415 000e 00BF     		.align	2
+ 416              	.L36:
+ 417 0010 00000000 		.word	safetyStatus
+ 418              		.cfi_endproc
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s 			page 11
+
+
+ 419              	.LFE154:
+ 421              		.section	.text.DacSafety_GetStatus,"ax",%progbits
+ 422              		.align	1
+ 423              		.global	DacSafety_GetStatus
+ 424              		.syntax unified
+ 425              		.thumb
+ 426              		.thumb_func
+ 428              	DacSafety_GetStatus:
+ 429              	.LVL31:
+ 430              	.LFB155:
+  92:App/Src/dac_safety.c **** 
+  93:App/Src/dac_safety.c **** DacSafety_Status DacSafety_GetStatus(void)
+  94:App/Src/dac_safety.c **** {
+ 431              		.loc 1 94 1 is_stmt 1 view -0
+ 432              		.cfi_startproc
+ 433              		@ args = 0, pretend = 0, frame = 0
+ 434              		@ frame_needed = 0, uses_anonymous_args = 0
+ 435              		@ link register save eliminated.
+ 436              		.loc 1 94 1 is_stmt 0 view .LVU103
+ 437 0000 8446     		mov	ip, r0
+  95:App/Src/dac_safety.c ****   return safetyStatus;
+ 438              		.loc 1 95 3 is_stmt 1 view .LVU104
+ 439              		.loc 1 95 10 is_stmt 0 view .LVU105
+ 440 0002 034B     		ldr	r3, .L39
+ 441 0004 0FCB     		ldm	r3, {r0, r1, r2, r3}
+ 442              	.LVL32:
+ 443              		.loc 1 95 10 view .LVU106
+ 444 0006 8CE80F00 		stm	ip, {r0, r1, r2, r3}
+  96:App/Src/dac_safety.c **** }
+ 445              		.loc 1 96 1 view .LVU107
+ 446 000a 6046     		mov	r0, ip
+ 447 000c 7047     		bx	lr
+ 448              	.L40:
+ 449 000e 00BF     		.align	2
+ 450              	.L39:
+ 451 0010 00000000 		.word	safetyStatus
+ 452              		.cfi_endproc
+ 453              	.LFE155:
+ 455              		.section	.bss.lastAlarmPollMs,"aw",%nobits
+ 456              		.align	2
+ 459              	lastAlarmPollMs:
+ 460 0000 00000000 		.space	4
+ 461              		.section	.bss.safetyStatus,"aw",%nobits
+ 462              		.align	2
+ 465              	safetyStatus:
+ 466 0000 00000000 		.space	16
+ 466      00000000 
+ 466      00000000 
+ 466      00000000 
+ 467              		.text
+ 468              	.Letext0:
+ 469              		.file 2 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 470              		.file 3 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 471              		.file 4 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
+ 472              		.file 5 "App/Inc/dac_safety.h"
+ 473              		.file 6 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 474              		.file 7 "App/Inc/voltage_sim.h"
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s 			page 12
+
+
+ 475              		.file 8 "BSP/Inc/bsp_dac81416.h"
+ 476              		.file 9 "App/Inc/waveform_gen.h"
+ 477              		.file 10 "<built-in>"
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 dac_safety.c
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:20     .text.DacSafety_IsValidSafeVoltage:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:25     .text.DacSafety_IsValidSafeVoltage:00000000 DacSafety_IsValidSafeVoltage
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:56     .text.DacSafety_Init:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:62     .text.DacSafety_Init:00000000 DacSafety_Init
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:118    .text.DacSafety_Init:00000028 $d
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:465    .bss.safetyStatus:00000000 safetyStatus
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:123    .rodata.DacSafety_EmergencyStop.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:130    .text.DacSafety_EmergencyStop:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:136    .text.DacSafety_EmergencyStop:00000000 DacSafety_EmergencyStop
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:218    .text.DacSafety_EmergencyStop:00000040 $d
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:225    .rodata.DacSafety_Process.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:230    .text.DacSafety_Process:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:236    .text.DacSafety_Process:00000000 DacSafety_Process
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:336    .text.DacSafety_Process:00000050 $d
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:459    .bss.lastAlarmPollMs:00000000 lastAlarmPollMs
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:343    .rodata.DacSafety_Release.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:347    .text.DacSafety_Release:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:353    .text.DacSafety_Release:00000000 DacSafety_Release
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:381    .text.DacSafety_Release:00000014 $d
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:387    .text.DacSafety_IsOutputAllowed:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:393    .text.DacSafety_IsOutputAllowed:00000000 DacSafety_IsOutputAllowed
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:417    .text.DacSafety_IsOutputAllowed:00000010 $d
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:422    .text.DacSafety_GetStatus:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:428    .text.DacSafety_GetStatus:00000000 DacSafety_GetStatus
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:451    .text.DacSafety_GetStatus:00000010 $d
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:456    .bss.lastAlarmPollMs:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccB0a9bz.s:462    .bss.safetyStatus:00000000 $d
+
+UNDEFINED SYMBOLS
+DAC_ReadAlarmPin
+WaveformGen_Stop
+VoltageSim_ClearAllFaults
+VoltageSim_SetAllCellsVoltageMv
+printf
+puts
