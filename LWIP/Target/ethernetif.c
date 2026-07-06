@@ -44,10 +44,10 @@
 /* The time to block waiting for input. */
 #define TIME_WAITING_FOR_INPUT ( osWaitForever )
 /* Time to block waiting for transmissions to finish */
-#define ETHIF_TX_TIMEOUT (2000U)
+#define ETHIF_TX_TIMEOUT (100U)
 /* USER CODE BEGIN OS_THREAD_STACK_SIZE_WITH_RTOS */
 /* Stack size of the interface thread */
-#define INTERFACE_THREAD_STACK_SIZE ( 350 )
+#define INTERFACE_THREAD_STACK_SIZE ( 512 )
 /* USER CODE END OS_THREAD_STACK_SIZE_WITH_RTOS */
 /* Network interface name */
 #define IFNAME0 's'
@@ -785,6 +785,9 @@ void ethernet_link_thread(void* argument)
       {
         (void)HAL_ETH_Stop_IT(&heth);
         netif_set_link_down(netif);
+        /* Clear PHY cache for hot-plug scenarios: re-discovery on next cycle */
+        lan8720PhyAddress = LAN8720_PHY_ADDR_INVALID;
+        lan8720SoftwareResetDone = 0U;
         printf("[eth] link down\r\n");
       }
     }

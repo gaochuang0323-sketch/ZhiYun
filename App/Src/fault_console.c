@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 
+#include "cmsis_os2.h"
 #include "fault_command.h"
 #include "usart.h"
 
@@ -55,4 +56,7 @@ void FaultConsole_Process(void)
       printf("[cmd] line too long\r\n");
     }
   }
+
+  /* Yield to prevent CPU starvation when called in a tight RTOS loop */
+  osDelay(1);
 }

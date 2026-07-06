@@ -58,7 +58,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+osMutexId_t printfMutex = NULL;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -227,7 +227,19 @@ void SystemClock_Config(void)
 int __io_putchar(int ch)
 {
   uint8_t data = (uint8_t)ch;
-  HAL_UART_Transmit(&huart1, &data, 1, HAL_MAX_DELAY);
+
+  /* Protect printf with mutex when RTOS is running */
+  if ((osKernelGetState() == osKernelRunning) && (printfMutex != NULL))
+  {
+    (void)osMutexAcquire(printfMutex, osWaitForever);
+    HAL_UART_Transmit(&huart1, &data, 1, HAL_MAX_DELAY);
+    (void)osMutexRelease(printfMutex);
+  }
+  else
+  {
+    HAL_UART_Transmit(&huart1, &data, 1, HAL_MAX_DELAY);
+  }
+
   return ch;
 }
 

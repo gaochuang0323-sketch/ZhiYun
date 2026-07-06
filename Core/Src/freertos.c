@@ -84,8 +84,13 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE END Init */
 
-  /* USER CODE BEGIN RTOS_MUTEX */
-  /* add mutexes, ... */
+/* USER CODE BEGIN RTOS_MUTEX */
+  /* Create printf mutex for thread-safe serial output */
+  extern osMutexId_t printfMutex;
+  if (printfMutex == NULL)
+  {
+    printfMutex = osMutexNew(NULL);
+  }
   /* USER CODE END RTOS_MUTEX */
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */

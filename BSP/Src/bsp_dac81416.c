@@ -16,6 +16,7 @@ static void DAC_SPI_EnsureMutex(void)
     if (dacSpiMutex == NULL)
     {
       dacSpiMutex = osMutexNew(NULL);
+      __DSB();  /* Ensure mutex object is fully committed to memory */
     }
 
     (void)osKernelRestoreLock(lockState);

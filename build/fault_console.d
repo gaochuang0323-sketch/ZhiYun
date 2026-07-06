@@ -36,7 +36,8 @@ build/fault_console.o: App/Src/fault_console.c App/Inc/fault_console.h \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h \
  Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h \
- App/Inc/fault_command.h Core/Inc/usart.h Core/Inc/main.h
+ Drivers/CMSIS/RTOS2/Include/cmsis_os2.h App/Inc/fault_command.h \
+ Core/Inc/usart.h Core/Inc/main.h
 App/Inc/fault_console.h:
 Core/Inc/main.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h:
@@ -79,6 +80,7 @@ Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h:
+Drivers/CMSIS/RTOS2/Include/cmsis_os2.h:
 App/Inc/fault_command.h:
 Core/Inc/usart.h:
 Core/Inc/main.h:
