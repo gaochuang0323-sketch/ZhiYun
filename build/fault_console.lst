@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\hh\AppData\Local\Temp\cc6vg96n.s 			page 1
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc6vg96n.s 			page 1
   40              		.cfi_offset 3, -8
   41              		.cfi_offset 14, -4
   42 0002 0146     		mov	r1, r0
-ARM GAS  C:\Users\hh\AppData\Local\Temp\cc6vg96n.s 			page 2
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s 			page 2
 
 
   43              	.LVL1:
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc6vg96n.s 			page 1
   87 0006 1A80     		strh	r2, [r3]	@ movhi
   24:App/Src/fault_console.c ****   printf("[cmd] console ready, type 'help' or JSON {\"cmd\":\"help\"}\r\n");
   88              		.loc 1 24 3 is_stmt 1 view .LVU9
-ARM GAS  C:\Users\hh\AppData\Local\Temp\cc6vg96n.s 			page 3
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s 			page 3
 
 
   89 0008 0248     		ldr	r0, .L7+4
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc6vg96n.s 			page 1
  134 0004 0024     		movs	r4, #0
  135              		.loc 1 31 3 view .LVU16
  136 0006 03E0     		b	.L10
-ARM GAS  C:\Users\hh\AppData\Local\Temp\cc6vg96n.s 			page 4
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s 			page 4
 
 
  137              	.LVL6:
@@ -194,7 +194,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc6vg96n.s 			page 1
   40:App/Src/fault_console.c ****       if (consoleLineLength > 0U)
  139              		.loc 1 40 7 is_stmt 1 view .LVU17
  140              		.loc 1 40 29 is_stmt 0 view .LVU18
- 141 0008 194B     		ldr	r3, .L20
+ 141 0008 184B     		ldr	r3, .L20
  142 000a 1B88     		ldrh	r3, [r3]
  143              		.loc 1 40 10 view .LVU19
  144 000c D3B9     		cbnz	r3, .L18
@@ -207,7 +207,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc6vg96n.s 			page 1
   31:App/Src/fault_console.c ****   {
  150              		.loc 1 31 37 discriminator 1 view .LVU21
  151 0010 1F2C     		cmp	r4, #31
- 152 0012 28D8     		bhi	.L11
+ 152 0012 28D8     		bhi	.L9
   33:App/Src/fault_console.c ****     {
  153              		.loc 1 33 5 view .LVU22
   33:App/Src/fault_console.c ****     {
@@ -215,12 +215,12 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc6vg96n.s 			page 1
  155 0014 0023     		movs	r3, #0
  156 0016 0122     		movs	r2, #1
  157 0018 0DF10701 		add	r1, sp, #7
- 158 001c 1548     		ldr	r0, .L20+4
+ 158 001c 1448     		ldr	r0, .L20+4
  159 001e FFF7FEFF 		bl	HAL_UART_Receive
  160              	.LVL8:
   33:App/Src/fault_console.c ****     {
  161              		.loc 1 33 8 discriminator 1 view .LVU24
- 162 0022 00BB     		cbnz	r0, .L11
+ 162 0022 00BB     		cbnz	r0, .L9
   38:App/Src/fault_console.c ****     {
  163              		.loc 1 38 5 is_stmt 1 view .LVU25
   38:App/Src/fault_console.c ****     {
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc6vg96n.s 			page 1
   44:App/Src/fault_console.c ****         consoleLineLength = 0U;
   45:App/Src/fault_console.c ****       }
   46:App/Src/fault_console.c ****       continue;
-ARM GAS  C:\Users\hh\AppData\Local\Temp\cc6vg96n.s 			page 5
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s 			page 5
 
 
   47:App/Src/fault_console.c ****     }
@@ -246,7 +246,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc6vg96n.s 			page 1
   49:App/Src/fault_console.c ****     if (consoleLineLength < (FAULT_CONSOLE_LINE_SIZE - 1U))
  171              		.loc 1 49 5 is_stmt 1 view .LVU28
  172              		.loc 1 49 27 is_stmt 0 view .LVU29
- 173 0030 0F4A     		ldr	r2, .L20
+ 173 0030 0E4A     		ldr	r2, .L20
  174 0032 1288     		ldrh	r2, [r2]
  175              		.loc 1 49 8 view .LVU30
  176 0034 9E2A     		cmp	r2, #158
@@ -256,10 +256,10 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc6vg96n.s 			page 1
  178              		.loc 1 51 7 is_stmt 1 view .LVU31
  179              		.loc 1 51 36 is_stmt 0 view .LVU32
  180 0038 501C     		adds	r0, r2, #1
- 181 003a 0D49     		ldr	r1, .L20
+ 181 003a 0C49     		ldr	r1, .L20
  182 003c 0880     		strh	r0, [r1]	@ movhi
  183              		.loc 1 51 40 view .LVU33
- 184 003e 0E49     		ldr	r1, .L20+8
+ 184 003e 0D49     		ldr	r1, .L20+8
  185 0040 8B54     		strb	r3, [r1, r2]
  186 0042 E4E7     		b	.L14
  187              	.L18:
@@ -267,20 +267,20 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc6vg96n.s 			page 1
  188              		.loc 1 42 9 is_stmt 1 view .LVU34
   42:App/Src/fault_console.c ****         FaultCommand_ExecuteLine(consoleLine, FaultConsole_Write, NULL);
  189              		.loc 1 42 40 is_stmt 0 view .LVU35
- 190 0044 0C48     		ldr	r0, .L20+8
+ 190 0044 0B48     		ldr	r0, .L20+8
  191 0046 0025     		movs	r5, #0
  192 0048 C554     		strb	r5, [r0, r3]
   43:App/Src/fault_console.c ****         consoleLineLength = 0U;
  193              		.loc 1 43 9 is_stmt 1 view .LVU36
  194 004a 2A46     		mov	r2, r5
- 195 004c 0B49     		ldr	r1, .L20+12
+ 195 004c 0A49     		ldr	r1, .L20+12
  196 004e FFF7FEFF 		bl	FaultCommand_ExecuteLine
  197              	.LVL9:
   44:App/Src/fault_console.c ****       }
  198              		.loc 1 44 9 view .LVU37
   44:App/Src/fault_console.c ****       }
  199              		.loc 1 44 27 is_stmt 0 view .LVU38
- 200 0052 074B     		ldr	r3, .L20
+ 200 0052 064B     		ldr	r3, .L20
  201 0054 1D80     		strh	r5, [r3]	@ movhi
   46:App/Src/fault_console.c ****     }
  202              		.loc 1 46 7 is_stmt 1 view .LVU39
@@ -292,102 +292,91 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc6vg96n.s 			page 1
   55:App/Src/fault_console.c ****       consoleLineLength = 0U;
  205              		.loc 1 55 7 view .LVU40
  206              		.loc 1 55 25 is_stmt 0 view .LVU41
- 207 0058 054B     		ldr	r3, .L20
+ 207 0058 044B     		ldr	r3, .L20
  208 005a 0022     		movs	r2, #0
  209 005c 1A80     		strh	r2, [r3]	@ movhi
   56:App/Src/fault_console.c ****       printf("[cmd] line too long\r\n");
  210              		.loc 1 56 7 is_stmt 1 view .LVU42
- 211 005e 0848     		ldr	r0, .L20+16
-ARM GAS  C:\Users\hh\AppData\Local\Temp\cc6vg96n.s 			page 6
+ 211 005e 0748     		ldr	r0, .L20+16
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s 			page 6
 
 
  212 0060 FFF7FEFF 		bl	puts
  213              	.LVL10:
  214 0064 D3E7     		b	.L14
- 215              	.L11:
+ 215              	.L9:
  216              	.LBE2:
   57:App/Src/fault_console.c ****     }
   58:App/Src/fault_console.c ****   }
   59:App/Src/fault_console.c **** 
-  60:App/Src/fault_console.c ****   /* Yield to prevent CPU starvation when called in a tight RTOS loop */
-  61:App/Src/fault_console.c ****   osDelay(1);
- 217              		.loc 1 61 3 view .LVU43
- 218 0066 0120     		movs	r0, #1
- 219 0068 FFF7FEFF 		bl	osDelay
- 220              	.LVL11:
-  62:App/Src/fault_console.c **** }
- 221              		.loc 1 62 1 is_stmt 0 view .LVU44
- 222 006c 03B0     		add	sp, sp, #12
- 223              	.LCFI4:
- 224              		.cfi_def_cfa_offset 12
- 225              		@ sp needed
- 226 006e 30BD     		pop	{r4, r5, pc}
- 227              	.LVL12:
- 228              	.L21:
- 229              		.loc 1 62 1 view .LVU45
- 230              		.align	2
- 231              	.L20:
- 232 0070 00000000 		.word	consoleLineLength
- 233 0074 00000000 		.word	huart1
- 234 0078 00000000 		.word	consoleLine
- 235 007c 00000000 		.word	FaultConsole_Write
- 236 0080 00000000 		.word	.LC2
- 237              		.cfi_endproc
- 238              	.LFE151:
- 240              		.section	.bss.consoleLineLength,"aw",%nobits
- 241              		.align	1
- 244              	consoleLineLength:
- 245 0000 0000     		.space	2
- 246              		.section	.bss.consoleLine,"aw",%nobits
- 247              		.align	2
- 250              	consoleLine:
- 251 0000 00000000 		.space	160
- 251      00000000 
- 251      00000000 
- 251      00000000 
- 251      00000000 
- 252              		.text
- 253              	.Letext0:
- 254              		.file 2 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
- 255              		.file 3 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
- 256              		.file 4 "Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h"
- 257              		.file 5 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
- 258              		.file 6 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h"
- 259              		.file 7 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h"
- 260              		.file 8 "Drivers/CMSIS/RTOS2/Include/cmsis_os2.h"
- 261              		.file 9 "App/Inc/fault_command.h"
- 262              		.file 10 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-
- 263              		.file 11 "Core/Inc/usart.h"
-ARM GAS  C:\Users\hh\AppData\Local\Temp\cc6vg96n.s 			page 7
-
-
- 264              		.file 12 "<built-in>"
-ARM GAS  C:\Users\hh\AppData\Local\Temp\cc6vg96n.s 			page 8
+  60:App/Src/fault_console.c **** }
+ 217              		.loc 1 60 1 is_stmt 0 view .LVU43
+ 218 0066 03B0     		add	sp, sp, #12
+ 219              	.LCFI4:
+ 220              		.cfi_def_cfa_offset 12
+ 221              		@ sp needed
+ 222 0068 30BD     		pop	{r4, r5, pc}
+ 223              	.LVL11:
+ 224              	.L21:
+ 225              		.loc 1 60 1 view .LVU44
+ 226 006a 00BF     		.align	2
+ 227              	.L20:
+ 228 006c 00000000 		.word	consoleLineLength
+ 229 0070 00000000 		.word	huart1
+ 230 0074 00000000 		.word	consoleLine
+ 231 0078 00000000 		.word	FaultConsole_Write
+ 232 007c 00000000 		.word	.LC2
+ 233              		.cfi_endproc
+ 234              	.LFE151:
+ 236              		.section	.bss.consoleLineLength,"aw",%nobits
+ 237              		.align	1
+ 240              	consoleLineLength:
+ 241 0000 0000     		.space	2
+ 242              		.section	.bss.consoleLine,"aw",%nobits
+ 243              		.align	2
+ 246              	consoleLine:
+ 247 0000 00000000 		.space	160
+ 247      00000000 
+ 247      00000000 
+ 247      00000000 
+ 247      00000000 
+ 248              		.text
+ 249              	.Letext0:
+ 250              		.file 2 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 251              		.file 3 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 252              		.file 4 "Drivers/CMSIS/Device/ST/STM32H7xx/Include/stm32h743xx.h"
+ 253              		.file 5 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
+ 254              		.file 6 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h"
+ 255              		.file 7 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h"
+ 256              		.file 8 "App/Inc/fault_command.h"
+ 257              		.file 9 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+ 258              		.file 10 "Core/Inc/usart.h"
+ 259              		.file 11 "<built-in>"
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 fault_console.c
-C:\Users\hh\AppData\Local\Temp\cc6vg96n.s:20     .rodata.FaultConsole_Write.str1.4:00000000 $d
-C:\Users\hh\AppData\Local\Temp\cc6vg96n.s:24     .text.FaultConsole_Write:00000000 $t
-C:\Users\hh\AppData\Local\Temp\cc6vg96n.s:29     .text.FaultConsole_Write:00000000 FaultConsole_Write
-C:\Users\hh\AppData\Local\Temp\cc6vg96n.s:56     .text.FaultConsole_Write:0000000c $d
-C:\Users\hh\AppData\Local\Temp\cc6vg96n.s:61     .rodata.FaultConsole_Init.str1.4:00000000 $d
-C:\Users\hh\AppData\Local\Temp\cc6vg96n.s:66     .text.FaultConsole_Init:00000000 $t
-C:\Users\hh\AppData\Local\Temp\cc6vg96n.s:72     .text.FaultConsole_Init:00000000 FaultConsole_Init
-C:\Users\hh\AppData\Local\Temp\cc6vg96n.s:97     .text.FaultConsole_Init:00000010 $d
-C:\Users\hh\AppData\Local\Temp\cc6vg96n.s:244    .bss.consoleLineLength:00000000 consoleLineLength
-C:\Users\hh\AppData\Local\Temp\cc6vg96n.s:103    .rodata.FaultConsole_Process.str1.4:00000000 $d
-C:\Users\hh\AppData\Local\Temp\cc6vg96n.s:107    .text.FaultConsole_Process:00000000 $t
-C:\Users\hh\AppData\Local\Temp\cc6vg96n.s:113    .text.FaultConsole_Process:00000000 FaultConsole_Process
-C:\Users\hh\AppData\Local\Temp\cc6vg96n.s:232    .text.FaultConsole_Process:00000070 $d
-C:\Users\hh\AppData\Local\Temp\cc6vg96n.s:250    .bss.consoleLine:00000000 consoleLine
-C:\Users\hh\AppData\Local\Temp\cc6vg96n.s:241    .bss.consoleLineLength:00000000 $d
-C:\Users\hh\AppData\Local\Temp\cc6vg96n.s:247    .bss.consoleLine:00000000 $d
+C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s:20     .rodata.FaultConsole_Write.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s:24     .text.FaultConsole_Write:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s:29     .text.FaultConsole_Write:00000000 FaultConsole_Write
+C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s:56     .text.FaultConsole_Write:0000000c $d
+C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s:61     .rodata.FaultConsole_Init.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s:66     .text.FaultConsole_Init:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s:72     .text.FaultConsole_Init:00000000 FaultConsole_Init
+C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s:97     .text.FaultConsole_Init:00000010 $d
+C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s:240    .bss.consoleLineLength:00000000 consoleLineLength
+C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s:103    .rodata.FaultConsole_Process.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s:107    .text.FaultConsole_Process:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s:113    .text.FaultConsole_Process:00000000 FaultConsole_Process
+C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s:228    .text.FaultConsole_Process:0000006c $d
+C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s:246    .bss.consoleLine:00000000 consoleLine
+C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s:237    .bss.consoleLineLength:00000000 $d
+C:\Users\hh\AppData\Local\Temp\cc3pNlN9.s:243    .bss.consoleLine:00000000 $d
 
 UNDEFINED SYMBOLS
 printf
 puts
 HAL_UART_Receive
 FaultCommand_ExecuteLine
-osDelay
 huart1

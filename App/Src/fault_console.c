@@ -57,6 +57,4 @@ void FaultConsole_Process(void)
     }
   }
 
-  /* Yield to prevent CPU starvation when called in a tight RTOS loop */
-  osDelay(1);
 }
