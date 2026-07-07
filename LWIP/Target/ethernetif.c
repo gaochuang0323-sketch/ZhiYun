@@ -44,7 +44,7 @@
 /* The time to block waiting for input. */
 #define TIME_WAITING_FOR_INPUT ( osWaitForever )
 /* Time to block waiting for transmissions to finish */
-#define ETHIF_TX_TIMEOUT (100U)
+#define ETHIF_TX_TIMEOUT (2000U)
 /* USER CODE BEGIN OS_THREAD_STACK_SIZE_WITH_RTOS */
 /* Stack size of the interface thread */
 #define INTERFACE_THREAD_STACK_SIZE ( 512 )
@@ -154,6 +154,7 @@ __attribute__((section(".Rx_PoolSection"))) extern u8_t memp_memory_RX_POOL_base
 /* USER CODE BEGIN 2 */
 static uint32_t lan8720PhyAddress = LAN8720_PHY_ADDR_INVALID;
 static uint8_t lan8720SoftwareResetDone = 0U;
+static uint32_t lastPhyMissingLogTick = 0U;
 
 /* USER CODE END 2 */
 
@@ -724,10 +725,15 @@ u32_t sys_now(void)
   */
 void ethernet_link_thread(void* argument)
 {
-  struct netif *netif = (struct netif *)argument;
-  uint32_t lastPhyMissingLogTick = 0U;
 
 /* USER CODE BEGIN ETH link init */
+  struct netif *netif = (struct netif *)argument;
+
+  if (netif == NULL)
+  {
+    osThreadExit();
+  }
+
   netif_set_link_down(netif);
 
 /* USER CODE END ETH link init */

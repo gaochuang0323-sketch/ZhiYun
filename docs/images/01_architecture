@@ -1,0 +1,20 @@
+digraph architecture {
+	graph [bgcolor="#FAFAFA" dpi=150 fontname="Microsoft YaHei" fontsize=14 margin=0.3 rankdir=TB splines=ortho]
+	layer_comm [label="控制入口层
+串口命令 (fault_console)
+TCP JSON 服务 (tcp_json_server)
+CAN 通信 (bsp_can)" fillcolor="#E3F2FD" fontname="Microsoft YaHei" fontsize=11 shape=box style="filled,rounded"]
+	layer_cmd [label="命令解析层
+fault_command
+把文本或 JSON 翻译成业务动作" fillcolor="#E8F5E9" fontname="Microsoft YaHei" fontsize=11 shape=box style="filled,rounded"]
+	layer_biz [label="业务逻辑层（状态机都在这一层）
+电压模拟 · 波形生成 · 安全保护 · 响应记录" fillcolor="#FFF3E0" fontname="Microsoft YaHei" fontsize=11 shape=box style="filled,rounded"]
+	layer_drv [label="硬件驱动层
+DAC81416 驱动 · CAN BSP · ETH BSP · SRAM BSP" fillcolor="#F3E5F5" fontname="Microsoft YaHei" fontsize=11 shape=box style="filled,rounded"]
+	layer_hal [label="芯片外设层 (CubeMX 自动生成)
+SPI1 / GPIO / USART1 / FDCAN1 / ETH / FMC" fillcolor="#ECEFF1" fontname="Microsoft YaHei" fontsize=11 shape=box style="filled,rounded"]
+	layer_comm -> layer_cmd [arrowhead=none penwidth=1.5]
+	layer_cmd -> layer_biz [arrowhead=none penwidth=1.5]
+	layer_biz -> layer_drv [arrowhead=none penwidth=1.5]
+	layer_drv -> layer_hal [arrowhead=none penwidth=1.5]
+}

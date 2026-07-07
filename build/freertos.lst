@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 1
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccCvbQnc.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 1
   40              	.LVL0:
   41              	.LFB154:
    1:Core/Src/freertos.c **** /* USER CODE BEGIN Header */
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 2
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccCvbQnc.s 			page 2
 
 
    2:Core/Src/freertos.c **** /**
@@ -118,14 +118,14 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 1
   56:Core/Src/freertos.c **** /* USER CODE BEGIN Variables */
   57:Core/Src/freertos.c **** 
   58:Core/Src/freertos.c **** /* USER CODE END Variables */
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 3
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccCvbQnc.s 			page 3
 
 
   59:Core/Src/freertos.c **** /* Definitions for defaultTask */
   60:Core/Src/freertos.c **** osThreadId_t defaultTaskHandle;
   61:Core/Src/freertos.c **** const osThreadAttr_t defaultTask_attributes = {
   62:Core/Src/freertos.c ****   .name = "defaultTask",
-  63:Core/Src/freertos.c ****   .stack_size = 1024 * 4,
+  63:Core/Src/freertos.c ****   .stack_size = 128 * 4,
   64:Core/Src/freertos.c ****   .priority = (osPriority_t) osPriorityNormal,
   65:Core/Src/freertos.c **** };
   66:Core/Src/freertos.c **** 
@@ -149,7 +149,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 1
   84:Core/Src/freertos.c **** 
   85:Core/Src/freertos.c ****   /* USER CODE END Init */
   86:Core/Src/freertos.c **** 
-  87:Core/Src/freertos.c **** /* USER CODE BEGIN RTOS_MUTEX */
+  87:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_MUTEX */
   88:Core/Src/freertos.c ****   /* Create printf mutex for thread-safe serial output */
   89:Core/Src/freertos.c ****   extern osMutexId_t printfMutex;
   90:Core/Src/freertos.c ****   if (printfMutex == NULL)
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 1
  113:Core/Src/freertos.c ****   /* add threads, ... */
  114:Core/Src/freertos.c ****   /* USER CODE END RTOS_THREADS */
  115:Core/Src/freertos.c **** 
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 4
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccCvbQnc.s 			page 4
 
 
  116:Core/Src/freertos.c ****   /* USER CODE BEGIN RTOS_EVENTS */
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 1
   71 0012 3546     		mov	r5, r6
   72 0014 22E0     		b	.L5
   73              	.LVL4:
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 5
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccCvbQnc.s 			page 5
 
 
   74              	.L2:
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 1
  106 003a FFF7FEFF 		bl	HAL_GPIO_TogglePin
  107              	.LVL10:
  161:Core/Src/freertos.c ****       HAL_GPIO_TogglePin(LED_RY_GPIO_Port, LED_RY_Pin);
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 6
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccCvbQnc.s 			page 6
 
 
  108              		.loc 1 161 7 view .LVU20
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 1
  148 0066 0028     		cmp	r0, #0
  149 0068 D5D0     		beq	.L2
  147:Core/Src/freertos.c ****     }
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 7
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccCvbQnc.s 			page 7
 
 
  150              		.loc 1 147 7 is_stmt 1 view .LVU33
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 1
  199              		.loc 1 110 3 is_stmt 1 view .LVU40
  110:Core/Src/freertos.c **** 
  200              		.loc 1 110 23 is_stmt 0 view .LVU41
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 8
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccCvbQnc.s 			page 8
 
 
  201 0008 074A     		ldr	r2, .L14+4
@@ -470,7 +470,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 1
  242      00000000 
  242      00000000 
  242      00000000 
- 243 0014 00100000 		.word	4096
+ 243 0014 00020000 		.word	512
  244 0018 18000000 		.word	24
  245 001c 00000000 		.space	8
  245      00000000 
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 1
  247              		.section	.bss.defaultTaskHandle,"aw",%nobits
  248              		.align	2
  251              	defaultTaskHandle:
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 9
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccCvbQnc.s 			page 9
 
 
  252 0000 00000000 		.space	4
@@ -499,23 +499,23 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 1
  267              		.file 14 "App/Inc/tcp_json_server.h"
  268              		.file 15 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h"
  269              		.file 16 "<built-in>"
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccfchQqn.s 			page 10
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccCvbQnc.s 			page 10
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 freertos.c
-C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:20     .rodata.StartDefaultTask.str1.4:00000000 $d
-C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:33     .text.StartDefaultTask:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:39     .text.StartDefaultTask:00000000 StartDefaultTask
-C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:164    .text.StartDefaultTask:0000007c $d
-C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:174    .text.MX_FREERTOS_Init:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:180    .text.MX_FREERTOS_Init:00000000 MX_FREERTOS_Init
-C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:224    .text.MX_FREERTOS_Init:00000024 $d
-C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:240    .rodata.defaultTask_attributes:00000000 defaultTask_attributes
-C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:251    .bss.defaultTaskHandle:00000000 defaultTaskHandle
-C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:233    .rodata.str1.4:00000000 $d
-C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:237    .rodata.defaultTask_attributes:00000000 $d
-C:\Users\hh\AppData\Local\Temp\ccfchQqn.s:248    .bss.defaultTaskHandle:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccCvbQnc.s:20     .rodata.StartDefaultTask.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccCvbQnc.s:33     .text.StartDefaultTask:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccCvbQnc.s:39     .text.StartDefaultTask:00000000 StartDefaultTask
+C:\Users\hh\AppData\Local\Temp\ccCvbQnc.s:164    .text.StartDefaultTask:0000007c $d
+C:\Users\hh\AppData\Local\Temp\ccCvbQnc.s:174    .text.MX_FREERTOS_Init:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccCvbQnc.s:180    .text.MX_FREERTOS_Init:00000000 MX_FREERTOS_Init
+C:\Users\hh\AppData\Local\Temp\ccCvbQnc.s:224    .text.MX_FREERTOS_Init:00000024 $d
+C:\Users\hh\AppData\Local\Temp\ccCvbQnc.s:240    .rodata.defaultTask_attributes:00000000 defaultTask_attributes
+C:\Users\hh\AppData\Local\Temp\ccCvbQnc.s:251    .bss.defaultTaskHandle:00000000 defaultTaskHandle
+C:\Users\hh\AppData\Local\Temp\ccCvbQnc.s:233    .rodata.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccCvbQnc.s:237    .rodata.defaultTask_attributes:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccCvbQnc.s:248    .bss.defaultTaskHandle:00000000 $d
 
 UNDEFINED SYMBOLS
 MX_LWIP_Init

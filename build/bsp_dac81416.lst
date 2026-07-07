@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
   43              		.cfi_offset 4, -8
   44              		.cfi_offset 14, -4
   45              	.LBB5:
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 2
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 2
 
 
   13:BSP/Src/bsp_dac81416.c ****   {
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
   83              	.LBI6:
   84              		.file 2 "Drivers/CMSIS/Include/cmsis_gcc.h"
    1:Drivers/CMSIS/Include/cmsis_gcc.h **** /**************************************************************************//**
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 3
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 3
 
 
    2:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
   56:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __USED                                 __attribute__((used))
   57:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
   58:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __WEAK
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 4
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 4
 
 
   59:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __WEAK                                 __attribute__((weak))
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
  113:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __RESTRICT
  114:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __RESTRICT                             __restrict
  115:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 5
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 5
 
 
  116:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __COMPILER_BARRIER
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
  170:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __INITIAL_SP              __StackTop
  171:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
  172:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 6
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 6
 
 
  173:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __STACK_LIMIT
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
  227:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
  228:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __NOP()                             __ASM volatile ("nop")
  229:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 7
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 7
 
 
  230:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
   96              	.L11:
   97 002e 00BF     		.align	2
   98              	.L10:
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 8
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 8
 
 
   99 0030 00000000 		.word	dacSpiMutex
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
  137 000e FFF7FEFF 		bl	DAC_SPI_EnsureMutex
  138              	.LVL8:
   32:BSP/Src/bsp_dac81416.c ****     {
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 9
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 9
 
 
  139              		.loc 1 32 5 view .LVU28
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
  185 0002 FFF7FEFF 		bl	osKernelGetState
  186              	.LVL10:
  187              		.loc 1 45 6 discriminator 1 view .LVU38
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 10
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 10
 
 
  188 0006 0228     		cmp	r0, #2
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
  226              		@ frame_needed = 0, uses_anonymous_args = 0
  227              		@ link register save eliminated.
   60:BSP/Src/bsp_dac81416.c ****   dacSpiTimeoutMs = timeoutMs;
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 11
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 11
 
 
  228              		.loc 1 60 3 view .LVU46
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
   70:BSP/Src/bsp_dac81416.c ****   uint32_t frame;
   71:BSP/Src/bsp_dac81416.c **** 
   72:BSP/Src/bsp_dac81416.c ****   if ((txData == NULL) || (size != 3U))
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 12
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 12
 
 
   73:BSP/Src/bsp_dac81416.c ****   {
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
  114:BSP/Src/bsp_dac81416.c ****   if ((txFrames == NULL) || (frameCount == 0U))
  290              		.loc 1 114 3 view .LVU55
  291              		.loc 1 114 6 is_stmt 0 view .LVU56
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 13
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 13
 
 
  292 0002 0029     		cmp	r1, #0
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
  323              		.loc 1 125 3 is_stmt 0 view .LVU65
  324 0026 FFF7FEFF 		bl	HAL_GPIO_WritePin
  325              	.LVL18:
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 14
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 14
 
 
  126:BSP/Src/bsp_dac81416.c ****   DAC_CS_HIGH();
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
  373              		.loc 1 72 3 view .LVU74
   72:BSP/Src/bsp_dac81416.c ****   {
  374              		.loc 1 72 33 is_stmt 0 view .LVU75
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 15
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 15
 
 
  375 0000 0339     		subs	r1, r1, #3
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
  415              		.loc 1 77 9 view .LVU89
  416 0026 0193     		str	r3, [sp, #4]
   81:BSP/Src/bsp_dac81416.c **** }
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 16
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 16
 
 
  417              		.loc 1 81 3 is_stmt 1 view .LVU90
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
  462              		.loc 1 139 6 is_stmt 0 view .LVU98
  463 0004 0029     		cmp	r1, #0
  464 0006 18BF     		it	ne
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 17
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 17
 
 
  465 0008 0028     		cmpne	r0, #0
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
  153:BSP/Src/bsp_dac81416.c ****                                    (uint8_t *)rxFrames,
  154:BSP/Src/bsp_dac81416.c ****                                    frameCount,
  155:BSP/Src/bsp_dac81416.c ****                                    dacSpiTimeoutMs);
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 18
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 18
 
 
  156:BSP/Src/bsp_dac81416.c ****   DAC_CS_HIGH();
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
   85:BSP/Src/bsp_dac81416.c ****   HAL_StatusTypeDef status;
  555              		.loc 1 85 1 is_stmt 0 view .LVU116
  556 0000 10B5     		push	{r4, lr}
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 19
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 19
 
 
  557              	.LCFI10:
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
  599              		.loc 1 96 30 view .LVU128
  600 001e 4378     		ldrb	r3, [r0, #1]	@ zero_extendqisi2
   96:BSP/Src/bsp_dac81416.c ****             (uint32_t)txData[2];
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 20
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 20
 
 
  601              		.loc 1 96 34 view .LVU129
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
  104:BSP/Src/bsp_dac81416.c ****   }
  638              		.loc 1 104 5 is_stmt 1 view .LVU147
  104:BSP/Src/bsp_dac81416.c ****   }
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 21
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 21
 
 
  639              		.loc 1 104 15 is_stmt 0 view .LVU148
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
  689              		.section	.text.DAC_ResetHardware,"ax",%progbits
  690              		.align	1
  691              		.global	DAC_ResetHardware
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 22
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 22
 
 
  692              		.syntax unified
@@ -1318,7 +1318,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
  738              		.loc 1 176 1 is_stmt 1 view -0
  739              		.cfi_startproc
  740              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 23
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 23
 
 
  741              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -1378,7 +1378,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
  792              	.LVL60:
   55:BSP/Src/bsp_dac81416.c **** }
  793              		.loc 1 55 3 view .LVU170
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 24
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 24
 
 
  794 0012 0120     		movs	r0, #1
@@ -1438,7 +1438,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
  843              		.global	DAC_ReadAlarmPin
  844              		.syntax unified
  845              		.thumb
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 25
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 25
 
 
  846              		.thumb_func
@@ -1498,59 +1498,59 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 1
  901              		.file 10 "Drivers/CMSIS/RTOS2/Include/cmsis_os2.h"
  902              		.file 11 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h"
  903              		.file 12 "Core/Inc/spi.h"
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 26
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 26
 
 
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 27
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 27
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 bsp_dac81416.c
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:20     .text.DAC_SPI_EnsureMutex:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:25     .text.DAC_SPI_EnsureMutex:00000000 DAC_SPI_EnsureMutex
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:99     .text.DAC_SPI_EnsureMutex:00000030 $d
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:890    .bss.dacSpiMutex:00000000 dacSpiMutex
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:107    .text.DAC_SPI_Lock:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:112    .text.DAC_SPI_Lock:00000000 DAC_SPI_Lock
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:161    .text.DAC_SPI_Lock:00000028 $d
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:884    .data.dacSpiTimeoutMs:00000000 dacSpiTimeoutMs
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:167    .text.DAC_SPI_Unlock:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:172    .text.DAC_SPI_Unlock:00000000 DAC_SPI_Unlock
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:209    .text.DAC_SPI_Unlock:0000001c $d
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:214    .text.BSP_DAC81416_SetTimeout:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:220    .text.BSP_DAC81416_SetTimeout:00000000 BSP_DAC81416_SetTimeout
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:237    .text.BSP_DAC81416_SetTimeout:00000008 $d
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:242    .text.BSP_DAC81416_GetTimeout:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:248    .text.BSP_DAC81416_GetTimeout:00000000 BSP_DAC81416_GetTimeout
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:263    .text.BSP_DAC81416_GetTimeout:00000008 $d
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:268    .text.DAC_SPI_TransmitFrames24:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:274    .text.DAC_SPI_TransmitFrames24:00000000 DAC_SPI_TransmitFrames24
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:352    .text.DAC_SPI_TransmitFrames24:0000004c $d
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:359    .text.DAC_SPI_Transmit:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:365    .text.DAC_SPI_Transmit:00000000 DAC_SPI_Transmit
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:435    .text.DAC_SPI_TransmitReceiveFrames24:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:441    .text.DAC_SPI_TransmitReceiveFrames24:00000000 DAC_SPI_TransmitReceiveFrames24
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:535    .text.DAC_SPI_TransmitReceiveFrames24:0000005c $d
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:542    .text.DAC_SPI_TransmitReceive:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:548    .text.DAC_SPI_TransmitReceive:00000000 DAC_SPI_TransmitReceive
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:653    .text.DAC_SetResetPin:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:659    .text.DAC_SetResetPin:00000000 DAC_SetResetPin
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:685    .text.DAC_SetResetPin:00000010 $d
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:690    .text.DAC_ResetHardware:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:696    .text.DAC_ResetHardware:00000000 DAC_ResetHardware
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:729    .text.DAC_SetLDACPin:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:735    .text.DAC_SetLDACPin:00000000 DAC_SetLDACPin
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:761    .text.DAC_SetLDACPin:00000010 $d
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:766    .text.BSP_DAC81416_Init:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:772    .text.BSP_DAC81416_Init:00000000 BSP_DAC81416_Init
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:802    .text.BSP_DAC81416_Init:0000001c $d
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:807    .text.DAC_LDAC_Update:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:813    .text.DAC_LDAC_Update:00000000 DAC_LDAC_Update
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:842    .text.DAC_ReadAlarmPin:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:848    .text.DAC_ReadAlarmPin:00000000 DAC_ReadAlarmPin
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:876    .text.DAC_ReadAlarmPin:00000014 $d
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:881    .data.dacSpiTimeoutMs:00000000 $d
-C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s:887    .bss.dacSpiMutex:00000000 $d
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:20     .text.DAC_SPI_EnsureMutex:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:25     .text.DAC_SPI_EnsureMutex:00000000 DAC_SPI_EnsureMutex
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:99     .text.DAC_SPI_EnsureMutex:00000030 $d
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:890    .bss.dacSpiMutex:00000000 dacSpiMutex
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:107    .text.DAC_SPI_Lock:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:112    .text.DAC_SPI_Lock:00000000 DAC_SPI_Lock
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:161    .text.DAC_SPI_Lock:00000028 $d
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:884    .data.dacSpiTimeoutMs:00000000 dacSpiTimeoutMs
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:167    .text.DAC_SPI_Unlock:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:172    .text.DAC_SPI_Unlock:00000000 DAC_SPI_Unlock
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:209    .text.DAC_SPI_Unlock:0000001c $d
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:214    .text.BSP_DAC81416_SetTimeout:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:220    .text.BSP_DAC81416_SetTimeout:00000000 BSP_DAC81416_SetTimeout
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:237    .text.BSP_DAC81416_SetTimeout:00000008 $d
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:242    .text.BSP_DAC81416_GetTimeout:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:248    .text.BSP_DAC81416_GetTimeout:00000000 BSP_DAC81416_GetTimeout
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:263    .text.BSP_DAC81416_GetTimeout:00000008 $d
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:268    .text.DAC_SPI_TransmitFrames24:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:274    .text.DAC_SPI_TransmitFrames24:00000000 DAC_SPI_TransmitFrames24
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:352    .text.DAC_SPI_TransmitFrames24:0000004c $d
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:359    .text.DAC_SPI_Transmit:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:365    .text.DAC_SPI_Transmit:00000000 DAC_SPI_Transmit
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:435    .text.DAC_SPI_TransmitReceiveFrames24:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:441    .text.DAC_SPI_TransmitReceiveFrames24:00000000 DAC_SPI_TransmitReceiveFrames24
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:535    .text.DAC_SPI_TransmitReceiveFrames24:0000005c $d
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:542    .text.DAC_SPI_TransmitReceive:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:548    .text.DAC_SPI_TransmitReceive:00000000 DAC_SPI_TransmitReceive
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:653    .text.DAC_SetResetPin:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:659    .text.DAC_SetResetPin:00000000 DAC_SetResetPin
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:685    .text.DAC_SetResetPin:00000010 $d
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:690    .text.DAC_ResetHardware:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:696    .text.DAC_ResetHardware:00000000 DAC_ResetHardware
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:729    .text.DAC_SetLDACPin:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:735    .text.DAC_SetLDACPin:00000000 DAC_SetLDACPin
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:761    .text.DAC_SetLDACPin:00000010 $d
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:766    .text.BSP_DAC81416_Init:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:772    .text.BSP_DAC81416_Init:00000000 BSP_DAC81416_Init
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:802    .text.BSP_DAC81416_Init:0000001c $d
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:807    .text.DAC_LDAC_Update:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:813    .text.DAC_LDAC_Update:00000000 DAC_LDAC_Update
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:842    .text.DAC_ReadAlarmPin:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:848    .text.DAC_ReadAlarmPin:00000000 DAC_ReadAlarmPin
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:876    .text.DAC_ReadAlarmPin:00000014 $d
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:881    .data.dacSpiTimeoutMs:00000000 $d
+C:\Users\hh\AppData\Local\Temp\cchEzMMW.s:887    .bss.dacSpiMutex:00000000 $d
 
 UNDEFINED SYMBOLS
 osKernelLock
@@ -1561,7 +1561,7 @@ osMutexAcquire
 osMutexRelease
 HAL_GPIO_WritePin
 HAL_SPI_Transmit
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccNCiMyJ.s 			page 28
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cchEzMMW.s 			page 28
 
 
 hspi1

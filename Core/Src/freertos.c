@@ -60,7 +60,7 @@
 osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
-  .stack_size = 1024 * 4,
+  .stack_size = 128 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 
@@ -84,7 +84,7 @@ void MX_FREERTOS_Init(void) {
 
   /* USER CODE END Init */
 
-/* USER CODE BEGIN RTOS_MUTEX */
+  /* USER CODE BEGIN RTOS_MUTEX */
   /* Create printf mutex for thread-safe serial output */
   extern osMutexId_t printfMutex;
   if (printfMutex == NULL)

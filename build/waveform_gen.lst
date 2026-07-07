@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
   32              		@ link register save eliminated.
   25:App/Src/waveform_gen.c ****   return ((cell >= 1U) && (cell <= VOLTAGE_SIM_CELL_COUNT)) ? 1U : 0U;
   33              		.loc 1 25 3 view .LVU1
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 2
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 2
 
 
   34              		.loc 1 25 24 is_stmt 0 view .LVU2
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
   31:App/Src/waveform_gen.c **** }
   85              		.loc 1 31 1 view .LVU15
   86 0014 7047     		bx	lr
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 3
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 3
 
 
   87              		.cfi_endproc
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
  133 001c 00000000 		.word	waveformStartMs
  134 0020 00000000 		.word	waveformLastOutputMv
  135 0024 00000000 		.word	waveformStatus
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 4
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 4
 
 
  136              		.cfi_endproc
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
  182              	.LVL10:
   49:App/Src/waveform_gen.c ****       (WaveformGen_IsValidVoltage(lowMillivolts) == 0U) ||
  183              		.loc 1 49 57 view .LVU36
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 5
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 5
 
 
  184 001e C0B1     		cbz	r0, .L15
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
  222              	.LVL11:
  223 0048 00E0     		b	.L12
  224              	.L13:
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 6
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 6
 
 
   54:App/Src/waveform_gen.c ****   }
@@ -358,7 +358,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
  272              		.cfi_offset 9, -8
  273              		.cfi_offset 14, -4
  274 0004 0C46     		mov	r4, r1
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 7
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 7
 
 
  275 0006 1546     		mov	r5, r2
@@ -418,7 +418,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
  313 002e 05B3     		cbz	r5, .L26
  314 0030 FAB9     		cbnz	r2, .L26
   85:App/Src/waveform_gen.c ****       (maxMv > VOLTAGE_SIM_MAX_MV) ||
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 8
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 8
 
 
   86:App/Src/waveform_gen.c ****       (periodMs < WAVEFORM_GEN_MIN_PERIOD_MS))
@@ -478,7 +478,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
  353              		.loc 1 99 10 is_stmt 0 view .LVU93
  354 005c FFF7FEFF 		bl	WaveformGen_Start
  355              	.LVL20:
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 9
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 9
 
 
  356              		.loc 1 99 10 view .LVU94
@@ -538,7 +538,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
  104:App/Src/waveform_gen.c ****                                            uint32_t periodMs)
  105:App/Src/waveform_gen.c **** {
  403              		.loc 1 105 1 is_stmt 1 view -0
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 10
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 10
 
 
  404              		.cfi_startproc
@@ -598,7 +598,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
  446 001e B7F5FA7F 		cmp	r7, #500
  447 0022 2CBF     		ite	cs
  448 0024 0023     		movcs	r3, #0
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 11
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 11
 
 
  449 0026 0123     		movcc	r3, #1
@@ -658,7 +658,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
  487              		.loc 1 129 3 is_stmt 1 view .LVU131
  488              		.loc 1 129 27 is_stmt 0 view .LVU132
  489 0052 C3F80C80 		str	r8, [r3, #12]
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 12
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 12
 
 
  130:App/Src/waveform_gen.c **** 
@@ -718,7 +718,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
  536              		.cfi_startproc
  537              		@ args = 0, pretend = 0, frame = 0
  538              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 13
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 13
 
 
  539              		@ link register save eliminated.
@@ -778,7 +778,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
  584 000a 10B5     		push	{r4, lr}
  585              	.LCFI4:
  586              		.cfi_def_cfa_offset 8
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 14
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 14
 
 
  587              		.cfi_offset 4, -8
@@ -838,7 +838,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
  624              		.loc 1 162 46 is_stmt 0 view .LVU169
  625 0032 DFF888C0 		ldr	ip, .L60
  626 0036 BCF80A30 		ldrh	r3, [ip, #10]
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 15
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 15
 
 
  627              	.LVL43:
@@ -898,7 +898,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
  663              		.loc 1 177 3 is_stmt 1 view .LVU182
  664              		.loc 1 177 6 is_stmt 0 view .LVU183
  665 0068 032A     		cmp	r2, #3
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 16
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 16
 
 
  666 006a 14D0     		beq	.L58
@@ -958,7 +958,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
  154:App/Src/waveform_gen.c ****                waveformStatus.lowMillivolts :
  700              		.loc 1 154 14 discriminator 1 view .LVU196
  701 008c E7E7     		b	.L48
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 17
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 17
 
 
  702              	.LVL52:
@@ -1018,7 +1018,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
  743              	.LVL60:
  744              	.L52:
  174:App/Src/waveform_gen.c ****   }
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 18
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 18
 
 
  745              		.loc 1 174 12 view .LVU210
@@ -1078,7 +1078,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
  797 0016 CCF80030 		str	r3, [ip]
  199:App/Src/waveform_gen.c **** }
  798              		.loc 1 199 1 view .LVU217
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 19
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 19
 
 
  799 001a 2046     		mov	r0, r4
@@ -1138,7 +1138,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
  846              	.LVL66:
  847              		.loc 1 203 3 is_stmt 0 view .LVU221
  848 000e 7047     		bx	lr
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 20
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 20
 
 
  849              	.LVL67:
@@ -1198,7 +1198,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
  893              		.align	2
  896              	waveformStatus:
  897 0000 00000000 		.space	20
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 21
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 21
 
 
  897      00000000 
@@ -1258,7 +1258,7 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
  950 005e 9E80     		.short	-32610
  951 0060 0180     		.short	-32767
  952 0062 9E80     		.short	-32610
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 22
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 22
 
 
  953 0064 7682     		.short	-32138
@@ -1283,48 +1283,48 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 1
  972              		.file 5 "App/Inc/waveform_gen.h"
  973              		.file 6 "App/Inc/voltage_sim.h"
  974              		.file 7 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h"
-ARM GAS  C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s 			page 23
+ARM GAS  C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s 			page 23
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 waveform_gen.c
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:20     .text.WaveformGen_IsValidCell:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:25     .text.WaveformGen_IsValidCell:00000000 WaveformGen_IsValidCell
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:55     .text.WaveformGen_IsValidVoltage:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:60     .text.WaveformGen_IsValidVoltage:00000000 WaveformGen_IsValidVoltage
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:91     .text.WaveformGen_Start:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:96     .text.WaveformGen_Start:00000000 WaveformGen_Start
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:133    .text.WaveformGen_Start:0000001c $d
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:890    .bss.waveformStartMs:00000000 waveformStartMs
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:884    .bss.waveformLastOutputMv:00000000 waveformLastOutputMv
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:896    .bss.waveformStatus:00000000 waveformStatus
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:140    .text.WaveformGen_StartSquare:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:146    .text.WaveformGen_StartSquare:00000000 WaveformGen_StartSquare
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:244    .text.WaveformGen_StartSquare:0000005c $d
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:249    .text.WaveformGen_StartSine:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:255    .text.WaveformGen_StartSine:00000000 WaveformGen_StartSine
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:389    .text.WaveformGen_StartSine:0000007c $d
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:394    .text.WaveformGen_StartSineAll:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:400    .text.WaveformGen_StartSineAll:00000000 WaveformGen_StartSineAll
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:522    .text.WaveformGen_StartSineAll:00000070 $d
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:527    .text.WaveformGen_Stop:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:533    .text.WaveformGen_Stop:00000000 WaveformGen_Stop
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:553    .text.WaveformGen_Stop:0000000c $d
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:558    .text.WaveformGen_Process:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:564    .text.WaveformGen_Process:00000000 WaveformGen_Process
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:759    .text.WaveformGen_Process:000000bc $d
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:902    .rodata.sineTableQ15:00000000 sineTableQ15
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:768    .text.WaveformGen_GetStatus:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:774    .text.WaveformGen_GetStatus:00000000 WaveformGen_GetStatus
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:806    .text.WaveformGen_GetStatus:00000020 $d
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:811    .rodata.WaveformGen_GetTypeName.str1.4:00000000 $d
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:824    .text.WaveformGen_GetTypeName:00000000 $t
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:830    .text.WaveformGen_GetTypeName:00000000 WaveformGen_GetTypeName
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:873    .text.WaveformGen_GetTypeName:0000001c $d
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:881    .bss.waveformLastOutputMv:00000000 $d
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:887    .bss.waveformStartMs:00000000 $d
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:893    .bss.waveformStatus:00000000 $d
-C:\Users\hh\AppData\Local\Temp\ccMOEnKq.s:899    .rodata.sineTableQ15:00000000 $d
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:20     .text.WaveformGen_IsValidCell:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:25     .text.WaveformGen_IsValidCell:00000000 WaveformGen_IsValidCell
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:55     .text.WaveformGen_IsValidVoltage:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:60     .text.WaveformGen_IsValidVoltage:00000000 WaveformGen_IsValidVoltage
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:91     .text.WaveformGen_Start:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:96     .text.WaveformGen_Start:00000000 WaveformGen_Start
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:133    .text.WaveformGen_Start:0000001c $d
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:890    .bss.waveformStartMs:00000000 waveformStartMs
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:884    .bss.waveformLastOutputMv:00000000 waveformLastOutputMv
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:896    .bss.waveformStatus:00000000 waveformStatus
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:140    .text.WaveformGen_StartSquare:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:146    .text.WaveformGen_StartSquare:00000000 WaveformGen_StartSquare
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:244    .text.WaveformGen_StartSquare:0000005c $d
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:249    .text.WaveformGen_StartSine:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:255    .text.WaveformGen_StartSine:00000000 WaveformGen_StartSine
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:389    .text.WaveformGen_StartSine:0000007c $d
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:394    .text.WaveformGen_StartSineAll:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:400    .text.WaveformGen_StartSineAll:00000000 WaveformGen_StartSineAll
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:522    .text.WaveformGen_StartSineAll:00000070 $d
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:527    .text.WaveformGen_Stop:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:533    .text.WaveformGen_Stop:00000000 WaveformGen_Stop
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:553    .text.WaveformGen_Stop:0000000c $d
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:558    .text.WaveformGen_Process:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:564    .text.WaveformGen_Process:00000000 WaveformGen_Process
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:759    .text.WaveformGen_Process:000000bc $d
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:902    .rodata.sineTableQ15:00000000 sineTableQ15
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:768    .text.WaveformGen_GetStatus:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:774    .text.WaveformGen_GetStatus:00000000 WaveformGen_GetStatus
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:806    .text.WaveformGen_GetStatus:00000020 $d
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:811    .rodata.WaveformGen_GetTypeName.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:824    .text.WaveformGen_GetTypeName:00000000 $t
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:830    .text.WaveformGen_GetTypeName:00000000 WaveformGen_GetTypeName
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:873    .text.WaveformGen_GetTypeName:0000001c $d
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:881    .bss.waveformLastOutputMv:00000000 $d
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:887    .bss.waveformStartMs:00000000 $d
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:893    .bss.waveformStatus:00000000 $d
+C:\Users\hh\AppData\Local\Temp\cc1lK8xw.s:899    .rodata.sineTableQ15:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_GetTick

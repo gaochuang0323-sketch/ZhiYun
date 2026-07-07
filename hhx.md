@@ -1,199 +1,235 @@
-# BMS 故障模拟器项目分层架构与接口说明
+# BMS 故障模拟器 — 项目架构说明
 
-## 总体架构,接口的里面的参数(具体一点),RTOS里面每个任务的周期,优先级的分配是怎么进行的也要说明
+## 一、项目概述
 
-    ┌─────────────────────────────────────────────────────────────┐
-    │ 上位机 / 串口调试工具 / TCP JSON 客户端 / USB-CAN 工具           │
-    └───────────────┬───────────────────────┬─────────────────────┘
-                    │                       │
-              USART 文本/JSON          TCP JSON / CAN
-                    │                       │
-    ┌───────────────▼───────────────────────▼─────────────────────┐
-    │ 通信与命令层                                                  │
-    │ fault_console / tcp_json_server / fault_command             │
-    └───────────────┬───────────────────────┬─────────────────────┘
-                    │                       │
-    ┌───────────────▼───────────────────────▼─────────────────────┐
-    │ 应用业务层                                                    │
-    │ voltage_sim / waveform_gen / dac_safety / bms_response_log  │
-    └───────────────┬───────────────────────┬─────────────────────┘
-                    │                       │
-    ┌───────────────▼───────────────────────▼─────────────────────┐
-    │ 器件驱动层                                                    │
-    │ DAC81416 register driver                                    │
-    └───────────────┬───────────────────────┬─────────────────────┘
-                    │                       │
-    ┌───────────────▼───────────────────────▼─────────────────────┐
-    │ BSP 板级支持层                                                │
-    │ bsp_dac81416 / bsp_can / bsp_eth / bsp_sram                 │
-    └───────────────┬───────────────────────┬─────────────────────┘
-                    │                       |
-    ┌───────────────▼───────────────────────▼─────────────────────┐
-    │ HAL / CubeMX 外设层                                          │
-    │ SPI1 / GPIO / USART1 / FDCAN1 / ETH / FMC / FreeRTOS / LwIP │
-    └─────────────────────────────────────────────────────────────┘
+本系统是一台 BMS 故障模拟器，代替真实电池模组向 BMS 注入故障信号，并记录 BMS 的响应时间。
 
-## 分层职责
+| 项目 | 说明 |
+|------|------|
+| 主控芯片 | STM32H743 + FreeRTOS 实时系统 |
+| 电压输出 | DAC81416 芯片，13 路独立可调（0.5V~5V） |
+| 通信方式 | 串口（USART1）+ 以太网（TCP JSON）|
+| CAN 接口 | FDCAN1，500kbps，用于与 BMS 通信 |
+| 外部 SRAM | 1MB，用于扩展存储 |
 
-| 层级               | 主要文件                                                                         | 职责                                                             |
-| ---------------- | ---------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| HAL / CubeMX 外设层 | `Core/Src/*.c`、`LWIP/*`                                                      | 初始化 MCU 外设、时钟、GPIO、SPI、USART、FDCAN、ETH、FMC、FreeRTOS 和 LwIP     |
-| BSP 板级支持层        | `BSP/Src/*`                                                                  | 封装板级硬件操作，例如 DAC CS/RESET/LDAC/ALMOUT、CAN 收发、以太网 PHY、外部 SRAM 自检 |
-| 器件驱动层            | `Drivers/DAC81416/*`                                                         | 封装 DAC81416 寄存器读写、24-bit SPI 帧、通道输出、量程配置、内部基准控制                |
-| 应用业务层            | `App/Src/voltage_sim.c`、`waveform_gen.c`、`dac_safety.c`、`bms_response_log.c` | 实现电芯电压模拟、故障注入、波形输出、DAC 安全保护、BMS 响应时间记录                         |
-| 通信与命令层           | `fault_console.c`、`tcp_json_server.c`、`fault_command.c`                      | 将串口文本命令和 TCP JSON 命令统一解析到同一套业务接口                               |
-| 调度入口层            | `main.c`、`freertos.c`                                                        | 系统启动、模块初始化、周期调度、后台任务循环                                         |
+---
 
-## 主要模块接口
+## 二、软件分层架构
 
-### 命令执行接口
+整个软件分为 5 层，从下到上依次是：
 
-| 接口                           | 文件                          | 功能                         |
-| ---------------------------- | --------------------------- | -------------------------- |
-| `FaultCommand_ExecuteLine()` | `App/Inc/fault_command.h`   | 统一执行一行文本命令或 JSON 命令        |
-| `FaultConsole_Init()`        | `App/Inc/fault_console.h`   | 初始化 USART1 命令接收            |
-| `FaultConsole_Process()`     | `App/Inc/fault_console.h`   | 周期处理串口输入并转交命令层             |
-| `TcpJsonServer_Start()`      | `App/Inc/tcp_json_server.h` | 启动 TCP JSON 控制服务，端口 `5000` |
+```text
+┌────────────────────────────────────────────┐
+│ 控制入口层 — 串口 / TCP / CAN 接收命令       │
+├────────────────────────────────────────────┤
+│ 命令解析层 — 把文本/JSON 翻译成业务动作       │
+├────────────────────────────────────────────┤
+│ 应用业务层 — 电压模拟/波形/安全/响应记录      │
+├────────────────────────────────────────────┤
+│ 硬件驱动层 — DAC/CAN/以太网/SRAM 操作封装    │
+├────────────────────────────────────────────┤
+│ 芯片外设层 — SPI/GPIO/串口/CAN/以太网初始化  │
+└────────────────────────────────────────────┘
+```
 
-说明：串口和 TCP 最终都调用 `FaultCommand_ExecuteLine()`，因此两种控制方式复用同一套业务逻辑。
+---
 
-### 电压模拟接口
+## 三、FreeRTOS 任务分布
 
-| 接口                                                            | 功能                   |
-| ------------------------------------------------------------- | -------------------- |
-| `VoltageSim_Init()`                                           | 初始化 13 路电芯默认电压       |
-| `VoltageSim_SetCellVoltageMv()`                               | 设置单节电芯电压             |
-| `VoltageSim_SetAllCellsVoltageMv()`                           | 设置全部电芯电压             |
-| `VoltageSim_InjectCellOverVoltageRamp()`                      | 单体过压故障，支持持续时间和斜率     |
-| `VoltageSim_InjectCellUnderVoltageRamp()`                     | 单体欠压故障，支持持续时间和斜率     |
-| `VoltageSim_InjectVoltageDifference()`                        | 压差过大故障               |
-| `VoltageSim_ClearCellFault()` / `VoltageSim_ClearAllFaults()` | 清除故障                 |
-| `VoltageSim_Process()`                                        | FreeRTOS 周期调用，推进故障时序 |
-| `VoltageSim_SetCellCalibrationOffsetMv()`                     | 每通道 mV 级校准补偿         |
-| `VoltageSim_MillivoltsToDacCode()`                            | mV 到 DAC 码值转换        |
+系统有 **4 个任务** 同时工作：
 
-当前范围：`C01~C13`，电压范围 `500mV~5000mV`，默认正常电压 `3200mV`。
+| 任务名 | 优先级 | 干什么 |
+|--------|--------|--------|
+| **defaultTask** | 中等 | 每 1ms 跑一次，处理电压模拟、波形、安全检测、串口和 CAN 输入 |
+| **EthIf** | 最高 | 以太网收到数据包立刻处理，防止丢包 |
+| **TcpJson** | 最低 | 监听端口 5000，处理 TCP JSON 命令 |
+| **ethernet_link_thread** | 中等 | 每 100ms 检查网线是否插好 |
 
-### 波形输出接口
+**为什么业务不分独立任务？** 电压、波形、安全都要操作 DAC 芯片，分三个任务会冲突（同时写 DAC 打架）。放在同一个 1ms 循环里按顺序执行，既简单又安全。
 
-| 接口                           | 功能                    |
-| ---------------------------- | --------------------- |
-| `WaveformGen_StartSquare()`  | 单通道方波输出               |
-| `WaveformGen_StartSine()`    | 单通道正弦波输出              |
-| `WaveformGen_StartSineAll()` | 13 路同相同步正弦波输出         |
-| `WaveformGen_Stop()`         | 停止波形                  |
-| `WaveformGen_Process()`      | FreeRTOS 周期调用，推进波形采样点 |
-| `WaveformGen_GetStatus()`    | 查询当前波形状态              |
+---
 
-说明：当前波形发生器为 FreeRTOS 1ms 低频验证版本，后续高精度版本应升级为 `TIM + SPI DMA + LDAC`。
+## 四、所有模块的接口函数一览
 
-### DAC 安全保护接口
+按模块列出每个函数的名字和作用，领导只需要知道"这个函数是干什么的"即可。
 
-| 接口                            | 功能                                   |
-| ----------------------------- | ------------------------------------ |
-| `DacSafety_Init()`            | 初始化安全电压，默认 `3200mV`                  |
-| `DacSafety_Process()`         | 周期读取 `nALMOUT` 报警引脚(**==还可以进行优化==**) |
-| `DacSafety_EmergencyStop()`   | 急停，停止波形、清除故障、输出安全电压                  |
-| `DacSafety_Release()`         | 释放急停锁存                               |
-| `DacSafety_IsOutputAllowed()` | 判断当前是否允许修改 DAC 输出                    |
-| `DacSafety_GetStatus()`       | 查询安全状态、报警计数和最近报警时间                   |
+### 4.1 命令执行入口
 
-安全策略：急停锁存期间，`normal`、`set`、`ov`、`uv`、`diff`、`wave`、`cal`、`clear` 等会改变输出的命令会被拒绝。
+| 函数 | 作用 |
+|------|------|
+| `FaultCommand_ExecuteLine(命令文本, 输出回调, 上下文指针)` | 执行一行命令。自动识别文本还是 JSON，分发给对应的业务函数。串口和 TCP 都走这里。 |
 
-### BMS 响应时间记录接口
+### 4.2 串口控制台
 
-| 接口                                    | 功能                         |
-| ------------------------------------- | -------------------------- |
-| `BmsResponseLog_RecordFaultTrigger()` | 故障注入成功时记录 T1               |
-| `BspCan_OnRxFrame()`                  | CAN 收到帧后回调到响应记录模块          |
-| `BmsResponseLog_SetFilter()`          | 配置目标 CAN ID/mask 和标准/扩展帧类型 |
-| `BmsResponseLog_SetDataFilter()`      | 配置数据字节 bit/mask 过滤         |
-| `BmsResponseLog_ClearDataFilter()`    | 清除数据过滤                     |
-| `BmsResponseLog_Clear()`              | 清除当前响应记录                   |
-| `BmsResponseLog_GetStatus()`          | 查询 T1/T2、响应延时、响应帧数据和过滤命中状态 |
+| 函数 | 作用 |
+|------|------|
+| `FaultConsole_Init()` | 初始化串口接收，准备接收命令 |
+| `FaultConsole_Process()` | 每 1ms 检查串口有没有新输入，有则拼成一行交给命令解析 |
 
-当前能力：支持从“故障后第一帧 CAN”升级为“目标 CAN 告警帧”响应时间统计。拿到 BMS 的 DBC 或告警 bit 定义后，可以直接配置目标 ID 和数据掩码。
+### 4.3 TCP JSON 服务
 
-### DAC81416 器件驱动接口
+| 函数 | 作用 |
+|------|------|
+| `TcpJsonServer_Start()` | 启动 TCP 服务，监听端口 5000，接收 JSON 命令 |
 
-| 接口                             | 功能                                    |
-| ------------------------------ | ------------------------------------- |
-| `DAC81416_Init()`              | 初始化 DAC，配置内部 2.5V 基准和 0~5V 量程         |
-| `DAC_WriteRegister()`          | 写 DAC81416 寄存器                        |
-| `DAC_ReadRegister()`           | 读 DAC81416 寄存器，read + NOP 两个 24-bit 帧 |
-| `DAC_WriteChannel()`           | 写单个 DAC 通道                            |
-| `DAC_WriteAllChannels()`       | 写全部 16 路 DAC 通道并触发 LDAC               |
-| `DAC_EnableInternalRef()`      | 使能/关闭内部参考电压                           |
-| `DAC_SetAllChannelsRange()`    | 配置全部通道量程                              |
-| `DAC_ConfigAllChannels0To5V()` | 统一配置 0~5V 输出范围                        |
-| `DAC_PowerDownChannels()`      | 配置通道上下电                               |
-| `DAC_TriggerLDAC()`            | 软件触发 DAC 更新                           |
+### 4.4 电压模拟（核心模块）
 
-SPI 特性：当前 SPI1 使用 STM32H7 原生 `24-bit` DataSize，每个命令严格 24 个 SCLK；读寄存器使用 `0xC0 | reg`，连续发送两个 24-bit 帧，共 48 个 SCLK。
+**常量：** 13 路电芯，电压范围 500~5000mV，默认 3200mV
 
-### DAC BSP 接口
+| 函数 | 作用 |
+|------|------|
+| `VoltageSim_Init(默认电压)` | 初始化 13 路电芯的默认电压 |
+| `VoltageSim_Process(当前时间)` | 每 1ms 调用，推进故障状态机（升压/保持/恢复）|
+| `VoltageSim_SetCellVoltageMv(通道号, 电压值)` | 设置单路电芯电压 |
+| `VoltageSim_SetAllCellsVoltageMv(电压值)` | 设置全部 13 路为同一电压 |
+| `VoltageSim_InjectCellOverVoltageRamp(通道, 目标电压, 时长, 斜率)` | 过压故障：按斜率升到目标→保持→恢复 |
+| `VoltageSim_InjectCellUnderVoltageRamp(通道, 目标电压, 时长, 斜率)` | 欠压故障：按斜率降到目标→保持→恢复 |
+| `VoltageSim_InjectVoltageDifference(高压通道, 高压值, 低压通道, 低压值, 时长, 斜率)` | 压差过大故障：两路同时设 |
+| `VoltageSim_ClearCellFault(通道号)` | 清除单路故障 |
+| `VoltageSim_ClearAllFaults()` | 清除全部故障 |
+| `VoltageSim_SetCellCalibrationOffsetMv(通道, 偏移量)` | 设置该路校准补偿（±500mV）|
+| `VoltageSim_GetActiveFaultCount()` | 查询当前有多少路处于故障状态 |
+| `VoltageSim_MillivoltsToDacCode(电压值)` | 把毫伏值转成 DAC 芯片能识别的码值 |
 
-| 接口                                  | 功能                                     |
-| ----------------------------------- | -------------------------------------- |
-| `BSP_DAC81416_Init()`               | 初始化 DAC 板级 GPIO 状态                     |
-| `DAC_SPI_TransmitFrames24()`        | 发送一个或多个 24-bit DAC SPI 帧               |
-| `DAC_SPI_TransmitReceiveFrames24()` | 收发一个或多个 24-bit DAC SPI 帧，CS 在整个调用期间保持低 |
-| `DAC_ResetHardware()`               | DAC 硬件复位，低电平保持 10ms，释放后等待 10ms         |
-| `DAC_LDAC_Update()`                 | LDAC 低脉冲 1ms，更新 DAC 输出                 |
-| `DAC_ReadAlarmPin()`                | 读取 `nALMOUT` 报警引脚                      |
+### 4.5 波形生成
 
-### CAN BSP 接口
+| 函数 | 作用 |
+|------|------|
+| `WaveformGen_StartSquare(通道, 低电平, 高电平, 周期)` | 启动方波输出 |
+| `WaveformGen_StartSine(通道, 中心电压, 幅值, 周期)` | 启动单通道正弦波 |
+| `WaveformGen_StartSineAll(中心电压, 幅值, 周期)` | 启动 13 路同步正弦波 |
+| `WaveformGen_Stop()` | 停止波形 |
+| `WaveformGen_Process(当前时间)` | 每 1ms 推进波形采样点 |
+| `WaveformGen_GetStatus()` | 查询当前波形状态（类型/是否激活/参数）|
 
-| 接口                     | 功能                                        |
-| ---------------------- | ----------------------------------------- |
-| `BspCan_Init()`        | 启动 FDCAN1，配置 Classic CAN 500kbps，接收标准/扩展帧 |
-| `BspCan_SendClassic()` | 发送标准帧或扩展帧                                 |
-| `BspCan_Process()`     | 周期读取 Rx FIFO，打印日志并触发接收回调                  |
-| `BspCan_GetStatus()`   | 查询 CAN 发送/接收/错误计数和最后一帧                    |
-| `BspCan_OnRxFrame()`   | 弱回调接口，当前由 BMS 响应记录模块实现                    |
+### 4.6 DAC 安全保护
 
-### SRAM / FMC 接口
+| 函数 | 作用 |
+|------|------|
+| `DacSafety_Init(安全电压)` | 初始化安全保护，设置安全电压 |
+| `DacSafety_Process(当前时间)` | 每 50ms 检查 DAC 报警引脚，低电平则自动急停 |
+| `DacSafety_EmergencyStop(安全电压)` | 手动急停：停止波形→清除故障→输出安全电压→锁存 |
+| `DacSafety_Release()` | 解除急停锁存，恢复正常控制 |
+| `DacSafety_IsOutputAllowed()` | 查询是否允许修改 DAC 输出（急停中返回禁止）|
+| `DacSafety_GetStatus()` | 查询安全状态（是否急停/是否报警/报警次数）|
 
-| 接口                        | 功能                              |
-| ------------------------- | ------------------------------- |
-| `BspSram_Init()`          | 初始化 SRAM 状态记录                   |
-| `BspSram_RunSelfTest()`   | 外部 SRAM 写读自检，默认测试 64KB，可扩展到 1MB |
-| `BspSram_GetStatus()`     | 查询 SRAM 基地址、容量、自检结果和失败地址        |
-| `BspSram_GetResultName()` | 将 HAL 状态转为字符串                   |
+### 4.7 BMS 响应时间记录
 
-当前 SRAM 基地址 `0x60000000`，容量 `1MB`，16bit 总线。当前仅实现基础自检，尚未作为日志缓存或文件系统使用。
+| 函数 | 作用 |
+|------|------|
+| `BmsResponseLog_RecordFaultTrigger(触发类型, 主通道, 主电压, 副通道, 副电压)` | 故障注入成功后记录 T1 |
+| `BmsResponseLog_Clear()` | 清除响应记录 |
+| `BmsResponseLog_GetStatus()` | 查询 T1、T2、响应延时 ΔT、响应帧数据 |
+| `BmsResponseLog_SetFilter(是否启用, 是否扩展帧, CAN ID, 掩码)` | 配置目标 CAN 帧过滤 |
+| `BmsResponseLog_DisableFilter()` | 关闭过滤 |
+| `BmsResponseLog_SetDataFilter(字节位置, 掩码, 期望值)` | 配置数据字节过滤，要求 (data & mask) == value |
+| `BmsResponseLog_ClearDataFilter()` | 清除数据字节过滤 |
 
-### 以太网 / TCP 接口
+### 4.8 CAN 通信
 
-| 接口                      | 文件                          | 功能                    |
-| ----------------------- | --------------------------- | --------------------- |
-| `MX_LWIP_Init()`        | `LWIP/App/lwip.c`           | 初始化 LwIP 网络协议栈        |
-| `TcpJsonServer_Start()` | `App/Src/tcp_json_server.c` | 启动 TCP JSON server    |
-| `BSP_ETH_PHY_Reset()`   | `BSP/Src/bsp_eth.c`         | LAN8720A PHY 软件管理接口支持 |
+| 函数 | 作用 |
+|------|------|
+| `BspCan_Init()` | 初始化 FDCAN1，500kbps，接收所有帧 |
+| `BspCan_SendClassic(CAN ID, 是否扩展帧, 数据指针, 数据长度)` | 发送一帧 CAN 数据 |
+| `BspCan_Process()` | 每 1ms 检查有没有收到新 CAN 帧 |
+| `BspCan_GetStatus()` | 查询 CAN 统计信息（发送/接收/错误计数）|
+| `BspCan_OnRxFrame(接收帧)` | CAN 收到帧后的回调函数，由响应记录模块接管 |
 
-当前默认 IP：`192.168.137.202`，TCP JSON 端口：`5000`。
+### 4.9 DAC81416 芯片驱动
 
-## 关键源码索引
+| 函数 | 作用 |
+|------|------|
+| `DAC81416_Init()` | 初始化 DAC 芯片，配置 2.5V 内部基准和 0~5V 量程 |
+| `DAC_WriteRegister(命令, 地址, 数据)` | 写 DAC 寄存器 |
+| `DAC_ReadRegister(命令, 地址)` | 读 DAC 寄存器（需要发 2 帧，CS 保持低）|
+| `DAC_WriteChannel(通道号, 码值)` | 写单个 DAC 通道的输出电压 |
+| `DAC_WriteAllChannels(所有通道码值)` | 一次性写全部 16 路并触发更新 |
+| `DAC_EnableInternalRef(使能/关闭)` | 控制内部参考电压 |
+| `DAC_SetAllChannelsRange(量程)` | 配置全部通道的输出量程 |
+| `DAC_ConfigAllChannels0To5V()` | 快捷配置 0~5V 量程 |
+| `DAC_PowerDownChannels(通道掩码)` | 控制通道上下电 |
+| `DAC_TriggerLDAC()` | 软件触发 DAC 输出更新 |
 
-| 模块              | 文件                                |
-| --------------- | --------------------------------- |
-| 系统启动            | `Core/Src/main.c`                 |
-| FreeRTOS 主循环    | `Core/Src/freertos.c`             |
-| SPI1 配置         | `Core/Src/spi.c`                  |
-| FDCAN 配置        | `Core/Src/fdcan.c`                |
-| FMC/SRAM 配置     | `Core/Src/fmc.c`                  |
-| USART 配置        | `Core/Src/usart.c`                |
-| LwIP 初始化        | `LWIP/App/lwip.c`                 |
-| 以太网底层           | `LWIP/Target/ethernetif.c`        |
-| 命令执行            | `App/Src/fault_command.c`         |
-| 串口控制台           | `App/Src/fault_console.c`         |
-| TCP JSON server | `App/Src/tcp_json_server.c`       |
-| 电压模拟            | `App/Src/voltage_sim.c`           |
-| 波形发生器           | `App/Src/waveform_gen.c`          |
-| DAC 安全保护        | `App/Src/dac_safety.c`            |
-| BMS 响应记录        | `App/Src/bms_response_log.c`      |
-| DAC81416 驱动     | `Drivers/DAC81416/Src/dac81416.c` |
-| DAC BSP         | `BSP/Src/bsp_dac81416.c`          |
-| CAN BSP         | `BSP/Src/bsp_can.c`               |
-| ETH BSP         | `BSP/Src/bsp_eth.c`               |
-| SRAM BSP        | `BSP/Src/bsp_sram.c`              |
+### 4.10 DAC 板级支持
+
+| 函数 | 作用 |
+|------|------|
+| `BSP_DAC81416_Init()` | 初始化 DAC 相关 GPIO 引脚状态 |
+| `DAC_SPI_TransmitFrames24(帧数组, 帧数)` | 发送 24-bit SPI 帧（受互斥锁保护）|
+| `DAC_SPI_TransmitReceiveFrames24(发送帧, 接收帧, 帧数)` | 收发 24-bit SPI 帧（读操作用）|
+| `DAC_ResetHardware()` | DAC 硬件复位：拉低复位脚 10ms→释放→等10ms |
+| `DAC_LDAC_Update()` | LDAC 低脉冲 1ms，更新 DAC 输出 |
+| `DAC_ReadAlarmPin()` | 读取 DAC 报警引脚，返回 1=正常, 0=报警 |
+
+### 4.11 外部 SRAM
+
+| 函数 | 作用 |
+|------|------|
+| `BspSram_Init()` | 初始化 SRAM 状态记录 |
+| `BspSram_RunSelfTest(测试字节数)` | 执行 SRAM 写读自检（默认 64KB，最大 1MB）|
+| `BspSram_GetStatus()` | 查询 SRAM 基地址、容量、自检结果和失败地址 |
+
+### 4.12 以太网 / TCP
+
+| 函数 | 作用 |
+|------|------|
+| `MX_LWIP_Init()` | 初始化 LwIP 网络协议栈 |
+| `TcpJsonServer_Start()` | 启动 TCP JSON 服务（端口 5000）|
+| `BSP_ETH_PHY_Reset()` | 以太网 PHY 硬件复位 |
+
+---
+
+## 五、系统中的状态机
+
+系统用了 4 个独立的小型状态机来管理随时间变化的行为：
+
+**故障状态机（每路电芯一个，共 13 个）：**
+空闲 → 按斜率升降压 → 保持目标电压 → 按斜率恢复 → 回到空闲
+
+**安全状态机：**
+正常监测（每 50ms 读报警引脚）→ 发现报警自动急停锁存 → 手动释放 → 回到正常
+
+**PHY 状态机：**
+扫描 PHY 地址 → 软件复位 → 检测网线 → 链路 up（开始收发）→ 链路 down（清除缓存）→ 重新扫描
+
+**波形状态机：**
+空闲 → 输出方波/正弦波 → 空闲
+
+---
+
+## 六、模块调用关系（简单版）
+
+```text
+串口/TCP 收到命令 "ov 7 4500"
+  ↓
+命令解析器判断是"过压故障"
+  ↓
+检查安全保护是否允许输出
+  ↓
+允许 → 调用电压模拟的过压注入函数
+         设置第 7 路的故障参数
+  ↓
+下次 1ms 循环时，故障状态机自动开始逐步升压
+  ↓
+升到 4500mV → 保持 100ms → 恢复到原始电压
+```
+
+---
+
+## 七、关键源码文件位置
+
+| 功能 | 文件路径 |
+|------|---------|
+| 系统启动入口 | `Core/Src/main.c` |
+| FreeRTOS 主循环 | `Core/Src/freertos.c` |
+| 命令解析 | `App/Src/fault_command.c` |
+| 串口控制台 | `App/Src/fault_console.c` |
+| TCP JSON 服务 | `App/Src/tcp_json_server.c` |
+| 电压模拟/故障注入 | `App/Src/voltage_sim.c` |
+| 波形生成 | `App/Src/waveform_gen.c` |
+| DAC 安全保护 | `App/Src/dac_safety.c` |
+| BMS 响应记录 | `App/Src/bms_response_log.c` |
+| DAC 芯片驱动 | `Drivers/DAC81416/Src/dac81416.c` |
+| CAN 通信 | `BSP/Src/bsp_can.c` |
+| 外部 SRAM | `BSP/Src/bsp_sram.c` |
+| 以太网底层 | `LWIP/Target/ethernetif.c` |

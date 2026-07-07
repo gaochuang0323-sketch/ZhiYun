@@ -43,8 +43,9 @@ build/main.o: Core/Src/main.c Core/Inc/main.h \
  Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h \
  Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h \
  Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h \
- Drivers/CMSIS/RTOS2/Include/cmsis_os2.h Core/Inc/fdcan.h Core/Inc/main.h \
- LWIP/App/lwip.h Middlewares/Third_Party/LwIP/src/include/lwip/opt.h \
+ Drivers/CMSIS/RTOS2/Include/cmsis_os2.h Core/Inc/dma.h Core/Inc/main.h \
+ Core/Inc/fdcan.h LWIP/App/lwip.h \
+ Middlewares/Third_Party/LwIP/src/include/lwip/opt.h \
  LWIP/Target/lwipopts.h \
  Middlewares/Third_Party/LwIP/src/include/lwip/debug.h \
  Middlewares/Third_Party/LwIP/src/include/lwip/arch.h \
@@ -79,10 +80,10 @@ build/main.o: Core/Src/main.c Core/Inc/main.h \
  LWIP/Target/ethernetif.h \
  Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h \
  Middlewares/Third_Party/LwIP/src/include/lwip/tcpip.h Core/Inc/spi.h \
- Core/Inc/usart.h Core/Inc/gpio.h Core/Inc/fmc.h BSP/Inc/bsp_can.h \
- BSP/Inc/bsp_sram.h Drivers/DAC81416/Inc/dac81416.h \
+ Core/Inc/tim.h Core/Inc/usart.h Core/Inc/gpio.h Core/Inc/fmc.h \
+ BSP/Inc/bsp_can.h BSP/Inc/bsp_sram.h Drivers/DAC81416/Inc/dac81416.h \
  BSP/Inc/bsp_dac81416.h App/Inc/dac_safety.h App/Inc/voltage_sim.h \
- App/Inc/fault_console.h App/Inc/voltage_sim.h
+ App/Inc/fault_console.h App/Inc/voltage_sim.h App/Inc/waveform_engine.h
 Core/Inc/main.h:
 Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h:
 Core/Inc/stm32h7xx_hal_conf.h:
@@ -132,8 +133,9 @@ Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h:
 Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h:
 Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h:
 Drivers/CMSIS/RTOS2/Include/cmsis_os2.h:
-Core/Inc/fdcan.h:
+Core/Inc/dma.h:
 Core/Inc/main.h:
+Core/Inc/fdcan.h:
 LWIP/App/lwip.h:
 Middlewares/Third_Party/LwIP/src/include/lwip/opt.h:
 LWIP/Target/lwipopts.h:
@@ -171,6 +173,7 @@ LWIP/Target/ethernetif.h:
 Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h:
 Middlewares/Third_Party/LwIP/src/include/lwip/tcpip.h:
 Core/Inc/spi.h:
+Core/Inc/tim.h:
 Core/Inc/usart.h:
 Core/Inc/gpio.h:
 Core/Inc/fmc.h:
@@ -182,3 +185,4 @@ App/Inc/dac_safety.h:
 App/Inc/voltage_sim.h:
 App/Inc/fault_console.h:
 App/Inc/voltage_sim.h:
+App/Inc/waveform_engine.h:
