@@ -1,0 +1,47 @@
+# CI workflow for STM32H743 project - runs Ceedling unit tests on push and PR
+name: CI
+
+on:
+  push:
+    branches: [ "main", "master", "develop" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+
+      - name: Install Ceedling
+        run: gem install ceedling
+
+      - name: Install GCC for unit testing
+        run: sudo apt-get update && sudo apt-get install -y gcc
+
+      - name: Install gcovr for coverage reports
+        run: pip install gcovr
+
+      - name: Run all unit tests
+        run: ceedling test:all
+        working-directory: ${{ github.workspace }}
+
+      - name: Generate coverage report
+        run: ceedling gcov:all
+        working-directory: ${{ github.workspace }}
+        continue-on-error: true
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-report
+          path: test/build/artifacts/gcov/
+          retention-days: 7

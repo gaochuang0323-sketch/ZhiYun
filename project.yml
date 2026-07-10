@@ -1,0 +1,109 @@
+# =========================================================================
+#   Ceedling - Test-Centered Build System for C
+#   ThrowTheSwitch.org
+#   Copyright (c) 2010-25 Mike Karlesky, Mark VanderVoord, & Greg Williams
+#   SPDX-License-Identifier: MIT
+# =========================================================================
+
+---
+:project:
+  :which_ceedling: gem
+  :ceedling_version: 1.0.1
+  :use_mocks: TRUE
+  :use_test_preprocessor: :none
+  :use_deep_preprocessor: :none
+  :use_backtrace: :simple
+  :use_decorators: :auto
+  :build_root: test/build
+  :test_file_prefix: test_
+  :default_tasks:
+    - test:all
+  :test_threads: 1
+  :compile_threads: 1
+  :release_build: FALSE
+
+:plugins:
+  :load_paths: []
+  :enabled:
+    - module_generator
+    - report_tests_pretty_stdout
+    - gcov
+
+:extension:
+  :executable: .out
+
+:paths:
+  :test:
+    - +:test/*
+    - -:test/support
+  :source:
+    - App/Src/**
+    - BSP/Src/**
+  :include:
+    - test/support/**
+    - App/Inc/**
+    - BSP/Inc/**
+    - Core/Inc/**
+    - Drivers/DAC81416/Inc/**
+  :support:
+    - test/support
+
+:defines:
+  :test:
+    - TEST
+    - STM32H743xx
+    - USE_HAL_DRIVER
+    - __weak=
+    - "__DSB()="
+    - "__ISB()="
+    - "__DMB()="
+    - "__disable_irq()="
+    - "__enable_irq()="
+    - "__NOP()="
+    - "__BKPT()="
+  :release: []
+  :use_test_definition: FALSE
+
+:cmock:
+  :plugins:
+    - :ignore
+    - :callback
+  :verbosity: 2
+  :when_no_prototypes: :warn
+  :mock_prefix: mock_
+  :mock_suffix: ''
+  :strippables:
+    - '(?:__attribute__\s*\([ (]*.*?[ )]*\)+)'
+  :attributes: []
+  :treat_externs: :exclude
+  :treat_inlines: :exclude
+  :treat_as:
+    uint8:    HEX8
+    uint16:   HEX16
+    uint32:   UINT32
+    int8:     INT8
+    int16:    INT16
+    int32:    INT32
+    bool:     UINT8
+  :memcmp_if_unknown: true
+  :when_ptr: :compare_data
+  :enforce_strict_ordering: false
+  :fail_on_unexpected_calls: false
+  :callback_include_count: true
+  :callback_after_arg_check: false
+  :exclude_setjmp_h: true
+
+:unity:
+  :defines:
+    - UNITY_EXCLUDE_FLOAT
+
+:gcov:
+  :summaries: TRUE
+  :report_task: FALSE
+  :utilities:
+    - gcovr
+  :reports:
+    - HtmlBasic
+  :gcovr:
+    :html_medium_threshold: 75
+    :html_high_threshold: 90

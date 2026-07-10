@@ -1,0 +1,143 @@
+---
+:source:
+  :file: test/test_bsp_can.c
+  :dirname: test
+  :basename: test_bsp_can.c
+:successes:
+- :test: test_Init_sets_started_flag
+  :line: 20
+  :message: ''
+  :unity_test_time: 0
+- :test: test_Init_returns_error_on_filter_fail
+  :line: 26
+  :message: ''
+  :unity_test_time: 0
+- :test: test_Init_returns_error_on_start_fail
+  :line: 33
+  :message: ''
+  :unity_test_time: 0
+- :test: test_SendClassic_valid_std_id_succeeds
+  :line: 41
+  :message: ''
+  :unity_test_time: 0
+- :test: test_SendClassic_valid_ext_id_succeeds
+  :line: 49
+  :message: ''
+  :unity_test_time: 0
+- :test: test_SendClassic_std_id_over_11bit_returns_error
+  :line: 56
+  :message: ''
+  :unity_test_time: 0
+- :test: test_SendClassic_ext_id_over_29bit_returns_error
+  :line: 64
+  :message: ''
+  :unity_test_time: 0
+- :test: test_SendClassic_length_over_8_returns_error
+  :line: 71
+  :message: ''
+  :unity_test_time: 0
+- :test: test_SendClassic_null_data_with_length_returns_error
+  :line: 78
+  :message: ''
+  :unity_test_time: 0
+- :test: test_SendClassic_null_data_with_zero_length_succeeds
+  :line: 84
+  :message: ''
+  :unity_test_time: 0
+- :test: test_SendClassic_returns_error_on_tx_fifo_full
+  :line: 90
+  :message: ''
+  :unity_test_time: 0
+- :test: test_Process_drains_rx_fifo
+  :line: 100
+  :message: ''
+  :unity_test_time: 0
+- :test: test_Process_handles_rx_error_gracefully
+  :line: 116
+  :message: ''
+  :unity_test_time: 0
+- :test: test_Process_empty_fifo_does_nothing
+  :line: 126
+  :message: ''
+  :unity_test_time: 0
+- :test: test_Process_receives_extended_id
+  :line: 136
+  :message: ''
+  :unity_test_time: 0
+- :test: test_Process_tick_is_recorded
+  :line: 151
+  :message: ''
+  :unity_test_time: 0
+- :test: test_Process_multiple_frames_all_drained
+  :line: 164
+  :message: ''
+  :unity_test_time: 0
+- :test: test_SendClassic_not_started_returns_error
+  :line: 178
+  :message: ''
+  :unity_test_time: 0
+- :test: test_GetStatus_returns_counts
+  :line: 193
+  :message: ''
+  :unity_test_time: 0
+:failures: []
+:ignores: []
+:counts:
+  :total: 19
+  :passed: 19
+  :failed: 0
+  :ignored: 0
+:stdout:
+- "[can] FDCAN1 started, classic CAN 500kbps, accept all frames"
+- ''
+- "[can] FDCAN1 started, classic CAN 500kbps, accept all frames"
+- ''
+- "[can] FDCAN1 started, classic CAN 500kbps, accept all frames"
+- ''
+- "[can] FDCAN1 started, classic CAN 500kbps, accept all frames"
+- ''
+- "[can] FDCAN1 started, classic CAN 500kbps, accept all frames"
+- ''
+- "[can] FDCAN1 started, classic CAN 500kbps, accept all frames"
+- ''
+- "[can] FDCAN1 started, classic CAN 500kbps, accept all frames"
+- ''
+- "[can] FDCAN1 started, classic CAN 500kbps, accept all frames"
+- ''
+- "[can] FDCAN1 started, classic CAN 500kbps, accept all frames"
+- ''
+- "[can] FDCAN1 started, classic CAN 500kbps, accept all frames"
+- ''
+- "[can] FDCAN1 started, classic CAN 500kbps, accept all frames"
+- ''
+- "[can] FDCAN1 started, classic CAN 500kbps, accept all frames"
+- ''
+- "[can] rx std id=0x200 len=8 data=11 22 33 44 55 66 77 88"
+- ''
+- "[can] rx std id=0x200 len=8 data=11 22 33 44 55 66 77 88"
+- ''
+- "[can] FDCAN1 started, classic CAN 500kbps, accept all frames"
+- ''
+- "[can] FDCAN1 started, classic CAN 500kbps, accept all frames"
+- ''
+- "[can] FDCAN1 started, classic CAN 500kbps, accept all frames"
+- ''
+- "[can] rx ext id=0x1FFFFFFF len=8 data=11 22 33 44 55 66 77 88"
+- ''
+- "[can] FDCAN1 started, classic CAN 500kbps, accept all frames"
+- ''
+- "[can] rx std id=0x100 len=1 data=AA"
+- ''
+- "[can] FDCAN1 started, classic CAN 500kbps, accept all frames"
+- ''
+- "[can] rx std id=0x100 len=8 data=01 02 03 04 05 06 07 08"
+- ''
+- "[can] rx std id=0x100 len=8 data=01 02 03 04 05 06 07 08"
+- ''
+- "[can] rx std id=0x100 len=8 data=01 02 03 04 05 06 07 08"
+- ''
+- "[can] FDCAN1 started, classic CAN 500kbps, accept all frames"
+- ''
+- "[can] FDCAN1 started, classic CAN 500kbps, accept all frames"
+- ''
+:time: 0.11880310002015904

@@ -10,6 +10,7 @@
 #include "bsp_sram.h"
 #include "dac_safety.h"
 #include "voltage_sim.h"
+#include "waveform_engine.h"
 #include "waveform_gen.h"
 
 #define FAULT_COMMAND_DEFAULT_DURATION_MS 100U
@@ -63,6 +64,7 @@ static void FaultCommand_WriteTextHelp(FaultCommand_WriteFn write, void *context
   FaultCommand_Write(write, context, "  wave square <cell> <low_mv> <high_mv> <period_ms>\r\n");
   FaultCommand_Write(write, context, "  wave sine <cell> <offset_mv> <amplitude_mv> <period_ms>\r\n");
   FaultCommand_Write(write, context, "  wave sine all <offset_mv> <amplitude_mv> <period_ms>\r\n");
+  FaultCommand_Write(write, context, "  wave high <cell> <freq_hz> <points> <amp_mv> <offset_mv>\r\n");
   FaultCommand_Write(write, context, "  cal status\r\n");
   FaultCommand_Write(write, context, "  cal set <cell> <offset_mv>\r\n");
   FaultCommand_Write(write, context, "  cal trim <cell> <target_mv> <measured_mv>\r\n");
@@ -90,6 +92,7 @@ static void FaultCommand_WriteTextHelp(FaultCommand_WriteFn write, void *context
 static void FaultCommand_WriteTextWaveStatus(FaultCommand_WriteFn write, void *context)
 {
   WaveformGen_Status status = WaveformGen_GetStatus();
+  WaveformEngine_Status highStatus = WaveformEngine_GetStatus();
 
   FaultCommand_WriteFormat(write,
                            context,
@@ -99,6 +102,19 @@ static void FaultCommand_WriteTextWaveStatus(FaultCommand_WriteFn write, void *c
                            status.cell,
                            (unsigned long)status.periodMs,
                            status.lastMillivolts);
+  FaultCommand_WriteFormat(write,
+                           context,
+                           "[wave-high] running=%u buffer=%u samples=%lu errors=%lu\r\n",
+                           highStatus.running,
+                           highStatus.bufferIndex,
+                           (unsigned long)highStatus.sampleCount,
+                           (unsigned long)highStatus.errorCount);
+}
+
+static void FaultCommand_StopAllWaveforms(void)
+{
+  WaveformEngine_Stop();
+  WaveformGen_Stop();
 }
 
 static void FaultCommand_WriteTextCanStatus(FaultCommand_WriteFn write, void *context)
@@ -498,7 +514,7 @@ static HAL_StatusTypeDef FaultCommand_RunNormal(uint16_t millivolts)
     return HAL_BUSY;
   }
 
-  WaveformGen_Stop();
+  FaultCommand_StopAllWaveforms();
   return VoltageSim_SetAllCellsVoltageMv(millivolts);
 }
 
@@ -509,7 +525,7 @@ static HAL_StatusTypeDef FaultCommand_RunSet(uint8_t cell, uint16_t millivolts)
     return HAL_BUSY;
   }
 
-  WaveformGen_Stop();
+  FaultCommand_StopAllWaveforms();
   return VoltageSim_SetCellVoltageMv(cell, millivolts);
 }
 
@@ -544,7 +560,7 @@ static HAL_StatusTypeDef FaultCommand_RunOverVoltage(uint8_t cell,
     return HAL_BUSY;
   }
 
-  WaveformGen_Stop();
+  FaultCommand_StopAllWaveforms();
   status = VoltageSim_InjectCellOverVoltageRamp(cell, target, duration, slew);
   if (status == HAL_OK)
   {
@@ -566,7 +582,7 @@ static HAL_StatusTypeDef FaultCommand_RunUnderVoltage(uint8_t cell,
     return HAL_BUSY;
   }
 
-  WaveformGen_Stop();
+  FaultCommand_StopAllWaveforms();
   status = VoltageSim_InjectCellUnderVoltageRamp(cell, target, duration, slew);
   if (status == HAL_OK)
   {
@@ -590,7 +606,7 @@ static HAL_StatusTypeDef FaultCommand_RunDiff(uint8_t highCell,
     return HAL_BUSY;
   }
 
-  WaveformGen_Stop();
+  FaultCommand_StopAllWaveforms();
   status = VoltageSim_InjectVoltageDifference(highCell, highMv, lowCell, lowMv, duration, slew);
   if (status == HAL_OK)
   {
@@ -828,8 +844,47 @@ static void FaultCommand_ExecuteText(const char *line, FaultCommand_WriteFn writ
   }
   else if (strcmp(line, "wave stop") == 0)
   {
-    WaveformGen_Stop();
+    FaultCommand_StopAllWaveforms();
     FaultCommand_WriteTextResult(write, context, "wave", HAL_OK);
+  }
+  else if (strncmp(line, "wave high ", 10U) == 0)
+  {
+    unsigned int freqHz;
+    unsigned int points;
+    WaveformEngine_Config cfg;
+
+    if (DacSafety_IsOutputAllowed() == 0U)
+    {
+      FaultCommand_WriteTextResult(write, context, "wave-high", HAL_BUSY);
+      return;
+    }
+
+    if (sscanf(line,
+               "wave high %u %u %u %u %u",
+               &cell,
+               &freqHz,
+               &points,
+               &amplitudeMv,
+               &centerMv) != 5)
+    {
+      FaultCommand_WriteTextResult(write, context, "wave-high", HAL_ERROR);
+      return;
+    }
+
+    memset(&cfg, 0, sizeof(cfg));
+    cfg.active = 1U;
+    cfg.channels = 1U;
+    cfg.channelList[0] = (uint8_t)cell;
+    cfg.sampleRate = (uint32_t)freqHz * (uint32_t)points;
+    cfg.pointCount = (uint32_t)points;
+    cfg.cycleCount = 1U;
+    cfg.amplitudeMv = (uint16_t)amplitudeMv;
+    cfg.offsetMv = (uint16_t)centerMv;
+
+    FaultCommand_WriteTextResult(write,
+                                 context,
+                                 "wave-high",
+                                 WaveformEngine_StartSine(&cfg));
   }
   else if (strncmp(line, "wave square ", 12U) == 0)
   {
@@ -850,6 +905,7 @@ static void FaultCommand_ExecuteText(const char *line, FaultCommand_WriteFn writ
       return;
     }
 
+    WaveformEngine_Stop();
     FaultCommand_WriteTextResult(write,
                                  context,
                                  "wave",
@@ -876,6 +932,7 @@ static void FaultCommand_ExecuteText(const char *line, FaultCommand_WriteFn writ
       return;
     }
 
+    WaveformEngine_Stop();
     FaultCommand_WriteTextResult(write,
                                  context,
                                  "wave",
@@ -902,6 +959,7 @@ static void FaultCommand_ExecuteText(const char *line, FaultCommand_WriteFn writ
       return;
     }
 
+    WaveformEngine_Stop();
     FaultCommand_WriteTextResult(write,
                                  context,
                                  "wave",
@@ -1062,6 +1120,7 @@ static void FaultCommand_ExecuteText(const char *line, FaultCommand_WriteFn writ
     millivolts = DAC_SAFETY_DEFAULT_SAFE_MV;
     (void)sscanf(line, "safe stop %u", &millivolts);
     (void)sscanf(line, "emergency stop %u", &millivolts);
+    FaultCommand_StopAllWaveforms();
     FaultCommand_WriteTextResult(write,
                                  context,
                                  "safe",
@@ -1094,7 +1153,7 @@ static void FaultCommand_ExecuteText(const char *line, FaultCommand_WriteFn writ
       return;
     }
 
-    WaveformGen_Stop();
+    FaultCommand_StopAllWaveforms();
     if (sscanf(line, "clear %u", &cell) == 1)
     {
       FaultCommand_WriteTextResult(write, context, "clear", VoltageSim_ClearCellFault((uint8_t)cell));
@@ -1320,6 +1379,7 @@ static void FaultCommand_ExecuteJson(const char *json, FaultCommand_WriteFn writ
             (FaultCommand_JsonGetUint(json, "high_mv", &high) != 0U))
         {
           period = FaultCommand_JsonGetUintDefault(json, "period_ms", 1000U);
+          WaveformEngine_Stop();
           status = WaveformGen_StartSquare((uint8_t)cell,
                                            (uint16_t)low,
                                            (uint16_t)high,
@@ -1337,6 +1397,7 @@ static void FaultCommand_ExecuteJson(const char *json, FaultCommand_WriteFn writ
             (FaultCommand_JsonGetUint(json, "amplitude_mv", &amplitude) != 0U))
         {
           period = FaultCommand_JsonGetUintDefault(json, "period_ms", 1000U);
+          WaveformEngine_Stop();
           status = WaveformGen_StartSine((uint8_t)cell,
                                          (uint16_t)offset,
                                          (uint16_t)amplitude,
@@ -1353,21 +1414,48 @@ static void FaultCommand_ExecuteJson(const char *json, FaultCommand_WriteFn writ
             (FaultCommand_JsonGetUint(json, "amplitude_mv", &amplitude) != 0U))
         {
           period = FaultCommand_JsonGetUintDefault(json, "period_ms", 1000U);
+          WaveformEngine_Stop();
           status = WaveformGen_StartSineAll((uint16_t)offset,
                                             (uint16_t)amplitude,
                                             period);
         }
       }
+      else if (strcmp(type, "high") == 0)
+      {
+        uint32_t freq;
+        uint32_t points;
+        uint32_t amplitude;
+        uint32_t offset;
+        WaveformEngine_Config cfg;
+
+        if ((FaultCommand_JsonGetUint(json, "cell", &cell) != 0U) &&
+            (FaultCommand_JsonGetUint(json, "freq_hz", &freq) != 0U) &&
+            (FaultCommand_JsonGetUint(json, "points", &points) != 0U) &&
+            (FaultCommand_JsonGetUint(json, "amplitude_mv", &amplitude) != 0U) &&
+            (FaultCommand_JsonGetUint(json, "offset_mv", &offset) != 0U))
+        {
+          memset(&cfg, 0, sizeof(cfg));
+          cfg.active = 1U;
+          cfg.channels = 1U;
+          cfg.channelList[0] = (uint8_t)cell;
+          cfg.sampleRate = freq * points;
+          cfg.pointCount = points;
+          cfg.cycleCount = 1U;
+          cfg.amplitudeMv = (uint16_t)amplitude;
+          cfg.offsetMv = (uint16_t)offset;
+          status = WaveformEngine_StartSine(&cfg);
+        }
+      }
       else if (strcmp(type, "stop") == 0)
       {
-        WaveformGen_Stop();
+        FaultCommand_StopAllWaveforms();
         status = HAL_OK;
       }
     }
   }
   else if (strcmp(cmd, "wave_stop") == 0)
   {
-    WaveformGen_Stop();
+    FaultCommand_StopAllWaveforms();
     status = HAL_OK;
   }
   else if (strcmp(cmd, "cal") == 0)
@@ -1623,6 +1711,7 @@ static void FaultCommand_ExecuteJson(const char *json, FaultCommand_WriteFn writ
       else if ((strcmp(action, "stop") == 0) || (strcmp(action, "emergency_stop") == 0))
       {
         mv = FaultCommand_JsonGetUintDefault(json, "mv", DAC_SAFETY_DEFAULT_SAFE_MV);
+        FaultCommand_StopAllWaveforms();
         status = DacSafety_EmergencyStop((uint16_t)mv);
       }
       else if (strcmp(action, "release") == 0)
@@ -1662,7 +1751,7 @@ static void FaultCommand_ExecuteJson(const char *json, FaultCommand_WriteFn writ
     }
     else
     {
-      WaveformGen_Stop();
+      FaultCommand_StopAllWaveforms();
       if (FaultCommand_JsonGetUint(json, "cell", &cell) != 0U)
       {
         status = VoltageSim_ClearCellFault((uint8_t)cell);
