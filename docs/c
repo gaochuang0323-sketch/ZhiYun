@@ -1,0 +1,270 @@
+# CAN 通信协议实现方案
+
+基于 `docs/frame.csv` 的 CAN 矩阵定义，制定本实施方案。
+
+## 1. 协议总览
+
+| 参数 | 值 |
+|------|----|
+| 帧格式 | CAN 2.0B 标准帧 (11-bit ID) |
+| 字节序 | **Intel (Little-Endian)** — 低地址存低字节 |
+| 波特率 | 500 kbps |
+| 数据长度 | 8 字节 |
+
+## 2. CAN ID 分配
+
+### 2.1 接收帧 (PC → 模拟器)
+
+| ID | 名称 | 周期 | 说明 |
+|----|------|------|------|
+| 0x011 | PC_msg1 | trigger | 设置通道 1~4 电压 |
+| 0x012 | PC_msg2 | trigger | 设置通道 5~8 电压 |
+| 0x013 | PC_msg3 | trigger | 设置通道 9~12 电压 |
+| 0x014 | PC_msg4 | trigger | 设置通道13、更新激活、波形、急停 |
+| 0x015 | PC_msg5 | trigger | 设置温度通道 1~7 |
+| 0x016 | PC_msg6 | trigger | 设置偏移通道 1~8 |
+| 0x017 | PC_msg7 | trigger | 设置偏移通道 9~13 + IP设置 |
+
+### 2.2 发送帧 (模拟器 → PC)
+
+| ID | 名称 | 周期 | 说明 |
+|----|------|------|------|
+| 0x01A | Replayer_msg2 | 500ms | 反馈通道 1~4 电压 |
+| 0x01B | Replayer_msg3 | 500ms | 反馈通道 5~8 电压 |
+| 0x01C | Replayer_msg4 | 500ms | 反馈通道 9~12 电压 |
+| 0x01D | Replayer_msg5 | 500ms | 反馈通道13、波形状态 |
+| 0x01E | Replayer_msg6 | 500ms | 反馈温度 1~7 |
+| 0x01F | Replayer_msg7 | 触发后500ms | 反馈偏移 1~8 |
+| 0x020 | Replayer_msg8 | 触发后500ms | 反馈偏移 9~13 |
+| 0x021 | Replayer_msg9 | 500ms | 反馈波形、急停状态、故障码 |
+
+### 2.3 其他
+
+| ID | 名称 | 方向 | 说明 |
+|----|------|------|------|
+| 0x019 | Replayer_msg1 | Tx | ASCII code 字符串响应（暂时不实现） |
+| 0x017 | PC_msg11 | Rx | 服务器IP设置（相同ID不同帧） |
+| 0x018 | PC_msg12 | Rx | 板卡IP设置 |
+
+## 3. 接收帧数据格式 (Intel/小端)
+
+### 0x011 — PC_msg1 (设通道 1~4 电压)
+
+```
+Byte 0-1: VolCh1_set_mv  uint16 LE  [0-65535]  通道1电压
+Byte 2-3: VolCh2_set_mv  uint16 LE  [0-65535]  通道2电压
+Byte 4-5: VolCh3_set_mv  uint16 LE  [0-65535]  通道3电压
+Byte 6-7: VolCh4_set_mv  uint16 LE  [0-65535]  通道4电压
+```
+
+### 0x012 — PC_msg2 (设通道 5~8 电压)
+
+```
+Byte 0-1: VolCh5_set_mv  uint16 LE
+Byte 2-3: VolCh6_set_mv  uint16 LE
+Byte 4-5: VolCh7_set_mv  uint16 LE
+Byte 6-7: VolCh8_set_mv  uint16 LE
+```
+
+### 0x013 — PC_msg3 (设通道 9~12 电压)
+
+```
+Byte 0-1: VolCh9_set_mv   uint16 LE
+Byte 2-3: VolCh10_set_mv  uint16 LE
+Byte 4-5: VolCh11_set_mv  uint16 LE
+Byte 6-7: VolCh12_set_mv  uint16 LE
+```
+
+### 0x014 — PC_msg4 (通道13 + 控制)
+
+```
+Byte 0-1: VolCh13_set_mv   uint16 LE  [0-65535]  通道13电压  
+Byte 2:   VolCh_set_active  uint8  [0=不更新,1=独立更新,2=同步更新]
+Byte 3:   VolWave_set       uint8  [0=正弦,1=方波]
+Byte 4:   EmergencyStop     uint8  [0=不停止,1=停止]
+Byte 5-7: (保留)
+```
+
+**VolCh_set_active 说明：**
+- 0：不更新电压（收到此帧不改变输出）
+- 1：独立更新（单独设置某个通道电压）
+- 2：按 VolCh1_set_mv 同步更新（所有通道设为该值）
+
+### 0x015 — PC_msg5 (设温度)
+
+```
+Byte 0: TempCh1_set   int8  [0=1K,1=10K,2=100K]
+Byte 1: TempCh2_set   int8
+Byte 2: TempCh3_set   int8
+Byte 3: TempCh4_set   int8
+Byte 4: TempCh5_set   int8
+Byte 5: TempCh6_set   uint8
+Byte 6: TempCh7_set   uint8
+Byte 7: TempCh_set_active  uint8  [0=不更新,1=独立,2=同步]
+```
+
+### 0x016 — PC_msg6 (设偏移 1~8)
+
+```
+Byte 0: VolCh1_offset_set_mv  int8  [-128~127]
+Byte 1: VolCh2_offset_set_mv  int8
+Byte 2: VolCh3_offset_set_mv  int8
+Byte 3: VolCh4_offset_set_mv  int8
+Byte 4: VolCh5_offset_set_mv  int8
+Byte 5: VolCh6_offset_set_mv  int8
+Byte 6: VolCh7_offset_set_mv  int8
+Byte 7: VolCh8_offset_set_mv  int8
+```
+
+### 0x017 — PC_msg7 (设偏移 9~13 + IP)
+
+```
+Byte 0: VolCh9_offset_set_mv   int8
+Byte 1: VolCh10_offset_set_mv  int8
+Byte 2: VolCh11_offset_set_mv  int8
+Byte 3: VolCh12_offset_set_mv  int8
+Byte 4: VolCh13_offset_set_mv  int8
+Byte 5: VolCh_offset_set_active uint8 [0=不更新,1=更新]
+Byte 6-7: VolCh_offset_Code    uint16 LE [0x55AA=允许更新]
+```
+
+## 4. 发送帧数据格式
+
+### 0x01A — Replayer_msg2 (电压反馈 1~4, 500ms)
+
+```
+Byte 0-1: VolCh1_back_mv  uint16 LE
+Byte 2-3: VolCh2_back_mv  uint16 LE
+Byte 4-5: VolCh3_back_mv  uint16 LE
+Byte 6-7: VolCh4_back_mv  uint16 LE
+```
+
+### 0x01B — Replayer_msg3 (电压反馈 5~8, 500ms)
+
+```
+Byte 0-1: VolCh5_back_mv  uint16 LE
+Byte 2-3: VolCh6_back_mv  uint16 LE
+Byte 4-5: VolCh7_back_mv  uint16 LE
+Byte 6-7: VolCh8_back_mv  uint16 LE
+```
+
+### 0x01C — Replayer_msg4 (电压反馈 9~12, 500ms)
+
+```
+Byte 0-1: VolCh9_back_mv   uint16 LE
+Byte 2-3: VolCh10_back_mv  uint16 LE
+Byte 4-5: VolCh11_back_mv  uint16 LE
+Byte 6-7: VolCh12_back_mv  uint16 LE
+```
+
+### 0x01D — Replayer_msg5 (电压反馈 13 + 波形, 500ms)
+
+```
+Byte 0-1: VolCh13_back_mv  uint16 LE
+Byte 2:   VolWave_back     uint8  [0=正弦,1=方波]
+Byte 3-7: (保留)
+```
+
+### 0x01E — Replayer_msg6 (温度反馈, 500ms)
+
+```
+Byte 0: TempCh1_back  int8
+Byte 1: TempCh2_back  int8
+Byte 2: TempCh3_back  int8
+Byte 3: TempCh4_back  int8
+Byte 4: TempCh5_back  int8
+Byte 5: TempCh6_back  uint8
+Byte 6: TempCh7_back  uint8
+Byte 7: (保留)
+```
+
+### 0x01F — Replayer_msg7 (偏移反馈 1~8, 触发后500ms)
+
+```
+Byte 0: VolCh1_offset_back_mv  int8
+Byte 1: VolCh2_offset_back_mv  int8
+...
+Byte 7: VolCh8_offset_back_mv  int8
+```
+
+### 0x020 — Replayer_msg8 (偏移反馈 9~13, 触发后500ms)
+
+```
+Byte 0: VolCh9_offset_back_mv   int8
+Byte 1: VolCh10_offset_back_mv  int8
+Byte 2: VolCh11_offset_back_mv  int8
+Byte 3: VolCh12_offset_back_mv  int8
+Byte 4: VolCh13_offset_back_mv  int8
+Byte 5-7: (保留)
+```
+
+### 0x021 — Replayer_msg9 (状态反馈, 500ms)
+
+```
+Byte 0: VolWave_back       uint8 [0=正弦,1=方波]
+Byte 1: EmergencyStop_back uint8 [0=不停止,1=停止]
+Byte 2-3: Replayer_ErrCode    uint16 LE [故障码]
+Byte 4-5: Replayer_StatusCode uint16 LE [状态码]
+Byte 6-7: Replayer_StatusCode2 uint16 LE [状态码2]
+```
+
+## 5. 代码结构
+
+```
+App/
+├── Inc/
+│   └── can_protocol.h    — CAN 协议常量、ID、信号偏移宏、API
+└── Src/
+    └── can_protocol.c    — 帧解析(pack/unpack)、发送队列
+```
+
+### 核心 API
+
+```c
+// can_protocol.h
+
+/* ===== 初始化 ===== */
+void CanProtocol_Init(void);
+
+/* ===== 接收处理 ===== */
+// 由 BspCan_OnRxFrame 回调调用，解析帧 ID 并分派
+void CanProtocol_ProcessRxFrame(uint32_t id, const uint8_t *data, uint8_t len);
+
+/* ===== 周期性发送 ===== */
+void CanProtocol_SendFeedbackVoltage1_4(void);   // 0x01A, 500ms
+void CanProtocol_SendFeedbackVoltage5_8(void);   // 0x01B, 500ms
+void CanProtocol_SendFeedbackVoltage9_12(void);  // 0x01C, 500ms
+void CanProtocol_SendFeedbackVoltage13(void);    // 0x01D, 500ms
+void CanProtocol_SendFeedbackTemp(void);         // 0x01E, 500ms
+void CanProtocol_SendFeedbackStatus(void);       // 0x021, 500ms
+
+/* ===== 事件触发发送 ===== */
+void CanProtocol_SendFeedbackOffset1_8(void);    // 0x01F
+void CanProtocol_SendFeedbackOffset9_13(void);   // 0x020
+```
+
+### 接收分派逻辑
+
+```c
+void CanProtocol_ProcessRxFrame(uint32_t id, const uint8_t *data, uint8_t len)
+{
+    switch (id) {
+        case 0x011: unpack_PC_msg1(data); break;
+        case 0x012: unpack_PC_msg2(data); break;
+        case 0x013: unpack_PC_msg3(data); break;
+        case 0x014: unpack_PC_msg4(data); break;
+        case 0x015: unpack_PC_msg5(data); break;
+        case 0x016: unpack_PC_msg6(data); break;
+        case 0x017: unpack_PC_msg7(data); break;
+        default: break;
+    }
+}
+```
+
+## 6. 实现文件清单
+
+| 文件 | 说明 |
+|------|------|
+| `App/Inc/can_protocol.h` | 宏定义、结构体、函数声明 |
+| `App/Src/can_protocol.c` | 帧解析/打包/调度实现 |
+| `docs/通信协议.md` | 更新后的文档 |

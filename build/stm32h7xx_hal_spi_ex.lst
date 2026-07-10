@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 1
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccw5p9TL.s 			page 1
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
    1              		.cpu cortex-m7
@@ -58,7 +62,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 1
   28:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi_ex.c ****   * @{
   29:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi_ex.c ****   */
   30:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi_ex.c **** 
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 2
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccw5p9TL.s 			page 2
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
   31:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi_ex.c **** /** @defgroup SPIEx SPIEx
@@ -118,7 +126,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 1
   36              		.loc 1 77 25 is_stmt 0 view .LVU3
   37 0000 0268     		ldr	r2, [r0]
   38              		.loc 1 77 12 view .LVU4
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 3
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccw5p9TL.s 			page 3
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
   39 0002 D2F814C0 		ldr	ip, [r2, #20]
@@ -178,7 +190,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 1
   82 002a 8242     		cmpne	r2, r0
   83 002c 07D0     		beq	.L3
   84              		.loc 1 86 9 discriminator 1 view .LVU22
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 4
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccw5p9TL.s 			page 4
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
   85 002e 01F58061 		add	r1, r1, #1024
@@ -238,7 +254,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 1
  102:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi_ex.c **** }
  117              		.loc 1 102 1 view .LVU34
  118 0056 02B0     		add	sp, sp, #8
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 5
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccw5p9TL.s 			page 5
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  119              	.LCFI1:
@@ -298,7 +318,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 1
  158              		.loc 1 118 3 view .LVU41
  159 0002 90F88020 		ldrb	r2, [r0, #128]	@ zero_extendqisi2
  160 0006 012A     		cmp	r2, #1
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 6
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccw5p9TL.s 			page 6
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  161 0008 2DD0     		beq	.L23
@@ -358,7 +382,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 1
  188 002c 83F88120 		strb	r2, [r3, #129]
  146:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi_ex.c ****   /* Process Unlocked */
  147:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi_ex.c ****   __HAL_UNLOCK(hspi);
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 7
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccw5p9TL.s 			page 7
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  189              		.loc 1 147 3 is_stmt 1 view .LVU54
@@ -418,7 +446,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 1
  230 005c 0A68     		ldr	r2, [r1]
  231 005e 42F00102 		orr	r2, r2, #1
  232 0062 0A60     		str	r2, [r1]
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 8
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccw5p9TL.s 			page 8
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  233 0064 E1E7     		b	.L22
@@ -478,7 +510,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 1
  169:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi_ex.c ****   /* Check State and Insure that Underrun configuration is managed only by Salve */
  170:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi_ex.c ****   if ((hspi->State != HAL_SPI_STATE_READY) || (hspi->Init.Mode != SPI_MODE_SLAVE))
  268              		.loc 1 170 3 view .LVU80
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 9
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccw5p9TL.s 			page 9
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  269              		.loc 1 170 12 is_stmt 0 view .LVU81
@@ -538,7 +574,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 1
  191:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi_ex.c ****   {
  192:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi_ex.c ****     /* Disable SPI peripheral */
  193:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi_ex.c ****     __HAL_SPI_DISABLE(hspi);
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 10
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccw5p9TL.s 			page 10
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  194:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_spi_ex.c **** 
@@ -598,7 +638,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 1
  334              		.loc 1 176 12 view .LVU110
  335 005e 7047     		bx	lr
  336              	.LVL21:
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 11
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccw5p9TL.s 			page 11
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  337              	.L29:
@@ -653,11 +697,16 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 1
  379              		.file 5 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
  380              		.file 6 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_dma.h"
  381              		.file 7 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_spi.h"
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s 			page 12
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccw5p9TL.s 			page 12
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32h7xx_hal_spi_ex.c
+<<<<<<< HEAD
 C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s:20     .text.HAL_SPIEx_FlushRxFifo:00000000 $t
 C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s:26     .text.HAL_SPIEx_FlushRxFifo:00000000 HAL_SPIEx_FlushRxFifo
 C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s:133    .text.HAL_SPIEx_FlushRxFifo:00000060 $d
@@ -665,5 +714,14 @@ C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s:139    .text.HAL_SPIEx_EnableLockConfi
 C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s:145    .text.HAL_SPIEx_EnableLockConfiguration:00000000 HAL_SPIEx_EnableLockConfiguration
 C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s:244    .text.HAL_SPIEx_ConfigureUnderrun:00000000 $t
 C:\Users\hh\AppData\Local\Temp\ccZjYVxT.s:250    .text.HAL_SPIEx_ConfigureUnderrun:00000000 HAL_SPIEx_ConfigureUnderrun
+=======
+C:\Users\hh\AppData\Local\Temp\ccw5p9TL.s:20     .text.HAL_SPIEx_FlushRxFifo:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccw5p9TL.s:26     .text.HAL_SPIEx_FlushRxFifo:00000000 HAL_SPIEx_FlushRxFifo
+C:\Users\hh\AppData\Local\Temp\ccw5p9TL.s:133    .text.HAL_SPIEx_FlushRxFifo:00000060 $d
+C:\Users\hh\AppData\Local\Temp\ccw5p9TL.s:139    .text.HAL_SPIEx_EnableLockConfiguration:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccw5p9TL.s:145    .text.HAL_SPIEx_EnableLockConfiguration:00000000 HAL_SPIEx_EnableLockConfiguration
+C:\Users\hh\AppData\Local\Temp\ccw5p9TL.s:244    .text.HAL_SPIEx_ConfigureUnderrun:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccw5p9TL.s:250    .text.HAL_SPIEx_ConfigureUnderrun:00000000 HAL_SPIEx_ConfigureUnderrun
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 NO UNDEFINED SYMBOLS

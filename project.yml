@@ -18,8 +18,13 @@
   :test_file_prefix: test_
   :default_tasks:
     - test:all
+<<<<<<< HEAD
   :test_threads: 1
   :compile_threads: 1
+=======
+  :test_threads: 4
+  :compile_threads: 4
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
   :release_build: FALSE
 
 :plugins:
@@ -34,11 +39,19 @@
 
 :paths:
   :test:
+<<<<<<< HEAD
     - +:test/*
     - -:test/support
   :source:
     - App/Src/**
     - BSP/Src/**
+=======
+    - +:test/**
+    - -:test/support
+  :source:
+    - App/Src/
+    - BSP/Src/
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
   :include:
     - test/support/**
     - App/Inc/**
@@ -59,7 +72,10 @@
     - "__DMB()="
     - "__disable_irq()="
     - "__enable_irq()="
+<<<<<<< HEAD
     - "__NOP()="
+=======
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
     - "__BKPT()="
   :release: []
   :use_test_definition: FALSE

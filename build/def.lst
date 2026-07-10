@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 1
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s 			page 1
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
    1              		.cpu cortex-m7
@@ -58,7 +62,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 1
   28:Middlewares/Third_Party/LwIP/src/core/def.c **** 
   29:Middlewares/Third_Party/LwIP/src/core/def.c **** /*
   30:Middlewares/Third_Party/LwIP/src/core/def.c ****  * Copyright (c) 2001-2004 Swedish Institute of Computer Science.
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 2
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s 			page 2
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
   31:Middlewares/Third_Party/LwIP/src/core/def.c ****  * All rights reserved.
@@ -118,7 +126,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 1
   35              		.loc 1 78 10 is_stmt 0 view .LVU2
   36 0000 0302     		lsls	r3, r0, #8
   37 0002 43EA1020 		orr	r0, r3, r0, lsr #8
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 3
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s 			page 3
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
   38              	.LVL1:
@@ -178,7 +190,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 1
   80              		.thumb
   81              		.thumb_func
   83              	lwip_strnstr:
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 4
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s 			page 4
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
   84              	.LVL4:
@@ -238,7 +254,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 1
  119              	.L6:
  120              		.loc 1 112 57 is_stmt 1 discriminator 2 view .LVU18
  121 0018 0134     		adds	r4, r4, #1
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 5
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s 			page 5
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  122              	.LVL8:
@@ -298,7 +318,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 1
  117:Middlewares/Third_Party/LwIP/src/core/def.c **** }
  169              		.loc 1 117 10 view .LVU34
  170 004a 1446     		mov	r4, r2
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 6
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s 			page 6
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  171              	.LVL14:
@@ -358,7 +382,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 1
  192 0000 00B5     		push	{lr}
  193              	.LCFI1:
  194              		.cfi_def_cfa_offset 4
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 7
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s 			page 7
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  195              		.cfi_offset 14, -4
@@ -418,7 +446,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 1
  219              	.LBB2:
  159:Middlewares/Third_Party/LwIP/src/core/def.c ****       if ((c1_upc >= 'a') && (c1_upc <= 'z')) {
  220              		.loc 1 159 7 is_stmt 1 view .LVU47
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 8
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s 			page 8
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  159:Middlewares/Third_Party/LwIP/src/core/def.c ****       if ((c1_upc >= 'a') && (c1_upc <= 'z')) {
@@ -478,7 +510,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 1
  261              	.LVL26:
  171:Middlewares/Third_Party/LwIP/src/core/def.c ****       }
  262              		.loc 1 171 16 view .LVU62
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 9
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s 			page 9
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  263 0036 FCE7     		b	.L12
@@ -538,7 +574,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 1
  205:Middlewares/Third_Party/LwIP/src/core/def.c ****         /* characters are not equal but none is in the alphabet range */
  206:Middlewares/Third_Party/LwIP/src/core/def.c ****         return 1;
  207:Middlewares/Third_Party/LwIP/src/core/def.c ****       }
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 10
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s 			page 10
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  208:Middlewares/Third_Party/LwIP/src/core/def.c ****     }
@@ -598,7 +638,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 1
  195:Middlewares/Third_Party/LwIP/src/core/def.c ****         /* characters are not equal an one is in the alphabet range:
  332              		.loc 1 195 7 is_stmt 1 view .LVU82
  195:Middlewares/Third_Party/LwIP/src/core/def.c ****         /* characters are not equal an one is in the alphabet range:
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 11
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s 			page 11
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  333              		.loc 1 195 27 is_stmt 0 view .LVU83
@@ -658,7 +702,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 1
  376              		.section	.text.lwip_strnistr,"ax",%progbits
  377              		.align	1
  378              		.global	lwip_strnistr
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 12
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s 			page 12
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  379              		.syntax unified
@@ -718,7 +766,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 1
  135:Middlewares/Third_Party/LwIP/src/core/def.c ****     if (lwip_strnicmp(p, token, tokenlen) == 0) {
  424              		.loc 1 135 23 discriminator 1 view .LVU106
  135:Middlewares/Third_Party/LwIP/src/core/def.c ****     if (lwip_strnicmp(p, token, tokenlen) == 0) {
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 13
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s 			page 13
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  425              		.loc 1 135 20 is_stmt 0 discriminator 1 view .LVU107
@@ -778,7 +830,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 1
  140:Middlewares/Third_Party/LwIP/src/core/def.c **** }
  467              		.loc 1 140 10 view .LVU120
  468 0046 FAE7     		b	.L29
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 14
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s 			page 14
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  469              		.cfi_endproc
@@ -838,7 +894,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 1
  228:Middlewares/Third_Party/LwIP/src/core/def.c ****   /* handle invalid bufsize */
  229:Middlewares/Third_Party/LwIP/src/core/def.c ****   if (bufsize < 2) {
  510              		.loc 1 229 3 is_stmt 1 view .LVU130
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 15
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s 			page 15
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  511              		.loc 1 229 6 is_stmt 0 view .LVU131
@@ -898,7 +958,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 1
  543              		.loc 1 238 12 is_stmt 0 view .LVU145
  544 0030 2D23     		movs	r3, #45
  545              	.LVL61:
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 16
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s 			page 16
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  238:Middlewares/Third_Party/LwIP/src/core/def.c ****   }
@@ -958,7 +1022,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 1
  590              	.L49:
  248:Middlewares/Third_Party/LwIP/src/core/def.c ****   }
  249:Middlewares/Third_Party/LwIP/src/core/def.c ****   if (n) {
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 17
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s 			page 17
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  591              		.loc 1 249 3 is_stmt 1 view .LVU162
@@ -1018,7 +1086,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 1
  261:Middlewares/Third_Party/LwIP/src/core/def.c **** }
  627              		.loc 1 261 3 view .LVU178
  628 0080 521A     		subs	r2, r2, r1
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 18
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s 			page 18
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  629 0082 FFF7FEFF 		bl	memmove
@@ -1078,7 +1150,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 1
  281:Middlewares/Third_Party/LwIP/src/core/def.c ****   for (i = 0; i < len; i++) {
  666              		.loc 1 281 3 view .LVU186
  279:Middlewares/Third_Party/LwIP/src/core/def.c ****   unsigned char ret = 0;
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 19
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s 			page 19
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  667              		.loc 1 279 17 is_stmt 0 view .LVU187
@@ -1125,11 +1201,16 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 1
  703              		.file 4 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/lib/g
  704              		.file 5 "Middlewares/Third_Party/LwIP/src/include/lwip/arch.h"
  705              		.file 6 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s 			page 20
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s 			page 20
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 def.c
+<<<<<<< HEAD
 C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s:20     .text.lwip_htons:00000000 $t
 C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s:26     .text.lwip_htons:00000000 lwip_htons
 C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s:46     .text.lwip_htonl:00000000 $t
@@ -1147,6 +1228,25 @@ C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s:479    .text.lwip_itoa:00000000 lwip_i
 C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s:636    .text.lwip_itoa:00000088 $d
 C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s:641    .text.lwip_memcmp_consttime:00000000 $t
 C:\Users\hh\AppData\Local\Temp\cc5Y7AEA.s:647    .text.lwip_memcmp_consttime:00000000 lwip_memcmp_consttime
+=======
+C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s:20     .text.lwip_htons:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s:26     .text.lwip_htons:00000000 lwip_htons
+C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s:46     .text.lwip_htonl:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s:52     .text.lwip_htonl:00000000 lwip_htonl
+C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s:77     .text.lwip_strnstr:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s:83     .text.lwip_strnstr:00000000 lwip_strnstr
+C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s:178    .text.lwip_stricmp:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s:184    .text.lwip_stricmp:00000000 lwip_stricmp
+C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s:269    .text.lwip_strnicmp:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s:275    .text.lwip_strnicmp:00000000 lwip_strnicmp
+C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s:377    .text.lwip_strnistr:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s:383    .text.lwip_strnistr:00000000 lwip_strnistr
+C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s:473    .text.lwip_itoa:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s:479    .text.lwip_itoa:00000000 lwip_itoa
+C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s:636    .text.lwip_itoa:00000088 $d
+C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s:641    .text.lwip_memcmp_consttime:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccXPrZmX.s:647    .text.lwip_memcmp_consttime:00000000 lwip_memcmp_consttime
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 UNDEFINED SYMBOLS
 strlen

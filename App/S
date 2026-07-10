@@ -1,0 +1,287 @@
+#include "can_protocol.h"
+#include "bsp_can.h"
+#include "voltage_sim.h"
+#include "waveform_gen.h"
+#include "dac_safety.h"
+
+#include <string.h>
+#include <stdio.h>
+
+/* ==================================================================== */
+/*  内部数据缓存                                                         */
+/* ==================================================================== */
+
+static uint16_t s_voltageSet[13] = {3200U, 3200U, 3200U, 3200U, 3200U,
+                                    3200U, 3200U, 3200U, 3200U, 3200U,
+                                    3200U, 3200U, 3200U};
+static int8_t   s_offsetSet[13] = {0};
+static int8_t   s_tempSet[7]    = {0};
+static uint8_t  s_waveType      = 0U;
+static uint8_t  s_waveChannel   = 1U;
+
+/* ==================================================================== */
+/*  辅助：发送一帧                                                       */
+/* ==================================================================== */
+static void CanProtocol_SendFrame(uint32_t id, const uint8_t *data, uint8_t len)
+{
+    (void)BspCan_SendClassic(id, 0U, data, len);
+}
+
+/* ==================================================================== */
+/*  接收帧解包                                                           */
+/* ==================================================================== */
+
+/* 0x011 — PC_msg1: 设通道 1~4 电压 */
+static void Unpack_PC_Msg1(const uint8_t *data)
+{
+    s_voltageSet[0] = GET_U16_LE(data + 0);
+    s_voltageSet[1] = GET_U16_LE(data + 2);
+    s_voltageSet[2] = GET_U16_LE(data + 4);
+    s_voltageSet[3] = GET_U16_LE(data + 6);
+
+    for (uint8_t i = 0; i < 4; i++)
+    {
+        if (s_voltageSet[i] < 500U)  s_voltageSet[i] = 500U;
+        if (s_voltageSet[i] > 5000U) s_voltageSet[i] = 5000U;
+        VoltageSim_SetCellVoltageMv(i + 1, s_voltageSet[i]);
+    }
+    printf("[can] PC_msg1: CH1=%u CH2=%u CH3=%u CH4=%u\r\n",
+           s_voltageSet[0], s_voltageSet[1], s_voltageSet[2], s_voltageSet[3]);
+}
+
+/* 0x012 — PC_msg2: 设通道 5~8 电压 */
+static void Unpack_PC_Msg2(const uint8_t *data)
+{
+    s_voltageSet[4] = GET_U16_LE(data + 0);
+    s_voltageSet[5] = GET_U16_LE(data + 2);
+    s_voltageSet[6] = GET_U16_LE(data + 4);
+    s_voltageSet[7] = GET_U16_LE(data + 6);
+
+    for (uint8_t i = 4; i < 8; i++)
+    {
+        if (s_voltageSet[i] < 500U)  s_voltageSet[i] = 500U;
+        if (s_voltageSet[i] > 5000U) s_voltageSet[i] = 5000U;
+        VoltageSim_SetCellVoltageMv(i + 1, s_voltageSet[i]);
+    }
+    printf("[can] PC_msg2: CH5=%u CH6=%u CH7=%u CH8=%u\r\n",
+           s_voltageSet[4], s_voltageSet[5], s_voltageSet[6], s_voltageSet[7]);
+}
+
+/* 0x013 — PC_msg3: 设通道 9~12 电压 */
+static void Unpack_PC_Msg3(const uint8_t *data)
+{
+    s_voltageSet[8]  = GET_U16_LE(data + 0);
+    s_voltageSet[9]  = GET_U16_LE(data + 2);
+    s_voltageSet[10] = GET_U16_LE(data + 4);
+    s_voltageSet[11] = GET_U16_LE(data + 6);
+
+    for (uint8_t i = 8; i < 12; i++)
+    {
+        if (s_voltageSet[i] < 500U)  s_voltageSet[i] = 500U;
+        if (s_voltageSet[i] > 5000U) s_voltageSet[i] = 5000U;
+        VoltageSim_SetCellVoltageMv(i + 1, s_voltageSet[i]);
+    }
+    printf("[can] PC_msg3: CH9=%u CH10=%u CH11=%u CH12=%u\r\n",
+           s_voltageSet[8], s_voltageSet[9], s_voltageSet[10], s_voltageSet[11]);
+}
+
+/* 0x014 — PC_msg4: 通道13 + 更新激活 + 波形 + 急停 */
+static void Unpack_PC_Msg4(const uint8_t *data)
+{
+    uint16_t ch13mv = GET_U16_LE(data + 0);
+    uint8_t  active = data[2];
+    uint8_t  wave   = data[3];
+    uint8_t  estop  = data[4];
+
+    if (ch13mv < 500U)  ch13mv = 500U;
+    if (ch13mv > 5000U) ch13mv = 5000U;
+    s_voltageSet[12] = ch13mv;
+
+    if (active == 1U)
+    {
+        VoltageSim_SetCellVoltageMv(13, ch13mv);
+    }
+    else if (active == 2U)
+    {
+        for (uint8_t i = 0; i < 13; i++)
+        {
+            s_voltageSet[i] = ch13mv;
+            VoltageSim_SetCellVoltageMv(i + 1, ch13mv);
+        }
+    }
+
+    s_waveType = (wave <= 1U) ? wave : 0U;
+    if (s_waveType == 1U)
+    {
+        WaveformGen_Stop();
+        WaveformGen_StartSquare(1, 1500U, 4000U, 50U);
+    }
+    else if (s_waveType == 0U)
+    {
+        WaveformGen_Stop();
+        WaveformGen_StartSine(1, 2500U, 1000U, 50U);
+    }
+
+    if (estop != 0U)
+    {
+        DacSafety_EmergencyStop(3200U);
+        WaveformGen_Stop();
+        VoltageSim_SetAllCellsVoltageMv(3200U);
+    }
+
+    printf("[can] PC_msg4: CH13=%u act=%u wave=%u estop=%u\r\n",
+           ch13mv, active, s_waveType, estop);
+}
+
+/* 0x015 — PC_msg5: 温度设置 */
+static void Unpack_PC_Msg5(const uint8_t *data)
+{
+    s_tempSet[0] = (int8_t)data[0];
+    s_tempSet[1] = (int8_t)data[1];
+    s_tempSet[2] = (int8_t)data[2];
+    s_tempSet[3] = (int8_t)data[3];
+    s_tempSet[4] = (int8_t)data[4];
+    s_tempSet[5] = (int8_t)data[5];
+    s_tempSet[6] = (int8_t)data[6];
+
+    printf("[can] PC_msg5: Temp1=%d Temp2=%d ... Temp7=%d\r\n",
+           s_tempSet[0], s_tempSet[1], s_tempSet[6]);
+}
+
+/* 0x016 — PC_msg6: 偏移 1~8 */
+static void Unpack_PC_Msg6(const uint8_t *data)
+{
+    for (uint8_t i = 0; i < 8; i++)
+    {
+        s_offsetSet[i] = (int8_t)data[i];
+        VoltageSim_SetCellCalibrationOffsetMv(i + 1, (int16_t)s_offsetSet[i]);
+    }
+    printf("[can] PC_msg6: offset 1~8 updated\r\n");
+    CanProtocol_SendFeedbackOffset1_8();
+}
+
+/* 0x017 — PC_msg7: 偏移 9~13 + 激活码 */
+static void Unpack_PC_Msg7(const uint8_t *data)
+{
+    uint16_t code = GET_U16_LE(data + 6);
+    if (code != 0x55AAU) return;
+
+    for (uint8_t i = 0; i < 5; i++)
+    {
+        s_offsetSet[8 + i] = (int8_t)data[i];
+        VoltageSim_SetCellCalibrationOffsetMv(9 + i, (int16_t)s_offsetSet[8 + i]);
+    }
+    printf("[can] PC_msg7: offset 9~13 updated (code=0x55AA)\r\n");
+    CanProtocol_SendFeedbackOffset9_13();
+}
+
+/* ==================================================================== */
+/*  发送帧打包                                                           */
+/* ==================================================================== */
+
+void CanProtocol_SendFeedbackVoltage1_4(void)
+{
+    uint8_t buf[8] = {0};
+    SET_U16_LE(buf + 0, VoltageSim_GetLastCellVoltageMv(1));
+    SET_U16_LE(buf + 2, VoltageSim_GetLastCellVoltageMv(2));
+    SET_U16_LE(buf + 4, VoltageSim_GetLastCellVoltageMv(3));
+    SET_U16_LE(buf + 6, VoltageSim_GetLastCellVoltageMv(4));
+    CanProtocol_SendFrame(CAN_ID_RP_MSG2, buf, 8);
+}
+
+void CanProtocol_SendFeedbackVoltage5_8(void)
+{
+    uint8_t buf[8] = {0};
+    SET_U16_LE(buf + 0, VoltageSim_GetLastCellVoltageMv(5));
+    SET_U16_LE(buf + 2, VoltageSim_GetLastCellVoltageMv(6));
+    SET_U16_LE(buf + 4, VoltageSim_GetLastCellVoltageMv(7));
+    SET_U16_LE(buf + 6, VoltageSim_GetLastCellVoltageMv(8));
+    CanProtocol_SendFrame(CAN_ID_RP_MSG3, buf, 8);
+}
+
+void CanProtocol_SendFeedbackVoltage9_12(void)
+{
+    uint8_t buf[8] = {0};
+    SET_U16_LE(buf + 0, VoltageSim_GetLastCellVoltageMv(9));
+    SET_U16_LE(buf + 2, VoltageSim_GetLastCellVoltageMv(10));
+    SET_U16_LE(buf + 4, VoltageSim_GetLastCellVoltageMv(11));
+    SET_U16_LE(buf + 6, VoltageSim_GetLastCellVoltageMv(12));
+    CanProtocol_SendFrame(CAN_ID_RP_MSG4, buf, 8);
+}
+
+void CanProtocol_SendFeedbackVoltage13(void)
+{
+    uint8_t buf[8] = {0};
+    SET_U16_LE(buf + 0, VoltageSim_GetLastCellVoltageMv(13));
+    buf[2] = s_waveType;
+    CanProtocol_SendFrame(CAN_ID_RP_MSG5, buf, 8);
+}
+
+void CanProtocol_SendFeedbackTemp(void)
+{
+    uint8_t buf[8] = {0};
+    for (uint8_t i = 0; i < 7; i++)
+    {
+        buf[i] = (uint8_t)s_tempSet[i];
+    }
+    CanProtocol_SendFrame(CAN_ID_RP_MSG6, buf, 8);
+}
+
+void CanProtocol_SendFeedbackOffset1_8(void)
+{
+    uint8_t buf[8] = {0};
+    for (uint8_t i = 0; i < 8; i++)
+    {
+        buf[i] = (uint8_t)VoltageSim_GetCellCalibrationOffsetMv(i + 1);
+    }
+    CanProtocol_SendFrame(CAN_ID_RP_MSG7, buf, 8);
+}
+
+void CanProtocol_SendFeedbackOffset9_13(void)
+{
+    uint8_t buf[8] = {0};
+    for (uint8_t i = 0; i < 5; i++)
+    {
+        buf[i] = (uint8_t)VoltageSim_GetCellCalibrationOffsetMv(9 + i);
+    }
+    CanProtocol_SendFrame(CAN_ID_RP_MSG8, buf, 8);
+}
+
+void CanProtocol_SendFeedbackStatus(void)
+{
+    uint8_t buf[8] = {0};
+    DacSafety_Status safety = DacSafety_GetStatus();
+
+    buf[0] = s_waveType;
+    buf[1] = safety.emergencyActive ? 1U : 0U;
+    SET_U16_LE(buf + 2, 0);
+    SET_U16_LE(buf + 4, 0);
+    SET_U16_LE(buf + 6, 0);
+    CanProtocol_SendFrame(CAN_ID_RP_MSG9, buf, 8);
+}
+
+/* ==================================================================== */
+/*  对外接口                                                              */
+/* ==================================================================== */
+
+void CanProtocol_Init(void)
+{
+    printf("[can_proto] protocol initialized\r\n");
+}
+
+void CanProtocol_ProcessRxFrame(uint32_t id, const uint8_t *data, uint8_t len)
+{
+    if (data == NULL || len < 8) return;
+
+    switch (id)
+    {
+        case CAN_ID_PC_MSG1: Unpack_PC_Msg1(data); break;
+        case CAN_ID_PC_MSG2: Unpack_PC_Msg2(data); break;
+        case CAN_ID_PC_MSG3: Unpack_PC_Msg3(data); break;
+        case CAN_ID_PC_MSG4: Unpack_PC_Msg4(data); break;
+        case CAN_ID_PC_MSG5: Unpack_PC_Msg5(data); break;
+        case CAN_ID_PC_MSG6: Unpack_PC_Msg6(data); break;
+        case CAN_ID_PC_MSG7: Unpack_PC_Msg7(data); break;
+        default: break;
+    }
+}

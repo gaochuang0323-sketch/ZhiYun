@@ -4,10 +4,13 @@
 #include "dac81416.h"
 #include "fdcan.h"
 #include "bsp_can.h"
+<<<<<<< HEAD
 #include "usart.h"
 
 /* UART handle needed by fault_console.c */
 UART_HandleTypeDef huart1;
+=======
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 /* HAL Tick stub */
 static uint32_t mockTick = 0U;
@@ -42,6 +45,7 @@ GPIO_PinState HAL_GPIO_ReadPin(uint16_t GPIO_Pin, uint16_t GPIO_Port)
     return GPIO_PIN_RESET;
 }
 
+<<<<<<< HEAD
 /* UART test buffer */
 #define UART_TEST_BUFFER_SIZE 256
 static uint8_t uartTestBuffer[UART_TEST_BUFFER_SIZE];
@@ -81,6 +85,8 @@ void UART_SetReceiveResult(HAL_StatusTypeDef result)
     uartReceiveResult = result;
 }
 
+=======
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 /* DAC stubs */
 static HAL_StatusTypeDef dacWriteResult = HAL_OK;
 static uint8_t dacWriteChannelCalled = 0U;
@@ -150,7 +156,11 @@ uint8_t DAC_ReadAlarmPin(void)
 }
 
 /* ========== FDCAN stubs ========== */
+<<<<<<< HEAD
 FDCAN_HandleTypeDef hfdcan1 = {0};
+=======
+FDCAN_HandleTypeDef hfdcan1 = 0;
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 static HAL_StatusTypeDef fdcanConfigFilterResult = HAL_OK;
 static HAL_StatusTypeDef fdcanConfigGlobalResult = HAL_OK;
 static HAL_StatusTypeDef fdcanStartResult = HAL_OK;
@@ -203,11 +213,14 @@ HAL_StatusTypeDef HAL_FDCAN_GetRxMessage(FDCAN_HandleTypeDef *hfdcan, uint32_t R
     (void)RxFifo;
     uint8_t i;
 
+<<<<<<< HEAD
     if (fdcanRxFifoFillLevel > 0U)
     {
         fdcanRxFifoFillLevel--;
     }
 
+=======
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
     pRxHeader->Identifier = fdcanMsgIdToReturn;
     pRxHeader->IdType = fdcanMsgIdTypeToReturn;
     pRxHeader->DataLength = fdcanMsgDlcToReturn;
@@ -245,4 +258,8 @@ void FDCAN_Reset(void)
     fdcanMsgIdTypeToReturn = 0U;
     fdcanMsgDlcToReturn = FDCAN_DLC_BYTES_8;
     for (int i = 0; i < 8; i++) fdcanMsgDataToReturn[i] = 0;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d

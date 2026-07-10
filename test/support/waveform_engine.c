@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Stub implementations for WaveformEngine functions.
    These replace the real hardware-dependent waveform_engine.c during testing. */
 #include "waveform_engine.h"
@@ -21,3 +22,7 @@ void WaveformEngine_DmaHalfComplete(void) {}
 void WaveformEngine_DmaComplete(void) {}
 void WaveformEngine_DmaError(void) {}
 void WaveformEngine_TimerElapsed(void) {}
+=======
+/* Empty stub for waveform_engine.c to prevent compiling the real hardware-dependent file */
+#include "waveform_engine.h"
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d

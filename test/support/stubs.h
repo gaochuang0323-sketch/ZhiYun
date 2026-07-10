@@ -25,11 +25,14 @@ void DAC_ClearLdacCalled(void);
 /* Alarm pin simulation */
 void DAC_SetAlarmPinValue(uint8_t value);
 
+<<<<<<< HEAD
 /* UART test buffer control */
 void UART_PushData(const uint8_t *data, uint16_t length);
 void UART_Reset(void);
 void UART_SetReceiveResult(HAL_StatusTypeDef result);
 
+=======
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 /* FDCAN test helpers */
 void FDCAN_SetConfigFilterResult(HAL_StatusTypeDef result);
 void FDCAN_SetConfigGlobalResult(HAL_StatusTypeDef result);

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 1
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
    1              		.cpu cortex-m7
@@ -58,7 +62,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
   28:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   [..] The Flexible memory controller (FMC) includes following memory controllers:
   29:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****        (+) The NOR/PSRAM memory controller
   30:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****      (+) The NAND memory controller
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 2
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 2
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
   31:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****        (+) The Synchronous DRAM (SDRAM) controller
@@ -118,7 +126,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
   85:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c **** #define BTR_CLEAR_MASK    ((uint32_t)(FMC_BTRx_ADDSET | FMC_BTRx_ADDHLD  |\
   86:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****                                       FMC_BTRx_DATAST | FMC_BTRx_BUSTURN |\
   87:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****                                       FMC_BTRx_CLKDIV | FMC_BTRx_DATLAT  |\
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 3
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 3
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
   88:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****                                       FMC_BTRx_ACCMOD))
@@ -178,7 +190,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  142:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c **** /** @defgroup FMC_LL_Exported_Functions_NORSRAM FMC Low Layer NOR SRAM Exported Functions
  143:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   * @brief  NORSRAM Controller functions
  144:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   *
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 4
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 4
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  145:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   @verbatim
@@ -238,7 +254,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
   35              	.LCFI0:
   36              		.cfi_def_cfa_offset 4
   37              		.cfi_offset 14, -4
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 5
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 5
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  193:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   uint32_t flashaccess;
@@ -298,7 +318,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
   65              		.loc 1 219 6 view .LVU24
   66 0012 082B     		cmp	r3, #8
   67 0014 33D0     		beq	.L7
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 6
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 6
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  220:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   {
@@ -358,7 +382,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
   99              		.loc 1 236 19 view .LVU40
  100 0036 0A6A     		ldr	r2, [r1, #32]
  235:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****               Init->WriteOperation          | \
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 7
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 7
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  101              		.loc 1 235 45 view .LVU41
@@ -418,7 +446,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  254:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****           FMC_BCRx_WAITEN               |
  255:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****           FMC_BCRx_EXTMOD               |
  256:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****           FMC_BCRx_ASYNCWAIT            |
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 8
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 8
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  257:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****           FMC_BCRx_CBURSTRW);
@@ -478,7 +510,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  167              		.loc 1 278 1 is_stmt 0 view .LVU71
  168 007a 0020     		movs	r0, #0
  169              	.LVL8:
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 9
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 9
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  170              		.loc 1 278 1 view .LVU72
@@ -538,7 +574,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  211              		@ frame_needed = 0, uses_anonymous_args = 0
  212              		@ link register save eliminated.
  290:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   /* Check the parameters */
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 10
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 10
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  291:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   assert_param(IS_FMC_NORSRAM_DEVICE(Device));
@@ -598,7 +638,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  243              	.LVL14:
  244              	.L12:
  307:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   }
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 11
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 11
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  245              		.loc 1 307 5 is_stmt 1 view .LVU94
@@ -658,7 +702,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  279              		.loc 1 335 3 view .LVU104
  336:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   assert_param(IS_FMC_DATA_LATENCY(Timing->DataLatency));
  280              		.loc 1 336 3 view .LVU105
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 12
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 12
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  337:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   assert_param(IS_FMC_ACCESS_MODE(Timing->AccessMode));
@@ -718,7 +766,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  316              		.loc 1 351 6 view .LVU122
  317 0036 13F4801F 		tst	r3, #1048576
  318 003a 0BD0     		beq	.L15
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 13
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 13
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  352:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   {
@@ -778,7 +830,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  363:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   *         parameters in the FMC_NORSRAM_TimingTypeDef
  364:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   * @param  Device Pointer to NORSRAM device instance
  365:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   * @param  Timing Pointer to NORSRAM Timing structure
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 14
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 14
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  366:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   * @param  Bank NORSRAM bank number
@@ -838,7 +894,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  402:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   }
  403:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c **** 
  404:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   return HAL_OK;
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 15
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 15
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  382              		.loc 1 404 3 is_stmt 1 view .LVU142
@@ -898,7 +958,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  404:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c **** }
  423              		.loc 1 404 3 is_stmt 1 view .LVU157
  424              		.loc 1 405 1 is_stmt 0 view .LVU158
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 16
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 16
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  425 003c 0020     		movs	r0, #0
@@ -958,7 +1022,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  454              		@ link register save eliminated.
  433:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   /* Check the parameters */
  434:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   assert_param(IS_FMC_NORSRAM_DEVICE(Device));
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 17
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 17
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  455              		.loc 1 434 3 view .LVU161
@@ -1018,7 +1086,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  489 0004 23F48053 		bic	r3, r3, #4096
  490 0008 40F82130 		str	r3, [r0, r1, lsl #2]
  457:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c **** 
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 18
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 18
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  458:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   return HAL_OK;
@@ -1078,7 +1150,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  495:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   *  @brief    Initialization and Configuration functions
  496:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   *
  497:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c **** @verbatim
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 19
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 19
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  498:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   ==============================================================================
@@ -1138,7 +1214,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  530 0004 0A4A     		ldr	r2, .L31
  531 0006 1A40     		ands	r2, r2, r3
  532 0008 4B68     		ldr	r3, [r1, #4]
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 20
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 20
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  533 000a 8C68     		ldr	r4, [r1, #8]
@@ -1198,7 +1278,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  546:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   * @param  Timing Pointer to NAND timing structure
  547:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   * @param  Bank NAND bank number
  548:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   * @retval HAL status
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 21
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 21
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  549:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   */
@@ -1258,7 +1342,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  569:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c **** 
  570:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   return HAL_OK;
  605              		.loc 1 570 3 is_stmt 1 view .LVU206
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 22
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 22
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  571:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c **** }
@@ -1318,7 +1406,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  636              		.loc 1 596 3 view .LVU217
  637              		.loc 1 596 25 is_stmt 0 view .LVU218
  638 0000 0B68     		ldr	r3, [r1]
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 23
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 23
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  597:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****                   ((Timing->WaitSetupTime) << FMC_PATT_ATTWAIT_Pos) |
@@ -1378,7 +1470,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  676              		@ frame_needed = 0, uses_anonymous_args = 0
  677              		@ link register save eliminated.
  612:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   /* Check the parameters */
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 24
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 24
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  613:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   assert_param(IS_FMC_NAND_DEVICE(Device));
@@ -1438,7 +1534,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  632:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c **** /**
  633:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   * @}
  634:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   */
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 25
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 25
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  635:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c **** 
@@ -1498,7 +1598,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  732 000a 7047     		bx	lr
  733              		.cfi_endproc
  734              	.LFE156:
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 26
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 26
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  736              		.section	.text.FMC_NAND_ECC_Disable,"ax",%progbits
@@ -1558,7 +1662,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  770              		.syntax unified
  771              		.thumb
  772              		.thumb_func
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 27
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 27
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  774              	FMC_NAND_GetECC:
@@ -1618,7 +1726,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  805              	.L40:
  806              		.loc 1 716 60 view .LVU266
  807              		.loc 1 716 10 is_stmt 0 view .LVU267
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 28
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 28
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  808 000e 6268     		ldr	r2, [r4, #4]
@@ -1678,7 +1790,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  843 0034 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
  844              	.LVL53:
  845              	.L43:
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 29
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 29
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  723:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****       }
@@ -1738,7 +1854,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  775:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c **** 
  776:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c **** @endverbatim
  777:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   * @{
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 30
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 30
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  778:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   */
@@ -1798,7 +1918,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  888              		.loc 1 805 5 is_stmt 1 view .LVU301
  889 0006 0268     		ldr	r2, [r0]
  890 0008 6FF30E02 		bfc	r2, #0, #15
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 31
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 31
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  891 000c 4B68     		ldr	r3, [r1, #4]
@@ -1858,7 +1982,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  913              		.loc 1 837 3 is_stmt 1 view .LVU303
  838:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c **** }
  914              		.loc 1 838 1 is_stmt 0 view .LVU304
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 32
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 32
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  915 0032 0020     		movs	r0, #0
@@ -1918,7 +2046,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  968              	.LVL59:
  969              	.LFB160:
  839:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c **** 
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 33
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 33
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  840:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c **** 
@@ -1978,7 +2110,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  997 000a 0B68     		ldr	r3, [r1]
  998 000c 013B     		subs	r3, r3, #1
  999 000e 4C68     		ldr	r4, [r1, #4]
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 34
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 34
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  1000 0010 04F1FF3C 		add	ip, r4, #-1
@@ -2038,7 +2174,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  1026              		.loc 1 894 1 view .LVU327
  1027 004e 10BC     		pop	{r4}
  1028              	.LCFI12:
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 35
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 35
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  1029              		.cfi_remember_state
@@ -2098,7 +2238,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  1080              		.section	.text.FMC_SDRAM_DeInit,"ax",%progbits
  1081              		.align	1
  1082              		.global	FMC_SDRAM_DeInit
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 36
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 36
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  1083              		.syntax unified
@@ -2158,7 +2302,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  1120              		.loc 1 912 22 is_stmt 0 view .LVU347
  1121 001a 9861     		str	r0, [r3, #24]
  913:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c **** 
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 37
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 37
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  914:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   return HAL_OK;
@@ -2218,7 +2366,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  947:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c **** 
  948:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   /* Enable write protection */
  949:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   SET_BIT(Device->SDCR[Bank], FMC_SDRAM_WRITE_PROTECTION_ENABLE);
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 38
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 38
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  1145              		.loc 1 949 3 view .LVU353
@@ -2278,7 +2430,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  1181 000c 0020     		movs	r0, #0
  1182              	.LVL72:
  1183              		.loc 1 969 1 view .LVU363
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 39
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 39
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  1184 000e 7047     		bx	lr
@@ -2338,7 +2494,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  1219 000a 4C68     		ldr	r4, [r1, #4]
  1220 000c 2343     		orrs	r3, r3, r4
  1221 000e 8C68     		ldr	r4, [r1, #8]
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 40
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 40
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  1222 0010 04F1FF3C 		add	ip, r4, #-1
@@ -2398,7 +2558,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
 1009:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   assert_param(IS_FMC_REFRESH_RATE(RefreshRate));
  1260              		.loc 1 1009 3 view .LVU380
 1010:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c **** 
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 41
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 41
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
 1011:Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_fmc.c ****   /* Set the refresh rate in command register */
@@ -2458,7 +2622,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  1296              	.LVL80:
  1297              		.loc 1 1031 3 is_stmt 0 view .LVU389
  1298 0008 43EA4113 		orr	r3, r3, r1, lsl #5
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 42
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 42
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  1299 000c 0361     		str	r3, [r0, #16]
@@ -2518,7 +2686,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  1330              		.loc 1 1056 5 is_stmt 1 view .LVU399
  1331              		.loc 1 1056 31 is_stmt 0 view .LVU400
  1332 0002 8069     		ldr	r0, [r0, #24]
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 43
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 43
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  1333              	.LVL83:
@@ -2561,11 +2733,16 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 1
  1362              		.file 6 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
  1363              		.file 7 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_fmc.h"
  1364              		.file 8 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h"
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbNirFa.s 			page 44
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s 			page 44
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 stm32h7xx_ll_fmc.c
+<<<<<<< HEAD
 C:\Users\hh\AppData\Local\Temp\ccbNirFa.s:20     .text.FMC_NORSRAM_Init:00000000 $t
 C:\Users\hh\AppData\Local\Temp\ccbNirFa.s:26     .text.FMC_NORSRAM_Init:00000000 FMC_NORSRAM_Init
 C:\Users\hh\AppData\Local\Temp\ccbNirFa.s:194    .text.FMC_NORSRAM_Init:00000098 $d
@@ -2614,6 +2791,56 @@ C:\Users\hh\AppData\Local\Temp\ccbNirFa.s:1276   .text.FMC_SDRAM_SetAutoRefreshN
 C:\Users\hh\AppData\Local\Temp\ccbNirFa.s:1282   .text.FMC_SDRAM_SetAutoRefreshNumber:00000000 FMC_SDRAM_SetAutoRefreshNumber
 C:\Users\hh\AppData\Local\Temp\ccbNirFa.s:1310   .text.FMC_SDRAM_GetModeStatus:00000000 $t
 C:\Users\hh\AppData\Local\Temp\ccbNirFa.s:1316   .text.FMC_SDRAM_GetModeStatus:00000000 FMC_SDRAM_GetModeStatus
+=======
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:20     .text.FMC_NORSRAM_Init:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:26     .text.FMC_NORSRAM_Init:00000000 FMC_NORSRAM_Init
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:194    .text.FMC_NORSRAM_Init:00000098 $d
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:199    .text.FMC_NORSRAM_DeInit:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:205    .text.FMC_NORSRAM_DeInit:00000000 FMC_NORSRAM_DeInit
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:254    .text.FMC_NORSRAM_Timing_Init:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:260    .text.FMC_NORSRAM_Timing_Init:00000000 FMC_NORSRAM_Timing_Init
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:355    .text.FMC_NORSRAM_Extended_Timing_Init:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:361    .text.FMC_NORSRAM_Extended_Timing_Init:00000000 FMC_NORSRAM_Extended_Timing_Init
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:436    .text.FMC_NORSRAM_Extended_Timing_Init:00000044 $d
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:441    .text.FMC_NORSRAM_WriteOperation_Enable:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:447    .text.FMC_NORSRAM_WriteOperation_Enable:00000000 FMC_NORSRAM_WriteOperation_Enable
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:471    .text.FMC_NORSRAM_WriteOperation_Disable:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:477    .text.FMC_NORSRAM_WriteOperation_Disable:00000000 FMC_NORSRAM_WriteOperation_Disable
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:501    .text.FMC_NAND_Init:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:507    .text.FMC_NAND_Init:00000000 FMC_NAND_Init
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:561    .text.FMC_NAND_Init:00000030 $d
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:566    .text.FMC_NAND_CommonSpace_Timing_Init:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:572    .text.FMC_NAND_CommonSpace_Timing_Init:00000000 FMC_NAND_CommonSpace_Timing_Init
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:615    .text.FMC_NAND_AttributeSpace_Timing_Init:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:621    .text.FMC_NAND_AttributeSpace_Timing_Init:00000000 FMC_NAND_AttributeSpace_Timing_Init
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:664    .text.FMC_NAND_DeInit:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:670    .text.FMC_NAND_DeInit:00000000 FMC_NAND_DeInit
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:706    .text.FMC_NAND_ECC_Enable:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:712    .text.FMC_NAND_ECC_Enable:00000000 FMC_NAND_ECC_Enable
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:737    .text.FMC_NAND_ECC_Disable:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:743    .text.FMC_NAND_ECC_Disable:00000000 FMC_NAND_ECC_Disable
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:768    .text.FMC_NAND_GetECC:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:774    .text.FMC_NAND_GetECC:00000000 FMC_NAND_GetECC
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:853    .text.FMC_SDRAM_Init:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:859    .text.FMC_SDRAM_Init:00000000 FMC_SDRAM_Init
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:961    .text.FMC_SDRAM_Timing_Init:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:967    .text.FMC_SDRAM_Timing_Init:00000000 FMC_SDRAM_Timing_Init
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:1076   .text.FMC_SDRAM_Timing_Init:000000a4 $d
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:1081   .text.FMC_SDRAM_DeInit:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:1087   .text.FMC_SDRAM_DeInit:00000000 FMC_SDRAM_DeInit
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:1129   .text.FMC_SDRAM_WriteProtection_Enable:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:1135   .text.FMC_SDRAM_WriteProtection_Enable:00000000 FMC_SDRAM_WriteProtection_Enable
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:1159   .text.FMC_SDRAM_WriteProtection_Disable:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:1165   .text.FMC_SDRAM_WriteProtection_Disable:00000000 FMC_SDRAM_WriteProtection_Disable
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:1189   .text.FMC_SDRAM_SendCommand:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:1195   .text.FMC_SDRAM_SendCommand:00000000 FMC_SDRAM_SendCommand
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:1245   .text.FMC_SDRAM_ProgramRefreshRate:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:1251   .text.FMC_SDRAM_ProgramRefreshRate:00000000 FMC_SDRAM_ProgramRefreshRate
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:1276   .text.FMC_SDRAM_SetAutoRefreshNumber:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:1282   .text.FMC_SDRAM_SetAutoRefreshNumber:00000000 FMC_SDRAM_SetAutoRefreshNumber
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:1310   .text.FMC_SDRAM_GetModeStatus:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccjRCM9P.s:1316   .text.FMC_SDRAM_GetModeStatus:00000000 FMC_SDRAM_GetModeStatus
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 UNDEFINED SYMBOLS
 HAL_GetTick

@@ -56,7 +56,10 @@ void DMA1_Stream3_IRQHandler(void);
 void TIM1_UP_IRQHandler(void);
 void TIM3_IRQHandler(void);
 void SPI1_IRQHandler(void);
+<<<<<<< HEAD
 void TIM8_BRK_TIM12_IRQHandler(void);
+=======
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */

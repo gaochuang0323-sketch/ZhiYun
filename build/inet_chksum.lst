@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 1
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
    1              		.cpu cortex-m7
@@ -58,7 +62,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
   28:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****  * 3. The name of the author may not be used to endorse or promote products
   29:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****  *    derived from this software without specific prior written permission.
   30:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****  *
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 2
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 2
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
   31:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR IMPLIED
@@ -118,7 +126,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
   85:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c **** 
   86:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****   acc = 0;
   87:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****   /* dataptr may be at odd or even addresses */
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 3
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 3
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
   88:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****   octetptr = (const u8_t *)dataptr;
@@ -178,7 +190,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
   36              		.cfi_def_cfa_offset 4
   37              		.cfi_offset 14, -4
  135:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****   const u8_t *pb = (const u8_t *)dataptr;
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 4
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 4
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
   38              		.loc 1 135 3 is_stmt 1 view .LVU2
@@ -238,7 +254,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
   77 0024 03E0     		b	.L3
   78              	.LVL7:
   79              	.L4:
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 5
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 5
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  150:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****     sum += *ps++;
@@ -298,7 +318,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  117              		.loc 1 165 9 is_stmt 0 view .LVU39
  118 0046 98B2     		uxth	r0, r3
  119              	.LVL14:
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 6
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 6
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  120              		.loc 1 165 7 view .LVU40
@@ -358,7 +382,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  187:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****  */
  188:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c **** u16_t
  189:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c **** lwip_standard_chksum(const void *dataptr, int len)
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 7
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 7
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  190:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c **** {
@@ -418,7 +446,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  244:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c **** 
  245:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****   /* Fold 32-bit sum to 16 bits
  246:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****      calling this twice is probably faster than if statements... */
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 8
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 8
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  247:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****   sum = FOLD_U32T(sum);
@@ -478,7 +510,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  188              	.L9:
  189              		.loc 1 266 17 discriminator 1 view .LVU57
  190 0012 9DB1     		cbz	r5, .L14
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 9
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 9
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  267:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****     LWIP_DEBUGF(INET_DEBUG, ("inet_chksum_pseudo(): checksumming pbuf %p (has next %p) \n",
@@ -538,7 +574,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  230 003c 27B1     		cbz	r7, .L12
  282:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****     acc = SWAP_BYTES_IN_WORD(acc);
  231              		.loc 1 282 5 is_stmt 1 view .LVU75
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 10
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 10
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  232              		.loc 1 282 11 is_stmt 0 view .LVU76
@@ -598,7 +638,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  274              		.loc 1 294 1 view .LVU93
  275 0066 80B2     		uxth	r0, r0
  276              	.LVL38:
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 11
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 11
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  277              		.loc 1 294 1 view .LVU94
@@ -658,7 +702,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  315:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c **** 
  316:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****   addr = ip4_addr_get_u32(src);
  317:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****   acc = (addr & 0xffffUL);
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 12
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 12
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  318:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****   acc = (u32_t)(acc + ((addr >> 16) & 0xffffUL));
@@ -718,7 +766,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  372:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****  * @param src source ip address (used for checksum of pseudo header)
  373:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****  * @param dst destination ip address (used for checksum of pseudo header)
  374:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****  * @param proto ip protocol (used for checksum of pseudo header)
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 13
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 13
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  375:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****  * @param proto_len length of the ip data part (used for checksum of pseudo header)
@@ -778,7 +830,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  327              		.loc 1 404 3 view .LVU100
  405:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c **** 
  406:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****   /* iterate through all pbuf in chain */
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 14
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 14
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  407:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****   for (q = p; (q != NULL) && (chksum_len > 0); q = q->next) {
@@ -838,7 +894,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  363              		.loc 1 411 5 is_stmt 1 view .LVU113
  411:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****       chklen = chksum_len;
  364              		.loc 1 411 8 is_stmt 0 view .LVU114
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 15
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 15
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  365 0032 A845     		cmp	r8, r5
@@ -898,7 +958,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  407              		.loc 1 421 7 is_stmt 1 view .LVU132
  408              		.loc 1 421 17 is_stmt 0 view .LVU133
  409 0060 87F00107 		eor	r7, r7, #1
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 16
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 16
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  410              	.LVL52:
@@ -958,7 +1022,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  435:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****      calling this twice is probably faster than if statements... */
  436:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****   acc = FOLD_U32T(acc);
  451              		.loc 1 436 3 is_stmt 1 view .LVU148
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 17
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 17
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  452              		.loc 1 436 9 is_stmt 0 view .LVU149
@@ -1018,7 +1086,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  502              		.cfi_offset 3, -8
  503              		.cfi_offset 14, -4
  313:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****   u32_t addr;
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 18
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 18
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  504              		.loc 1 313 3 is_stmt 1 view .LVU162
@@ -1078,7 +1150,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  324:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c **** 
  540              		.loc 1 324 9 is_stmt 0 view .LVU181
  541 0020 1FFA83FC 		uxth	ip, r3
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 19
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 19
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  542              	.LVL75:
@@ -1138,7 +1214,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  588              		.cfi_def_cfa_offset 8
  589              		@ sp needed
  590 000e 10BD     		pop	{r4, pc}
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 20
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 20
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  395:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c **** 
@@ -1198,7 +1278,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  624              	.LVL81:
  463:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****   acc = (addr & 0xffffUL);
  625              		.loc 1 463 3 is_stmt 1 view .LVU199
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 21
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 21
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  464:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****   acc = (u32_t)(acc + ((addr >> 16) & 0xffffUL));
@@ -1258,7 +1342,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  670              		.cfi_def_cfa_offset 8
  671              		@ sp needed
  672 003a 10BD     		pop	{r4, pc}
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 22
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 22
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  673              		.loc 1 473 1 view .LVU220
@@ -1318,7 +1406,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  516:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****  * Calculates the IPv4 or IPv6 pseudo Internet checksum used by TCP and UDP for a pbuf chain.
  517:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****  *
  518:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****  * @param p chain of pbufs over that a checksum should be calculated (ip data part)
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 23
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 23
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  519:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****  * @param src source ip address (used for checksum of pseudo header)
@@ -1378,7 +1470,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  718              		.section	.text.inet_chksum,"ax",%progbits
  719              		.align	1
  720              		.global	inet_chksum
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 24
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 24
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  721              		.syntax unified
@@ -1438,7 +1534,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  561:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****  * Calculate a checksum over a chain of pbufs (without pseudo-header, much like
  562:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****  * inet_chksum only pbufs are used).
  563:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****  *
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 25
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 25
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  564:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c ****  * @param p pbuf chain over that the checksum should be calculated
@@ -1498,7 +1598,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  799 0010 3146     		mov	r1, r6
  800 0012 6868     		ldr	r0, [r5, #4]
  801 0014 FFF7FEFF 		bl	lwip_standard_chksum
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 26
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 26
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  802              	.LVL100:
@@ -1558,7 +1662,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  845              		.loc 1 587 10 is_stmt 0 view .LVU265
  846 0042 E043     		mvns	r0, r4
  588:Middlewares/Third_Party/LwIP/src/core/inet_chksum.c **** }
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 27
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 27
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  847              		.loc 1 588 1 view .LVU266
@@ -1577,11 +1685,16 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 1
  861              		.file 7 "Middlewares/Third_Party/LwIP/src/include/lwip/ip_addr.h"
  862              		.file 8 "C:/Program Files (x86)/ARM/arm-gnu-toolchain-15.2.rel1-mingw-w64-i686-arm-none-eabi/arm-n
  863              		.file 9 "Middlewares/Third_Party/LwIP/src/include/lwip/def.h"
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s 			page 28
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s 			page 28
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 inet_chksum.c
+<<<<<<< HEAD
 C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s:20     .text.lwip_standard_chksum:00000000 $t
 C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s:26     .text.lwip_standard_chksum:00000000 lwip_standard_chksum
 C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s:147    .text.inet_cksum_pseudo_base:00000000 $t
@@ -1602,6 +1715,28 @@ C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s:719    .text.inet_chksum:00000000 $t
 C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s:725    .text.inet_chksum:00000000 inet_chksum
 C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s:751    .text.inet_chksum_pbuf:00000000 $t
 C:\Users\hh\AppData\Local\Temp\ccu5Gw9r.s:757    .text.inet_chksum_pbuf:00000000 inet_chksum_pbuf
+=======
+C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s:20     .text.lwip_standard_chksum:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s:26     .text.lwip_standard_chksum:00000000 lwip_standard_chksum
+C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s:147    .text.inet_cksum_pseudo_base:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s:152    .text.inet_cksum_pseudo_base:00000000 inet_cksum_pseudo_base
+C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s:284    .rodata.inet_cksum_pseudo_partial_base.str1.4:00000000 $d
+C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s:295    .text.inet_cksum_pseudo_partial_base:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s:300    .text.inet_cksum_pseudo_partial_base:00000000 inet_cksum_pseudo_partial_base
+C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s:478    .text.inet_cksum_pseudo_partial_base:000000a0 $d
+C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s:485    .text.inet_chksum_pseudo:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s:491    .text.inet_chksum_pseudo:00000000 inet_chksum_pseudo
+C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s:557    .text.ip_chksum_pseudo:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s:563    .text.ip_chksum_pseudo:00000000 ip_chksum_pseudo
+C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s:596    .text.inet_chksum_pseudo_partial:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s:602    .text.inet_chksum_pseudo_partial:00000000 inet_chksum_pseudo_partial
+C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s:678    .text.ip_chksum_pseudo_partial:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s:684    .text.ip_chksum_pseudo_partial:00000000 ip_chksum_pseudo_partial
+C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s:719    .text.inet_chksum:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s:725    .text.inet_chksum:00000000 inet_chksum
+C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s:751    .text.inet_chksum_pbuf:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccGSKbTa.s:757    .text.inet_chksum_pbuf:00000000 inet_chksum_pbuf
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 UNDEFINED SYMBOLS
 lwip_htons

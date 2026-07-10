@@ -133,6 +133,7 @@ void test_Process_empty_fifo_does_nothing(void)
     TEST_ASSERT_EQUAL_UINT32(rxCountBefore, BspCan_GetStatus().rxCount);
 }
 
+<<<<<<< HEAD
 void test_Process_receives_extended_id(void)
 {
     uint8_t rxData[8] = {0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88};
@@ -189,6 +190,8 @@ void test_SendClassic_not_started_returns_error(void)
     TEST_ASSERT_EQUAL(HAL_ERROR, result);
 }
 
+=======
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 /* ========== BspCan_GetStatus ========== */
 void test_GetStatus_returns_counts(void)
 {

@@ -115,7 +115,10 @@ int main(void)
   MX_USART1_UART_Init();
   MX_FDCAN1_Init();
   MX_TIM3_Init();
+<<<<<<< HEAD
   MX_TIM12_Init();
+=======
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
   /* USER CODE BEGIN 2 */
   setvbuf(stdout, NULL, _IONBF, 0);
   printf("\r\n[boot] project start\r\n");

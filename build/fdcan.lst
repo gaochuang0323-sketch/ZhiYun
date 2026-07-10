@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s 			page 1
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccTxRZEX.s 			page 1
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
    1              		.cpu cortex-m7
@@ -58,7 +62,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s 			page 1
   29:Core/Src/fdcan.c **** /* FDCAN1 init function */
   30:Core/Src/fdcan.c **** void MX_FDCAN1_Init(void)
   31:Core/Src/fdcan.c **** {
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s 			page 2
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccTxRZEX.s 			page 2
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
   28              		.loc 1 31 1 view -0
@@ -118,7 +126,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s 			page 1
   48:Core/Src/fdcan.c ****   hfdcan1.Init.NominalTimeSeg1 = 1;
   66              		.loc 1 48 3 is_stmt 1 view .LVU17
   67              		.loc 1 48 32 is_stmt 0 view .LVU18
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s 			page 3
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccTxRZEX.s 			page 3
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
   68 001c C261     		str	r2, [r0, #28]
@@ -178,7 +190,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s 			page 1
   62:Core/Src/fdcan.c ****   hfdcan1.Init.RxBufferSize = FDCAN_DATA_BYTES_8;
  109              		.loc 1 62 3 is_stmt 1 view .LVU45
  110              		.loc 1 62 29 is_stmt 0 view .LVU46
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s 			page 4
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccTxRZEX.s 			page 4
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  111 003a 4265     		str	r2, [r0, #84]
@@ -238,7 +254,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s 			page 1
  151              		.align	1
  152              		.global	HAL_FDCAN_MspInit
  153              		.syntax unified
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s 			page 5
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccTxRZEX.s 			page 5
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  154              		.thumb
@@ -298,7 +318,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s 			page 1
   88:Core/Src/fdcan.c **** 
   89:Core/Src/fdcan.c ****   /** Initializes the peripherals clock
   90:Core/Src/fdcan.c ****   */
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s 			page 6
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccTxRZEX.s 			page 6
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
   91:Core/Src/fdcan.c ****     PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_FDCAN;
@@ -358,7 +382,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s 			page 1
  219              		.loc 1 93 9 is_stmt 0 view .LVU79
  220 0036 02A8     		add	r0, sp, #8
  221 0038 FFF7FEFF 		bl	HAL_RCCEx_PeriphCLKConfig
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s 			page 7
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccTxRZEX.s 			page 7
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  222              	.LVL6:
@@ -418,7 +446,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s 			page 1
  107:Core/Src/fdcan.c ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
  261              		.loc 1 107 5 is_stmt 1 view .LVU95
  107:Core/Src/fdcan.c ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s 			page 8
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccTxRZEX.s 			page 8
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  262              		.loc 1 107 26 is_stmt 0 view .LVU96
@@ -478,7 +510,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s 			page 1
  307              		.loc 1 120 1 view -0
  308              		.cfi_startproc
  309              		@ args = 0, pretend = 0, frame = 0
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s 			page 9
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccTxRZEX.s 			page 9
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  310              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -538,7 +574,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s 			page 1
  341              	.LVL13:
  342              		.loc 1 140 1 view .LVU115
  343 0024 F1E7     		b	.L15
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s 			page 10
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccTxRZEX.s 			page 10
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  344              	.L20:
@@ -571,11 +611,16 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s 			page 1
  370              		.file 10 "Core/Inc/fdcan.h"
  371              		.file 11 "Core/Inc/main.h"
  372              		.file 12 "<built-in>"
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s 			page 11
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccTxRZEX.s 			page 11
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 fdcan.c
+<<<<<<< HEAD
 C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s:20     .text.MX_FDCAN1_Init:00000000 $t
 C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s:26     .text.MX_FDCAN1_Init:00000000 MX_FDCAN1_Init
 C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s:145    .text.MX_FDCAN1_Init:00000054 $d
@@ -587,6 +632,19 @@ C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s:298    .text.HAL_FDCAN_MspDeInit:00000
 C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s:304    .text.HAL_FDCAN_MspDeInit:00000000 HAL_FDCAN_MspDeInit
 C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s:347    .text.HAL_FDCAN_MspDeInit:00000028 $d
 C:\Users\hh\AppData\Local\Temp\ccVrEvIx.s:355    .bss.hfdcan1:00000000 $d
+=======
+C:\Users\hh\AppData\Local\Temp\ccTxRZEX.s:20     .text.MX_FDCAN1_Init:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccTxRZEX.s:26     .text.MX_FDCAN1_Init:00000000 MX_FDCAN1_Init
+C:\Users\hh\AppData\Local\Temp\ccTxRZEX.s:145    .text.MX_FDCAN1_Init:00000054 $d
+C:\Users\hh\AppData\Local\Temp\ccTxRZEX.s:358    .bss.hfdcan1:00000000 hfdcan1
+C:\Users\hh\AppData\Local\Temp\ccTxRZEX.s:151    .text.HAL_FDCAN_MspInit:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccTxRZEX.s:157    .text.HAL_FDCAN_MspInit:00000000 HAL_FDCAN_MspInit
+C:\Users\hh\AppData\Local\Temp\ccTxRZEX.s:291    .text.HAL_FDCAN_MspInit:00000094 $d
+C:\Users\hh\AppData\Local\Temp\ccTxRZEX.s:298    .text.HAL_FDCAN_MspDeInit:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccTxRZEX.s:304    .text.HAL_FDCAN_MspDeInit:00000000 HAL_FDCAN_MspDeInit
+C:\Users\hh\AppData\Local\Temp\ccTxRZEX.s:347    .text.HAL_FDCAN_MspDeInit:00000028 $d
+C:\Users\hh\AppData\Local\Temp\ccTxRZEX.s:355    .bss.hfdcan1:00000000 $d
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 UNDEFINED SYMBOLS
 HAL_FDCAN_Init

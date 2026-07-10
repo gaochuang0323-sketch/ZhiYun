@@ -1,14 +1,5 @@
 # ZhiYun BMS Fault Simulator
 
-## High-Speed Waveform Engine Note
-
-`wave high <cell> <freq> <points> <amp> <offset>` now has two execution paths:
-
-- Single-channel output uses TIM3 update DMA request (`DMA_REQUEST_TIM3_UP`) in circular mode. DMA writes precomputed 24-bit DAC frames directly to `SPI1->TXDR`, so the CPU no longer starts one SPI DMA transfer per sample.
-- Multi-channel output keeps the compatible TIM3 interrupt + SPI DMA burst path, because it still needs grouped channel writes plus an LDAC pulse after each sample point.
-- The single-channel turbo path keeps DAC CS low and LDAC low while streaming. If the DAC or board-level timing requires a CS pulse for every 24-bit frame, the next hardware step is to route SPI hardware NSS/LDAC timing instead of software GPIO.
-- With SPI1 at 50MHz and 24-bit frames, the practical single-channel DMA pacing target is around 1Msps before analog settling and DAC timing margins are considered. Verify the real limit with an oscilloscope.
-
 ---
 
 便携式储能电站 BMS 故障模拟装置固件工程。
@@ -43,7 +34,11 @@
 
 ```text
 第 1 步：编译下载
+<<<<<<< HEAD
    → 执行 mingw32-make 
+=======
+   → 执行 mingw32-make -j4
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
    → 执行 mingw32-make flash（需要 ST-Link）
 
 第 2 步：确认启动正常
@@ -212,8 +207,8 @@ STM32_Programmer_CLI -c port=SWD -w build/project_01.hex -v -rst
 | `<offset>` | 正弦波中心电压       | 500~5000                     |
 | `<amp>`    | 正弦波幅值         | ≤2500（保证不超限）                 |
 | `<period>` | 波形周期（毫秒）      | ≥ 2                          |
-| `<freq>`   | 高频正弦目标频率（Hz） | 建议先从 1000 开始验证               |
-| `<points>` | 高频正弦每周期点数     | 1~1024，推荐 20 或 50              |
+| `<freq>`   | 高频正弦目标频率（Hz）  | 建议先从 1000 开始验证               |
+| `<points>` | 高频正弦每周期点数     | 1~1024，推荐 20 或 50            |
 | `<id_hex>` | CAN ID（十六进制）  | 标准帧 ≤ 0x7FF，扩展帧 ≤ 0x1FFFFFFF |
 | `<len>`    | CAN 数据长度      | 0~8                          |
 
@@ -745,30 +740,30 @@ sram test 1048576    # 测试全部 1MB（需要几秒钟）
 
 ## 📝 代码质量改进记录
 
-| 改进项          | 文件                             | 说明                   |
-| ------------ | ------------------------------ | -------------------- |
-| printf 互斥锁保护 | `Core/Src/main.c`、`freertos.c` | 多任务同时 printf 不输出交错   |
-| SPI 互斥锁保护    | `BSP/Src/bsp_dac81416.c`       | 多任务访问 DAC 不冲突        |
-| EthIf 任务栈扩容  | `LWIP/Target/ethernetif.c`     | 350→512 字节           |
-| PHY 热插拔      | `LWIP/Target/ethernetif.c`     | 链路断开自动清除缓存           |
-| UART 轮询让步    | `App/Src/fault_console.c`      | 每次轮询后 osDelay(1)     |
-| DCLP 内存屏障    | `BSP/Src/bsp_dac81416.c`       | 添加 __DSB() 确保互斥锁可见性  |
-| TX 超时减小      | `LWIP/Target/ethernetif.c`     | 2000ms→100ms 减少锁持有时间 |
-| 高频波形引擎      | `App/Src/waveform_engine.c`    | TIM3 节拍触发每采样点 SPI DMA burst |
+| 改进项          | 文件                             | 说明                          |
+| ------------ | ------------------------------ | --------------------------- |
+| printf 互斥锁保护 | `Core/Src/main.c`、`freertos.c` | 多任务同时 printf 不输出交错          |
+| SPI 互斥锁保护    | `BSP/Src/bsp_dac81416.c`       | 多任务访问 DAC 不冲突               |
+| EthIf 任务栈扩容  | `LWIP/Target/ethernetif.c`     | 350→512 字节                  |
+| PHY 热插拔      | `LWIP/Target/ethernetif.c`     | 链路断开自动清除缓存                  |
+| UART 轮询让步    | `App/Src/fault_console.c`      | 每次轮询后 osDelay(1)            |
+| DCLP 内存屏障    | `BSP/Src/bsp_dac81416.c`       | 添加 __DSB() 确保互斥锁可见性         |
+| TX 超时减小      | `LWIP/Target/ethernetif.c`     | 2000ms→100ms 减少锁持有时间        |
+| 高频波形引擎       | `App/Src/waveform_engine.c`    | TIM3 节拍触发每采样点 SPI DMA burst |
 
 ---
 
 ## ⚠️ 当前限制
 
-| 项目       | 当前状态                    | 后续计划                 |
-| -------- | ----------------------- | -------------------- |
-| 低频波形刷新   | FreeRTOS 1ms 软件推进，适合慢速功能验证 | 保留当前实现 |
+| 项目       | 当前状态                                                               | 后续计划                              |
+| -------- | ------------------------------------------------------------------ | --------------------------------- |
+| 低频波形刷新   | FreeRTOS 1ms 软件推进，适合慢速功能验证                                         | 保留当前实现                            |
 | 高频波形刷新   | `wave high` 使用 TIM3 中断节拍启动 SPI DMA burst；50kHz@20 点需示波器验证 CPU/中断余量 | 进一步改为 TIM/DMAMUX/硬件 CS-LDAC 全硬件触发 |
-| 校准保存     | 保存在 RAM，掉电丢失            | 增加 Flash 存储          |
-| 温度模拟     | 尚未实现                    | 需增加 NTC 电阻切换电路       |
-| BMS 协议解析 | 手动配置过滤规则                | 拿到 DBC 后实现自动解析       |
-| 上位机      | TCP JSON 可用             | 开发 PC 图形界面           |
-| 网络       | 静态 IP，无 DHCP            | 可启用 DHCP             |
+| 校准保存     | 保存在 RAM，掉电丢失                                                       | 增加 Flash 存储                       |
+| 温度模拟     | 尚未实现                                                               | 需增加 NTC 电阻切换电路                    |
+| BMS 协议解析 | 手动配置过滤规则                                                           | 拿到 DBC 后实现自动解析                    |
+| 上位机      | TCP JSON 可用                                                        | 开发 PC 图形界面                        |
+| 网络       | 静态 IP，无 DHCP                                                       | 可启用 DHCP                          |
 
 ---
 

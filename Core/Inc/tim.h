@@ -34,14 +34,20 @@ extern "C" {
 
 extern TIM_HandleTypeDef htim3;
 
+<<<<<<< HEAD
 extern TIM_HandleTypeDef htim12;
 
+=======
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
 
 void MX_TIM3_Init(void);
+<<<<<<< HEAD
 void MX_TIM12_Init(void);
+=======
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 /* USER CODE BEGIN Prototypes */
 

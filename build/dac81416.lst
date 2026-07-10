@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 1
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s 			page 1
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
    1              		.cpu cortex-m7
@@ -58,7 +62,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 1
   15:Drivers/DAC81416/Src/dac81416.c ****     case DAC81416_RANGE_0V_TO_20V:
   16:Drivers/DAC81416/Src/dac81416.c ****     case DAC81416_RANGE_0V_TO_40V:
   17:Drivers/DAC81416/Src/dac81416.c ****     case DAC81416_RANGE_NEG_5V_TO_5V:
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 2
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s 			page 2
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
   18:Drivers/DAC81416/Src/dac81416.c ****     case DAC81416_RANGE_NEG_10V_TO_10V:
@@ -118,7 +126,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 1
   80              	.LVL10:
   81              	.L5:
   11:Drivers/DAC81416/Src/dac81416.c ****   {
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 3
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s 			page 3
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
   82              		.loc 1 11 3 view .LVU13
@@ -178,7 +190,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 1
  129              		.thumb
  130              		.thumb_func
  132              	DAC81416_BuildFrame:
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 4
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s 			page 4
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  133              	.LVL16:
@@ -238,7 +254,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 1
   54:Drivers/DAC81416/Src/dac81416.c **** 
   55:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_EnableInternalRef(1U);
   56:Drivers/DAC81416/Src/dac81416.c ****   if (dacLastStatus != HAL_OK)
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 5
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s 			page 5
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
   57:Drivers/DAC81416/Src/dac81416.c ****   {
@@ -298,7 +318,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 1
  200 0014 FFF7FEFF 		bl	DAC_SPI_TransmitFrames24
  201              	.LVL24:
  202              		.loc 1 79 17 discriminator 1 view .LVU43
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 6
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s 			page 6
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  203 0018 024B     		ldr	r3, .L17
@@ -358,7 +382,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 1
  251              		.loc 1 85 3 is_stmt 1 view .LVU50
   86:Drivers/DAC81416/Src/dac81416.c ****   uint32_t rx[DAC81416_READ_TRANSACTION_FRAMES] = {0U, 0U};
  252              		.loc 1 86 3 view .LVU51
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 7
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s 			page 7
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  253              		.loc 1 86 12 is_stmt 0 view .LVU52
@@ -418,7 +446,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 1
  296 0034 BDF80400 		ldrh	r0, [sp, #4]
  297              	.L21:
   98:Drivers/DAC81416/Src/dac81416.c **** }
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 8
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s 			page 8
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  298              		.loc 1 98 1 view .LVU69
@@ -478,7 +510,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 1
  346              		.loc 1 105 3 is_stmt 1 view .LVU75
  347 0012 0120     		movs	r0, #1
  348 0014 FFF7FEFF 		bl	HAL_Delay
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 9
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s 			page 9
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  349              	.LVL33:
@@ -538,7 +574,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 1
  116:Drivers/DAC81416/Src/dac81416.c **** 
  117:Drivers/DAC81416/Src/dac81416.c ****   dacLastStatus = DAC_WriteRegister(DAC81416_CMD_WRITE,
  118:Drivers/DAC81416/Src/dac81416.c ****                                     (uint8_t)(DAC81416_REG_DAC0 + channel),
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 10
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s 			page 10
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  119:Drivers/DAC81416/Src/dac81416.c ****                                     value);
@@ -598,7 +638,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 1
  438              		.loc 1 124 1 is_stmt 0 view .LVU95
  439 0000 38B5     		push	{r3, r4, r5, lr}
  440              	.LCFI10:
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 11
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s 			page 11
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  441              		.cfi_def_cfa_offset 16
@@ -658,7 +702,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 1
  133:Drivers/DAC81416/Src/dac81416.c ****   {
  480              		.loc 1 133 71 discriminator 2 view .LVU108
  481              	.LBE2:
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 12
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s 			page 12
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  129:Drivers/DAC81416/Src/dac81416.c ****     return dacLastStatus;
@@ -718,7 +766,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 1
  522              		.cfi_endproc
  523              	.LFE154:
  525              		.section	.text.DAC_EnableInternalRef,"ax",%progbits
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 13
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s 			page 13
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  526              		.align	1
@@ -778,7 +830,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 1
  568              	.LVL56:
  569              		.loc 1 159 9 view .LVU135
  570 001a 92B2     		uxth	r2, r2
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 14
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s 			page 14
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  571              	.LVL57:
@@ -838,7 +894,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 1
  171:Drivers/DAC81416/Src/dac81416.c **** {
  613              		.loc 1 171 1 is_stmt 1 view -0
  614              		.cfi_startproc
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 15
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s 			page 15
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  615              		@ args = 0, pretend = 0, frame = 0
@@ -898,7 +958,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 1
  654 001c 2A46     		mov	r2, r5
  655 001e C9B2     		uxtb	r1, r1
  656 0020 0020     		movs	r0, #0
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 16
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s 			page 16
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  657 0022 FFF7FEFF 		bl	DAC_WriteRegister
@@ -958,7 +1022,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 1
  693              		.loc 1 194 1 view .LVU172
  694 003e 38BD     		pop	{r3, r4, r5, pc}
  695              	.L65:
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 17
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s 			page 17
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  696              		.align	2
@@ -1018,7 +1086,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 1
  746              	.LCFI14:
  747              		.cfi_def_cfa_offset 8
  748              		.cfi_offset 3, -8
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 18
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s 			page 18
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  749              		.cfi_offset 14, -4
@@ -1078,7 +1150,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 1
  796              		.loc 1 47 3 view .LVU188
   47:Drivers/DAC81416/Src/dac81416.c ****                                     DAC81416_REG_SPICONFIG,
  797              		.loc 1 47 19 is_stmt 0 view .LVU189
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 19
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s 			page 19
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  798 000a 40F68422 		movw	r2, #2692
@@ -1138,7 +1214,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 1
  837              		.loc 1 64 6 is_stmt 0 view .LVU204
  838 003a 0028     		cmp	r0, #0
  839 003c EED1     		bne	.L73
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 20
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s 			page 20
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
   69:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
@@ -1198,7 +1278,11 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 1
  214:Drivers/DAC81416/Src/dac81416.c ****   return dacLastStatus;
  885              		.loc 1 214 3 is_stmt 1 view .LVU214
  215:Drivers/DAC81416/Src/dac81416.c **** }
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 21
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s 			page 21
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
  886              		.loc 1 215 1 is_stmt 0 view .LVU215
@@ -1248,11 +1332,16 @@ ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 1
  930              		.file 4 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_def.h"
  931              		.file 5 "BSP/Inc/bsp_dac81416.h"
  932              		.file 6 "Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal.h"
+<<<<<<< HEAD
 ARM GAS  C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s 			page 22
+=======
+ARM GAS  C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s 			page 22
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 dac81416.c
+<<<<<<< HEAD
 C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s:20     .text.DAC81416_IsValidRange:00000000 $t
 C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s:25     .text.DAC81416_IsValidRange:00000000 DAC81416_IsValidRange
 C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s:98     .text.DAC81416_BuildRangeRegister:00000000 $t
@@ -1296,6 +1385,51 @@ C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s:896    .text.DAC_GetLastStatus:0000000
 C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s:902    .text.DAC_GetLastStatus:00000000 DAC_GetLastStatus
 C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s:917    .text.DAC_GetLastStatus:00000008 $d
 C:\Users\hh\AppData\Local\Temp\cc96MQRJ.s:925    .bss.dacLastStatus:00000000 $d
+=======
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:20     .text.DAC81416_IsValidRange:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:25     .text.DAC81416_IsValidRange:00000000 DAC81416_IsValidRange
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:98     .text.DAC81416_BuildRangeRegister:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:103    .text.DAC81416_BuildRangeRegister:00000000 DAC81416_BuildRangeRegister
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:127    .text.DAC81416_BuildFrame:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:132    .text.DAC81416_BuildFrame:00000000 DAC81416_BuildFrame
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:160    .text.DAC_WriteRegister:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:166    .text.DAC_WriteRegister:00000000 DAC_WriteRegister
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:225    .text.DAC_WriteRegister:00000024 $d
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:924    .bss.dacLastStatus:00000000 dacLastStatus
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:230    .text.DAC_ReadRegister:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:236    .text.DAC_ReadRegister:00000000 DAC_ReadRegister
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:314    .text.DAC_ReadRegister:00000040 $d
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:319    .text.DAC_SoftwareReset:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:325    .text.DAC_SoftwareReset:00000000 DAC_SoftwareReset
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:357    .text.DAC_SoftwareReset:0000001c $d
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:362    .text.DAC_WriteChannel:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:368    .text.DAC_WriteChannel:00000000 DAC_WriteChannel
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:420    .text.DAC_WriteChannel:00000020 $d
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:425    .text.DAC_WriteAllChannels:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:431    .text.DAC_WriteAllChannels:00000000 DAC_WriteAllChannels
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:521    .text.DAC_WriteAllChannels:0000003c $d
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:526    .text.DAC_EnableInternalRef:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:532    .text.DAC_EnableInternalRef:00000000 DAC_EnableInternalRef
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:599    .text.DAC_EnableInternalRef:00000034 $d
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:604    .text.DAC_SetAllChannelsRange:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:610    .text.DAC_SetAllChannelsRange:00000000 DAC_SetAllChannelsRange
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:698    .text.DAC_SetAllChannelsRange:00000040 $d
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:703    .text.DAC_ConfigAllChannels0To5V:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:709    .text.DAC_ConfigAllChannels0To5V:00000000 DAC_ConfigAllChannels0To5V
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:731    .text.DAC_PowerDownChannels:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:737    .text.DAC_PowerDownChannels:00000000 DAC_PowerDownChannels
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:768    .text.DAC_PowerDownChannels:00000014 $d
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:773    .text.DAC81416_Init:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:779    .text.DAC81416_Init:00000000 DAC81416_Init
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:853    .text.DAC81416_Init:00000048 $d
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:858    .text.DAC_TriggerLDAC:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:864    .text.DAC_TriggerLDAC:00000000 DAC_TriggerLDAC
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:891    .text.DAC_TriggerLDAC:00000014 $d
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:896    .text.DAC_GetLastStatus:00000000 $t
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:902    .text.DAC_GetLastStatus:00000000 DAC_GetLastStatus
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:917    .text.DAC_GetLastStatus:00000008 $d
+C:\Users\hh\AppData\Local\Temp\ccbnBXg3.s:925    .bss.dacLastStatus:00000000 $d
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 
 UNDEFINED SYMBOLS
 DAC_SPI_TransmitFrames24

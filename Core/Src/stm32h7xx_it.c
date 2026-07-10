@@ -58,7 +58,10 @@
 extern DMA_HandleTypeDef hdma_spi1_tx;
 extern SPI_HandleTypeDef hspi1;
 extern TIM_HandleTypeDef htim3;
+<<<<<<< HEAD
 extern TIM_HandleTypeDef htim12;
+=======
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 extern TIM_HandleTypeDef htim1;
 
 /* USER CODE BEGIN EV */
@@ -219,6 +222,7 @@ void SPI1_IRQHandler(void)
   /* USER CODE END SPI1_IRQn 1 */
 }
 
+<<<<<<< HEAD
 /**
   * @brief This function handles TIM8 break interrupt and TIM12 global interrupt.
   */
@@ -233,6 +237,8 @@ void TIM8_BRK_TIM12_IRQHandler(void)
   /* USER CODE END TIM8_BRK_TIM12_IRQn 1 */
 }
 
+=======
+>>>>>>> f4c64959d37a1ca5ac670db93692e329027a8e2d
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
